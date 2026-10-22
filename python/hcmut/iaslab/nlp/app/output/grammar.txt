@@ -1,0 +1,523 @@
+<S> ::= <QUESTION>
+      | <REQUEST>
+      | <STATEMENT>
+
+<QUESTION> ::= <WH_QUESTION>
+             | <YES_NO_QUESTION>
+             | <ALTERNATIVE_QUESTION>
+             | <POLITE_QUESTION>
+
+<POLITE_QUESTION> ::= <POLITE_PREFIX> <QUESTION_CORE> <OPT_QUESTION_MARK>
+                    | <POLITE_PREFIX> <REQUEST_CORE> <OPT_QUESTION_MARK>
+
+<QUESTION_CORE> ::= <WH_QUESTION>
+                  | <YES_NO_QUESTION>
+                  | <ALTERNATIVE_QUESTION>
+
+<REQUEST> ::= <REQUEST_CORE> <OPT_QUESTION_MARK>
+
+<STATEMENT> ::= <NP> <VP> <OPT_QUESTION_MARK>
+
+<OPT_QUESTION_MARK> ::= "?"
+                       | <EMPTY>
+
+<EMPTY> ::=
+
+
+# 2. PHRASE STRUCTURE
+# NP = noun phrase; VP = verb phrase; PP = prepositional phrase;
+# QP = quantity phrase; AdjP = adjective phrase; WHP = wh/interrogative phrase.
+
+<NP> ::= <COURSE_NP>
+       | <TOPIC_NP>
+       | <ASSIGNMENT_NP>
+       | <RESOURCE_NP>
+       | <RULE_NP>
+       | <WEEK_NP>
+       | <GENERAL_NP>
+
+<COURSE_NP> ::= <OPT_COURSE_MARKER> <COURSE_REF>
+              | <DETERMINER> <OPT_COURSE_MARKER> <COURSE_REF>
+              | <COURSE_REF>
+
+<TOPIC_NP> ::= <OPT_TOPIC_MARKER> <TOPIC>
+             | <DETERMINER> <OPT_TOPIC_MARKER> <TOPIC>
+
+<ASSIGNMENT_NP> ::= <ASSIGNMENT_REF>
+                  | <DETERMINER> <ASSIGNMENT_REF>
+
+<RESOURCE_NP> ::= <RESOURCE_REF>
+                | <DETERMINER> <RESOURCE_REF>
+
+<RULE_NP> ::= <RULE_REF>
+            | <DETERMINER> <RULE_REF>
+
+<WEEK_NP> ::= <WEEK_REF>
+
+<GENERAL_NP> ::= <NOUN>
+               | <DETERMINER> <NOUN>
+               | <ADJECTIVE> <NOUN>
+               | <NOUN> <NOUN>
+               | <NP> <PP>
+
+<VP> ::= <VERB>
+       | <VERB> <NP>
+       | <VERB> <QP>
+       | <VERB> <PP>
+       | <VERB> <NP> <PP>
+       | <COPULA> <NP>
+       | <COPULA> <ADJP>
+       | <COPULA> <WHP>
+       | <AUXILIARY> <VERB>
+       | <AUXILIARY> <VERB> <NP>
+       | <AUXILIARY> <VERB> <QP>
+       | <VERB> <WHP>
+
+<PP> ::= <PREPOSITION> <NP>
+       | <PREPOSITION> <TOPIC_NP>
+       | <PREPOSITION> <COURSE_NP>
+
+<QP> ::= <QUANTITY_WORD> <NOUN>
+       | <QUANTITY_WORD> <NOUN> <OPT_QUANTITY_MODIFIER>
+
+<OPT_QUANTITY_MODIFIER> ::= "tất cả"
+                           | "tổng cộng"
+                           | <EMPTY>
+
+<ADJP> ::= <ADJECTIVE>
+         | <DEGREE_WORD> <ADJECTIVE>
+
+<WHP> ::= <WH_WORD>
+        | <WH_WORD> <NOUN>
+        | <WH_WORD> <NP>
+        | <QUANTITY_WORD> <NOUN>
+
+
+# 3. QUESTION CONSTRUCTIONS
+# Vietnamese permits multiple word orders. These rules cover common course-query forms;
+# they do not claim to cover all Vietnamese syntax.
+
+<WH_QUESTION> ::= <NP> <VP> <WHP>
+                | <NP> <VP> <OPT_WH_FINAL>
+                | <WHP> <VP>
+                | <WHP> <NP> <VP>
+                | <NP> <WH_PREDICATE>
+                | <WH_PREDICATE> <NP>
+                | <WH_FRONTED> <NP> <VP>
+
+<WH_PREDICATE> ::= <COPULA> <WHP>
+                 | <VERB> <WHP>
+                 | <AUXILIARY> <VERB> <WHP>
+
+<WH_FRONTED> ::= <WH_WORD>
+               | <QUANTITY_WORD> <NOUN>
+               | <WH_WORD> <NOUN>
+
+<OPT_WH_FINAL> ::= "gì"
+                  | "nào"
+                  | "bao nhiêu"
+                  | <EMPTY>
+
+<YES_NO_QUESTION> ::= <NP> <VP> <QUESTION_PARTICLE>
+                    | <AUXILIARY> <NP> <VP> <QUESTION_PARTICLE>
+                    | <NP> <VERB> <NP> <QUESTION_PARTICLE>
+
+<ALTERNATIVE_QUESTION> ::= <NP> <VP> "hay" <VP>
+                          | <NP> <VP> "hay là" <VP>
+
+<REQUEST_CORE> ::= <REQUEST_VERB> <NP>
+                 | <REQUEST_VERB> <NP> <PP>
+                 | <REQUEST_VERB> <VP>
+                 | <REQUEST_VERB> <NP> <WHP>
+                 | <REQUEST_VERB> <NP> <VERB> <NP>
+
+<REQUEST_VERB> ::= "liệt kê"
+                 | "cho biết"
+                 | "giải thích"
+                 | "tóm tắt"
+                 | "giới thiệu"
+                 | "tìm"
+                 | "tìm giúp"
+                 | "cung cấp"
+                 | "nêu"
+                 | "so sánh"
+
+
+# 4. GRAMMATICAL CATEGORIES / FUNCTION WORDS
+<OPT_COURSE_MARKER> ::= "môn"
+                       | "học phần"
+                       | "môn học"
+                       | <EMPTY>
+
+<OPT_TOPIC_MARKER> ::= "chủ đề"
+                      | "nội dung"
+                      | <EMPTY>
+
+<DETERMINER> ::= "các"
+                | "những"
+                | "một"
+                | "mọi"
+
+<PREPOSITION> ::= "về"
+                | "của"
+                | "trong"
+                | "theo"
+                | "đối với"
+                | "cho"
+
+<VERB> ::= "có"
+         | "học"
+         | "gồm"
+         | "bao gồm"
+         | "thuộc"
+         | "nộp"
+         | "hoàn thành"
+         | "đọc"
+         | "sử dụng"
+         | "cho phép"
+         | "cần"
+         | "được cung cấp"
+         | "được đăng"
+         | "xuất hiện"
+         | "nằm"
+         | "liên quan"
+         | "dạy"
+         | "giới thiệu"
+         | "giải thích"
+         | "chấm điểm"
+
+<AUXILIARY> ::= "cần"
+              | "phải"
+              | "được"
+              | "có thể"
+              | "nên"
+              | "muốn"
+
+<COPULA> ::= "là"
+
+<QUESTION_PARTICLE> ::= "không"
+                      | "chưa"
+                      | "à"
+                      | "vậy"
+
+<NOUN> ::= "tín chỉ"
+         | "mã môn học"
+         | "mã học phần"
+         | "tên đầy đủ"
+         | "thông tin"
+         | "mục tiêu đào tạo"
+         | "nội dung"
+         | "kiến thức"
+         | "chủ đề"
+         | "tuần"
+         | "lịch học"
+         | "bài tập"
+         | "bài tập lớn"
+         | "đồ án"
+         | "project"
+         | "dự án"
+         | "bài thực hành"
+         | "bài lab"
+         | "hạn nộp"
+         | "deadline"
+         | "thời hạn"
+         | "tài liệu"
+         | "giáo trình"
+         | "slide bài giảng"
+         | "bài giảng"
+         | "nguồn học tập"
+         | "tài liệu tham khảo"
+         | "quy định"
+         | "chính sách"
+         | "điểm danh"
+         | "đạo văn"
+         | "công cụ AI"
+
+<ADJECTIVE> ::= "đại cương"
+              | "nâng cao"
+              | "phân tán"
+              | "thông minh"
+              | "trực tuyến"
+
+<DEGREE_WORD> ::= "rất"
+                 | "khá"
+
+<WH_WORD> ::= "gì"
+            | "nào"
+            | "ai"
+            | "đâu"
+            | "khi nào"
+            | "như thế nào"
+            | "bao lâu"
+
+<QUANTITY_WORD> ::= "bao nhiêu"
+                  | "mấy"
+
+<POLITE_PREFIX> ::= "cho hỏi"
+                  | "xin hỏi"
+                  | "cho mình hỏi"
+                  | "cho tôi hỏi"
+                  | "vui lòng cho biết"
+                  | "hãy cho biết"
+
+
+# 5. DOMAIN CONSTRUCTIONS
+# These are reusable domain phrases, not complete fixed questions.
+
+<TOPIC> ::= "CFG"
+          | "Context-Free Grammar"
+          | "ngữ pháp phi ngữ cảnh"
+          | "Parsing"
+          | "phân tích cú pháp"
+          | "cây phân tích cú pháp"
+          | "văn phạm"
+          | "tokenization"
+          | "tách từ"
+          | "mô hình ngôn ngữ"
+          | "xử lý ngôn ngữ tự nhiên"
+          | "máy học"
+          | "học sâu"
+
+<WEEK_REF> ::= "tuần" <NUMBER>
+             | "tuần thứ" <NUMBER>
+
+<ASSIGNMENT_REF> ::= "bài tập lớn"
+                   | "bài tập"
+                   | "bài tập tuần" <NUMBER>
+                   | "đồ án"
+                   | "project"
+                   | "dự án"
+                   | "bài thực hành"
+                   | "bài lab"
+
+<RESOURCE_REF> ::= "tài liệu"
+                 | "giáo trình"
+                 | "slide bài giảng"
+                 | "bài giảng"
+                 | "nguồn học tập"
+                 | "tài liệu tham khảo"
+                 | "sách tham khảo"
+                 | "video bài giảng"
+
+<RULE_REF> ::= "quy định về sử dụng AI"
+             | "quy định về điểm danh"
+             | "quy định về làm bài nhóm"
+             | "quy định về nộp bài muộn"
+             | "quy định của môn học"
+             | "chính sách sử dụng công cụ AI"
+             | "quy định về đạo văn"
+             | "quy định về thi"
+             | "quy định về vắng học"
+             | "quy định về trích dẫn tài liệu"
+
+<NUMBER> ::= "1" | "2" | "3" | "4" | "5"
+           | "6" | "7" | "8" | "9" | "10"
+           | "11" | "12" | "13" | "14" | "15"
+
+
+# 6. COURSE LEXICON
+# The supplied catalogue is preserved below, grouped by subject area.
+<COURSE_REF> ::= <COURSE>
+               | "môn" <COURSE>
+               | "học phần" <COURSE>
+
+<COURSE> ::= <DATA_COURSE>
+           | <SECURITY_COURSE>
+           | <SOFTWARE_COURSE>
+           | <AI_COURSE>
+           | <COMP_SCI_COURSE>
+           | <GENERAL_COURSE>
+
+<DATA_COURSE> ::= "C02013"
+                | "Hệ cơ sở Dữ liệu"
+                | "C03021"
+                | "Hệ Quản trị Cơ sở Dữ liệu"
+                | "C03023"
+                | "Cơ sở Dữ liệu Phân tán và Hướng đối tượng"
+                | "C03029"
+                | "Khai phá Dữ liệu"
+                | "C03127"
+                | "Đồ án tổng hợp - hướng kỹ thuật dữ liệu"
+                | "C03137"
+                | "Dữ liệu lớn"
+                | "C04031"
+                | "Kho dữ liệu và hệ hỗ trợ quyết định"
+                | "C04033"
+                | "Phân tích dữ liệu lớn và trí tuệ kinh doanh"
+
+<SECURITY_COURSE> ::= "C03033"
+                    | "Bảo mật Hệ thống Thông tin"
+                    | "C03069"
+                    | "Mật mã và An ninh mạng"
+                    | "C03083"
+                    | "Mật mã học và Mã hóa Thông tin"
+                    | "C03129"
+                    | "Bảo mật Phần mềm"
+                    | "C03151"
+                    | "Quản trị mạng"
+                    | "C03153"
+                    | "Đánh giá an toàn mạng máy tính"
+                    | "C04039"
+                    | "Bảo mật sinh trắc"
+
+<SOFTWARE_COURSE> ::= "C01027"
+                    | "Kỹ thuật Lập trình"
+                    | "C02039"
+                    | "Lập trình Nâng cao"
+                    | "C03001"
+                    | "Công nghệ Phần mềm"
+                    | "C03011"
+                    | "Quản lý Dự án Phần mềm"
+                    | "C03013"
+                    | "Xây dựng Chương trình Dịch"
+                    | "C03015"
+                    | "Kiểm tra Phần mềm"
+                    | "C03017"
+                    | "Kiến trúc Phần mềm"
+                    | "C03027"
+                    | "Thương mại Điện tử"
+                    | "C03043"
+                    | "Phát triển Ứng dụng trên Thiết bị di động"
+                    | "C03045"
+                    | "Lập trình Game"
+                    | "C03049"
+                    | "Lập trình Web"
+                    | "C03065"
+                    | "Công nghệ Phần mềm Nâng cao"
+                    | "C03103"
+                    | "Đồ án Tổng hợp - Hướng Công nghệ Phần mềm"
+                    | "C03109"
+                    | "Thực tập Đồ án môn học Đa ngành - Hướng Công nghệ phần mềm"
+                    | "C03131"
+                    | "Công nghệ Phần mềm thế hệ mới"
+                    | "C03115"
+                    | "Phân tích và Thiết kế Hệ thống"
+
+<AI_COURSE> ::= "C03041"
+              | "Hệ thống Thông minh"
+              | "C03057"
+              | "Xử lý ảnh số và thị giác máy tính"
+              | "C03061"
+              | "Nhập môn Trí tuệ Nhân tạo"
+              | "C03085"
+              | "Xử lý Ngôn ngữ Tự nhiên"
+              | "C03117"
+              | "Học máy"
+              | "C03133"
+              | "Học sâu và Ứng dụng"
+              | "C03135"
+              | "Lập trình cho Trí tuệ nhân tạo và Khoa học dữ liệu"
+              | "C03101"
+              | "Đồ án Tổng hợp - Hướng Trí tuệ Nhân tạo"
+              | "C03107"
+              | "Thực tập Đồ án môn học Đa ngành - Hướng Trí tuệ Nhân tạo"
+
+<COMP_SCI_COURSE> ::= "C01007"
+                    | "Cấu trúc Rời rạc cho Khoa học Máy tính"
+                    | "C01005"
+                    | "Nhập môn Điện toán"
+                    | "C01023"
+                    | "Hệ thống số"
+                    | "C02003"
+                    | "Cấu trúc Dữ liệu và Giải Thuật"
+                    | "C02007"
+                    | "Kiến trúc Máy tính"
+                    | "C02017"
+                    | "Hệ điều hành"
+                    | "C03005"
+                    | "Nguyên lý Ngôn ngữ Lập trình"
+                    | "C03093"
+                    | "Mạng máy tính"
+                    | "C03031"
+                    | "Phân tích và Thiết kế Giải Thuật"
+                    | "C03035"
+                    | "Hệ thời gian thực"
+                    | "C03037"
+                    | "Phát triển Ứng dụng Internet of Things"
+                    | "C03047"
+                    | "Mạng máy tính nâng cao"
+                    | "C03051"
+                    | "Hệ thống thiết bị di động"
+                    | "C03059"
+                    | "Đồ họa Máy tính"
+                    | "C03067"
+                    | "Tính toán Song song"
+                    | "C03071"
+                    | "Hệ phân bố"
+                    | "C03089"
+                    | "Những Chủ đề Nâng cao trong Khoa học Máy tính"
+                    | "C03105"
+                    | "Đồ án Tổng hợp - Hướng Hệ thống Thông tin"
+                    | "C03119"
+                    | "Đồ án Mạng máy tính"
+                    | "C03139"
+                    | "Chuyển đổi số"
+                    | "C04025"
+                    | "Mạng xã hội và Thông tin"
+                    | "C04037"
+                    | "Hệ thống thông tin quản lý"
+                    | "C03111"
+                    | "Thực tập Đồ án môn học Đa ngành - hướng Hệ thống thông tin"
+                    | "C04029"
+                    | "Đồ án Chuyên ngành"
+                    | "C04337"
+                    | "Đồ án Tốt nghiệp (Khoa học Máy tính)"
+
+<GENERAL_COURSE> ::= "C01007"
+                   | "Cấu trúc Rời rạc cho Khoa học Máy tính"
+                   | "C02011"
+                   | "Mô hình hóa Toán học"
+                   | "MT1003"
+                   | "Giải tích 1"
+                   | "MT1005"
+                   | "Giải tích 2"
+                   | "MT1007"
+                   | "Đại số Tuyến tính"
+                   | "MT2013"
+                   | "Xác suất và Thống kê"
+                   | "CH1003"
+                   | "Hóa đại cương"
+                   | "PH1003"
+                   | "Vật lý 1"
+                   | "PH1007"
+                   | "Thí nghiệm Vật lý"
+                   | "SP1007"
+                   | "Pháp luật Việt Nam Đại cương"
+                   | "SP1031"
+                   | "Triết học Mác - Lênin"
+                   | "SP1033"
+                   | "Kinh tế Chính trị Mác - Lênin"
+                   | "SP1035"
+                   | "Chủ nghĩa Xã hội Khoa học"
+                   | "SP1037"
+                   | "Tư tưởng Hồ Chí Minh"
+                   | "SP1039"
+                   | "Lịch sử Đảng Cộng sản Việt Nam"
+                   | "LA1003"
+                   | "Anh văn 1"
+                   | "LA1005"
+                   | "Anh văn 2"
+                   | "LA1007"
+                   | "Anh văn 3"
+                   | "LA1009"
+                   | "Anh văn 4"
+                   | "IM1013"
+                   | "Kinh tế học Đại cương"
+                   | "IM1023"
+                   | "Quản lý Sản xuất cho Kỹ sư"
+                   | "IM1025"
+                   | "Quản lý Dự án cho Kỹ sư"
+                   | "IM1027"
+                   | "Kinh tế Kỹ thuật"
+                   | "IM3001"
+                   | "Quản trị Kinh doanh cho Kỹ sư"
+                   | "C02001"
+                   | "Kỹ năng Chuyên nghiệp cho Kỹ sư"
+                   | "C04035"
+                   | "Hoạch định tài nguyên tổ chức"
+                   | "CCGDTC"
+                   | "Chứng chỉ Giáo Dục Thể Chất"
+                   | "MI1003"
+                   | "Giáo dục Quốc phòng"
+                   | "C03335"
+                   | "Thực tập Ngoài trường"
