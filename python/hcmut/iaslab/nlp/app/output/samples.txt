@@ -1,0 +1,1173 @@
+Lịch học diễn ra khi nào?
+Môn học được tổ chức trong bao nhiêu tuần?
+Kế hoạch học tập kéo dài bao lâu?
+Có bao nhiêu tuần học?
+Một tuần học mấy tiết?
+Chương nào nói về CFG?
+Chương nào nói về PCFG?
+Chương nào nói về văn phạm phụ thuộc?
+Chương nào nói về nét và văn phạm gia tố?
+Chương nào nói về gán nhãn từ loại?
+Chương nào nói về dạng luận lý?
+Chương nào nói về vai trò chủ đề?
+Chương nào nói về giới hạn lựa chọn?
+Chương nào nói về mạng ngữ nghĩa?
+Chương nào nói về văn phạm ngữ nghĩa?
+Chương nào nói về biểu diễn tri thức?
+Chương nào nói về hỏi đáp?
+Chương nào nói về tham chiếu?
+Chương nào nói về đồng tham chiếu?
+Chương nào nói về cụm danh từ?
+Chương nào nói về cụm động từ?
+Chương nào nói về cụm tính từ?
+Chương nào nói về cụm trạng từ?
+Chương nào đề cập đến CFG?
+Chương nào đề cập đến PCFG?
+Chương nào đề cập đến văn phạm phụ thuộc?
+Chương nào đề cập đến nét và văn phạm gia tố?
+Chương nào đề cập đến gán nhãn từ loại?
+Chương nào đề cập đến dạng luận lý?
+Chương nào đề cập đến vai trò chủ đề?
+Chương nào đề cập đến giới hạn lựa chọn?
+Chương nào đề cập đến mạng ngữ nghĩa?
+Chương nào đề cập đến văn phạm ngữ nghĩa?
+Chương nào đề cập đến biểu diễn tri thức?
+Chương nào đề cập đến hỏi đáp?
+Chương nào đề cập đến tham chiếu?
+Chương nào đề cập đến đồng tham chiếu?
+Chương nào đề cập đến cụm danh từ?
+Chương nào đề cập đến cụm động từ?
+Chương nào đề cập đến cụm tính từ?
+Chương nào đề cập đến cụm trạng từ?
+Chương nào học về CFG?
+Chương nào học về PCFG?
+Chương nào học về văn phạm phụ thuộc?
+Chương nào học về nét và văn phạm gia tố?
+Chương nào học về gán nhãn từ loại?
+Chương nào học về dạng luận lý?
+Chương nào học về vai trò chủ đề?
+Chương nào học về giới hạn lựa chọn?
+Chương nào học về mạng ngữ nghĩa?
+Chương nào học về văn phạm ngữ nghĩa?
+Chương nào học về biểu diễn tri thức?
+Chương nào học về hỏi đáp?
+Chương nào học về tham chiếu?
+Chương nào học về đồng tham chiếu?
+Chương nào học về cụm danh từ?
+Chương nào học về cụm động từ?
+Chương nào học về cụm tính từ?
+Chương nào học về cụm trạng từ?
+Tài liệu nào liên quan đến statistical NLP?
+Tài liệu nào liên quan đến Python NLP?
+Tài liệu nào liên quan đến machine translation?
+Tài liệu nào liên quan đến xử lý ngôn ngữ tự nhiên bằng Python?
+Tài liệu nào liên quan đến các phương pháp thống kê trong NLP?
+Tài liệu tham khảo về statistical NLP là gì?
+Tài liệu tham khảo về Python NLP là gì?
+Tài liệu tham khảo về machine translation là gì?
+Tài liệu tham khảo về xử lý ngôn ngữ tự nhiên bằng Python là gì?
+Tài liệu tham khảo về các phương pháp thống kê trong NLP là gì?
+Môn NLP có bao nhiêu tín chỉ?
+Môn NLP có mấy tín chỉ?
+Môn NLP bao nhiêu tín chỉ?
+Môn NLP gồm những phần nào?
+Môn NLP có những phần chính nào?
+Môn NLP được chia thành những phần nào?
+Môn NLP có những mục tiêu học tập nào?
+môn học CO3085 có bao nhiêu tín chỉ?
+môn học CO3085 có mấy tín chỉ?
+môn học CO3085 bao nhiêu tín chỉ?
+môn học CO3085 gồm những phần nào?
+môn học CO3085 có những phần chính nào?
+môn học CO3085 được chia thành những phần nào?
+môn học CO3085 có những mục tiêu học tập nào?
+CO3085 có bao nhiêu tín chỉ?
+CO3085 có mấy tín chỉ?
+CO3085 bao nhiêu tín chỉ?
+CO3085 gồm những phần nào?
+CO3085 có những phần chính nào?
+CO3085 được chia thành những phần nào?
+CO3085 có những mục tiêu học tập nào?
+Xử lý Ngôn ngữ Tự nhiên có bao nhiêu tín chỉ?
+Xử lý Ngôn ngữ Tự nhiên có mấy tín chỉ?
+Xử lý Ngôn ngữ Tự nhiên bao nhiêu tín chỉ?
+Xử lý Ngôn ngữ Tự nhiên gồm những phần nào?
+Xử lý Ngôn ngữ Tự nhiên có những phần chính nào?
+Xử lý Ngôn ngữ Tự nhiên được chia thành những phần nào?
+Xử lý Ngôn ngữ Tự nhiên có những mục tiêu học tập nào?
+midterm kéo dài bao lâu?
+final kéo dài bao lâu?
+bài thi giữa kỳ kéo dài bao lâu?
+bài thi cuối kỳ kéo dài bao lâu?
+CFG được học ở chương nào?
+CFG được trình bày ở chương nào?
+CFG nằm ở chương nào?
+CFG thuộc chương nào?
+CFG được dạy trong chương nào?
+CFG xuất hiện trong chương nào?
+CFG được giảng dạy ở chương nào?
+CFG nằm trong nội dung chương nào?
+CFG thuộc nội dung của chương nào?
+CFG được giới thiệu ở chương nào?
+PCFG được học ở chương nào?
+PCFG được trình bày ở chương nào?
+PCFG nằm ở chương nào?
+PCFG thuộc chương nào?
+PCFG được dạy trong chương nào?
+PCFG xuất hiện trong chương nào?
+PCFG được giảng dạy ở chương nào?
+PCFG nằm trong nội dung chương nào?
+PCFG thuộc nội dung của chương nào?
+PCFG được giới thiệu ở chương nào?
+văn phạm phụ thuộc được học ở chương nào?
+văn phạm phụ thuộc được trình bày ở chương nào?
+văn phạm phụ thuộc nằm ở chương nào?
+văn phạm phụ thuộc thuộc chương nào?
+văn phạm phụ thuộc được dạy trong chương nào?
+văn phạm phụ thuộc xuất hiện trong chương nào?
+văn phạm phụ thuộc được giảng dạy ở chương nào?
+văn phạm phụ thuộc nằm trong nội dung chương nào?
+văn phạm phụ thuộc thuộc nội dung của chương nào?
+văn phạm phụ thuộc được giới thiệu ở chương nào?
+nét và văn phạm gia tố được học ở chương nào?
+nét và văn phạm gia tố được trình bày ở chương nào?
+nét và văn phạm gia tố nằm ở chương nào?
+nét và văn phạm gia tố thuộc chương nào?
+nét và văn phạm gia tố được dạy trong chương nào?
+nét và văn phạm gia tố xuất hiện trong chương nào?
+nét và văn phạm gia tố được giảng dạy ở chương nào?
+nét và văn phạm gia tố nằm trong nội dung chương nào?
+nét và văn phạm gia tố thuộc nội dung của chương nào?
+nét và văn phạm gia tố được giới thiệu ở chương nào?
+gán nhãn từ loại được học ở chương nào?
+gán nhãn từ loại được trình bày ở chương nào?
+gán nhãn từ loại nằm ở chương nào?
+gán nhãn từ loại thuộc chương nào?
+gán nhãn từ loại được dạy trong chương nào?
+gán nhãn từ loại xuất hiện trong chương nào?
+gán nhãn từ loại được giảng dạy ở chương nào?
+gán nhãn từ loại nằm trong nội dung chương nào?
+gán nhãn từ loại thuộc nội dung của chương nào?
+gán nhãn từ loại được giới thiệu ở chương nào?
+dạng luận lý được học ở chương nào?
+dạng luận lý được trình bày ở chương nào?
+dạng luận lý nằm ở chương nào?
+dạng luận lý thuộc chương nào?
+dạng luận lý được dạy trong chương nào?
+dạng luận lý xuất hiện trong chương nào?
+dạng luận lý được giảng dạy ở chương nào?
+dạng luận lý nằm trong nội dung chương nào?
+dạng luận lý thuộc nội dung của chương nào?
+dạng luận lý được giới thiệu ở chương nào?
+vai trò chủ đề được học ở chương nào?
+vai trò chủ đề được trình bày ở chương nào?
+vai trò chủ đề nằm ở chương nào?
+vai trò chủ đề thuộc chương nào?
+vai trò chủ đề được dạy trong chương nào?
+vai trò chủ đề xuất hiện trong chương nào?
+vai trò chủ đề được giảng dạy ở chương nào?
+vai trò chủ đề nằm trong nội dung chương nào?
+vai trò chủ đề thuộc nội dung của chương nào?
+vai trò chủ đề được giới thiệu ở chương nào?
+giới hạn lựa chọn được học ở chương nào?
+giới hạn lựa chọn được trình bày ở chương nào?
+giới hạn lựa chọn nằm ở chương nào?
+giới hạn lựa chọn thuộc chương nào?
+giới hạn lựa chọn được dạy trong chương nào?
+giới hạn lựa chọn xuất hiện trong chương nào?
+giới hạn lựa chọn được giảng dạy ở chương nào?
+giới hạn lựa chọn nằm trong nội dung chương nào?
+giới hạn lựa chọn thuộc nội dung của chương nào?
+giới hạn lựa chọn được giới thiệu ở chương nào?
+mạng ngữ nghĩa được học ở chương nào?
+mạng ngữ nghĩa được trình bày ở chương nào?
+mạng ngữ nghĩa nằm ở chương nào?
+mạng ngữ nghĩa thuộc chương nào?
+mạng ngữ nghĩa được dạy trong chương nào?
+mạng ngữ nghĩa xuất hiện trong chương nào?
+mạng ngữ nghĩa được giảng dạy ở chương nào?
+mạng ngữ nghĩa nằm trong nội dung chương nào?
+mạng ngữ nghĩa thuộc nội dung của chương nào?
+mạng ngữ nghĩa được giới thiệu ở chương nào?
+văn phạm ngữ nghĩa được học ở chương nào?
+văn phạm ngữ nghĩa được trình bày ở chương nào?
+văn phạm ngữ nghĩa nằm ở chương nào?
+văn phạm ngữ nghĩa thuộc chương nào?
+văn phạm ngữ nghĩa được dạy trong chương nào?
+văn phạm ngữ nghĩa xuất hiện trong chương nào?
+văn phạm ngữ nghĩa được giảng dạy ở chương nào?
+văn phạm ngữ nghĩa nằm trong nội dung chương nào?
+văn phạm ngữ nghĩa thuộc nội dung của chương nào?
+văn phạm ngữ nghĩa được giới thiệu ở chương nào?
+biểu diễn tri thức được học ở chương nào?
+biểu diễn tri thức được trình bày ở chương nào?
+biểu diễn tri thức nằm ở chương nào?
+biểu diễn tri thức thuộc chương nào?
+biểu diễn tri thức được dạy trong chương nào?
+biểu diễn tri thức xuất hiện trong chương nào?
+biểu diễn tri thức được giảng dạy ở chương nào?
+biểu diễn tri thức nằm trong nội dung chương nào?
+biểu diễn tri thức thuộc nội dung của chương nào?
+biểu diễn tri thức được giới thiệu ở chương nào?
+hỏi đáp được học ở chương nào?
+hỏi đáp được trình bày ở chương nào?
+hỏi đáp nằm ở chương nào?
+hỏi đáp thuộc chương nào?
+hỏi đáp được dạy trong chương nào?
+hỏi đáp xuất hiện trong chương nào?
+hỏi đáp được giảng dạy ở chương nào?
+hỏi đáp nằm trong nội dung chương nào?
+hỏi đáp thuộc nội dung của chương nào?
+hỏi đáp được giới thiệu ở chương nào?
+tham chiếu được học ở chương nào?
+tham chiếu được trình bày ở chương nào?
+tham chiếu nằm ở chương nào?
+tham chiếu thuộc chương nào?
+tham chiếu được dạy trong chương nào?
+tham chiếu xuất hiện trong chương nào?
+tham chiếu được giảng dạy ở chương nào?
+tham chiếu nằm trong nội dung chương nào?
+tham chiếu thuộc nội dung của chương nào?
+tham chiếu được giới thiệu ở chương nào?
+đồng tham chiếu được học ở chương nào?
+đồng tham chiếu được trình bày ở chương nào?
+đồng tham chiếu nằm ở chương nào?
+đồng tham chiếu thuộc chương nào?
+đồng tham chiếu được dạy trong chương nào?
+đồng tham chiếu xuất hiện trong chương nào?
+đồng tham chiếu được giảng dạy ở chương nào?
+đồng tham chiếu nằm trong nội dung chương nào?
+đồng tham chiếu thuộc nội dung của chương nào?
+đồng tham chiếu được giới thiệu ở chương nào?
+cụm danh từ được học ở chương nào?
+cụm danh từ được trình bày ở chương nào?
+cụm danh từ nằm ở chương nào?
+cụm danh từ thuộc chương nào?
+cụm danh từ được dạy trong chương nào?
+cụm danh từ xuất hiện trong chương nào?
+cụm danh từ được giảng dạy ở chương nào?
+cụm danh từ nằm trong nội dung chương nào?
+cụm danh từ thuộc nội dung của chương nào?
+cụm danh từ được giới thiệu ở chương nào?
+cụm động từ được học ở chương nào?
+cụm động từ được trình bày ở chương nào?
+cụm động từ nằm ở chương nào?
+cụm động từ thuộc chương nào?
+cụm động từ được dạy trong chương nào?
+cụm động từ xuất hiện trong chương nào?
+cụm động từ được giảng dạy ở chương nào?
+cụm động từ nằm trong nội dung chương nào?
+cụm động từ thuộc nội dung của chương nào?
+cụm động từ được giới thiệu ở chương nào?
+cụm tính từ được học ở chương nào?
+cụm tính từ được trình bày ở chương nào?
+cụm tính từ nằm ở chương nào?
+cụm tính từ thuộc chương nào?
+cụm tính từ được dạy trong chương nào?
+cụm tính từ xuất hiện trong chương nào?
+cụm tính từ được giảng dạy ở chương nào?
+cụm tính từ nằm trong nội dung chương nào?
+cụm tính từ thuộc nội dung của chương nào?
+cụm tính từ được giới thiệu ở chương nào?
+cụm trạng từ được học ở chương nào?
+cụm trạng từ được trình bày ở chương nào?
+cụm trạng từ nằm ở chương nào?
+cụm trạng từ thuộc chương nào?
+cụm trạng từ được dạy trong chương nào?
+cụm trạng từ xuất hiện trong chương nào?
+cụm trạng từ được giảng dạy ở chương nào?
+cụm trạng từ nằm trong nội dung chương nào?
+cụm trạng từ thuộc nội dung của chương nào?
+cụm trạng từ được giới thiệu ở chương nào?
+bài tập lớn yêu cầu làm gì?
+bài tập lớn gồm những phần nào?
+bài tập lớn có phần hỏi đáp không?
+bài tập lớn cần xây dựng những gì?
+bài tập lớn yêu cầu xây dựng những thành phần nào?
+bài tập lớn bao gồm các phần nào?
+bài tập lớn có những yêu cầu gì?
+bài tập lớn cần nộp những sản phẩm nào?
+BTL yêu cầu làm gì?
+BTL gồm những phần nào?
+BTL có phần hỏi đáp không?
+BTL cần xây dựng những gì?
+BTL yêu cầu xây dựng những thành phần nào?
+BTL bao gồm các phần nào?
+BTL có những yêu cầu gì?
+BTL cần nộp những sản phẩm nào?
+Phần I của bài tập lớn là gì?
+Phần I cần làm gì?
+Phần I cần xuất file gì?
+Phần I yêu cầu những đầu ra nào?
+Phần I cần nộp những file nào?
+Phần I bao gồm những nhiệm vụ gì?
+Phần II của bài tập lớn là gì?
+Phần II cần làm gì?
+Phần II cần xuất file gì?
+Phần II yêu cầu những đầu ra nào?
+Phần II cần nộp những file nào?
+Phần II bao gồm những nhiệm vụ gì?
+Phần III của bài tập lớn là gì?
+Phần III cần làm gì?
+Phần III cần xuất file gì?
+Phần III yêu cầu những đầu ra nào?
+Phần III cần nộp những file nào?
+Phần III bao gồm những nhiệm vụ gì?
+Phần IV của bài tập lớn là gì?
+Phần IV cần làm gì?
+Phần IV cần xuất file gì?
+Phần IV yêu cầu những đầu ra nào?
+Phần IV cần nộp những file nào?
+Phần IV bao gồm những nhiệm vụ gì?
+deadline bài tập lớn là khi nào?
+deadline bài tập lớn khi nào?
+deadline bài tập lớn là ngày nào?
+deadline bài tập lớn được ghi ở đâu?
+deadline bài tập lớn được quy định như thế nào?
+hạn nộp bài tập lớn là khi nào?
+hạn nộp bài tập lớn khi nào?
+hạn nộp bài tập lớn là ngày nào?
+hạn nộp bài tập lớn được ghi ở đâu?
+hạn nộp bài tập lớn được quy định như thế nào?
+thời hạn nộp bài là khi nào?
+thời hạn nộp bài khi nào?
+thời hạn nộp bài là ngày nào?
+thời hạn nộp bài được ghi ở đâu?
+thời hạn nộp bài được quy định như thế nào?
+tài liệu tham khảo gồm những gì?
+tài liệu tham khảo là gì?
+tài liệu tham khảo nên đọc những tài liệu nào?
+tài liệu tham khảo được sử dụng trong môn học là gì?
+giáo trình gồm những gì?
+giáo trình là gì?
+giáo trình nên đọc những tài liệu nào?
+giáo trình được sử dụng trong môn học là gì?
+tài liệu Python NLP gồm những gì?
+tài liệu Python NLP là gì?
+tài liệu Python NLP nên đọc những tài liệu nào?
+tài liệu Python NLP được sử dụng trong môn học là gì?
+nguồn học tập gồm những gì?
+nguồn học tập là gì?
+nguồn học tập nên đọc những tài liệu nào?
+nguồn học tập được sử dụng trong môn học là gì?
+sách tham khảo gồm những gì?
+sách tham khảo là gì?
+sách tham khảo nên đọc những tài liệu nào?
+sách tham khảo được sử dụng trong môn học là gì?
+tài liệu môn học gồm những gì?
+tài liệu môn học là gì?
+tài liệu môn học nên đọc những tài liệu nào?
+tài liệu môn học được sử dụng trong môn học là gì?
+quy định về sử dụng AI là gì?
+quy định về sử dụng AI như thế nào?
+quy định về sử dụng AI được quy định ra sao?
+quy định về sử dụng AI cần tuân thủ những gì?
+quy định về LLM/RAG là gì?
+quy định về LLM/RAG như thế nào?
+quy định về LLM/RAG được quy định ra sao?
+quy định về LLM/RAG cần tuân thủ những gì?
+quy định của môn học là gì?
+quy định của môn học như thế nào?
+quy định của môn học được quy định ra sao?
+quy định của môn học cần tuân thủ những gì?
+L.O.2.5 là gì?
+L.O.2.5 liên quan đến nội dung nào?
+L.O.2.5 mô tả năng lực gì?
+L.O.2.5 đề cập đến kiến thức nào?
+L.O.2.5 yêu cầu sinh viên có khả năng gì?
+L.O.3.3 là gì?
+L.O.3.3 liên quan đến nội dung nào?
+L.O.3.3 mô tả năng lực gì?
+L.O.3.3 đề cập đến kiến thức nào?
+L.O.3.3 yêu cầu sinh viên có khả năng gì?
+L.O.4.2 là gì?
+L.O.4.2 liên quan đến nội dung nào?
+L.O.4.2 mô tả năng lực gì?
+L.O.4.2 đề cập đến kiến thức nào?
+L.O.4.2 yêu cầu sinh viên có khả năng gì?
+tuần 1 học gì?
+tuần 1 học nội dung gì?
+tuần 1 có những chủ đề nào?
+tuần 1 có nội dung học gì?
+tuần 1 môn học dạy nội dung nào?
+tuần 1 bao gồm những chủ đề nào?
+tuần 1 chủ đề chính là gì?
+tuần 1 được bố trí nội dung gì?
+tuần 1 lớp sẽ học những gì?
+tuần 1 nội dung chính là gì?
+tuần 1 những kiến thức nào được giảng?
+tuần 1 lớp học về chủ đề nào?
+tuần 1 sinh viên học phần nào?
+tuần 1 các chủ đề nào được giới thiệu?
+tuần 1 buổi học sẽ đề cập đến những gì?
+tuần 1 tập trung vào nội dung nào?
+tuần 2 học gì?
+tuần 2 học nội dung gì?
+tuần 2 có những chủ đề nào?
+tuần 2 có nội dung học gì?
+tuần 2 môn học dạy nội dung nào?
+tuần 2 bao gồm những chủ đề nào?
+tuần 2 chủ đề chính là gì?
+tuần 2 được bố trí nội dung gì?
+tuần 2 lớp sẽ học những gì?
+tuần 2 nội dung chính là gì?
+tuần 2 những kiến thức nào được giảng?
+tuần 2 lớp học về chủ đề nào?
+tuần 2 sinh viên học phần nào?
+tuần 2 các chủ đề nào được giới thiệu?
+tuần 2 buổi học sẽ đề cập đến những gì?
+tuần 2 tập trung vào nội dung nào?
+tuần 3 học gì?
+tuần 3 học nội dung gì?
+tuần 3 có những chủ đề nào?
+tuần 3 có nội dung học gì?
+tuần 3 môn học dạy nội dung nào?
+tuần 3 bao gồm những chủ đề nào?
+tuần 3 chủ đề chính là gì?
+tuần 3 được bố trí nội dung gì?
+tuần 3 lớp sẽ học những gì?
+tuần 3 nội dung chính là gì?
+tuần 3 những kiến thức nào được giảng?
+tuần 3 lớp học về chủ đề nào?
+tuần 3 sinh viên học phần nào?
+tuần 3 các chủ đề nào được giới thiệu?
+tuần 3 buổi học sẽ đề cập đến những gì?
+tuần 3 tập trung vào nội dung nào?
+tuần 4 học gì?
+tuần 4 học nội dung gì?
+tuần 4 có những chủ đề nào?
+tuần 4 có nội dung học gì?
+tuần 4 môn học dạy nội dung nào?
+tuần 4 bao gồm những chủ đề nào?
+tuần 4 chủ đề chính là gì?
+tuần 4 được bố trí nội dung gì?
+tuần 4 lớp sẽ học những gì?
+tuần 4 nội dung chính là gì?
+tuần 4 những kiến thức nào được giảng?
+tuần 4 lớp học về chủ đề nào?
+tuần 4 sinh viên học phần nào?
+tuần 4 các chủ đề nào được giới thiệu?
+tuần 4 buổi học sẽ đề cập đến những gì?
+tuần 4 tập trung vào nội dung nào?
+tuần 5 học gì?
+tuần 5 học nội dung gì?
+tuần 5 có những chủ đề nào?
+tuần 5 có nội dung học gì?
+tuần 5 môn học dạy nội dung nào?
+tuần 5 bao gồm những chủ đề nào?
+tuần 5 chủ đề chính là gì?
+tuần 5 được bố trí nội dung gì?
+tuần 5 lớp sẽ học những gì?
+tuần 5 nội dung chính là gì?
+tuần 5 những kiến thức nào được giảng?
+tuần 5 lớp học về chủ đề nào?
+tuần 5 sinh viên học phần nào?
+tuần 5 các chủ đề nào được giới thiệu?
+tuần 5 buổi học sẽ đề cập đến những gì?
+tuần 5 tập trung vào nội dung nào?
+tuần 6 học gì?
+tuần 6 học nội dung gì?
+tuần 6 có những chủ đề nào?
+tuần 6 có nội dung học gì?
+tuần 6 môn học dạy nội dung nào?
+tuần 6 bao gồm những chủ đề nào?
+tuần 6 chủ đề chính là gì?
+tuần 6 được bố trí nội dung gì?
+tuần 6 lớp sẽ học những gì?
+tuần 6 nội dung chính là gì?
+tuần 6 những kiến thức nào được giảng?
+tuần 6 lớp học về chủ đề nào?
+tuần 6 sinh viên học phần nào?
+tuần 6 các chủ đề nào được giới thiệu?
+tuần 6 buổi học sẽ đề cập đến những gì?
+tuần 6 tập trung vào nội dung nào?
+tuần 7 học gì?
+tuần 7 học nội dung gì?
+tuần 7 có những chủ đề nào?
+tuần 7 có nội dung học gì?
+tuần 7 môn học dạy nội dung nào?
+tuần 7 bao gồm những chủ đề nào?
+tuần 7 chủ đề chính là gì?
+tuần 7 được bố trí nội dung gì?
+tuần 7 lớp sẽ học những gì?
+tuần 7 nội dung chính là gì?
+tuần 7 những kiến thức nào được giảng?
+tuần 7 lớp học về chủ đề nào?
+tuần 7 sinh viên học phần nào?
+tuần 7 các chủ đề nào được giới thiệu?
+tuần 7 buổi học sẽ đề cập đến những gì?
+tuần 7 tập trung vào nội dung nào?
+tuần 8 học gì?
+tuần 8 học nội dung gì?
+tuần 8 có những chủ đề nào?
+tuần 8 có nội dung học gì?
+tuần 8 môn học dạy nội dung nào?
+tuần 8 bao gồm những chủ đề nào?
+tuần 8 chủ đề chính là gì?
+tuần 8 được bố trí nội dung gì?
+tuần 8 lớp sẽ học những gì?
+tuần 8 nội dung chính là gì?
+tuần 8 những kiến thức nào được giảng?
+tuần 8 lớp học về chủ đề nào?
+tuần 8 sinh viên học phần nào?
+tuần 8 các chủ đề nào được giới thiệu?
+tuần 8 buổi học sẽ đề cập đến những gì?
+tuần 8 tập trung vào nội dung nào?
+tuần 9 học gì?
+tuần 9 học nội dung gì?
+tuần 9 có những chủ đề nào?
+tuần 9 có nội dung học gì?
+tuần 9 môn học dạy nội dung nào?
+tuần 9 bao gồm những chủ đề nào?
+tuần 9 chủ đề chính là gì?
+tuần 9 được bố trí nội dung gì?
+tuần 9 lớp sẽ học những gì?
+tuần 9 nội dung chính là gì?
+tuần 9 những kiến thức nào được giảng?
+tuần 9 lớp học về chủ đề nào?
+tuần 9 sinh viên học phần nào?
+tuần 9 các chủ đề nào được giới thiệu?
+tuần 9 buổi học sẽ đề cập đến những gì?
+tuần 9 tập trung vào nội dung nào?
+tuần 10 học gì?
+tuần 10 học nội dung gì?
+tuần 10 có những chủ đề nào?
+tuần 10 có nội dung học gì?
+tuần 10 môn học dạy nội dung nào?
+tuần 10 bao gồm những chủ đề nào?
+tuần 10 chủ đề chính là gì?
+tuần 10 được bố trí nội dung gì?
+tuần 10 lớp sẽ học những gì?
+tuần 10 nội dung chính là gì?
+tuần 10 những kiến thức nào được giảng?
+tuần 10 lớp học về chủ đề nào?
+tuần 10 sinh viên học phần nào?
+tuần 10 các chủ đề nào được giới thiệu?
+tuần 10 buổi học sẽ đề cập đến những gì?
+tuần 10 tập trung vào nội dung nào?
+tuần 11 học gì?
+tuần 11 học nội dung gì?
+tuần 11 có những chủ đề nào?
+tuần 11 có nội dung học gì?
+tuần 11 môn học dạy nội dung nào?
+tuần 11 bao gồm những chủ đề nào?
+tuần 11 chủ đề chính là gì?
+tuần 11 được bố trí nội dung gì?
+tuần 11 lớp sẽ học những gì?
+tuần 11 nội dung chính là gì?
+tuần 11 những kiến thức nào được giảng?
+tuần 11 lớp học về chủ đề nào?
+tuần 11 sinh viên học phần nào?
+tuần 11 các chủ đề nào được giới thiệu?
+tuần 11 buổi học sẽ đề cập đến những gì?
+tuần 11 tập trung vào nội dung nào?
+tuần 12 học gì?
+tuần 12 học nội dung gì?
+tuần 12 có những chủ đề nào?
+tuần 12 có nội dung học gì?
+tuần 12 môn học dạy nội dung nào?
+tuần 12 bao gồm những chủ đề nào?
+tuần 12 chủ đề chính là gì?
+tuần 12 được bố trí nội dung gì?
+tuần 12 lớp sẽ học những gì?
+tuần 12 nội dung chính là gì?
+tuần 12 những kiến thức nào được giảng?
+tuần 12 lớp học về chủ đề nào?
+tuần 12 sinh viên học phần nào?
+tuần 12 các chủ đề nào được giới thiệu?
+tuần 12 buổi học sẽ đề cập đến những gì?
+tuần 12 tập trung vào nội dung nào?
+tuần 13 học gì?
+tuần 13 học nội dung gì?
+tuần 13 có những chủ đề nào?
+tuần 13 có nội dung học gì?
+tuần 13 môn học dạy nội dung nào?
+tuần 13 bao gồm những chủ đề nào?
+tuần 13 chủ đề chính là gì?
+tuần 13 được bố trí nội dung gì?
+tuần 13 lớp sẽ học những gì?
+tuần 13 nội dung chính là gì?
+tuần 13 những kiến thức nào được giảng?
+tuần 13 lớp học về chủ đề nào?
+tuần 13 sinh viên học phần nào?
+tuần 13 các chủ đề nào được giới thiệu?
+tuần 13 buổi học sẽ đề cập đến những gì?
+tuần 13 tập trung vào nội dung nào?
+tuần 14 học gì?
+tuần 14 học nội dung gì?
+tuần 14 có những chủ đề nào?
+tuần 14 có nội dung học gì?
+tuần 14 môn học dạy nội dung nào?
+tuần 14 bao gồm những chủ đề nào?
+tuần 14 chủ đề chính là gì?
+tuần 14 được bố trí nội dung gì?
+tuần 14 lớp sẽ học những gì?
+tuần 14 nội dung chính là gì?
+tuần 14 những kiến thức nào được giảng?
+tuần 14 lớp học về chủ đề nào?
+tuần 14 sinh viên học phần nào?
+tuần 14 các chủ đề nào được giới thiệu?
+tuần 14 buổi học sẽ đề cập đến những gì?
+tuần 14 tập trung vào nội dung nào?
+tuần 15 học gì?
+tuần 15 học nội dung gì?
+tuần 15 có những chủ đề nào?
+tuần 15 có nội dung học gì?
+tuần 15 môn học dạy nội dung nào?
+tuần 15 bao gồm những chủ đề nào?
+tuần 15 chủ đề chính là gì?
+tuần 15 được bố trí nội dung gì?
+tuần 15 lớp sẽ học những gì?
+tuần 15 nội dung chính là gì?
+tuần 15 những kiến thức nào được giảng?
+tuần 15 lớp học về chủ đề nào?
+tuần 15 sinh viên học phần nào?
+tuần 15 các chủ đề nào được giới thiệu?
+tuần 15 buổi học sẽ đề cập đến những gì?
+tuần 15 tập trung vào nội dung nào?
+tuần thứ 1 học gì?
+tuần thứ 1 học nội dung gì?
+tuần thứ 1 có những chủ đề nào?
+tuần thứ 1 có nội dung học gì?
+tuần thứ 1 môn học dạy nội dung nào?
+tuần thứ 1 bao gồm những chủ đề nào?
+tuần thứ 1 chủ đề chính là gì?
+tuần thứ 1 được bố trí nội dung gì?
+tuần thứ 1 lớp sẽ học những gì?
+tuần thứ 1 nội dung chính là gì?
+tuần thứ 1 những kiến thức nào được giảng?
+tuần thứ 1 lớp học về chủ đề nào?
+tuần thứ 1 sinh viên học phần nào?
+tuần thứ 1 các chủ đề nào được giới thiệu?
+tuần thứ 1 buổi học sẽ đề cập đến những gì?
+tuần thứ 1 tập trung vào nội dung nào?
+tuần thứ 2 học gì?
+tuần thứ 2 học nội dung gì?
+tuần thứ 2 có những chủ đề nào?
+tuần thứ 2 có nội dung học gì?
+tuần thứ 2 môn học dạy nội dung nào?
+tuần thứ 2 bao gồm những chủ đề nào?
+tuần thứ 2 chủ đề chính là gì?
+tuần thứ 2 được bố trí nội dung gì?
+tuần thứ 2 lớp sẽ học những gì?
+tuần thứ 2 nội dung chính là gì?
+tuần thứ 2 những kiến thức nào được giảng?
+tuần thứ 2 lớp học về chủ đề nào?
+tuần thứ 2 sinh viên học phần nào?
+tuần thứ 2 các chủ đề nào được giới thiệu?
+tuần thứ 2 buổi học sẽ đề cập đến những gì?
+tuần thứ 2 tập trung vào nội dung nào?
+tuần thứ 3 học gì?
+tuần thứ 3 học nội dung gì?
+tuần thứ 3 có những chủ đề nào?
+tuần thứ 3 có nội dung học gì?
+tuần thứ 3 môn học dạy nội dung nào?
+tuần thứ 3 bao gồm những chủ đề nào?
+tuần thứ 3 chủ đề chính là gì?
+tuần thứ 3 được bố trí nội dung gì?
+tuần thứ 3 lớp sẽ học những gì?
+tuần thứ 3 nội dung chính là gì?
+tuần thứ 3 những kiến thức nào được giảng?
+tuần thứ 3 lớp học về chủ đề nào?
+tuần thứ 3 sinh viên học phần nào?
+tuần thứ 3 các chủ đề nào được giới thiệu?
+tuần thứ 3 buổi học sẽ đề cập đến những gì?
+tuần thứ 3 tập trung vào nội dung nào?
+tuần thứ 4 học gì?
+tuần thứ 4 học nội dung gì?
+tuần thứ 4 có những chủ đề nào?
+tuần thứ 4 có nội dung học gì?
+tuần thứ 4 môn học dạy nội dung nào?
+tuần thứ 4 bao gồm những chủ đề nào?
+tuần thứ 4 chủ đề chính là gì?
+tuần thứ 4 được bố trí nội dung gì?
+tuần thứ 4 lớp sẽ học những gì?
+tuần thứ 4 nội dung chính là gì?
+tuần thứ 4 những kiến thức nào được giảng?
+tuần thứ 4 lớp học về chủ đề nào?
+tuần thứ 4 sinh viên học phần nào?
+tuần thứ 4 các chủ đề nào được giới thiệu?
+tuần thứ 4 buổi học sẽ đề cập đến những gì?
+tuần thứ 4 tập trung vào nội dung nào?
+tuần thứ 5 học gì?
+tuần thứ 5 học nội dung gì?
+tuần thứ 5 có những chủ đề nào?
+tuần thứ 5 có nội dung học gì?
+tuần thứ 5 môn học dạy nội dung nào?
+tuần thứ 5 bao gồm những chủ đề nào?
+tuần thứ 5 chủ đề chính là gì?
+tuần thứ 5 được bố trí nội dung gì?
+tuần thứ 5 lớp sẽ học những gì?
+tuần thứ 5 nội dung chính là gì?
+tuần thứ 5 những kiến thức nào được giảng?
+tuần thứ 5 lớp học về chủ đề nào?
+tuần thứ 5 sinh viên học phần nào?
+tuần thứ 5 các chủ đề nào được giới thiệu?
+tuần thứ 5 buổi học sẽ đề cập đến những gì?
+tuần thứ 5 tập trung vào nội dung nào?
+tuần thứ 6 học gì?
+tuần thứ 6 học nội dung gì?
+tuần thứ 6 có những chủ đề nào?
+tuần thứ 6 có nội dung học gì?
+tuần thứ 6 môn học dạy nội dung nào?
+tuần thứ 6 bao gồm những chủ đề nào?
+tuần thứ 6 chủ đề chính là gì?
+tuần thứ 6 được bố trí nội dung gì?
+tuần thứ 6 lớp sẽ học những gì?
+tuần thứ 6 nội dung chính là gì?
+tuần thứ 6 những kiến thức nào được giảng?
+tuần thứ 6 lớp học về chủ đề nào?
+tuần thứ 6 sinh viên học phần nào?
+tuần thứ 6 các chủ đề nào được giới thiệu?
+tuần thứ 6 buổi học sẽ đề cập đến những gì?
+tuần thứ 6 tập trung vào nội dung nào?
+tuần thứ 7 học gì?
+tuần thứ 7 học nội dung gì?
+tuần thứ 7 có những chủ đề nào?
+tuần thứ 7 có nội dung học gì?
+tuần thứ 7 môn học dạy nội dung nào?
+tuần thứ 7 bao gồm những chủ đề nào?
+tuần thứ 7 chủ đề chính là gì?
+tuần thứ 7 được bố trí nội dung gì?
+tuần thứ 7 lớp sẽ học những gì?
+tuần thứ 7 nội dung chính là gì?
+tuần thứ 7 những kiến thức nào được giảng?
+tuần thứ 7 lớp học về chủ đề nào?
+tuần thứ 7 sinh viên học phần nào?
+tuần thứ 7 các chủ đề nào được giới thiệu?
+tuần thứ 7 buổi học sẽ đề cập đến những gì?
+tuần thứ 7 tập trung vào nội dung nào?
+tuần thứ 8 học gì?
+tuần thứ 8 học nội dung gì?
+tuần thứ 8 có những chủ đề nào?
+tuần thứ 8 có nội dung học gì?
+tuần thứ 8 môn học dạy nội dung nào?
+tuần thứ 8 bao gồm những chủ đề nào?
+tuần thứ 8 chủ đề chính là gì?
+tuần thứ 8 được bố trí nội dung gì?
+tuần thứ 8 lớp sẽ học những gì?
+tuần thứ 8 nội dung chính là gì?
+tuần thứ 8 những kiến thức nào được giảng?
+tuần thứ 8 lớp học về chủ đề nào?
+tuần thứ 8 sinh viên học phần nào?
+tuần thứ 8 các chủ đề nào được giới thiệu?
+tuần thứ 8 buổi học sẽ đề cập đến những gì?
+tuần thứ 8 tập trung vào nội dung nào?
+tuần thứ 9 học gì?
+tuần thứ 9 học nội dung gì?
+tuần thứ 9 có những chủ đề nào?
+tuần thứ 9 có nội dung học gì?
+tuần thứ 9 môn học dạy nội dung nào?
+tuần thứ 9 bao gồm những chủ đề nào?
+tuần thứ 9 chủ đề chính là gì?
+tuần thứ 9 được bố trí nội dung gì?
+tuần thứ 9 lớp sẽ học những gì?
+tuần thứ 9 nội dung chính là gì?
+tuần thứ 9 những kiến thức nào được giảng?
+tuần thứ 9 lớp học về chủ đề nào?
+tuần thứ 9 sinh viên học phần nào?
+tuần thứ 9 các chủ đề nào được giới thiệu?
+tuần thứ 9 buổi học sẽ đề cập đến những gì?
+tuần thứ 9 tập trung vào nội dung nào?
+tuần thứ 10 học gì?
+tuần thứ 10 học nội dung gì?
+tuần thứ 10 có những chủ đề nào?
+tuần thứ 10 có nội dung học gì?
+tuần thứ 10 môn học dạy nội dung nào?
+tuần thứ 10 bao gồm những chủ đề nào?
+tuần thứ 10 chủ đề chính là gì?
+tuần thứ 10 được bố trí nội dung gì?
+tuần thứ 10 lớp sẽ học những gì?
+tuần thứ 10 nội dung chính là gì?
+tuần thứ 10 những kiến thức nào được giảng?
+tuần thứ 10 lớp học về chủ đề nào?
+tuần thứ 10 sinh viên học phần nào?
+tuần thứ 10 các chủ đề nào được giới thiệu?
+tuần thứ 10 buổi học sẽ đề cập đến những gì?
+tuần thứ 10 tập trung vào nội dung nào?
+tuần thứ 11 học gì?
+tuần thứ 11 học nội dung gì?
+tuần thứ 11 có những chủ đề nào?
+tuần thứ 11 có nội dung học gì?
+tuần thứ 11 môn học dạy nội dung nào?
+tuần thứ 11 bao gồm những chủ đề nào?
+tuần thứ 11 chủ đề chính là gì?
+tuần thứ 11 được bố trí nội dung gì?
+tuần thứ 11 lớp sẽ học những gì?
+tuần thứ 11 nội dung chính là gì?
+tuần thứ 11 những kiến thức nào được giảng?
+tuần thứ 11 lớp học về chủ đề nào?
+tuần thứ 11 sinh viên học phần nào?
+tuần thứ 11 các chủ đề nào được giới thiệu?
+tuần thứ 11 buổi học sẽ đề cập đến những gì?
+tuần thứ 11 tập trung vào nội dung nào?
+tuần thứ 12 học gì?
+tuần thứ 12 học nội dung gì?
+tuần thứ 12 có những chủ đề nào?
+tuần thứ 12 có nội dung học gì?
+tuần thứ 12 môn học dạy nội dung nào?
+tuần thứ 12 bao gồm những chủ đề nào?
+tuần thứ 12 chủ đề chính là gì?
+tuần thứ 12 được bố trí nội dung gì?
+tuần thứ 12 lớp sẽ học những gì?
+tuần thứ 12 nội dung chính là gì?
+tuần thứ 12 những kiến thức nào được giảng?
+tuần thứ 12 lớp học về chủ đề nào?
+tuần thứ 12 sinh viên học phần nào?
+tuần thứ 12 các chủ đề nào được giới thiệu?
+tuần thứ 12 buổi học sẽ đề cập đến những gì?
+tuần thứ 12 tập trung vào nội dung nào?
+tuần thứ 13 học gì?
+tuần thứ 13 học nội dung gì?
+tuần thứ 13 có những chủ đề nào?
+tuần thứ 13 có nội dung học gì?
+tuần thứ 13 môn học dạy nội dung nào?
+tuần thứ 13 bao gồm những chủ đề nào?
+tuần thứ 13 chủ đề chính là gì?
+tuần thứ 13 được bố trí nội dung gì?
+tuần thứ 13 lớp sẽ học những gì?
+tuần thứ 13 nội dung chính là gì?
+tuần thứ 13 những kiến thức nào được giảng?
+tuần thứ 13 lớp học về chủ đề nào?
+tuần thứ 13 sinh viên học phần nào?
+tuần thứ 13 các chủ đề nào được giới thiệu?
+tuần thứ 13 buổi học sẽ đề cập đến những gì?
+tuần thứ 13 tập trung vào nội dung nào?
+tuần thứ 14 học gì?
+tuần thứ 14 học nội dung gì?
+tuần thứ 14 có những chủ đề nào?
+tuần thứ 14 có nội dung học gì?
+tuần thứ 14 môn học dạy nội dung nào?
+tuần thứ 14 bao gồm những chủ đề nào?
+tuần thứ 14 chủ đề chính là gì?
+tuần thứ 14 được bố trí nội dung gì?
+tuần thứ 14 lớp sẽ học những gì?
+tuần thứ 14 nội dung chính là gì?
+tuần thứ 14 những kiến thức nào được giảng?
+tuần thứ 14 lớp học về chủ đề nào?
+tuần thứ 14 sinh viên học phần nào?
+tuần thứ 14 các chủ đề nào được giới thiệu?
+tuần thứ 14 buổi học sẽ đề cập đến những gì?
+tuần thứ 14 tập trung vào nội dung nào?
+tuần thứ 15 học gì?
+tuần thứ 15 học nội dung gì?
+tuần thứ 15 có những chủ đề nào?
+tuần thứ 15 có nội dung học gì?
+tuần thứ 15 môn học dạy nội dung nào?
+tuần thứ 15 bao gồm những chủ đề nào?
+tuần thứ 15 chủ đề chính là gì?
+tuần thứ 15 được bố trí nội dung gì?
+tuần thứ 15 lớp sẽ học những gì?
+tuần thứ 15 nội dung chính là gì?
+tuần thứ 15 những kiến thức nào được giảng?
+tuần thứ 15 lớp học về chủ đề nào?
+tuần thứ 15 sinh viên học phần nào?
+tuần thứ 15 các chủ đề nào được giới thiệu?
+tuần thứ 15 buổi học sẽ đề cập đến những gì?
+tuần thứ 15 tập trung vào nội dung nào?
+chương 1 học vào tuần nào?
+chương 1 được học vào tuần nào?
+chương 1 được dạy vào tuần nào?
+chương 1 nằm trong tuần nào?
+chương 1 được xếp vào tuần học nào?
+chương 1 xuất hiện trong tuần nào?
+chương 1 được giảng dạy vào tuần nào?
+chương 1 nằm trong kế hoạch của tuần nào?
+chương 1 được xếp lịch ở tuần mấy?
+chương 1 thuộc tuần học thứ mấy?
+chương 2 học vào tuần nào?
+chương 2 được học vào tuần nào?
+chương 2 được dạy vào tuần nào?
+chương 2 nằm trong tuần nào?
+chương 2 được xếp vào tuần học nào?
+chương 2 xuất hiện trong tuần nào?
+chương 2 được giảng dạy vào tuần nào?
+chương 2 nằm trong kế hoạch của tuần nào?
+chương 2 được xếp lịch ở tuần mấy?
+chương 2 thuộc tuần học thứ mấy?
+chương 3 học vào tuần nào?
+chương 3 được học vào tuần nào?
+chương 3 được dạy vào tuần nào?
+chương 3 nằm trong tuần nào?
+chương 3 được xếp vào tuần học nào?
+chương 3 xuất hiện trong tuần nào?
+chương 3 được giảng dạy vào tuần nào?
+chương 3 nằm trong kế hoạch của tuần nào?
+chương 3 được xếp lịch ở tuần mấy?
+chương 3 thuộc tuần học thứ mấy?
+chương 4 học vào tuần nào?
+chương 4 được học vào tuần nào?
+chương 4 được dạy vào tuần nào?
+chương 4 nằm trong tuần nào?
+chương 4 được xếp vào tuần học nào?
+chương 4 xuất hiện trong tuần nào?
+chương 4 được giảng dạy vào tuần nào?
+chương 4 nằm trong kế hoạch của tuần nào?
+chương 4 được xếp lịch ở tuần mấy?
+chương 4 thuộc tuần học thứ mấy?
+chương 5 học vào tuần nào?
+chương 5 được học vào tuần nào?
+chương 5 được dạy vào tuần nào?
+chương 5 nằm trong tuần nào?
+chương 5 được xếp vào tuần học nào?
+chương 5 xuất hiện trong tuần nào?
+chương 5 được giảng dạy vào tuần nào?
+chương 5 nằm trong kế hoạch của tuần nào?
+chương 5 được xếp lịch ở tuần mấy?
+chương 5 thuộc tuần học thứ mấy?
+chương 6 học vào tuần nào?
+chương 6 được học vào tuần nào?
+chương 6 được dạy vào tuần nào?
+chương 6 nằm trong tuần nào?
+chương 6 được xếp vào tuần học nào?
+chương 6 xuất hiện trong tuần nào?
+chương 6 được giảng dạy vào tuần nào?
+chương 6 nằm trong kế hoạch của tuần nào?
+chương 6 được xếp lịch ở tuần mấy?
+chương 6 thuộc tuần học thứ mấy?
+chương 7 học vào tuần nào?
+chương 7 được học vào tuần nào?
+chương 7 được dạy vào tuần nào?
+chương 7 nằm trong tuần nào?
+chương 7 được xếp vào tuần học nào?
+chương 7 xuất hiện trong tuần nào?
+chương 7 được giảng dạy vào tuần nào?
+chương 7 nằm trong kế hoạch của tuần nào?
+chương 7 được xếp lịch ở tuần mấy?
+chương 7 thuộc tuần học thứ mấy?
+chương 8 học vào tuần nào?
+chương 8 được học vào tuần nào?
+chương 8 được dạy vào tuần nào?
+chương 8 nằm trong tuần nào?
+chương 8 được xếp vào tuần học nào?
+chương 8 xuất hiện trong tuần nào?
+chương 8 được giảng dạy vào tuần nào?
+chương 8 nằm trong kế hoạch của tuần nào?
+chương 8 được xếp lịch ở tuần mấy?
+chương 8 thuộc tuần học thứ mấy?
+chương 9 học vào tuần nào?
+chương 9 được học vào tuần nào?
+chương 9 được dạy vào tuần nào?
+chương 9 nằm trong tuần nào?
+chương 9 được xếp vào tuần học nào?
+chương 9 xuất hiện trong tuần nào?
+chương 9 được giảng dạy vào tuần nào?
+chương 9 nằm trong kế hoạch của tuần nào?
+chương 9 được xếp lịch ở tuần mấy?
+chương 9 thuộc tuần học thứ mấy?
+chương 10 học vào tuần nào?
+chương 10 được học vào tuần nào?
+chương 10 được dạy vào tuần nào?
+chương 10 nằm trong tuần nào?
+chương 10 được xếp vào tuần học nào?
+chương 10 xuất hiện trong tuần nào?
+chương 10 được giảng dạy vào tuần nào?
+chương 10 nằm trong kế hoạch của tuần nào?
+chương 10 được xếp lịch ở tuần mấy?
+chương 10 thuộc tuần học thứ mấy?
+chương 11 học vào tuần nào?
+chương 11 được học vào tuần nào?
+chương 11 được dạy vào tuần nào?
+chương 11 nằm trong tuần nào?
+chương 11 được xếp vào tuần học nào?
+chương 11 xuất hiện trong tuần nào?
+chương 11 được giảng dạy vào tuần nào?
+chương 11 nằm trong kế hoạch của tuần nào?
+chương 11 được xếp lịch ở tuần mấy?
+chương 11 thuộc tuần học thứ mấy?
+chương 12 học vào tuần nào?
+chương 12 được học vào tuần nào?
+chương 12 được dạy vào tuần nào?
+chương 12 nằm trong tuần nào?
+chương 12 được xếp vào tuần học nào?
+chương 12 xuất hiện trong tuần nào?
+chương 12 được giảng dạy vào tuần nào?
+chương 12 nằm trong kế hoạch của tuần nào?
+chương 12 được xếp lịch ở tuần mấy?
+chương 12 thuộc tuần học thứ mấy?
+chương 1 nói về gì?
+chương 1 học những nội dung nào?
+chương 1 có những chủ đề gì?
+chương 1 trình bày nội dung gì?
+chương 1 bao gồm những kiến thức nào?
+chương 1 tập trung vào chủ đề nào?
+chương 1 đề cập đến những nội dung gì?
+chương 1 giới thiệu kiến thức gì?
+chương 1 tập trung vào vấn đề gì?
+chương 1 nội dung trọng tâm là gì?
+chương 1 đề cập đến vấn đề nào?
+chương 1 chủ đề nào được trình bày?
+chương 1 kiến thức nào được giới thiệu?
+chương 1 nội dung chương gồm những gì?
+chương 2 nói về gì?
+chương 2 học những nội dung nào?
+chương 2 có những chủ đề gì?
+chương 2 trình bày nội dung gì?
+chương 2 bao gồm những kiến thức nào?
+chương 2 tập trung vào chủ đề nào?
+chương 2 đề cập đến những nội dung gì?
+chương 2 giới thiệu kiến thức gì?
+chương 2 tập trung vào vấn đề gì?
+chương 2 nội dung trọng tâm là gì?
+chương 2 đề cập đến vấn đề nào?
+chương 2 chủ đề nào được trình bày?
+chương 2 kiến thức nào được giới thiệu?
+chương 2 nội dung chương gồm những gì?
+chương 3 nói về gì?
+chương 3 học những nội dung nào?
+chương 3 có những chủ đề gì?
+chương 3 trình bày nội dung gì?
+chương 3 bao gồm những kiến thức nào?
+chương 3 tập trung vào chủ đề nào?
+chương 3 đề cập đến những nội dung gì?
+chương 3 giới thiệu kiến thức gì?
+chương 3 tập trung vào vấn đề gì?
+chương 3 nội dung trọng tâm là gì?
+chương 3 đề cập đến vấn đề nào?
+chương 3 chủ đề nào được trình bày?
+chương 3 kiến thức nào được giới thiệu?
+chương 3 nội dung chương gồm những gì?
+chương 4 nói về gì?
+chương 4 học những nội dung nào?
+chương 4 có những chủ đề gì?
+chương 4 trình bày nội dung gì?
+chương 4 bao gồm những kiến thức nào?
+chương 4 tập trung vào chủ đề nào?
+chương 4 đề cập đến những nội dung gì?
+chương 4 giới thiệu kiến thức gì?
+chương 4 tập trung vào vấn đề gì?
+chương 4 nội dung trọng tâm là gì?
+chương 4 đề cập đến vấn đề nào?
+chương 4 chủ đề nào được trình bày?
+chương 4 kiến thức nào được giới thiệu?
+chương 4 nội dung chương gồm những gì?
+chương 5 nói về gì?
+chương 5 học những nội dung nào?
+chương 5 có những chủ đề gì?
+chương 5 trình bày nội dung gì?
+chương 5 bao gồm những kiến thức nào?
+chương 5 tập trung vào chủ đề nào?
+chương 5 đề cập đến những nội dung gì?
+chương 5 giới thiệu kiến thức gì?
+chương 5 tập trung vào vấn đề gì?
+chương 5 nội dung trọng tâm là gì?
+chương 5 đề cập đến vấn đề nào?
+chương 5 chủ đề nào được trình bày?
+chương 5 kiến thức nào được giới thiệu?
+chương 5 nội dung chương gồm những gì?
+chương 6 nói về gì?
+chương 6 học những nội dung nào?
+chương 6 có những chủ đề gì?
+chương 6 trình bày nội dung gì?
+chương 6 bao gồm những kiến thức nào?
+chương 6 tập trung vào chủ đề nào?
+chương 6 đề cập đến những nội dung gì?
+chương 6 giới thiệu kiến thức gì?
+chương 6 tập trung vào vấn đề gì?
+chương 6 nội dung trọng tâm là gì?
+chương 6 đề cập đến vấn đề nào?
+chương 6 chủ đề nào được trình bày?
+chương 6 kiến thức nào được giới thiệu?
+chương 6 nội dung chương gồm những gì?
+chương 7 nói về gì?
+chương 7 học những nội dung nào?
+chương 7 có những chủ đề gì?
+chương 7 trình bày nội dung gì?
+chương 7 bao gồm những kiến thức nào?
+chương 7 tập trung vào chủ đề nào?
+chương 7 đề cập đến những nội dung gì?
+chương 7 giới thiệu kiến thức gì?
+chương 7 tập trung vào vấn đề gì?
+chương 7 nội dung trọng tâm là gì?
+chương 7 đề cập đến vấn đề nào?
+chương 7 chủ đề nào được trình bày?
+chương 7 kiến thức nào được giới thiệu?
+chương 7 nội dung chương gồm những gì?
+chương 8 nói về gì?
+chương 8 học những nội dung nào?
+chương 8 có những chủ đề gì?
+chương 8 trình bày nội dung gì?
+chương 8 bao gồm những kiến thức nào?
+chương 8 tập trung vào chủ đề nào?
+chương 8 đề cập đến những nội dung gì?
+chương 8 giới thiệu kiến thức gì?
+chương 8 tập trung vào vấn đề gì?
+chương 8 nội dung trọng tâm là gì?
+chương 8 đề cập đến vấn đề nào?
+chương 8 chủ đề nào được trình bày?
+chương 8 kiến thức nào được giới thiệu?
+chương 8 nội dung chương gồm những gì?
+chương 9 nói về gì?
+chương 9 học những nội dung nào?
+chương 9 có những chủ đề gì?
+chương 9 trình bày nội dung gì?
+chương 9 bao gồm những kiến thức nào?
+chương 9 tập trung vào chủ đề nào?
+chương 9 đề cập đến những nội dung gì?
+chương 9 giới thiệu kiến thức gì?
+chương 9 tập trung vào vấn đề gì?
+chương 9 nội dung trọng tâm là gì?
+chương 9 đề cập đến vấn đề nào?
+chương 9 chủ đề nào được trình bày?
+chương 9 kiến thức nào được giới thiệu?
+chương 9 nội dung chương gồm những gì?
+chương 10 nói về gì?
+chương 10 học những nội dung nào?
+chương 10 có những chủ đề gì?
+chương 10 trình bày nội dung gì?
+chương 10 bao gồm những kiến thức nào?
+chương 10 tập trung vào chủ đề nào?
+chương 10 đề cập đến những nội dung gì?
+chương 10 giới thiệu kiến thức gì?
+chương 10 tập trung vào vấn đề gì?
+chương 10 nội dung trọng tâm là gì?
+chương 10 đề cập đến vấn đề nào?
+chương 10 chủ đề nào được trình bày?
+chương 10 kiến thức nào được giới thiệu?
+chương 10 nội dung chương gồm những gì?
+chương 11 nói về gì?
+chương 11 học những nội dung nào?
+chương 11 có những chủ đề gì?
+chương 11 trình bày nội dung gì?
+chương 11 bao gồm những kiến thức nào?
+chương 11 tập trung vào chủ đề nào?
+chương 11 đề cập đến những nội dung gì?
+chương 11 giới thiệu kiến thức gì?
+chương 11 tập trung vào vấn đề gì?
+chương 11 nội dung trọng tâm là gì?
+chương 11 đề cập đến vấn đề nào?
+chương 11 chủ đề nào được trình bày?
+chương 11 kiến thức nào được giới thiệu?
+chương 11 nội dung chương gồm những gì?
+chương 12 nói về gì?
+chương 12 học những nội dung nào?
+chương 12 có những chủ đề gì?
+chương 12 trình bày nội dung gì?
+chương 12 bao gồm những kiến thức nào?
+chương 12 tập trung vào chủ đề nào?
+chương 12 đề cập đến những nội dung gì?
+chương 12 giới thiệu kiến thức gì?
+chương 12 tập trung vào vấn đề gì?
+chương 12 nội dung trọng tâm là gì?
+chương 12 đề cập đến vấn đề nào?
+chương 12 chủ đề nào được trình bày?
+chương 12 kiến thức nào được giới thiệu?
+chương 12 nội dung chương gồm những gì?
+Có được dùng AI không?
+Có được dùng AI trong bài tập lớn không?
+Có được dùng LLM/RAG không?
+Có được dùng LLM/RAG trong bài tập lớn không?
+Có được dùng công cụ AI không?
+Có được dùng công cụ AI trong bài tập lớn không?
+Có được sử dụng AI không?
+Có được sử dụng AI trong bài tập lớn không?
+Có được sử dụng LLM/RAG không?
+Có được sử dụng LLM/RAG trong bài tập lớn không?
+Có được sử dụng công cụ AI không?
+Có được sử dụng công cụ AI trong bài tập lớn không?
+Sinh viên có thể dùng AI không?
+Sinh viên có thể dùng AI trong bài tập lớn không?
+Sinh viên có thể dùng LLM/RAG không?
+Sinh viên có thể dùng LLM/RAG trong bài tập lớn không?
+Sinh viên có thể dùng công cụ AI không?
+Sinh viên có thể dùng công cụ AI trong bài tập lớn không?

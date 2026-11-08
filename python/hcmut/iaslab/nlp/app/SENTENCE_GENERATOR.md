@@ -1,38 +1,25 @@
 # Sentence generator (Phần 3.2)
 
-Thiết kế tách biệt ba phần:
+`grammar_file.py` đọc production từ `output/grammar.txt`. `course_grammar.py` là adapter nhỏ để đưa production đó vào `SentenceGenerator`; grammar file là nguồn duy nhất cho các câu tiếng Việt. `sentence_generator.py` mở rộng production, bỏ câu trùng và giới hạn tối đa 10.000 câu.
 
-- `grammar_file.py`: đọc luật CFG từ `output/grammar.txt`.
-- `course_grammar.py`: adapter cho generator; tiếng Việt dùng trực tiếp CFG trên,
-  tiếng Anh dùng production rules trong module.
-- `course_lexicon.py`: `CourseLexicon` đọc các rule terminal của CFG thành
-  lexicon, bên cạnh danh sách terminal dựng sẵn cho tiếng Anh.
-- `sentence_generator.py`: thuật toán mở rộng non-terminal theo luật sinh,
-  khử câu trùng, giới hạn tối đa 10.000 câu và ghi UTF-8, mỗi dòng một câu.
+Chạy trực tiếp từ thư mục `sample-code-v1.0/python/`:
 
-Chạy sinh câu tiếng Việt:
-
-```python
-from hcmut.iaslab.nlp.app.course_grammar import CourseGrammar
-from hcmut.iaslab.nlp.app.sentence_generator import generate_to_file
-
-generate_to_file(CourseGrammar("vi"), "output/samples.txt")
+```bash
+python3 hcmut/iaslab/nlp/app/utils.py
 ```
 
-Để sinh tiếng Anh, đổi `"vi"` thành `"en"`. Nếu muốn cả hai ngôn ngữ trong
-cùng file, chạy generator cho từng grammar rồi nối danh sách và loại trùng.
+Mặc định ghi ra `hcmut/iaslab/nlp/app/output/samples.txt`, độc lập với thư mục hiện hành. Có thể truyền `--output` hoặc `--max-sentences`.
 
-Các luật quy định cấu trúc câu; lexicon cung cấp terminal để lấp các vị trí
-trong luật. `POS_BY_CATEGORY` ghi loại từ/cụm từ của từng nhóm terminal, ví dụ
-`TOPIC_NP` là cụm danh từ, `V_TOPIC` là cụm động từ và `PREPOSITION` là giới từ.
-Các nhóm terminal nhiều từ được giữ như một đơn vị để tránh ghép từ tùy ý.
+## Bộ mẫu có nhãn
 
-Nội dung hiện tại là khung ban đầu; cần bổ sung/đối chiếu terminal và
-production với `entities.txt`, `topics.txt`, dữ liệu lịch và grammar chính thức
-của nhóm. Grammar ở đây hiện là grammar Course Assistant minh họa; nếu module
-Phần I đã có production rules riêng, adapter của module đó nên thay
-`CourseGrammar` khi gọi `generate_to_file`.
+Để sinh câu, parse lại, gán intent/entity và đối chiếu chunk kỳ vọng:
 
-Có thể truyền đường dẫn grammar khác khi khởi tạo, ví dụ
-`CourseGrammar("vi", "data/grammar.txt")`. Các terminal trong file phải được
-đặt trong dấu ngoặc kép; nonterminal dùng dạng `<SYMBOL> ::= ...`.
+```bash
+PYTHONPATH=hcmut python3 -m iaslab.nlp.app.build_sample_dataset
+```
+
+Lệnh tạo `output/samples.txt` và `output/samples_labeled.jsonl`. Mỗi nhánh gốc `Q_*` trong grammar tương ứng với một intent. Các nhãn tự động cần được rà trước khi dùng làm gold evaluation set. Chi tiết schema và giới hạn nằm trong `SAMPLE-DATASET.md`.
+
+## Phạm vi grammar
+
+Grammar chứa các dạng câu hỏi tiếng Việt của Course Assistant. Nó được viết gọn theo intent và entity trong sample knowledge base để tránh sinh tổ hợp vô nghĩa. Tập câu generated hữu hạn này dùng cho kiểm tra parser/semantic mapping; cần thêm câu viết tay để đánh giá độ tự nhiên và độ bao phủ.
