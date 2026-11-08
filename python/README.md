@@ -47,6 +47,25 @@ Hoặc dùng script có sẵn `util.sh`:
 
 ## 3. Hướng dẫn chạy chương trình (Phần I)
 
+### 3.0 API retrieval (Phần 1 RAG)
+API này chỉ nhận query và trả các chunk bằng chứng được retriever chọn từ knowledge base. `samples_labeled.jsonl` dành cho đánh giá offline, không được dùng để chọn chunk khi API đang chạy.
+
+Khởi động từ thư mục `sample-code-v1.0/python/`:
+```bash
+.venv/bin/python -m nlp.app.api --host 127.0.0.1 --port 8000
+```
+
+- `GET http://127.0.0.1:8000/health`: kiểm tra service.
+- `POST http://127.0.0.1:8000/retrieve` với JSON `{"query":"Tuần 3 học gì?"}`: nhận `chunks`, `scores` và `retrieval_status`.
+
+````bash
+curl -X POST http://127.0.0.1:8000/retrieve \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"Tuần 3 học gì?"}'
+```
+
+Mặc định retriever trả tối đa 3 chunk (`top_k=3`), với ngưỡng score `0.08`. API chưa sinh câu trả lời bằng LLM.
+
 ### 3.1 Sinh văn phạm (3.1)
 File văn phạm chuẩn định dạng BNF được đặt tại:
 * `output/grammar.txt` (hoặc `python/output/grammar.txt`, `python/hcmut/iaslab/nlp/app/output/grammar.txt`)
