@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from iaslab.nlp.app.grammar_file import load_grammar
+from nlp.app.grammar_file import load_grammar
 
 
 DEFAULT_GRAMMAR_PATH = Path(__file__).with_name("output") / "grammar.txt"

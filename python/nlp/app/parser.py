@@ -2,7 +2,7 @@ from pathlib import Path
 import unicodedata
 from functools import lru_cache
 
-from grammar_file import load_grammar
+from nlp.app.grammar_file import load_grammar
 
 
 class ParseNode:

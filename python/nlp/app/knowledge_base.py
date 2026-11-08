@@ -108,6 +108,8 @@ def _entities_in(text, aliases):
         (r"\bLO\s*\.?\s*(\d+\.\d+)\b", lambda match: "LO" + match.group(1)),
         (r"\bmidterm\b", lambda match: "MIDTERM"),
         (r"\bfinal\b", lambda match: "FINAL"),
+        (r"\bAI[_ ]usage\b", lambda match: "AI_USAGE"),
+        (r"\bLLM[_ /-]?RAG\b", lambda match: "LLM_RAG"),
     ):
         for match in re.finditer(pattern, text, re.IGNORECASE):
             entity_id = formatter(match)

@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from parser import CourseParser
+from nlp.app.parser import CourseParser
 
 
 def main():

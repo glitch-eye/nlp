@@ -1,9 +1,14 @@
+Hôm nay ở TP.HCM có mưa không?
+Ai là tổng thống của Pháp?
+Hãy giải bài tập xác suất này giúp tôi.
 Lịch học diễn ra khi nào?
 Môn học được tổ chức trong bao nhiêu tuần?
 Kế hoạch học tập kéo dài bao lâu?
 Có bao nhiêu tuần học?
 Một tuần học mấy tiết?
 Chương nào nói về CFG?
+Chương nào nói về CFG và Parsing?
+Chương nào nói về Parsing?
 Chương nào nói về PCFG?
 Chương nào nói về văn phạm phụ thuộc?
 Chương nào nói về nét và văn phạm gia tố?
@@ -22,6 +27,8 @@ Chương nào nói về cụm động từ?
 Chương nào nói về cụm tính từ?
 Chương nào nói về cụm trạng từ?
 Chương nào đề cập đến CFG?
+Chương nào đề cập đến CFG và Parsing?
+Chương nào đề cập đến Parsing?
 Chương nào đề cập đến PCFG?
 Chương nào đề cập đến văn phạm phụ thuộc?
 Chương nào đề cập đến nét và văn phạm gia tố?
@@ -40,6 +47,8 @@ Chương nào đề cập đến cụm động từ?
 Chương nào đề cập đến cụm tính từ?
 Chương nào đề cập đến cụm trạng từ?
 Chương nào học về CFG?
+Chương nào học về CFG và Parsing?
+Chương nào học về Parsing?
 Chương nào học về PCFG?
 Chương nào học về văn phạm phụ thuộc?
 Chương nào học về nét và văn phạm gia tố?
@@ -62,6 +71,26 @@ Tài liệu nào liên quan đến Python NLP?
 Tài liệu nào liên quan đến machine translation?
 Tài liệu nào liên quan đến xử lý ngôn ngữ tự nhiên bằng Python?
 Tài liệu nào liên quan đến các phương pháp thống kê trong NLP?
+Tài liệu nào nói về CFG?
+Tài liệu nào nói về CFG và Parsing?
+Tài liệu nào nói về Parsing?
+Tài liệu nào nói về PCFG?
+Tài liệu nào nói về văn phạm phụ thuộc?
+Tài liệu nào nói về nét và văn phạm gia tố?
+Tài liệu nào nói về gán nhãn từ loại?
+Tài liệu nào nói về dạng luận lý?
+Tài liệu nào nói về vai trò chủ đề?
+Tài liệu nào nói về giới hạn lựa chọn?
+Tài liệu nào nói về mạng ngữ nghĩa?
+Tài liệu nào nói về văn phạm ngữ nghĩa?
+Tài liệu nào nói về biểu diễn tri thức?
+Tài liệu nào nói về hỏi đáp?
+Tài liệu nào nói về tham chiếu?
+Tài liệu nào nói về đồng tham chiếu?
+Tài liệu nào nói về cụm danh từ?
+Tài liệu nào nói về cụm động từ?
+Tài liệu nào nói về cụm tính từ?
+Tài liệu nào nói về cụm trạng từ?
 Tài liệu tham khảo về statistical NLP là gì?
 Tài liệu tham khảo về Python NLP là gì?
 Tài liệu tham khảo về machine translation là gì?
@@ -81,6 +110,20 @@ môn học CO3085 gồm những phần nào?
 môn học CO3085 có những phần chính nào?
 môn học CO3085 được chia thành những phần nào?
 môn học CO3085 có những mục tiêu học tập nào?
+môn CO3085 có bao nhiêu tín chỉ?
+môn CO3085 có mấy tín chỉ?
+môn CO3085 bao nhiêu tín chỉ?
+môn CO3085 gồm những phần nào?
+môn CO3085 có những phần chính nào?
+môn CO3085 được chia thành những phần nào?
+môn CO3085 có những mục tiêu học tập nào?
+môn C03085 có bao nhiêu tín chỉ?
+môn C03085 có mấy tín chỉ?
+môn C03085 bao nhiêu tín chỉ?
+môn C03085 gồm những phần nào?
+môn C03085 có những phần chính nào?
+môn C03085 được chia thành những phần nào?
+môn C03085 có những mục tiêu học tập nào?
 CO3085 có bao nhiêu tín chỉ?
 CO3085 có mấy tín chỉ?
 CO3085 bao nhiêu tín chỉ?
@@ -88,6 +131,13 @@ CO3085 gồm những phần nào?
 CO3085 có những phần chính nào?
 CO3085 được chia thành những phần nào?
 CO3085 có những mục tiêu học tập nào?
+C03085 có bao nhiêu tín chỉ?
+C03085 có mấy tín chỉ?
+C03085 bao nhiêu tín chỉ?
+C03085 gồm những phần nào?
+C03085 có những phần chính nào?
+C03085 được chia thành những phần nào?
+C03085 có những mục tiêu học tập nào?
 Xử lý Ngôn ngữ Tự nhiên có bao nhiêu tín chỉ?
 Xử lý Ngôn ngữ Tự nhiên có mấy tín chỉ?
 Xử lý Ngôn ngữ Tự nhiên bao nhiêu tín chỉ?
@@ -109,6 +159,26 @@ CFG được giảng dạy ở chương nào?
 CFG nằm trong nội dung chương nào?
 CFG thuộc nội dung của chương nào?
 CFG được giới thiệu ở chương nào?
+CFG và Parsing được học ở chương nào?
+CFG và Parsing được trình bày ở chương nào?
+CFG và Parsing nằm ở chương nào?
+CFG và Parsing thuộc chương nào?
+CFG và Parsing được dạy trong chương nào?
+CFG và Parsing xuất hiện trong chương nào?
+CFG và Parsing được giảng dạy ở chương nào?
+CFG và Parsing nằm trong nội dung chương nào?
+CFG và Parsing thuộc nội dung của chương nào?
+CFG và Parsing được giới thiệu ở chương nào?
+Parsing được học ở chương nào?
+Parsing được trình bày ở chương nào?
+Parsing nằm ở chương nào?
+Parsing thuộc chương nào?
+Parsing được dạy trong chương nào?
+Parsing xuất hiện trong chương nào?
+Parsing được giảng dạy ở chương nào?
+Parsing nằm trong nội dung chương nào?
+Parsing thuộc nội dung của chương nào?
+Parsing được giới thiệu ở chương nào?
 PCFG được học ở chương nào?
 PCFG được trình bày ở chương nào?
 PCFG nằm ở chương nào?
@@ -319,11 +389,20 @@ Phần IV cần xuất file gì?
 Phần IV yêu cầu những đầu ra nào?
 Phần IV cần nộp những file nào?
 Phần IV bao gồm những nhiệm vụ gì?
+Tôi cần hoàn thành những bài tập nào?
+Tôi cần làm những bài tập nào?
+Sinh viên cần hoàn thành những bài tập nào?
+Sinh viên cần làm những bài tập nào?
 deadline bài tập lớn là khi nào?
 deadline bài tập lớn khi nào?
 deadline bài tập lớn là ngày nào?
 deadline bài tập lớn được ghi ở đâu?
 deadline bài tập lớn được quy định như thế nào?
+Deadline của bài tập lớn là khi nào?
+Deadline của bài tập lớn khi nào?
+Deadline của bài tập lớn là ngày nào?
+Deadline của bài tập lớn được ghi ở đâu?
+Deadline của bài tập lớn được quy định như thế nào?
 hạn nộp bài tập lớn là khi nào?
 hạn nộp bài tập lớn khi nào?
 hạn nộp bài tập lớn là ngày nào?
@@ -338,6 +417,10 @@ tài liệu tham khảo gồm những gì?
 tài liệu tham khảo là gì?
 tài liệu tham khảo nên đọc những tài liệu nào?
 tài liệu tham khảo được sử dụng trong môn học là gì?
+tài liệu gồm những gì?
+tài liệu là gì?
+tài liệu nên đọc những tài liệu nào?
+tài liệu được sử dụng trong môn học là gì?
 giáo trình gồm những gì?
 giáo trình là gì?
 giáo trình nên đọc những tài liệu nào?
@@ -358,6 +441,13 @@ tài liệu môn học gồm những gì?
 tài liệu môn học là gì?
 tài liệu môn học nên đọc những tài liệu nào?
 tài liệu môn học được sử dụng trong môn học là gì?
+liệt kê tài liệu tham khảo
+liệt kê tài liệu
+liệt kê giáo trình
+liệt kê tài liệu Python NLP
+liệt kê nguồn học tập
+liệt kê sách tham khảo
+liệt kê tài liệu môn học
 quy định về sử dụng AI là gì?
 quy định về sử dụng AI như thế nào?
 quy định về sử dụng AI được quy định ra sao?
@@ -385,8 +475,107 @@ L.O.4.2 liên quan đến nội dung nào?
 L.O.4.2 mô tả năng lực gì?
 L.O.4.2 đề cập đến kiến thức nào?
 L.O.4.2 yêu cầu sinh viên có khả năng gì?
+cho hỏi Môn NLP có bao nhiêu tín chỉ?
+cho hỏi Môn NLP có mấy tín chỉ?
+cho hỏi Môn NLP bao nhiêu tín chỉ?
+cho hỏi Môn NLP gồm những phần nào?
+cho hỏi Môn NLP có những phần chính nào?
+cho hỏi Môn NLP được chia thành những phần nào?
+cho hỏi Môn NLP có những mục tiêu học tập nào?
+cho hỏi môn học CO3085 có bao nhiêu tín chỉ?
+cho hỏi môn học CO3085 có mấy tín chỉ?
+cho hỏi môn học CO3085 bao nhiêu tín chỉ?
+cho hỏi môn học CO3085 gồm những phần nào?
+cho hỏi môn học CO3085 có những phần chính nào?
+cho hỏi môn học CO3085 được chia thành những phần nào?
+cho hỏi môn học CO3085 có những mục tiêu học tập nào?
+cho hỏi môn CO3085 có bao nhiêu tín chỉ?
+cho hỏi môn CO3085 có mấy tín chỉ?
+cho hỏi môn CO3085 bao nhiêu tín chỉ?
+cho hỏi môn CO3085 gồm những phần nào?
+cho hỏi môn CO3085 có những phần chính nào?
+cho hỏi môn CO3085 được chia thành những phần nào?
+cho hỏi môn CO3085 có những mục tiêu học tập nào?
+cho hỏi môn C03085 có bao nhiêu tín chỉ?
+cho hỏi môn C03085 có mấy tín chỉ?
+cho hỏi môn C03085 bao nhiêu tín chỉ?
+cho hỏi môn C03085 gồm những phần nào?
+cho hỏi môn C03085 có những phần chính nào?
+cho hỏi môn C03085 được chia thành những phần nào?
+cho hỏi môn C03085 có những mục tiêu học tập nào?
+cho hỏi CO3085 có bao nhiêu tín chỉ?
+cho hỏi CO3085 có mấy tín chỉ?
+cho hỏi CO3085 bao nhiêu tín chỉ?
+cho hỏi CO3085 gồm những phần nào?
+cho hỏi CO3085 có những phần chính nào?
+cho hỏi CO3085 được chia thành những phần nào?
+cho hỏi CO3085 có những mục tiêu học tập nào?
+cho hỏi C03085 có bao nhiêu tín chỉ?
+cho hỏi C03085 có mấy tín chỉ?
+cho hỏi C03085 bao nhiêu tín chỉ?
+cho hỏi C03085 gồm những phần nào?
+cho hỏi C03085 có những phần chính nào?
+cho hỏi C03085 được chia thành những phần nào?
+cho hỏi C03085 có những mục tiêu học tập nào?
+cho hỏi Xử lý Ngôn ngữ Tự nhiên có bao nhiêu tín chỉ?
+cho hỏi Xử lý Ngôn ngữ Tự nhiên có mấy tín chỉ?
+cho hỏi Xử lý Ngôn ngữ Tự nhiên bao nhiêu tín chỉ?
+cho hỏi Xử lý Ngôn ngữ Tự nhiên gồm những phần nào?
+cho hỏi Xử lý Ngôn ngữ Tự nhiên có những phần chính nào?
+cho hỏi Xử lý Ngôn ngữ Tự nhiên được chia thành những phần nào?
+cho hỏi Xử lý Ngôn ngữ Tự nhiên có những mục tiêu học tập nào?
+xin hỏi Môn NLP có bao nhiêu tín chỉ?
+xin hỏi Môn NLP có mấy tín chỉ?
+xin hỏi Môn NLP bao nhiêu tín chỉ?
+xin hỏi Môn NLP gồm những phần nào?
+xin hỏi Môn NLP có những phần chính nào?
+xin hỏi Môn NLP được chia thành những phần nào?
+xin hỏi Môn NLP có những mục tiêu học tập nào?
+xin hỏi môn học CO3085 có bao nhiêu tín chỉ?
+xin hỏi môn học CO3085 có mấy tín chỉ?
+xin hỏi môn học CO3085 bao nhiêu tín chỉ?
+xin hỏi môn học CO3085 gồm những phần nào?
+xin hỏi môn học CO3085 có những phần chính nào?
+xin hỏi môn học CO3085 được chia thành những phần nào?
+xin hỏi môn học CO3085 có những mục tiêu học tập nào?
+xin hỏi môn CO3085 có bao nhiêu tín chỉ?
+xin hỏi môn CO3085 có mấy tín chỉ?
+xin hỏi môn CO3085 bao nhiêu tín chỉ?
+xin hỏi môn CO3085 gồm những phần nào?
+xin hỏi môn CO3085 có những phần chính nào?
+xin hỏi môn CO3085 được chia thành những phần nào?
+xin hỏi môn CO3085 có những mục tiêu học tập nào?
+xin hỏi môn C03085 có bao nhiêu tín chỉ?
+xin hỏi môn C03085 có mấy tín chỉ?
+xin hỏi môn C03085 bao nhiêu tín chỉ?
+xin hỏi môn C03085 gồm những phần nào?
+xin hỏi môn C03085 có những phần chính nào?
+xin hỏi môn C03085 được chia thành những phần nào?
+xin hỏi môn C03085 có những mục tiêu học tập nào?
+xin hỏi CO3085 có bao nhiêu tín chỉ?
+xin hỏi CO3085 có mấy tín chỉ?
+xin hỏi CO3085 bao nhiêu tín chỉ?
+xin hỏi CO3085 gồm những phần nào?
+xin hỏi CO3085 có những phần chính nào?
+xin hỏi CO3085 được chia thành những phần nào?
+xin hỏi CO3085 có những mục tiêu học tập nào?
+xin hỏi C03085 có bao nhiêu tín chỉ?
+xin hỏi C03085 có mấy tín chỉ?
+xin hỏi C03085 bao nhiêu tín chỉ?
+xin hỏi C03085 gồm những phần nào?
+xin hỏi C03085 có những phần chính nào?
+xin hỏi C03085 được chia thành những phần nào?
+xin hỏi C03085 có những mục tiêu học tập nào?
+xin hỏi Xử lý Ngôn ngữ Tự nhiên có bao nhiêu tín chỉ?
+xin hỏi Xử lý Ngôn ngữ Tự nhiên có mấy tín chỉ?
+xin hỏi Xử lý Ngôn ngữ Tự nhiên bao nhiêu tín chỉ?
+xin hỏi Xử lý Ngôn ngữ Tự nhiên gồm những phần nào?
+xin hỏi Xử lý Ngôn ngữ Tự nhiên có những phần chính nào?
+xin hỏi Xử lý Ngôn ngữ Tự nhiên được chia thành những phần nào?
+xin hỏi Xử lý Ngôn ngữ Tự nhiên có những mục tiêu học tập nào?
 tuần 1 học gì?
 tuần 1 học nội dung gì?
+tuần 1 học những nội dung gì?
 tuần 1 có những chủ đề nào?
 tuần 1 có nội dung học gì?
 tuần 1 môn học dạy nội dung nào?
@@ -403,6 +592,7 @@ tuần 1 buổi học sẽ đề cập đến những gì?
 tuần 1 tập trung vào nội dung nào?
 tuần 2 học gì?
 tuần 2 học nội dung gì?
+tuần 2 học những nội dung gì?
 tuần 2 có những chủ đề nào?
 tuần 2 có nội dung học gì?
 tuần 2 môn học dạy nội dung nào?
@@ -419,6 +609,7 @@ tuần 2 buổi học sẽ đề cập đến những gì?
 tuần 2 tập trung vào nội dung nào?
 tuần 3 học gì?
 tuần 3 học nội dung gì?
+tuần 3 học những nội dung gì?
 tuần 3 có những chủ đề nào?
 tuần 3 có nội dung học gì?
 tuần 3 môn học dạy nội dung nào?
@@ -435,6 +626,7 @@ tuần 3 buổi học sẽ đề cập đến những gì?
 tuần 3 tập trung vào nội dung nào?
 tuần 4 học gì?
 tuần 4 học nội dung gì?
+tuần 4 học những nội dung gì?
 tuần 4 có những chủ đề nào?
 tuần 4 có nội dung học gì?
 tuần 4 môn học dạy nội dung nào?
@@ -451,6 +643,7 @@ tuần 4 buổi học sẽ đề cập đến những gì?
 tuần 4 tập trung vào nội dung nào?
 tuần 5 học gì?
 tuần 5 học nội dung gì?
+tuần 5 học những nội dung gì?
 tuần 5 có những chủ đề nào?
 tuần 5 có nội dung học gì?
 tuần 5 môn học dạy nội dung nào?
@@ -467,6 +660,7 @@ tuần 5 buổi học sẽ đề cập đến những gì?
 tuần 5 tập trung vào nội dung nào?
 tuần 6 học gì?
 tuần 6 học nội dung gì?
+tuần 6 học những nội dung gì?
 tuần 6 có những chủ đề nào?
 tuần 6 có nội dung học gì?
 tuần 6 môn học dạy nội dung nào?
@@ -483,6 +677,7 @@ tuần 6 buổi học sẽ đề cập đến những gì?
 tuần 6 tập trung vào nội dung nào?
 tuần 7 học gì?
 tuần 7 học nội dung gì?
+tuần 7 học những nội dung gì?
 tuần 7 có những chủ đề nào?
 tuần 7 có nội dung học gì?
 tuần 7 môn học dạy nội dung nào?
@@ -499,6 +694,7 @@ tuần 7 buổi học sẽ đề cập đến những gì?
 tuần 7 tập trung vào nội dung nào?
 tuần 8 học gì?
 tuần 8 học nội dung gì?
+tuần 8 học những nội dung gì?
 tuần 8 có những chủ đề nào?
 tuần 8 có nội dung học gì?
 tuần 8 môn học dạy nội dung nào?
@@ -515,6 +711,7 @@ tuần 8 buổi học sẽ đề cập đến những gì?
 tuần 8 tập trung vào nội dung nào?
 tuần 9 học gì?
 tuần 9 học nội dung gì?
+tuần 9 học những nội dung gì?
 tuần 9 có những chủ đề nào?
 tuần 9 có nội dung học gì?
 tuần 9 môn học dạy nội dung nào?
@@ -531,6 +728,7 @@ tuần 9 buổi học sẽ đề cập đến những gì?
 tuần 9 tập trung vào nội dung nào?
 tuần 10 học gì?
 tuần 10 học nội dung gì?
+tuần 10 học những nội dung gì?
 tuần 10 có những chủ đề nào?
 tuần 10 có nội dung học gì?
 tuần 10 môn học dạy nội dung nào?
@@ -547,6 +745,7 @@ tuần 10 buổi học sẽ đề cập đến những gì?
 tuần 10 tập trung vào nội dung nào?
 tuần 11 học gì?
 tuần 11 học nội dung gì?
+tuần 11 học những nội dung gì?
 tuần 11 có những chủ đề nào?
 tuần 11 có nội dung học gì?
 tuần 11 môn học dạy nội dung nào?
@@ -563,6 +762,7 @@ tuần 11 buổi học sẽ đề cập đến những gì?
 tuần 11 tập trung vào nội dung nào?
 tuần 12 học gì?
 tuần 12 học nội dung gì?
+tuần 12 học những nội dung gì?
 tuần 12 có những chủ đề nào?
 tuần 12 có nội dung học gì?
 tuần 12 môn học dạy nội dung nào?
@@ -579,6 +779,7 @@ tuần 12 buổi học sẽ đề cập đến những gì?
 tuần 12 tập trung vào nội dung nào?
 tuần 13 học gì?
 tuần 13 học nội dung gì?
+tuần 13 học những nội dung gì?
 tuần 13 có những chủ đề nào?
 tuần 13 có nội dung học gì?
 tuần 13 môn học dạy nội dung nào?
@@ -595,6 +796,7 @@ tuần 13 buổi học sẽ đề cập đến những gì?
 tuần 13 tập trung vào nội dung nào?
 tuần 14 học gì?
 tuần 14 học nội dung gì?
+tuần 14 học những nội dung gì?
 tuần 14 có những chủ đề nào?
 tuần 14 có nội dung học gì?
 tuần 14 môn học dạy nội dung nào?
@@ -611,6 +813,7 @@ tuần 14 buổi học sẽ đề cập đến những gì?
 tuần 14 tập trung vào nội dung nào?
 tuần 15 học gì?
 tuần 15 học nội dung gì?
+tuần 15 học những nội dung gì?
 tuần 15 có những chủ đề nào?
 tuần 15 có nội dung học gì?
 tuần 15 môn học dạy nội dung nào?
@@ -627,6 +830,7 @@ tuần 15 buổi học sẽ đề cập đến những gì?
 tuần 15 tập trung vào nội dung nào?
 tuần thứ 1 học gì?
 tuần thứ 1 học nội dung gì?
+tuần thứ 1 học những nội dung gì?
 tuần thứ 1 có những chủ đề nào?
 tuần thứ 1 có nội dung học gì?
 tuần thứ 1 môn học dạy nội dung nào?
@@ -643,6 +847,7 @@ tuần thứ 1 buổi học sẽ đề cập đến những gì?
 tuần thứ 1 tập trung vào nội dung nào?
 tuần thứ 2 học gì?
 tuần thứ 2 học nội dung gì?
+tuần thứ 2 học những nội dung gì?
 tuần thứ 2 có những chủ đề nào?
 tuần thứ 2 có nội dung học gì?
 tuần thứ 2 môn học dạy nội dung nào?
@@ -659,6 +864,7 @@ tuần thứ 2 buổi học sẽ đề cập đến những gì?
 tuần thứ 2 tập trung vào nội dung nào?
 tuần thứ 3 học gì?
 tuần thứ 3 học nội dung gì?
+tuần thứ 3 học những nội dung gì?
 tuần thứ 3 có những chủ đề nào?
 tuần thứ 3 có nội dung học gì?
 tuần thứ 3 môn học dạy nội dung nào?
@@ -675,6 +881,7 @@ tuần thứ 3 buổi học sẽ đề cập đến những gì?
 tuần thứ 3 tập trung vào nội dung nào?
 tuần thứ 4 học gì?
 tuần thứ 4 học nội dung gì?
+tuần thứ 4 học những nội dung gì?
 tuần thứ 4 có những chủ đề nào?
 tuần thứ 4 có nội dung học gì?
 tuần thứ 4 môn học dạy nội dung nào?
@@ -691,6 +898,7 @@ tuần thứ 4 buổi học sẽ đề cập đến những gì?
 tuần thứ 4 tập trung vào nội dung nào?
 tuần thứ 5 học gì?
 tuần thứ 5 học nội dung gì?
+tuần thứ 5 học những nội dung gì?
 tuần thứ 5 có những chủ đề nào?
 tuần thứ 5 có nội dung học gì?
 tuần thứ 5 môn học dạy nội dung nào?
@@ -707,6 +915,7 @@ tuần thứ 5 buổi học sẽ đề cập đến những gì?
 tuần thứ 5 tập trung vào nội dung nào?
 tuần thứ 6 học gì?
 tuần thứ 6 học nội dung gì?
+tuần thứ 6 học những nội dung gì?
 tuần thứ 6 có những chủ đề nào?
 tuần thứ 6 có nội dung học gì?
 tuần thứ 6 môn học dạy nội dung nào?
@@ -723,6 +932,7 @@ tuần thứ 6 buổi học sẽ đề cập đến những gì?
 tuần thứ 6 tập trung vào nội dung nào?
 tuần thứ 7 học gì?
 tuần thứ 7 học nội dung gì?
+tuần thứ 7 học những nội dung gì?
 tuần thứ 7 có những chủ đề nào?
 tuần thứ 7 có nội dung học gì?
 tuần thứ 7 môn học dạy nội dung nào?
@@ -739,6 +949,7 @@ tuần thứ 7 buổi học sẽ đề cập đến những gì?
 tuần thứ 7 tập trung vào nội dung nào?
 tuần thứ 8 học gì?
 tuần thứ 8 học nội dung gì?
+tuần thứ 8 học những nội dung gì?
 tuần thứ 8 có những chủ đề nào?
 tuần thứ 8 có nội dung học gì?
 tuần thứ 8 môn học dạy nội dung nào?
@@ -755,6 +966,7 @@ tuần thứ 8 buổi học sẽ đề cập đến những gì?
 tuần thứ 8 tập trung vào nội dung nào?
 tuần thứ 9 học gì?
 tuần thứ 9 học nội dung gì?
+tuần thứ 9 học những nội dung gì?
 tuần thứ 9 có những chủ đề nào?
 tuần thứ 9 có nội dung học gì?
 tuần thứ 9 môn học dạy nội dung nào?
@@ -771,6 +983,7 @@ tuần thứ 9 buổi học sẽ đề cập đến những gì?
 tuần thứ 9 tập trung vào nội dung nào?
 tuần thứ 10 học gì?
 tuần thứ 10 học nội dung gì?
+tuần thứ 10 học những nội dung gì?
 tuần thứ 10 có những chủ đề nào?
 tuần thứ 10 có nội dung học gì?
 tuần thứ 10 môn học dạy nội dung nào?
@@ -787,6 +1000,7 @@ tuần thứ 10 buổi học sẽ đề cập đến những gì?
 tuần thứ 10 tập trung vào nội dung nào?
 tuần thứ 11 học gì?
 tuần thứ 11 học nội dung gì?
+tuần thứ 11 học những nội dung gì?
 tuần thứ 11 có những chủ đề nào?
 tuần thứ 11 có nội dung học gì?
 tuần thứ 11 môn học dạy nội dung nào?
@@ -803,6 +1017,7 @@ tuần thứ 11 buổi học sẽ đề cập đến những gì?
 tuần thứ 11 tập trung vào nội dung nào?
 tuần thứ 12 học gì?
 tuần thứ 12 học nội dung gì?
+tuần thứ 12 học những nội dung gì?
 tuần thứ 12 có những chủ đề nào?
 tuần thứ 12 có nội dung học gì?
 tuần thứ 12 môn học dạy nội dung nào?
@@ -819,6 +1034,7 @@ tuần thứ 12 buổi học sẽ đề cập đến những gì?
 tuần thứ 12 tập trung vào nội dung nào?
 tuần thứ 13 học gì?
 tuần thứ 13 học nội dung gì?
+tuần thứ 13 học những nội dung gì?
 tuần thứ 13 có những chủ đề nào?
 tuần thứ 13 có nội dung học gì?
 tuần thứ 13 môn học dạy nội dung nào?
@@ -835,6 +1051,7 @@ tuần thứ 13 buổi học sẽ đề cập đến những gì?
 tuần thứ 13 tập trung vào nội dung nào?
 tuần thứ 14 học gì?
 tuần thứ 14 học nội dung gì?
+tuần thứ 14 học những nội dung gì?
 tuần thứ 14 có những chủ đề nào?
 tuần thứ 14 có nội dung học gì?
 tuần thứ 14 môn học dạy nội dung nào?
@@ -851,6 +1068,7 @@ tuần thứ 14 buổi học sẽ đề cập đến những gì?
 tuần thứ 14 tập trung vào nội dung nào?
 tuần thứ 15 học gì?
 tuần thứ 15 học nội dung gì?
+tuần thứ 15 học những nội dung gì?
 tuần thứ 15 có những chủ đề nào?
 tuần thứ 15 có nội dung học gì?
 tuần thứ 15 môn học dạy nội dung nào?
@@ -985,6 +1203,86 @@ chương 12 được giảng dạy vào tuần nào?
 chương 12 nằm trong kế hoạch của tuần nào?
 chương 12 được xếp lịch ở tuần mấy?
 chương 12 thuộc tuần học thứ mấy?
+Phần CFG nằm ở tuần nào?
+Phần CFG được học vào tuần nào?
+Phần CFG và Parsing nằm ở tuần nào?
+Phần CFG và Parsing được học vào tuần nào?
+Phần Parsing nằm ở tuần nào?
+Phần Parsing được học vào tuần nào?
+Phần PCFG nằm ở tuần nào?
+Phần PCFG được học vào tuần nào?
+Phần văn phạm phụ thuộc nằm ở tuần nào?
+Phần văn phạm phụ thuộc được học vào tuần nào?
+Phần nét và văn phạm gia tố nằm ở tuần nào?
+Phần nét và văn phạm gia tố được học vào tuần nào?
+Phần gán nhãn từ loại nằm ở tuần nào?
+Phần gán nhãn từ loại được học vào tuần nào?
+Phần dạng luận lý nằm ở tuần nào?
+Phần dạng luận lý được học vào tuần nào?
+Phần vai trò chủ đề nằm ở tuần nào?
+Phần vai trò chủ đề được học vào tuần nào?
+Phần giới hạn lựa chọn nằm ở tuần nào?
+Phần giới hạn lựa chọn được học vào tuần nào?
+Phần mạng ngữ nghĩa nằm ở tuần nào?
+Phần mạng ngữ nghĩa được học vào tuần nào?
+Phần văn phạm ngữ nghĩa nằm ở tuần nào?
+Phần văn phạm ngữ nghĩa được học vào tuần nào?
+Phần biểu diễn tri thức nằm ở tuần nào?
+Phần biểu diễn tri thức được học vào tuần nào?
+Phần hỏi đáp nằm ở tuần nào?
+Phần hỏi đáp được học vào tuần nào?
+Phần tham chiếu nằm ở tuần nào?
+Phần tham chiếu được học vào tuần nào?
+Phần đồng tham chiếu nằm ở tuần nào?
+Phần đồng tham chiếu được học vào tuần nào?
+Phần cụm danh từ nằm ở tuần nào?
+Phần cụm danh từ được học vào tuần nào?
+Phần cụm động từ nằm ở tuần nào?
+Phần cụm động từ được học vào tuần nào?
+Phần cụm tính từ nằm ở tuần nào?
+Phần cụm tính từ được học vào tuần nào?
+Phần cụm trạng từ nằm ở tuần nào?
+Phần cụm trạng từ được học vào tuần nào?
+CFG nằm ở tuần nào?
+CFG được học vào tuần nào?
+CFG và Parsing nằm ở tuần nào?
+CFG và Parsing được học vào tuần nào?
+Parsing nằm ở tuần nào?
+Parsing được học vào tuần nào?
+PCFG nằm ở tuần nào?
+PCFG được học vào tuần nào?
+văn phạm phụ thuộc nằm ở tuần nào?
+văn phạm phụ thuộc được học vào tuần nào?
+nét và văn phạm gia tố nằm ở tuần nào?
+nét và văn phạm gia tố được học vào tuần nào?
+gán nhãn từ loại nằm ở tuần nào?
+gán nhãn từ loại được học vào tuần nào?
+dạng luận lý nằm ở tuần nào?
+dạng luận lý được học vào tuần nào?
+vai trò chủ đề nằm ở tuần nào?
+vai trò chủ đề được học vào tuần nào?
+giới hạn lựa chọn nằm ở tuần nào?
+giới hạn lựa chọn được học vào tuần nào?
+mạng ngữ nghĩa nằm ở tuần nào?
+mạng ngữ nghĩa được học vào tuần nào?
+văn phạm ngữ nghĩa nằm ở tuần nào?
+văn phạm ngữ nghĩa được học vào tuần nào?
+biểu diễn tri thức nằm ở tuần nào?
+biểu diễn tri thức được học vào tuần nào?
+hỏi đáp nằm ở tuần nào?
+hỏi đáp được học vào tuần nào?
+tham chiếu nằm ở tuần nào?
+tham chiếu được học vào tuần nào?
+đồng tham chiếu nằm ở tuần nào?
+đồng tham chiếu được học vào tuần nào?
+cụm danh từ nằm ở tuần nào?
+cụm danh từ được học vào tuần nào?
+cụm động từ nằm ở tuần nào?
+cụm động từ được học vào tuần nào?
+cụm tính từ nằm ở tuần nào?
+cụm tính từ được học vào tuần nào?
+cụm trạng từ nằm ở tuần nào?
+cụm trạng từ được học vào tuần nào?
 chương 1 nói về gì?
 chương 1 học những nội dung nào?
 chương 1 có những chủ đề gì?
@@ -1153,6 +1451,8 @@ chương 12 đề cập đến vấn đề nào?
 chương 12 chủ đề nào được trình bày?
 chương 12 kiến thức nào được giới thiệu?
 chương 12 nội dung chương gồm những gì?
+cần hoàn thành những bài tập nào?
+cần làm những bài tập nào?
 Có được dùng AI không?
 Có được dùng AI trong bài tập lớn không?
 Có được dùng LLM/RAG không?
@@ -1171,3 +1471,27 @@ Sinh viên có thể dùng LLM/RAG không?
 Sinh viên có thể dùng LLM/RAG trong bài tập lớn không?
 Sinh viên có thể dùng công cụ AI không?
 Sinh viên có thể dùng công cụ AI trong bài tập lớn không?
+bài tập lớn có được sử dụng AI không?
+bài tập lớn có được sử dụng AI trong bài tập lớn không?
+bài tập lớn có được sử dụng LLM/RAG không?
+bài tập lớn có được sử dụng LLM/RAG trong bài tập lớn không?
+bài tập lớn có được sử dụng công cụ AI không?
+bài tập lớn có được sử dụng công cụ AI trong bài tập lớn không?
+bài tập lớn có được dùng AI không?
+bài tập lớn có được dùng AI trong bài tập lớn không?
+bài tập lớn có được dùng LLM/RAG không?
+bài tập lớn có được dùng LLM/RAG trong bài tập lớn không?
+bài tập lớn có được dùng công cụ AI không?
+bài tập lớn có được dùng công cụ AI trong bài tập lớn không?
+BTL có được sử dụng AI không?
+BTL có được sử dụng AI trong bài tập lớn không?
+BTL có được sử dụng LLM/RAG không?
+BTL có được sử dụng LLM/RAG trong bài tập lớn không?
+BTL có được sử dụng công cụ AI không?
+BTL có được sử dụng công cụ AI trong bài tập lớn không?
+BTL có được dùng AI không?
+BTL có được dùng AI trong bài tập lớn không?
+BTL có được dùng LLM/RAG không?
+BTL có được dùng LLM/RAG trong bài tập lớn không?
+BTL có được dùng công cụ AI không?
+BTL có được dùng công cụ AI trong bài tập lớn không?

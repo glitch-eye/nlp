@@ -6,9 +6,9 @@ import re
 import unicodedata
 from pathlib import Path
 
-from iaslab.nlp.app.knowledge_base import KnowledgeBase, default_data_dir, load_entity_aliases
-from iaslab.nlp.app.parser import CourseParser, ParseNode
-from iaslab.nlp.app.sentence_generator import SentenceGenerator
+from nlp.app.knowledge_base import KnowledgeBase, default_data_dir, load_entity_aliases
+from nlp.app.parser import CourseParser, ParseNode
+from nlp.app.sentence_generator import SentenceGenerator
 
 
 INTENT_TO_KIND = {
@@ -120,8 +120,12 @@ def expected_chunks(intent, entity_ids, documents):
     if not kind:
         return []
     candidates = [doc for doc in documents if doc["kind"] == kind]
+    candidate_entity_ids = set(
+        entity for doc in candidates for entity in doc.get("entity_ids", [])
+    )
+    relevant_entities = set(entity_ids).intersection(candidate_entity_ids)
     matched = [doc["chunk_id"] for doc in candidates
-               if set(entity_ids).intersection(doc.get("entity_ids", []))]
+               if relevant_entities and relevant_entities.issubset(set(doc.get("entity_ids", [])))]
     resource_terms = {
         "STATISTICAL_NLP": ("statistical", "statistics"),
         "PYTHON_NLP": ("python",),
@@ -131,8 +135,12 @@ def expected_chunks(intent, entity_ids, documents):
         terms = tuple(term for entity in entity_ids for term in resource_terms.get(entity, ()))
         matched = [doc["chunk_id"] for doc in candidates
                    if any(term in normalize(doc["text"]) for term in terms)]
-    if not matched and intent in ("GET_COURSE_INFO", "GET_SCHEDULE", "GET_ASSIGNMENT",
-                                  "GET_RESOURCE", "GET_RULE", "GET_LO"):
+    if matched:
+        return matched
+    if entity_ids:
+        return []
+    if intent in ("GET_COURSE_INFO", "GET_SCHEDULE", "GET_ASSIGNMENT",
+                  "GET_RESOURCE", "GET_RULE", "GET_LO"):
         matched = [doc["chunk_id"] for doc in candidates]
     return matched
 
@@ -173,9 +181,12 @@ def build_records(grammar_path, data_dir, max_sentences=10000):
 
         intent, entities = semantic_labels(tree, aliases)
         expected = expected_chunks(intent, entities, knowledge_base.documents)
-        answerability = "INSUFFICIENT_CONTEXT" if intent == "GET_DEADLINE" else (
-            "EXPECTED_CONTEXT" if expected else "REVIEW_EXPECTED_CONTEXT"
-        )
+        if intent == "GET_DEADLINE":
+            answerability = "INSUFFICIENT_CONTEXT"
+        elif intent == "UNKNOWN":
+            answerability = "NO_RELEVANT_CONTEXT"
+        else:
+            answerability = "EXPECTED_CONTEXT" if expected else "INSUFFICIENT_CONTEXT"
         records.append({
             "sample_id": "SYN{:04d}".format(index),
             "query": sentence,

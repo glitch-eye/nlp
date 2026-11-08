@@ -3,8 +3,8 @@
 import argparse
 from pathlib import Path
 
-from iaslab.nlp.app.knowledge_base import KnowledgeBase, default_data_dir
-from iaslab.nlp.app.retriever import Retriever, format_trace
+from nlp.app.knowledge_base import KnowledgeBase, default_data_dir
+from nlp.app.retriever import Retriever, format_trace
 
 
 def read_queries(path):

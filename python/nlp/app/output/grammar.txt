@@ -9,13 +9,21 @@
       | <Q_RESOURCE>
       | <Q_RULE>
       | <Q_LO>
+      | <Q_UNKNOWN>
 
 <Q_COURSE_INFO> ::= <COURSE_REF> <COURSE_INFO_TAIL>
+                   | <POLITE_PREFIX> <COURSE_REF> <COURSE_INFO_TAIL>
                    | <EXAM_REF> <EXAM_TAIL>
+
+<POLITE_PREFIX> ::= "cho hỏi"
+                   | "xin hỏi"
 
 <COURSE_REF> ::= "Môn NLP"
                | "môn học CO3085"
+               | "môn CO3085"
+               | "môn C03085"
                | "CO3085"
+               | "C03085"
                | "Xử lý Ngôn ngữ Tự nhiên"
 
 <COURSE_INFO_TAIL> ::= "có bao nhiêu tín chỉ?"
@@ -35,13 +43,21 @@
 
 <Q_SCHEDULE> ::= <WEEK_REF> <SCHEDULE_WEEK_TAIL>
                | <CHAPTER_REF> <SCHEDULE_CHAPTER_TAIL>
+               | <SCHEDULE_TOPIC_REF> <SCHEDULE_TOPIC_TAIL>
                | <SCHEDULE_WHEN>
+
+<SCHEDULE_TOPIC_REF> ::= "Phần" <TOPIC_REF>
+                        | <TOPIC_REF>
+
+<SCHEDULE_TOPIC_TAIL> ::= "nằm ở tuần nào?"
+                         | "được học vào tuần nào?"
 
 <WEEK_REF> ::= "tuần" <WEEK_NUMBER>
              | "tuần thứ" <WEEK_NUMBER>
 
 <SCHEDULE_WEEK_TAIL> ::= "học gì?"
                         | "học nội dung gì?"
+                        | "học những nội dung gì?"
                         | "có những chủ đề nào?"
                         | "có nội dung học gì?"
                         | "môn học dạy nội dung nào?"
@@ -109,6 +125,8 @@
                       | "được giới thiệu ở chương nào?"
 
 <TOPIC_REF> ::= "CFG"
+               | "CFG và Parsing"
+               | "Parsing"
                | "PCFG"
                | "văn phạm phụ thuộc"
                | "nét và văn phạm gia tố"
@@ -129,6 +147,16 @@
 
 <Q_ASSIGNMENT> ::= <ASSIGNMENT_REF> <ASSIGNMENT_TAIL>
                  | <PART_REF> <PART_TAIL>
+                 | <TASK_REQUESTOR> <TASK_REQUEST>
+
+<TASK_REQUESTOR> ::= "Tôi"
+                    | "Sinh viên"
+                    | <EMPTY>
+
+<TASK_REQUEST> ::= "cần hoàn thành những bài tập nào?"
+                  | "cần làm những bài tập nào?"
+
+<EMPTY> ::=
 
 <ASSIGNMENT_REF> ::= "bài tập lớn"
                    | "BTL"
@@ -157,6 +185,7 @@
 <Q_DEADLINE> ::= <DEADLINE_REF> <DEADLINE_TAIL>
 
 <DEADLINE_REF> ::= "deadline bài tập lớn"
+                 | "Deadline của bài tập lớn"
                  | "hạn nộp bài tập lớn"
                  | "thời hạn nộp bài"
 
@@ -168,9 +197,14 @@
 
 <Q_RESOURCE> ::= <RESOURCE_REF> <RESOURCE_TAIL>
                | "Tài liệu nào liên quan đến" <RESOURCE_TOPIC> "?"
+               | "Tài liệu nào nói về" <TOPIC_REF> "?"
                | "Tài liệu tham khảo về" <RESOURCE_TOPIC> "là gì?"
+               | <RESOURCE_REQUEST>
+
+<RESOURCE_REQUEST> ::= "liệt kê" <RESOURCE_REF>
 
 <RESOURCE_REF> ::= "tài liệu tham khảo"
+                 | "tài liệu"
                  | "giáo trình"
                  | "tài liệu Python NLP"
                  | "nguồn học tập"
@@ -190,6 +224,7 @@
 
 <Q_RULE> ::= <RULE_REF> <RULE_TAIL>
            | <RULE_QUESTION_PREFIX> <RULE_OBJECT> <RULE_QUESTION_TAIL>
+           | <ASSIGNMENT_REF> <RULE_USAGE_PREFIX> <RULE_OBJECT> <RULE_QUESTION_TAIL>
 
 <RULE_REF> ::= "quy định về sử dụng AI"
              | "quy định về LLM/RAG"
@@ -208,6 +243,9 @@
                          | "Có được sử dụng"
                          | "Sinh viên có thể dùng"
 
+<RULE_USAGE_PREFIX> ::= "có được sử dụng"
+                       | "có được dùng"
+
 <RULE_QUESTION_TAIL> ::= "không?"
                         | "trong bài tập lớn không?"
 
@@ -222,6 +260,10 @@
             | "mô tả năng lực gì?"
             | "đề cập đến kiến thức nào?"
             | "yêu cầu sinh viên có khả năng gì?"
+
+<Q_UNKNOWN> ::= "Hôm nay ở TP.HCM có mưa không?"
+              | "Ai là tổng thống của Pháp?"
+              | "Hãy giải bài tập xác suất này giúp tôi."
 
 <WEEK_NUMBER> ::= "1" | "2" | "3" | "4" | "5"
                  | "6" | "7" | "8" | "9" | "10"

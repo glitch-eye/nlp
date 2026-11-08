@@ -61,7 +61,7 @@ Kết quả được xuất ra file: `output/samples.txt`.
 ### 3.3 Phân tích cú pháp câu hỏi (3.3)
 Chạy bộ phân tích cú pháp (Earley Parser) trên tập câu kiểm thử `input/sentences.txt`:
 ```bash
-python -m hcmut.iaslab.nlp.app.run_parser --input input/sentences.txt --output output/parse-results.txt --grammar output/grammar.txt
+python -m run_parser --input input/sentences.txt --output output/parse-results.txt --grammar output/grammar.txt
 ```
 Đối với mỗi câu:
 - Hợp lệ: xuất cây cú pháp dạng ngoặc `(S ...)`.

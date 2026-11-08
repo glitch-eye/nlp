@@ -10,8 +10,8 @@ PACKAGE_ROOT = APP_DIR.parents[2]  # hcmut/, so `iaslab.*` imports resolve.
 if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
-from iaslab.nlp.app.course_grammar import CourseGrammar
-from iaslab.nlp.app.sentence_generator import generate_to_file
+from nlp.app.course_grammar import CourseGrammar
+from nlp.app.sentence_generator import generate_to_file
 
 
 def main():
