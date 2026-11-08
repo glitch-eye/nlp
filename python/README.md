@@ -64,7 +64,7 @@ curl -X POST http://127.0.0.1:8000/retrieve \
   -d '{"query":"Tuần 3 học gì?"}'
 ```
 
-Mặc định retriever trả tối đa 3 chunk (`top_k=3`), với ngưỡng score `0.08`. API chưa sinh câu trả lời bằng LLM.
+Retriever parse query theo CFG rồi kết hợp điểm semantic (intent/entity của query so với frame gắn vào từng chunk) với TF-IDF. Nếu parser không tạo được intent hợp lệ, hệ thống vẫn xếp hạng bằng TF-IDF. Mặc định trả tối đa 3 chunk (`top_k=3`), ngưỡng score `0.08`, trọng số TF-IDF `0.75`. API chưa sinh câu trả lời bằng LLM.
 
 ### 3.1 Sinh văn phạm (3.1)
 File văn phạm chuẩn định dạng BNF được đặt tại:

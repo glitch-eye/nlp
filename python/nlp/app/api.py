@@ -12,7 +12,7 @@ from nlp.app.retriever import Retriever
 class RetrievalService:
     """Load the course knowledge base and fit the retrieval index once."""
 
-    def __init__(self, data_dir=None, top_k=3, min_score=0.08):
+    def __init__(self, data_dir=None, top_k=3, min_score=0.08, lexical_weight=0.75):
         self.data_dir = Path(data_dir or default_data_dir())
         self.knowledge_base = KnowledgeBase(self.data_dir)
         self.retriever = Retriever(
@@ -20,6 +20,7 @@ class RetrievalService:
             aliases=self.knowledge_base.aliases,
             top_k=top_k,
             min_score=min_score,
+            lexical_weight=lexical_weight,
         )
 
     def retrieve(self, query):
@@ -48,6 +49,8 @@ def make_handler(service):
                 "document_count": len(service.knowledge_base.documents),
                 "top_k": service.retriever.top_k,
                 "min_score": service.retriever.min_score,
+                "lexical_weight": service.retriever.lexical_weight,
+                "semantic_weight": service.retriever.semantic_weight,
             })
 
         def do_POST(self):
@@ -90,12 +93,14 @@ def main():
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--top-k", type=int, default=3)
     parser.add_argument("--min-score", type=float, default=0.08)
+    parser.add_argument("--lexical-weight", type=float, default=0.75)
     args = parser.parse_args()
 
     service = RetrievalService(
         data_dir=args.data_dir,
         top_k=args.top_k,
         min_score=args.min_score,
+        lexical_weight=args.lexical_weight,
     )
     server = ThreadingHTTPServer((args.host, args.port), make_handler(service))
     print(

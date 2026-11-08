@@ -6,6 +6,8 @@ import unicodedata
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+from nlp.app.semantic_frame import chunk_frame, query_frame
+
 
 def _normalize(text):
     text = unicodedata.normalize("NFKD", text.casefold())
@@ -21,12 +23,26 @@ def _entity_token(entity_id):
 class Retriever:
     """Fit a TF-IDF index once and return ranked source-aware chunks."""
 
-    def __init__(self, documents, aliases=None, top_k=3, min_score=0.08):
+    def __init__(self, documents, aliases=None, top_k=3, min_score=0.08,
+                 parser=None, lexical_weight=0.75):
         self.documents = list(documents)
         self.aliases = aliases or []
         self.top_k = top_k
         # Initial threshold for inspection; calibrate against sample_queries.txt.
         self.min_score = min_score
+        self.lexical_weight = lexical_weight
+        if not 0.0 <= lexical_weight <= 1.0:
+            raise ValueError("lexical_weight must be between 0 and 1")
+        self.semantic_weight = 1.0 - lexical_weight
+        self.chunk_frames = [chunk_frame(document) for document in self.documents]
+        if parser is None:
+            try:
+                from nlp.app.parser import CourseParser
+                parser = CourseParser()
+            except Exception:
+                # A broken/missing grammar degrades to lexical-only retrieval.
+                parser = None
+        self.parser = parser
         if not self.documents:
             raise ValueError("Retriever requires at least one document")
 
@@ -92,10 +108,42 @@ class Retriever:
             return query
         return "{} {}".format(query, " ".join(dict.fromkeys(additions)))
 
+    def _semantic_scores(self, frame):
+        if not frame or frame.get("intent") in (None, "UNKNOWN"):
+            return [0.0] * len(self.documents)
+        intent = frame.get("intent")
+        query_entities = set(frame.get("entity_ids", []))
+        scores = []
+        for chunk in self.chunk_frames:
+            intent_match = intent in chunk["intents"]
+            # FAQ chunks can support many intents, but should not outrank the
+            # primary source category for a broad, entity-free question.
+            faq_fallback = chunk["kind"] == "faq" and intent_match
+            entity_match = query_entities.intersection(chunk["entity_ids"])
+            # Entity agreement is the stronger signal when entities exist.
+            if not query_entities:
+                # Generic questions use parsed intent to select their source kind.
+                scores.append(0.1 if faq_fallback else (1.0 if intent_match else 0.0))
+                continue
+            entity_score = len(entity_match) / float(len(query_entities))
+            intent_prior = 0.05 if faq_fallback else (0.2 if intent_match else 0.0)
+            scores.append(intent_prior + 0.8 * entity_score)
+        return scores
+
     def retrieve(self, question, semantic=None, top_k=None):
+        parsed_frame = query_frame(question, self.parser, self.aliases) if self.parser else None
+        frame = semantic or parsed_frame
         query = self.expand_query(question, semantic=semantic)
         query_vector = self.vectorizer.transform([query])
-        scores = cosine_similarity(query_vector, self.matrix).ravel()
+        lexical_scores = cosine_similarity(query_vector, self.matrix).ravel()
+        semantic_scores = self._semantic_scores(frame)
+        if frame and frame.get("intent") not in (None, "UNKNOWN"):
+            scores = [
+                self.lexical_weight * float(lexical) + self.semantic_weight * semantic_score
+                for lexical, semantic_score in zip(lexical_scores, semantic_scores)
+            ]
+        else:
+            scores = [float(score) for score in lexical_scores]
         ranked = sorted(enumerate(scores), key=lambda item: (-float(item[1]), item[0]))
         limit = self.top_k if top_k is None else top_k
         selected = [(index, float(score)) for index, score in ranked[:limit] if score >= self.min_score]

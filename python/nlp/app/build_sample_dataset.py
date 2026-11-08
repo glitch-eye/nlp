@@ -8,6 +8,7 @@ from pathlib import Path
 
 from nlp.app.knowledge_base import KnowledgeBase, default_data_dir, load_entity_aliases
 from nlp.app.parser import CourseParser, ParseNode
+from nlp.app.semantic_frame import frame_from_tree
 from nlp.app.sentence_generator import SentenceGenerator
 
 
@@ -66,50 +67,8 @@ def _add_alias_entity(text, aliases, found):
 
 
 def semantic_labels(tree, aliases):
-    intent = next((TREE_INTENT_TO_INTENT.get(node.label, "UNKNOWN") for node in tree.children
-                   if isinstance(node, ParseNode) and node.label.startswith("Q_")), "UNKNOWN")
-    entities = []
-
-    for label in ("COURSE_REF", "EXAM_REF", "WEEK_REF", "CHAPTER_REF", "TOPIC_REF",
-                  "ASSIGNMENT_REF", "PART_REF", "RESOURCE_TOPIC", "RESOURCE_REF",
-                  "RULE_REF", "RULE_OBJECT", "LO_REF", "DEADLINE_REF"):
-        node = first_node(tree, label)
-        if node is None:
-            continue
-        value = node_text(node)
-        if label == "COURSE_REF":
-            entities.append("CO3085")
-        elif label == "EXAM_REF":
-            entities.append("MIDTERM" if "midterm" in value.casefold() or "giữa kỳ" in value.casefold() else "FINAL")
-        elif label == "WEEK_REF":
-            number = re.search(r"\d+", value)
-            if number:
-                entities.append("WEEK_{:02d}".format(int(number.group(0))))
-        elif label == "CHAPTER_REF":
-            number = re.search(r"\d+", value)
-            if number:
-                entities.append("CH{:02d}".format(int(number.group(0))))
-        elif label == "LO_REF":
-            match = re.search(r"\d+\.\d+", value)
-            if match:
-                entities.append("LO" + match.group(0))
-        elif label in ("ASSIGNMENT_REF", "DEADLINE_REF"):
-            entities.append("BTL01")
-        elif label == "RULE_OBJECT":
-            entities.append("LLM_RAG" if "llm" in value.casefold() else "AI_USAGE")
-        elif label == "RULE_REF":
-            entities.append("LLM_RAG" if "llm/rag" in value.casefold() else "AI_USAGE")
-        elif label == "RESOURCE_TOPIC":
-            normalized = normalize(value)
-            entities.append(
-                "PYTHON_NLP" if "python" in normalized else
-                "STATISTICAL_NLP" if "statistical" in normalized or "thong ke" in normalized else
-                "MACHINE_TRANSLATION"
-            )
-        else:
-            _add_alias_entity(value, aliases, entities)
-
-    return intent, list(dict.fromkeys(entities))
+    frame = frame_from_tree(tree, " ".join(node_text(tree).split()), aliases)
+    return frame["intent"], frame["entity_ids"]
 
 
 def expected_chunks(intent, entity_ids, documents):
