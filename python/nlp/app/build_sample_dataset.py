@@ -119,12 +119,13 @@ def expected_chunks(intent, entity_ids, documents):
     kind = INTENT_TO_KIND.get(intent)
     if not kind:
         return []
-    candidates = [doc for doc in documents if doc["kind"] == kind]
+    primary_documents = [doc for doc in documents if doc["kind"] == kind]
     candidate_entity_ids = set(
-        entity for doc in candidates for entity in doc.get("entity_ids", [])
+        entity for doc in primary_documents for entity in doc.get("entity_ids", [])
     )
     relevant_entities = set(entity_ids).intersection(candidate_entity_ids)
-    matched = [doc["chunk_id"] for doc in candidates
+    # A valid answer can also be supported by an FAQ or another source kind.
+    matched = [doc["chunk_id"] for doc in documents
                if relevant_entities and relevant_entities.issubset(set(doc.get("entity_ids", [])))]
     resource_terms = {
         "STATISTICAL_NLP": ("statistical", "statistics"),
@@ -133,7 +134,7 @@ def expected_chunks(intent, entity_ids, documents):
     }
     if intent == "GET_RESOURCE" and not matched:
         terms = tuple(term for entity in entity_ids for term in resource_terms.get(entity, ()))
-        matched = [doc["chunk_id"] for doc in candidates
+        matched = [doc["chunk_id"] for doc in documents
                    if any(term in normalize(doc["text"]) for term in terms)]
     if matched:
         return matched
@@ -141,7 +142,7 @@ def expected_chunks(intent, entity_ids, documents):
         return []
     if intent in ("GET_COURSE_INFO", "GET_SCHEDULE", "GET_ASSIGNMENT",
                   "GET_RESOURCE", "GET_RULE", "GET_LO"):
-        matched = [doc["chunk_id"] for doc in candidates]
+        matched = [doc["chunk_id"] for doc in primary_documents]
     return matched
 
 

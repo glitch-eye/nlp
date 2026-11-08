@@ -1,441 +1,355 @@
 Q001
 Query: Môn NLP có bao nhiêu tín chỉ?
+Intent: GET_COURSE_INFO
 Retrieval status: FOUND
-1. faq-q1-0 | score=0.7817 | faq.txt / Q1
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING
+1. faq-q1-0 | score=0.7810 | faq.txt / Q1
+2. resources-textbook-3-2 | score=0.2912 | resources.txt / TEXTBOOK 3
+3. course-info-course-description-2 | score=0.2792 | course_info.txt / course_description
    Q1: question: Môn NLP có bao nhiêu tín chỉ? answer: Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ.
-2. resources-textbook-3-2 | score=0.3017 | resources.txt / TEXTBOOK 3
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING, REFERENCE
    TEXTBOOK 3 title: Xử lý ngôn ngữ tự nhiên author: Phan Thị Tươi publisher: Nhà xuất bản Đại học Quốc gia TP Hồ Chí Minh year: 2012 usage: Vietnamese NLP reference
-3. course-info-course-description-2 | score=0.2952 | course_info.txt / course_description
-   entity_ids: PART_III, CONTEXT_AND_WORLD_KNOWLEDGE, CO3085, NLP, NATURAL_LANGUAGE_PROCESSING, PART_II, SEMANTIC_INTERPRETATION, PART_I, SYNTACTIC_PROCESSING
    course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phần chính: (1) Xử lý cú pháp, (2) Diễn dịch ngữ nghĩa, và (3) Ngữ cảnh và tri thức thế giới.
 
 Q002
 Query: CO3085 có mấy tín chỉ?
+Intent: GET_COURSE_INFO
 Retrieval status: FOUND
-1. faq-q1-0 | score=0.6658 | faq.txt / Q1
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING
+1. faq-q1-0 | score=0.6551 | faq.txt / Q1
+2. course-info-course-id-co3085-1 | score=0.3177 | course_info.txt / course_id: CO3085
+3. resources-textbook-3-2 | score=0.3128 | resources.txt / TEXTBOOK 3
    Q1: question: Môn NLP có bao nhiêu tín chỉ? answer: Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ.
-2. resources-textbook-3-2 | score=0.3567 | resources.txt / TEXTBOOK 3
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING, REFERENCE
-   TEXTBOOK 3 title: Xử lý ngôn ngữ tự nhiên author: Phan Thị Tươi publisher: Nhà xuất bản Đại học Quốc gia TP Hồ Chí Minh year: 2012 usage: Vietnamese NLP reference
-3. course-info-course-id-co3085-1 | score=0.3300 | course_info.txt / course_id: CO3085
-   entity_ids: NATURAL_LANGUAGE_PROCESSING, CO3085, NLP
    course_id: CO3085 course_name: Xử lý Ngôn ngữ Tự nhiên course_name_en: Natural Language Processing semester: HK261 credits: 3 ects: 6 course_type: Specialty / Graduation knowledge block department: Khoa Khoa học và Kỹ thuật Máy tính format: 2 lecture periods per week, 15 weeks total_course_hours: 150 lecture_hours: 30 major_assignment_hours: 45 self_study_hours: 60
+   TEXTBOOK 3 title: Xử lý ngôn ngữ tự nhiên author: Phan Thị Tươi publisher: Nhà xuất bản Đại học Quốc gia TP Hồ Chí Minh year: 2012 usage: Vietnamese NLP reference
 
 Q003
 Query: Môn học gồm những phần nào?
+Intent: GET_COURSE_INFO
 Retrieval status: FOUND
-1. faq-q2-1 | score=0.4038 | faq.txt / Q2
-   entity_ids: PART_III, CONTEXT_AND_WORLD_KNOWLEDGE, PART_II, SEMANTIC_INTERPRETATION, PART_I, SYNTACTIC_PROCESSING, NLP
+1. faq-q2-1 | score=0.4048 | faq.txt / Q2
+2. faq-q7-6 | score=0.1312 | faq.txt / Q7
+3. faq-q12-11 | score=0.1246 | faq.txt / Q12
    Q2: question: NLP có những phần chính nào? answer: Môn học gồm ba phần chính: Xử lý cú pháp; Diễn dịch ngữ nghĩa; và Ngữ cảnh và tri thức thế giới.
-2. faq-q12-11 | score=0.1294 | faq.txt / Q12
-   entity_ids: NLP
-   Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
-3. faq-q7-6 | score=0.1291 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
+   Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
 
 Q004
 Query: Tuần 3 học gì?
+Intent: GET_SCHEDULE
 Retrieval status: FOUND
-1. regulations-academic-integrity-2 | score=0.2344 | regulations.txt / academic_integrity
-   entity_ids: (none)
+1. regulations-academic-integrity-2 | score=0.1907 | regulations.txt / academic_integrity
+2. schedule-week-03-3 | score=0.1895 | schedule.txt / WEEK 03
+3. regulations-external-libraries-6 | score=0.1412 | regulations.txt / external_libraries
    academic_integrity: Sinh viên phải tuân thủ nguyên tắc liêm chính học thuật và code of ethics.
-2. faq-q11-10 | score=0.1773 | faq.txt / Q11
-   entity_ids: (none)
-   Q11: question: L.O.3.3 liên quan đến nội dung gì? answer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê.
-3. regulations-external-libraries-6 | score=0.1734 | regulations.txt / external_libraries
-   entity_ids: (none)
+   WEEK 03 part: Syntactic Processing chapter: Chapter 3 topics: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies
    external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập.
 
 Q005
 Query: Chương 4 học vào tuần nào?
+Intent: GET_SCHEDULE
 Retrieval status: FOUND
-1. faq-q5-4 | score=0.4691 | faq.txt / Q5
-   entity_ids: AUGMENTED_GRAMMAR, CH04, FEATURES
+1. faq-q5-4 | score=0.4531 | faq.txt / Q5
+2. faq-q7-6 | score=0.2917 | faq.txt / Q7
+3. faq-q8-7 | score=0.2731 | faq.txt / Q8
    Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
-2. faq-q7-6 | score=0.2820 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-3. faq-q8-7 | score=0.2646 | faq.txt / Q8
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, PART_III, CH12
    Q8: question: Chương nào học về local discourse context? answer: Chương 12.
 
 Q006
 Query: Chương nào nói về CFG?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q3-2 | score=0.5313 | faq.txt / Q3
-   entity_ids: CH03, CFG
+1. faq-q3-2 | score=0.5233 | faq.txt / Q3
+2. faq-q8-7 | score=0.2876 | faq.txt / Q8
+3. topics-chapter-3-grammar-and-parsing-2 | score=0.2836 | topics.txt / CHAPTER 3: GRAMMAR AND PARSING
    Q3: question: Chương nào học về CFG? answer: CFG được trình bày trong Chương 3, Grammar and Parsing.
-2. schedule-week-03-3 | score=0.3145 | schedule.txt / WEEK 03
-   entity_ids: PCFG, SYNTACTIC_PROCESSING, CFG, DEPENDENCY_GRAMMAR
-   WEEK 03 part: Syntactic Processing chapter: Chapter 3 topics: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies
-3. schedule-week-07-7 | score=0.2899 | schedule.txt / WEEK 07
-   entity_ids: PCFG, SYNTACTIC_PROCESSING, CFG
-   WEEK 07 part: Syntactic Processing chapter: Chapter 6 topics: - basic probability theory - estimating probabilities - part-of-speech tagging - lexical probabilities - probabilistic context-free grammar
+   Q8: question: Chương nào học về local discourse context? answer: Chương 12.
+   CHAPTER 3: GRAMMAR AND PARSING chapter_id: CH03 part: Syntactic Processing keywords: CFG, parsing, PCFG, dependency grammar summary: The chapter introduces context-free grammar, sentence structure and parsing methods. It also introduces probabilistic CFG and dependency grammar. subtopics: 3.1 Context-Free Grammars 3.1.1 Grammar and sentence structure 3.1.2 What marks a good grammar 3.1.3 Top-down parser 3.1.4 Bottom-up chart parser 3.1.5 Top-down chart parser 3.2 Probabilistic Context-Free Grammars 3.3 Dependency Grammar and Parsing 3.4 Stanford Dependencies
 
 Q007
 Query: PCFG được học ở đâu?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. schedule-week-03-3 | score=0.3877 | schedule.txt / WEEK 03
-   entity_ids: PCFG, SYNTACTIC_PROCESSING, CFG, DEPENDENCY_GRAMMAR
-   WEEK 03 part: Syntactic Processing chapter: Chapter 3 topics: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies
-2. schedule-week-07-7 | score=0.3853 | schedule.txt / WEEK 07
-   entity_ids: PCFG, SYNTACTIC_PROCESSING, CFG
-   WEEK 07 part: Syntactic Processing chapter: Chapter 6 topics: - basic probability theory - estimating probabilities - part-of-speech tagging - lexical probabilities - probabilistic context-free grammar
-3. topics-chapter-3-grammar-and-parsing-2 | score=0.3464 | topics.txt / CHAPTER 3: GRAMMAR AND PARSING
-   entity_ids: SYNTACTIC_PROCESSING, CFG, DEPENDENCY_GRAMMAR, PCFG
+1. topics-chapter-3-grammar-and-parsing-2 | score=0.3290 | topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+2. faq-q4-3 | score=0.3137 | faq.txt / Q4
+3. schedule-week-03-3 | score=0.3130 | schedule.txt / WEEK 03
    CHAPTER 3: GRAMMAR AND PARSING chapter_id: CH03 part: Syntactic Processing keywords: CFG, parsing, PCFG, dependency grammar summary: The chapter introduces context-free grammar, sentence structure and parsing methods. It also introduces probabilistic CFG and dependency grammar. subtopics: 3.1 Context-Free Grammars 3.1.1 Grammar and sentence structure 3.1.2 What marks a good grammar 3.1.3 Top-down parser 3.1.4 Bottom-up chart parser 3.1.5 Top-down chart parser 3.2 Probabilistic Context-Free Grammars 3.3 Dependency Grammar and Parsing 3.4 Stanford Dependencies
+   Q4: question: Chương nào học về PCFG? answer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê.
+   WEEK 03 part: Syntactic Processing chapter: Chapter 3 topics: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies
 
 Q008
 Query: Chương nào nói về semantic grammar?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q6-5 | score=0.4299 | faq.txt / Q6
-   entity_ids: SEMANTIC_INTERPRETATION, SEMANTIC_GRAMMAR, CH10
+1. faq-q6-5 | score=0.4350 | faq.txt / Q6
+2. course-info-detailed-learning-outcomes-6 | score=0.2561 | course_info.txt / detailed_learning_outcomes
+3. faq-q5-4 | score=0.2391 | faq.txt / Q5
    Q6: question: Chương nào học về semantic grammar? answer: Chương 10, Other Strategies for Semantic Interpretation.
-2. course-info-detailed-learning-outcomes-6 | score=0.2847 | course_info.txt / detailed_learning_outcomes
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, PART_II, SEMANTIC_INTERPRETATION, SEMANTIC_GRAMMAR, KNOWLEDGE_REPRESENTATION, AUGMENTED_GRAMMAR, LOGICAL_FORM, REFERENCE, QUESTION_ANSWERING, NLP, FEATURES
    detailed_learning_outcomes: LO1.1 - Hiểu cấu trúc hệ thống NLP, ứng dụng và cách đánh giá hệ thống hiểu ngôn ngữ tự nhiên. LO2.1 - Kiến thức cơ sở về cú pháp tiếng Anh. LO2.2 - Kiến thức cơ bản về văn phạm và phân tích cú pháp. LO2.3 - Kiến thức về nét và văn phạm gia tố. LO2.4 - Kiến thức tạo văn phạm cho ngôn ngữ tự nhiên và phương pháp parsing. LO2.5 - Kiến thức xác suất để giải quyết nhập nhằng từ ở mức câu. LO3.1 - Kiến thức về ngôn ngữ dạng luận lý và tạo dạng luận lý đơn giản. LO3.2 - Tạo tự động diễn dịch ngữ nghĩa cho câu tự nhiên. LO3.3 - Giải quyết nhập nhằng ngữ nghĩa dựa trên tri thức và thống kê. LO3.4 - Diễn dịch ngữ nghĩa bằng quan hệ văn phạm và văn phạm ngữ nghĩa. LO4.1 - Biểu diễn tri thức, suy diễn và xây dựng hệ thống hỏi đáp đơn giản. LO4.2 - Ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.
-3. faq-q3-2 | score=0.2386 | faq.txt / Q3
-   entity_ids: CH03, CFG
-   Q3: question: Chương nào học về CFG? answer: CFG được trình bày trong Chương 3, Grammar and Parsing.
+   Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
 
 Q009
 Query: L.O.2.5 là gì?
+Intent: GET_LO
 Retrieval status: FOUND
-1. faq-q10-9 | score=0.4780 | faq.txt / Q10
-   entity_ids: (none)
+1. faq-q10-9 | score=0.5456 | faq.txt / Q10
+2. faq-q9-8 | score=0.3300 | faq.txt / Q9
+3. faq-q11-10 | score=0.2904 | faq.txt / Q11
    Q10: question: L.O.2.5 liên quan đến nội dung gì? answer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập nhằng từ ở mức câu.
-2. faq-q9-8 | score=0.3907 | faq.txt / Q9
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, REFERENCE
    Q9: question: L.O.4.2 liên quan đến nội dung gì? answer: L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.
-3. faq-q11-10 | score=0.3438 | faq.txt / Q11
-   entity_ids: (none)
    Q11: question: L.O.3.3 liên quan đến nội dung gì? answer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê.
 
 Q010
 Query: L.O.4.2 liên quan đến nội dung nào?
+Intent: GET_LO
 Retrieval status: FOUND
-1. faq-q9-8 | score=0.6813 | faq.txt / Q9
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, REFERENCE
+1. faq-q9-8 | score=0.7171 | faq.txt / Q9
+2. faq-q10-9 | score=0.5774 | faq.txt / Q10
+3. faq-q11-10 | score=0.5330 | faq.txt / Q11
    Q9: question: L.O.4.2 liên quan đến nội dung gì? answer: L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.
-2. faq-q10-9 | score=0.6544 | faq.txt / Q10
-   entity_ids: (none)
    Q10: question: L.O.2.5 liên quan đến nội dung gì? answer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập nhằng từ ở mức câu.
-3. faq-q11-10 | score=0.6050 | faq.txt / Q11
-   entity_ids: (none)
    Q11: question: L.O.3.3 liên quan đến nội dung gì? answer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê.
 
 Q011
 Query: Bài tập lớn yêu cầu xây dựng những gì?
+Intent: GET_ASSIGNMENT
 Retrieval status: FOUND
-1. faq-q12-11 | score=0.3760 | faq.txt / Q12
-   entity_ids: NLP
-   Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
+1. faq-q12-11 | score=0.3622 | faq.txt / Q12
 2. regulations-external-libraries-6 | score=0.3271 | regulations.txt / external_libraries
-   entity_ids: (none)
+3. schedule-luu-y-ay-la-ke-hoach-mau-uoc-xay-dung-tu-cau-truc-12-chuong-trong-0 | score=0.2029 | schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong
+   Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
    external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập.
-3. schedule-luu-y-ay-la-ke-hoach-mau-uoc-xay-dung-tu-cau-truc-12-chuong-trong-0 | score=0.2021 | schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong
-   entity_ids: CO3085
    Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong đề cương CO3085. Nó phục vụ bài tập Course Assistant và không thay thế lịch học hành chính chính thức.
 
 Q012
 Query: Phần I của bài tập lớn là gì?
+Intent: GET_ASSIGNMENT
 Retrieval status: FOUND
-1. assignments-luu-y-0 | score=0.2316 | assignments.txt / Lưu ý
-   entity_ids: BTL01, SEMANTIC_INTERPRETATION, QUESTION_ANSWERING, NLP
-   Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering.
+1. assignments-luu-y-0 | score=0.2311 | assignments.txt / Lưu ý
 2. regulations-external-libraries-6 | score=0.2189 | regulations.txt / external_libraries
-   entity_ids: (none)
+3. faq-q12-11 | score=0.1898 | faq.txt / Q12
+   Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering.
    external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập.
-3. faq-q12-11 | score=0.1970 | faq.txt / Q12
-   entity_ids: NLP
    Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
 
 Q013
 Query: Bài tập lớn có phần hỏi đáp không?
+Intent: GET_ASSIGNMENT
 Retrieval status: FOUND
-1. faq-q12-11 | score=0.2517 | faq.txt / Q12
-   entity_ids: NLP
+1. faq-q12-11 | score=0.2425 | faq.txt / Q12
+2. assignments-luu-y-0 | score=0.2200 | assignments.txt / Lưu ý
+3. course-info-learning-outcomes-5 | score=0.2079 | course_info.txt / learning_outcomes
    Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
-2. assignments-luu-y-0 | score=0.2205 | assignments.txt / Lưu ý
-   entity_ids: BTL01, SEMANTIC_INTERPRETATION, QUESTION_ANSWERING, NLP
    Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering.
-3. course-info-learning-outcomes-5 | score=0.2096 | course_info.txt / learning_outcomes
-   entity_ids: PART_II, SEMANTIC_INTERPRETATION, PART_I, SYNTACTIC_PROCESSING, LOGICAL_FORM, QUESTION_ANSWERING, NLP
    learning_outcomes: LO1 - Tổng quan về tổ chức hệ thống NLP và các ứng dụng. LO2 - Xử lý cú pháp; xây dựng văn phạm đơn giản và phân tích cú pháp. LO3 - Diễn dịch ngữ nghĩa; tạo dạng luận lý và giải quyết nhập nhằng. LO4 - Ngữ nghĩa và tri thức thế giới; xây dựng cơ sở tri thức và hệ thống hỏi đáp đơn giản.
 
 Q014
 Query: Có được dùng LLM/RAG không?
+Intent: GET_RULE
 Retrieval status: FOUND
-1. faq-q12-11 | score=0.5385 | faq.txt / Q12
-   entity_ids: NLP
+1. faq-q12-11 | score=0.5186 | faq.txt / Q12
+2. assignments-llm-rag-extension-5 | score=0.3325 | assignments.txt / LLM/RAG EXTENSION
+3. regulations-llm-rag-7 | score=0.2622 | regulations.txt / LLM_RAG
    Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
-2. assignments-llm-rag-extension-5 | score=0.3412 | assignments.txt / LLM/RAG EXTENSION
-   entity_ids: NLP
    LLM/RAG EXTENSION ----------------- status: optional description: Sinh viên có thể mở rộng bằng retrieval và/hoặc LLM. Phần này chỉ là mở rộng của NLP, không bắt buộc. not_required: - agent - multi-agent - fine-tuning LLM - huấn luyện language model - RAG pipeline quy mô lớn
-3. regulations-llm-rag-7 | score=0.2752 | regulations.txt / LLM_RAG
-   entity_ids: (none)
    LLM_RAG: LLM/RAG nếu được sử dụng chỉ nên đóng vai trò mở rộng. Sinh viên phải mô tả rõ mô hình, dữ liệu, retrieval và cách đánh giá.
 
 Q015
 Query: Quy định về sử dụng AI là gì?
+Intent: GET_RULE
 Retrieval status: FOUND
-1. regulations-ai-usage-3 | score=0.3533 | regulations.txt / AI_usage
-   entity_ids: (none)
-   AI_usage: Sinh viên phải khai báo việc sử dụng AI trong báo cáo, nghiên cứu và quá trình thực hiện theo quy định của môn học.
+1. regulations-ai-usage-3 | score=0.3262 | regulations.txt / AI_usage
 2. regulations-luu-y-0 | score=0.2016 | regulations.txt / Lưu ý
-   entity_ids: (none)
+3. faq-q4-3 | score=0.1336 | faq.txt / Q4
+   AI_usage: Sinh viên phải khai báo việc sử dụng AI trong báo cáo, nghiên cứu và quá trình thực hiện theo quy định của môn học.
    Lưu ý: Các quy định chi tiết về deadline, format nộp bài và chính sách lớp học trong file này là dữ liệu MẪU phục vụ Course Assistant. Khi triển khai thực tế, các thông tin này phải được thay bằng thông tin chính thức.
-3. faq-q4-3 | score=0.1326 | faq.txt / Q4
-   entity_ids: CH03, CH06, PCFG
    Q4: question: Chương nào học về PCFG? answer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê.
 
 Q016
 Query: Midterm bao nhiêu phút?
+Intent: GET_COURSE_INFO
 Retrieval status: FOUND
-1. faq-q14-13 | score=0.4509 | faq.txt / Q14
-   entity_ids: (none)
+1. faq-q14-13 | score=0.4132 | faq.txt / Q14
+2. faq-q15-14 | score=0.2069 | faq.txt / Q15
+3. faq-q1-0 | score=0.1976 | faq.txt / Q1
    Q14: question: Midterm kéo dài bao lâu? answer: Theo đề cương, midterm có thời lượng 60 phút.
-2. faq-q15-14 | score=0.2237 | faq.txt / Q15
-   entity_ids: (none)
    Q15: question: Final kéo dài bao lâu? answer: Theo đề cương, final có thời lượng 90 phút.
-3. faq-q1-0 | score=0.1958 | faq.txt / Q1
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING
    Q1: question: Môn NLP có bao nhiêu tín chỉ? answer: Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ.
 
 Q017
 Query: Final bao nhiêu phút?
+Intent: GET_COURSE_INFO
 Retrieval status: FOUND
-1. faq-q15-14 | score=0.4322 | faq.txt / Q15
-   entity_ids: (none)
+1. faq-q15-14 | score=0.3998 | faq.txt / Q15
+2. faq-q14-13 | score=0.2071 | faq.txt / Q14
+3. faq-q1-0 | score=0.2012 | faq.txt / Q1
    Q15: question: Final kéo dài bao lâu? answer: Theo đề cương, final có thời lượng 90 phút.
-2. faq-q14-13 | score=0.2260 | faq.txt / Q14
-   entity_ids: (none)
    Q14: question: Midterm kéo dài bao lâu? answer: Theo đề cương, midterm có thời lượng 60 phút.
-3. faq-q1-0 | score=0.1994 | faq.txt / Q1
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING
    Q1: question: Môn NLP có bao nhiêu tín chỉ? answer: Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ.
 
 Q018
 Query: Tài liệu tham khảo về statistical NLP là gì?
+Intent: GET_RESOURCE
 Retrieval status: FOUND
-1. faq-q1-0 | score=0.3161 | faq.txt / Q1
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING
+1. faq-q1-0 | score=0.3032 | faq.txt / Q1
+2. resources-textbook-3-2 | score=0.2428 | resources.txt / TEXTBOOK 3
+3. course-info-course-description-2 | score=0.2400 | course_info.txt / course_description
    Q1: question: Môn NLP có bao nhiêu tín chỉ? answer: Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ.
-2. course-info-course-description-2 | score=0.2563 | course_info.txt / course_description
-   entity_ids: PART_III, CONTEXT_AND_WORLD_KNOWLEDGE, CO3085, NLP, NATURAL_LANGUAGE_PROCESSING, PART_II, SEMANTIC_INTERPRETATION, PART_I, SYNTACTIC_PROCESSING
-   course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phần chính: (1) Xử lý cú pháp, (2) Diễn dịch ngữ nghĩa, và (3) Ngữ cảnh và tri thức thế giới.
-3. resources-textbook-3-2 | score=0.2542 | resources.txt / TEXTBOOK 3
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING, REFERENCE
    TEXTBOOK 3 title: Xử lý ngôn ngữ tự nhiên author: Phan Thị Tươi publisher: Nhà xuất bản Đại học Quốc gia TP Hồ Chí Minh year: 2012 usage: Vietnamese NLP reference
+   course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phần chính: (1) Xử lý cú pháp, (2) Diễn dịch ngữ nghĩa, và (3) Ngữ cảnh và tri thức thế giới.
 
 Q019
 Query: Tài liệu nào liên quan đến Python NLP?
+Intent: GET_RESOURCE
 Retrieval status: FOUND
-1. faq-q9-8 | score=0.3256 | faq.txt / Q9
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, REFERENCE
+1. faq-q9-8 | score=0.3140 | faq.txt / Q9
+2. faq-q10-9 | score=0.3010 | faq.txt / Q10
+3. faq-q1-0 | score=0.2915 | faq.txt / Q1
    Q9: question: L.O.4.2 liên quan đến nội dung gì? answer: L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.
-2. faq-q10-9 | score=0.3118 | faq.txt / Q10
-   entity_ids: (none)
    Q10: question: L.O.2.5 liên quan đến nội dung gì? answer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập nhằng từ ở mức câu.
-3. faq-q1-0 | score=0.3043 | faq.txt / Q1
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING
    Q1: question: Môn NLP có bao nhiêu tín chỉ? answer: Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ.
 
 Q020
 Query: Chương 12 nói về gì?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q8-7 | score=0.5234 | faq.txt / Q8
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, PART_III, CH12
+1. faq-q8-7 | score=0.5121 | faq.txt / Q8
+2. faq-q7-6 | score=0.2386 | faq.txt / Q7
+3. faq-q5-4 | score=0.2136 | faq.txt / Q5
    Q8: question: Chương nào học về local discourse context? answer: Chương 12.
-2. faq-q7-6 | score=0.2325 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-3. faq-q3-2 | score=0.2111 | faq.txt / Q3
-   entity_ids: CH03, CFG
-   Q3: question: Chương nào học về CFG? answer: CFG được trình bày trong Chương 3, Grammar and Parsing.
+   Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
 
 Q021
 Query: Chương nào học về reference?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q7-6 | score=0.3054 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
+1. faq-q7-6 | score=0.3203 | faq.txt / Q7
+2. faq-q8-7 | score=0.2999 | faq.txt / Q8
+3. faq-q5-4 | score=0.2867 | faq.txt / Q5
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-2. faq-q8-7 | score=0.2866 | faq.txt / Q8
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, PART_III, CH12
    Q8: question: Chương nào học về local discourse context? answer: Chương 12.
-3. faq-q3-2 | score=0.2773 | faq.txt / Q3
-   entity_ids: CH03, CFG
-   Q3: question: Chương nào học về CFG? answer: CFG được trình bày trong Chương 3, Grammar and Parsing.
+   Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
 
 Q022
 Query: Chương nào học về question answering?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q7-6 | score=0.3270 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
+1. faq-q7-6 | score=0.3324 | faq.txt / Q7
+2. faq-q8-7 | score=0.3112 | faq.txt / Q8
+3. faq-q5-4 | score=0.2975 | faq.txt / Q5
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-2. faq-q8-7 | score=0.3068 | faq.txt / Q8
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, PART_III, CH12
    Q8: question: Chương nào học về local discourse context? answer: Chương 12.
-3. faq-q3-2 | score=0.2969 | faq.txt / Q3
-   entity_ids: CH03, CFG
-   Q3: question: Chương nào học về CFG? answer: CFG được trình bày trong Chương 3, Grammar and Parsing.
+   Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
 
 Q023
 Query: Chương nào học về selectional restriction?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. topics-chapter-9-ambiguity-resolution-8 | score=0.3646 | topics.txt / CHAPTER 9: AMBIGUITY RESOLUTION
-   entity_ids: WSD, SEMANTIC_INTERPRETATION, SELECTIONAL_RESTRICTION, SEMANTIC_NETWORK
+1. topics-chapter-9-ambiguity-resolution-8 | score=0.3563 | topics.txt / CHAPTER 9: AMBIGUITY RESOLUTION
+2. faq-q7-6 | score=0.2753 | faq.txt / Q7
+3. faq-q8-7 | score=0.2578 | faq.txt / Q8
    CHAPTER 9: AMBIGUITY RESOLUTION chapter_id: CH09 part: Semantic Interpretation keywords: selectional restriction, semantic network, WSD summary: The chapter covers knowledge-based and statistical methods for semantic ambiguity resolution. subtopics: 9.1 Selectional restriction 9.2 Semantic filtering using selectional restriction 9.3 Semantic networks 9.4 Statistical word sense disambiguation
-2. faq-q7-6 | score=0.2709 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-3. faq-q8-7 | score=0.2541 | faq.txt / Q8
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, PART_III, CH12
    Q8: question: Chương nào học về local discourse context? answer: Chương 12.
 
 Q024
 Query: Chương 10 có những phương pháp gì?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q6-5 | score=0.3856 | faq.txt / Q6
-   entity_ids: SEMANTIC_INTERPRETATION, SEMANTIC_GRAMMAR, CH10
+1. faq-q6-5 | score=0.3741 | faq.txt / Q6
+2. faq-q4-3 | score=0.2365 | faq.txt / Q4
+3. topics-chapter-10-other-strategies-for-semantic-interpretation-9 | score=0.2235 | topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION
    Q6: question: Chương nào học về semantic grammar? answer: Chương 10, Other Strategies for Semantic Interpretation.
-2. faq-q4-3 | score=0.2329 | faq.txt / Q4
-   entity_ids: CH03, CH06, PCFG
    Q4: question: Chương nào học về PCFG? answer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê.
-3. topics-chapter-10-other-strategies-for-semantic-interpretation-9 | score=0.2075 | topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION
-   entity_ids: SEMANTIC_INTERPRETATION, SEMANTIC_GRAMMAR
    CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION chapter_id: CH10 part: Semantic Interpretation keywords: grammatical relations, semantic grammar, template matching summary: Alternative approaches to semantic interpretation include grammatical relations, semantic grammars, template matching and semantically driven parsing. subtopics: 10.1 Grammatical relations 10.2 Semantic grammars 10.3 Template matching 10.4 Semantically driven parsing techniques
 
 Q025
 Query: Chương 11 có liên quan đến hỏi đáp không?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q7-6 | score=0.3632 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
+1. faq-q7-6 | score=0.3529 | faq.txt / Q7
+2. topics-chapter-11-knowledge-representation-and-reasoning-10 | score=0.2258 | topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING
+3. faq-q11-10 | score=0.2220 | faq.txt / Q11
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-2. faq-q11-10 | score=0.2327 | faq.txt / Q11
-   entity_ids: (none)
-   Q11: question: L.O.3.3 liên quan đến nội dung gì? answer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê.
-3. topics-chapter-11-knowledge-representation-and-reasoning-10 | score=0.2128 | topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING
-   entity_ids: CONTEXT_AND_WORLD_KNOWLEDGE, KNOWLEDGE_REPRESENTATION, QUESTION_ANSWERING
    CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING chapter_id: CH11 part: Context and World Knowledge keywords: knowledge representation, reasoning, frame, QA summary: The chapter introduces knowledge representation and reasoning and applies them to simple natural-language question answering. subtopics: 11.1 Knowledge representation 11.2 Frames: representing stereotypical information 11.3 Handling natural language quantification 11.4 Time and aspectual classes of verbs 11.5 Procedural semantics and question answering
+   Q11: question: L.O.3.3 liên quan đến nội dung gì? answer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê.
 
 Q026
 Query: Hôm nay ở TP.HCM có mưa không?
-Retrieval status: FOUND
-1. faq-q11-10 | score=0.1594 | faq.txt / Q11
-   entity_ids: (none)
-   Q11: question: L.O.3.3 liên quan đến nội dung gì? answer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê.
-2. assignments-llm-rag-extension-5 | score=0.1459 | assignments.txt / LLM/RAG EXTENSION
-   entity_ids: NLP
-   LLM/RAG EXTENSION ----------------- status: optional description: Sinh viên có thể mở rộng bằng retrieval và/hoặc LLM. Phần này chỉ là mở rộng của NLP, không bắt buộc. not_required: - agent - multi-agent - fine-tuning LLM - huấn luyện language model - RAG pipeline quy mô lớn
-3. faq-q10-9 | score=0.1449 | faq.txt / Q10
-   entity_ids: (none)
-   Q10: question: L.O.2.5 liên quan đến nội dung gì? answer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập nhằng từ ở mức câu.
+Intent: UNKNOWN
+Retrieval status: NO_RELEVANT_CONTEXT
 
 Q027
 Query: Ai là tổng thống của Pháp?
-Retrieval status: FOUND
-1. regulations-ai-usage-3 | score=0.1920 | regulations.txt / AI_usage
-   entity_ids: (none)
-   AI_usage: Sinh viên phải khai báo việc sử dụng AI trong báo cáo, nghiên cứu và quá trình thực hiện theo quy định của môn học.
-2. course-info-learning-outcomes-5 | score=0.1737 | course_info.txt / learning_outcomes
-   entity_ids: PART_II, SEMANTIC_INTERPRETATION, PART_I, SYNTACTIC_PROCESSING, LOGICAL_FORM, QUESTION_ANSWERING, NLP
-   learning_outcomes: LO1 - Tổng quan về tổ chức hệ thống NLP và các ứng dụng. LO2 - Xử lý cú pháp; xây dựng văn phạm đơn giản và phân tích cú pháp. LO3 - Diễn dịch ngữ nghĩa; tạo dạng luận lý và giải quyết nhập nhằng. LO4 - Ngữ nghĩa và tri thức thế giới; xây dựng cơ sở tri thức và hệ thống hỏi đáp đơn giản.
-3. assignments-luu-y-0 | score=0.1554 | assignments.txt / Lưu ý
-   entity_ids: BTL01, SEMANTIC_INTERPRETATION, QUESTION_ANSWERING, NLP
-   Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering.
+Intent: UNKNOWN
+Retrieval status: NO_RELEVANT_CONTEXT
 
 Q028
 Query: Hãy giải bài tập xác suất này giúp tôi.
-Retrieval status: FOUND
-1. faq-q10-9 | score=0.2237 | faq.txt / Q10
-   entity_ids: (none)
-   Q10: question: L.O.2.5 liên quan đến nội dung gì? answer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập nhằng từ ở mức câu.
-2. regulations-luu-y-0 | score=0.1686 | regulations.txt / Lưu ý
-   entity_ids: (none)
-   Lưu ý: Các quy định chi tiết về deadline, format nộp bài và chính sách lớp học trong file này là dữ liệu MẪU phục vụ Course Assistant. Khi triển khai thực tế, các thông tin này phải được thay bằng thông tin chính thức.
-3. regulations-external-libraries-6 | score=0.1559 | regulations.txt / external_libraries
-   entity_ids: (none)
-   external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập.
+Intent: UNKNOWN
+Retrieval status: NO_RELEVANT_CONTEXT
 
 Q029
 Query: Chương 4 nói về gì?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q5-4 | score=0.4664 | faq.txt / Q5
-   entity_ids: AUGMENTED_GRAMMAR, CH04, FEATURES
+1. faq-q5-4 | score=0.4481 | faq.txt / Q5
+2. faq-q7-6 | score=0.2650 | faq.txt / Q7
+3. faq-q8-7 | score=0.2481 | faq.txt / Q8
    Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
-2. faq-q7-6 | score=0.2553 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-3. faq-q8-7 | score=0.2396 | faq.txt / Q8
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, PART_III, CH12
    Q8: question: Chương nào học về local discourse context? answer: Chương 12.
 
 Q030
 Query: Nó có liên quan đến parsing không?
+Intent: CONTEXT_DEPENDENT
 Retrieval status: FOUND
-1. faq-q11-10 | score=0.3877 | faq.txt / Q11
-   entity_ids: (none)
+1. faq-q11-10 | score=0.2926 | faq.txt / Q11
+2. faq-q9-8 | score=0.2648 | faq.txt / Q9
+3. faq-q10-9 | score=0.2617 | faq.txt / Q10
    Q11: question: L.O.3.3 liên quan đến nội dung gì? answer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê.
-2. faq-q9-8 | score=0.3508 | faq.txt / Q9
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, REFERENCE
    Q9: question: L.O.4.2 liên quan đến nội dung gì? answer: L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.
-3. faq-q10-9 | score=0.3463 | faq.txt / Q10
-   entity_ids: (none)
    Q10: question: L.O.2.5 liên quan đến nội dung gì? answer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập nhằng từ ở mức câu.
 
 Q031
 Query: Chương 11 có hỏi đáp không?
+Intent: GET_TOPIC
 Retrieval status: FOUND
-1. faq-q7-6 | score=0.3997 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
+1. faq-q7-6 | score=0.3888 | faq.txt / Q7
+2. topics-chapter-11-knowledge-representation-and-reasoning-10 | score=0.2487 | topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING
+3. schedule-week-13-13 | score=0.2274 | schedule.txt / WEEK 13
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-2. topics-chapter-11-knowledge-representation-and-reasoning-10 | score=0.2342 | topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING
-   entity_ids: CONTEXT_AND_WORLD_KNOWLEDGE, KNOWLEDGE_REPRESENTATION, QUESTION_ANSWERING
    CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING chapter_id: CH11 part: Context and World Knowledge keywords: knowledge representation, reasoning, frame, QA summary: The chapter introduces knowledge representation and reasoning and applies them to simple natural-language question answering. subtopics: 11.1 Knowledge representation 11.2 Frames: representing stereotypical information 11.3 Handling natural language quantification 11.4 Time and aspectual classes of verbs 11.5 Procedural semantics and question answering
-3. course-info-learning-outcomes-5 | score=0.1702 | course_info.txt / learning_outcomes
-   entity_ids: PART_II, SEMANTIC_INTERPRETATION, PART_I, SYNTACTIC_PROCESSING, LOGICAL_FORM, QUESTION_ANSWERING, NLP
-   learning_outcomes: LO1 - Tổng quan về tổ chức hệ thống NLP và các ứng dụng. LO2 - Xử lý cú pháp; xây dựng văn phạm đơn giản và phân tích cú pháp. LO3 - Diễn dịch ngữ nghĩa; tạo dạng luận lý và giải quyết nhập nhằng. LO4 - Ngữ nghĩa và tri thức thế giới; xây dựng cơ sở tri thức và hệ thống hỏi đáp đơn giản.
+   WEEK 13 part: Context and World Knowledge chapter: Chapter 11 topics: - knowledge representation - frames - natural language quantification - time and aspectual classes - procedural semantics - question answering
 
 Q032
 Query: Còn chương sau?
+Intent: CONTEXT_DEPENDENT
 Retrieval status: FOUND
-1. faq-q7-6 | score=0.2044 | faq.txt / Q7
-   entity_ids: KNOWLEDGE_REPRESENTATION, CH11
+1. faq-q7-6 | score=0.2077 | faq.txt / Q7
+2. faq-q8-7 | score=0.1945 | faq.txt / Q8
+3. faq-q5-4 | score=0.1859 | faq.txt / Q5
    Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
-2. faq-q8-7 | score=0.1918 | faq.txt / Q8
-   entity_ids: LOCAL_DISCOURSE_CONTEXT, PART_III, CH12
    Q8: question: Chương nào học về local discourse context? answer: Chương 12.
-3. faq-q3-2 | score=0.1856 | faq.txt / Q3
-   entity_ids: CH03, CFG
-   Q3: question: Chương nào học về CFG? answer: CFG được trình bày trong Chương 3, Grammar and Parsing.
+   Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
 
 Q033
 Query: Bài tập lớn có phần parser không?
+Intent: GET_ASSIGNMENT
 Retrieval status: FOUND
-1. faq-q12-11 | score=0.3665 | faq.txt / Q12
-   entity_ids: NLP
-   Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
-2. assignments-luu-y-0 | score=0.1852 | assignments.txt / Lưu ý
-   entity_ids: BTL01, SEMANTIC_INTERPRETATION, QUESTION_ANSWERING, NLP
-   Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering.
+1. faq-q12-11 | score=0.3530 | faq.txt / Q12
+2. assignments-luu-y-0 | score=0.1847 | assignments.txt / Lưu ý
 3. regulations-external-libraries-6 | score=0.1676 | regulations.txt / external_libraries
-   entity_ids: (none)
+   Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
+   Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering.
    external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập.
 
 Q034
 Query: Phần này cần xuất file gì?
+Intent: CONTEXT_DEPENDENT
 Retrieval status: FOUND
 1. regulations-luu-y-0 | score=0.2238 | regulations.txt / Lưu ý
-   entity_ids: (none)
+2. resources-textbook-3-2 | score=0.1271 | resources.txt / TEXTBOOK 3
+3. assignments-llm-rag-extension-5 | score=0.1012 | assignments.txt / LLM/RAG EXTENSION
    Lưu ý: Các quy định chi tiết về deadline, format nộp bài và chính sách lớp học trong file này là dữ liệu MẪU phục vụ Course Assistant. Khi triển khai thực tế, các thông tin này phải được thay bằng thông tin chính thức.
-2. resources-textbook-3-2 | score=0.1265 | resources.txt / TEXTBOOK 3
-   entity_ids: CO3085, NLP, NATURAL_LANGUAGE_PROCESSING, REFERENCE
    TEXTBOOK 3 title: Xử lý ngôn ngữ tự nhiên author: Phan Thị Tươi publisher: Nhà xuất bản Đại học Quốc gia TP Hồ Chí Minh year: 2012 usage: Vietnamese NLP reference
-3. assignments-llm-rag-extension-5 | score=0.1039 | assignments.txt / LLM/RAG EXTENSION
-   entity_ids: NLP
    LLM/RAG EXTENSION ----------------- status: optional description: Sinh viên có thể mở rộng bằng retrieval và/hoặc LLM. Phần này chỉ là mở rộng của NLP, không bắt buộc. not_required: - agent - multi-agent - fine-tuning LLM - huấn luyện language model - RAG pipeline quy mô lớn

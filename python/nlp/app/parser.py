@@ -24,7 +24,7 @@ class CourseParser:
     def __init__(self, grammar_path=None):
         app_dir = Path(__file__).resolve().parent
         self.grammar_path = Path(
-            grammar_path or app_dir / "output" / "grammar.txt"
+            grammar_path or Path(__file__).with_name("output") / "grammar.txt"
         )
         raw_rules = load_grammar(self.grammar_path)
         names = set(raw_rules)

@@ -105,7 +105,7 @@ def _entities_in(text, aliases):
     for pattern, formatter in (
         (r"\bWEEK\s+0?(\d{1,2})\b", lambda match: "WEEK_{:02d}".format(int(match.group(1)))),
         (r"\bCHAPTER\s+0?(\d{1,2})\b", lambda match: "CH{:02d}".format(int(match.group(1)))),
-        (r"\bLO\s*\.?\s*(\d+\.\d+)\b", lambda match: "LO" + match.group(1)),
+        (r"\bL\s*\.?\s*O\s*\.?\s*(\d+\.\d+)\b", lambda match: "LO" + match.group(1)),
         (r"\bmidterm\b", lambda match: "MIDTERM"),
         (r"\bfinal\b", lambda match: "FINAL"),
         (r"\bAI[_ ]usage\b", lambda match: "AI_USAGE"),
@@ -115,6 +115,17 @@ def _entities_in(text, aliases):
             entity_id = formatter(match)
             if entity_id not in found:
                 found.append(entity_id)
+    normalized_lower = _normalize(text)
+    resource_aliases = (
+        ("PYTHON_NLP", "python" in normalized_lower and
+         ("nlp" in normalized_lower or "natural language processing" in normalized_lower)),
+        ("STATISTICAL_NLP", "statistical" in normalized_lower and
+         ("nlp" in normalized_lower or "natural language processing" in normalized_lower)),
+        ("MACHINE_TRANSLATION", "machine translation" in normalized_lower),
+    )
+    for entity_id, matched in resource_aliases:
+        if matched and entity_id not in found:
+            found.append(entity_id)
     return found
 
 
@@ -157,8 +168,8 @@ def default_data_dir():
     """Find the sample dataset from the repository's standard layout."""
     app_dir = Path(__file__).resolve().parent
     candidates = [
-        app_dir.parents[5] / "NLP_Course_Assistant_Sample_Data",
         app_dir.parents[4] / "NLP_Course_Assistant_Sample_Data",
+        app_dir.parents[3] / "NLP_Course_Assistant_Sample_Data",
     ]
     for candidate in candidates:
         if candidate.exists():
