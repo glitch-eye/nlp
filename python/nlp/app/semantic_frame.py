@@ -1,7 +1,7 @@
 """Build lightweight semantic frames from parsed queries and KB chunks."""
 
 import re
-import unicodedata
+from nlp.app.text_utils import normalize
 
 from nlp.app.parser import CourseParser, ParseNode
 
@@ -30,10 +30,7 @@ KIND_TO_INTENTS = {
 }
 
 
-def _normalize(text):
-    text = unicodedata.normalize("NFKD", text.casefold())
-    text = "".join(char for char in text if not unicodedata.combining(char))
-    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+_normalize = normalize
 
 
 def _walk(node):

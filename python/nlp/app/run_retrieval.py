@@ -6,7 +6,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from nlp.app.knowledge_base import KnowledgeBase, default_data_dir
-from nlp.app.retriever import Retriever
+from nlp.app.retriever import Retriever, format_trace
 
 
 def read_queries(path):
@@ -60,7 +60,7 @@ def _retrieved_records(result):
     ]
 
 
-def evaluate_samples(samples, retriever, top_k, use_gold_entities=False):
+def evaluate_samples(samples, retriever, top_k, use_gold_entities=False, bypass_unknown=False):
     cases = []
     expected_cases = []
     unknown_cases = []
@@ -80,7 +80,7 @@ def evaluate_samples(samples, retriever, top_k, use_gold_entities=False):
         metrics["sample_count"] += 1
         semantic = ({"entity_ids": sample["entities"], "intent": intent}
                     if use_gold_entities else None)
-        if intent == "UNKNOWN":
+        if intent == "UNKNOWN" and bypass_unknown:
             # The semantic layer routes out-of-domain questions around retrieval.
             result = {
                 "query": sample["query"],
@@ -192,6 +192,8 @@ def main():
     parser.add_argument("--evaluation-output", default=str(app_dir / "output" / "retrieval_evaluation.json"))
     parser.add_argument("--top-k", type=int, default=3)
     parser.add_argument("--min-score", type=float, default=0.08)
+    parser.add_argument("--min-lexical-score", type=float, default=0.0)
+    parser.add_argument("--no-bypass-unknown", action="store_true", help="send UNKNOWN samples through the retriever")
     parser.add_argument(
         "--use-gold-entities",
         action="store_true",
@@ -205,12 +207,14 @@ def main():
         aliases=knowledge_base.aliases,
         top_k=args.top_k,
         min_score=args.min_score,
+        min_lexical_score=args.min_lexical_score,
     )
 
     if args.labeled_jsonl:
         samples = read_labeled_jsonl(args.labeled_jsonl)
         evaluation = evaluate_samples(
-            samples, retriever, args.top_k, use_gold_entities=args.use_gold_entities
+            samples, retriever, args.top_k, use_gold_entities=args.use_gold_entities,
+            bypass_unknown=not args.no_bypass_unknown,
         )
         output_path = Path(args.output)
         evaluation_path = Path(args.evaluation_output)
@@ -234,7 +238,7 @@ def main():
 
     reports = []
     for sample in read_queries(args.queries):
-        if sample.get("intent") == "UNKNOWN":
+        if sample.get("intent") == "UNKNOWN" and not args.no_bypass_unknown:
             result = {
                 "query": sample["query"],
                 "chunks": [],
@@ -243,24 +247,7 @@ def main():
             }
         else:
             result = retriever.retrieve(sample["query"])
-        reports.append("{}\n{}".format(
-            sample["sample_id"],
-            "\n".join([
-                "Query: {}".format(result["query"]),
-                "Intent: {}".format(sample["intent"]),
-                "Retrieval status: {}".format(result["retrieval_status"]),
-            ] + [
-                "{}. {} | score={:.4f} | {} / {}".format(
-                    rank, chunk["chunk_id"], score, chunk["source"], chunk["section"]
-                )
-                for rank, (chunk, score) in enumerate(
-                    zip(result["chunks"], result["scores"]), 1
-                )
-            ] + [
-                "   {}".format(" ".join(chunk["text"].split()))
-                for chunk in result["chunks"]
-            ]),
-        ))
+        reports.append("{}\n{}".format(sample["sample_id"], format_trace(result)))
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text("\n\n".join(reports) + "\n", encoding="utf-8")

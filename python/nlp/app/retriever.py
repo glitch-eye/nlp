@@ -1,18 +1,16 @@
 """TF-IDF retrieval for Course Assistant knowledge chunks."""
 
 import re
-import unicodedata
+import logging
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 from nlp.app.semantic_frame import chunk_frame, query_frame
+from nlp.app.text_utils import normalize
 
 
-def _normalize(text):
-    text = unicodedata.normalize("NFKD", text.casefold())
-    text = "".join(char for char in text if not unicodedata.combining(char))
-    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+_normalize = normalize
 
 
 def _entity_token(entity_id):
@@ -24,12 +22,13 @@ class Retriever:
     """Fit a TF-IDF index once and return ranked source-aware chunks."""
 
     def __init__(self, documents, aliases=None, top_k=3, min_score=0.08,
-                 parser=None, lexical_weight=0.75):
+                 parser=None, lexical_weight=0.75, min_lexical_score=0.0):
         self.documents = list(documents)
         self.aliases = aliases or []
         self.top_k = top_k
         # Initial threshold for inspection; calibrate against sample_queries.txt.
         self.min_score = min_score
+        self.min_lexical_score = min_lexical_score
         self.lexical_weight = lexical_weight
         if not 0.0 <= lexical_weight <= 1.0:
             raise ValueError("lexical_weight must be between 0 and 1")
@@ -39,8 +38,9 @@ class Retriever:
             try:
                 from nlp.app.parser import CourseParser
                 parser = CourseParser()
-            except Exception:
+            except Exception as error:
                 # A broken/missing grammar degrades to lexical-only retrieval.
+                logging.warning("Could not load semantic parser; using lexical retrieval: %s", error)
                 parser = None
         self.parser = parser
         if not self.documents:
@@ -53,7 +53,7 @@ class Retriever:
             )
             corpus.append("{} {} {}".format(document["text"], entity_text, entity_text))
         self.vectorizer = TfidfVectorizer(
-            strip_accents="unicode",
+            preprocessor=normalize,
             lowercase=True,
             token_pattern=r"(?u)\b\w+\b",
             sublinear_tf=True,
@@ -134,6 +134,15 @@ class Retriever:
         parsed_frame = query_frame(question, self.parser, self.aliases) if self.parser else None
         frame = semantic or parsed_frame
         query = self.expand_query(question, semantic=semantic)
+        query_entities = set((frame or {}).get("entity_ids", []))
+        normalized_query = " " + _normalize(question) + " "
+        for alias, entity_id, canonical in self.aliases:
+            normalized_alias = " " + _normalize(alias) + " "
+            if normalized_alias.strip() and normalized_alias in normalized_query:
+                query_entities.add(entity_id)
+        if " bai tap lon " in normalized_query:
+            query_entities.add("BTL01")
+            query += " " + _entity_token("BTL01")
         query_vector = self.vectorizer.transform([query])
         lexical_scores = cosine_similarity(query_vector, self.matrix).ravel()
         semantic_scores = self._semantic_scores(frame)
@@ -146,12 +155,29 @@ class Retriever:
             scores = [float(score) for score in lexical_scores]
         ranked = sorted(enumerate(scores), key=lambda item: (-float(item[1]), item[0]))
         limit = self.top_k if top_k is None else top_k
-        selected = [(index, float(score)) for index, score in ranked[:limit] if score >= self.min_score]
+        if frame and frame.get("intent") == "UNKNOWN":
+            selected = []
+        else:
+            selected = [(index, float(score)) for index, score in ranked[:limit]
+                        if score >= self.min_score and
+                        (lexical_scores[index] >= self.min_lexical_score or
+                         query_entities.intersection(self.chunk_frames[index]["entity_ids"]))]
+        details = [{"lexical": float(lexical_scores[index]),
+                    "semantic": float(semantic_scores[index]), "combined": score}
+                   for index, score in selected]
+        parse_status = ((frame or {}).get("parse_status") or
+                        ("PARSER_UNAVAILABLE" if self.parser is None else
+                         ("PARSED" if parsed_frame else "UNPARSED")))
         return {
             "query": question,
             "chunks": [self.documents[index] for index, _ in selected],
             "scores": [score for _, score in selected],
             "retrieval_status": "FOUND" if selected else "NO_RELEVANT_CONTEXT",
+            "parse_status": parse_status,
+            "intent": (frame or {}).get("intent"),
+            "entity_ids": sorted(query_entities),
+            "expanded_query": query,
+            "score_details": details,
         }
 
 
@@ -160,15 +186,21 @@ def format_trace(result):
     lines = [
         "Query: {}".format(result["query"]),
         "Retrieval status: {}".format(result["retrieval_status"]),
+        "Parse status: {}".format(result.get("parse_status", "UNKNOWN")),
+        "Intent: {}".format(result.get("intent") or "(none)"),
+        "Query entities: {}".format(", ".join(result.get("entity_ids", [])) or "(none)"),
+        "Expanded query: {}".format(result.get("expanded_query", result["query"])),
     ]
     if not result["chunks"]:
         lines.append("No chunk met the relevance threshold.")
     for rank, (chunk, score) in enumerate(zip(result["chunks"], result["scores"]), 1):
+        detail = result.get("score_details", [{}] * len(result["chunks"]))[rank - 1]
         lines.extend([
             "{}. {} | score={:.4f} | {} / {}".format(
                 rank, chunk["chunk_id"], score, chunk["source"], chunk["section"]
             ),
             "   entity_ids: {}".format(", ".join(chunk.get("entity_ids", [])) or "(none)"),
+            "   lexical={:.4f} semantic={:.4f} combined={:.4f}".format(detail.get("lexical", 0), detail.get("semantic", 0), detail.get("combined", score)),
             "   {}".format(" ".join(chunk["text"].split())),
         ])
     return "\n".join(lines)

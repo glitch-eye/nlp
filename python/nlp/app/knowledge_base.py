@@ -1,8 +1,8 @@
 """Load the sample course files into source-aware retrieval chunks."""
 
 import re
-import unicodedata
 from pathlib import Path
+from nlp.app.text_utils import normalize, slug
 
 
 DATA_FILES = {
@@ -16,11 +16,7 @@ DATA_FILES = {
 }
 
 
-def _slug(value):
-    value = unicodedata.normalize("NFKD", value.casefold())
-    value = "".join(char for char in value if not unicodedata.combining(char))
-    value = re.sub(r"[^a-z0-9]+", "-", value).strip("-")
-    return value or "section"
+_slug = slug
 
 
 def _read_text(path):
@@ -41,10 +37,6 @@ def load_entity_aliases(path):
         alias, value = [part.strip() for part in line.split("=", 1)]
         if current_group == "chapters":
             entity_id, canonical = value, alias
-        elif current_group == "topics":
-            entity_id, canonical = _slug(alias).upper().replace("-", "_"), value
-        elif current_group == "assignment":
-            entity_id, canonical = _slug(alias).upper().replace("-", "_"), value
         else:
             entity_id, canonical = _slug(alias).upper().replace("-", "_"), value
         aliases.append((alias, entity_id, canonical))
@@ -96,10 +88,10 @@ def _section_name(text):
 
 
 def _entities_in(text, aliases):
-    normalized = " " + _normalize(text) + " "
+    normalized = " " + normalize(text) + " "
     found = []
     for alias, entity_id, canonical in aliases:
-        needle = " " + _normalize(alias) + " "
+        needle = " " + normalize(alias) + " "
         if needle.strip() and needle in normalized and entity_id not in found:
             found.append(entity_id)
     for pattern, formatter in (
@@ -115,7 +107,7 @@ def _entities_in(text, aliases):
             entity_id = formatter(match)
             if entity_id not in found:
                 found.append(entity_id)
-    normalized_lower = _normalize(text)
+    normalized_lower = normalize(text)
     resource_aliases = (
         ("PYTHON_NLP", "python" in normalized_lower and
          ("nlp" in normalized_lower or "natural language processing" in normalized_lower)),
@@ -129,10 +121,7 @@ def _entities_in(text, aliases):
     return found
 
 
-def _normalize(text):
-    text = unicodedata.normalize("NFKD", text.casefold())
-    text = "".join(char for char in text if not unicodedata.combining(char))
-    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+_normalize = normalize
 
 
 class KnowledgeBase:
