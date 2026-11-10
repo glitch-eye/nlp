@@ -95,6 +95,50 @@ python -m nlp.app.run_parser \
 - Hợp lệ: xuất cây cú pháp dạng ngoặc `(S ...)`.
 - Không hợp lệ / ngoài văn phạm: xuất `()`.
 
+### 3.4 Chạy Course Assistant End-to-End (Phần II LLM/RAG & Phần III Hội thoại cục bộ)
+
+Module điều phối [`assistant.py`](nlp/app/assistant.py), quản lý ngữ cảnh hội thoại [`dialogue.py`](nlp/app/dialogue.py) và CLI [`run_assistant.py`](nlp/app/run_assistant.py) kết nối toàn bộ pipeline:
+`Dialogue Resolution -> CourseParser.parse() (Phần I) -> Semantic Frame -> Retriever (TF-IDF + Semantic) -> No-Context Guard -> Prompt -> LLMClient -> Citation Formatting -> DialogueState Update`.
+
+#### a) Chế độ Offline / Mock LLM (Mặc định – Không cần mạng, không tốn chi phí)
+Từ thư mục `python/`:
+```bash
+# 1. Chạy toàn bộ kịch bản hội thoại mẫu (input/dialogues.txt) và sinh output/dialogue.txt, answer.txt, evaluation.txt
+python -m nlp.app.run_assistant
+
+# 2. Hỏi 1 câu đơn lẻ trên CLI
+python -m nlp.app.run_assistant --question "Chương 4 nói về gì?"
+
+# 3. Xuất JSON đầy đủ schema chuẩn cho 1 câu hỏi
+python -m nlp.app.run_assistant --question "Phần I cần xuất file gì?" --json
+
+# 4. Chế độ hội thoại tương tác nhiều lượt (gõ 'reset' để xóa ngữ cảnh, 'exit' để thoát)
+python -m nlp.app.run_assistant --interactive
+```
+
+#### b) Chế độ gọi Model thật qua API (`OpenAICompatibleLLMClient`)
+Không commit API key vào mã nguồn. Cấu hình qua biến môi trường khi muốn gọi LLM thực:
+```bash
+export OPENAI_API_KEY="sk-..."
+export LLM_MODEL="gpt-4o-mini"          # hoặc model tương thích OpenAI Chat Completions
+export OPENAI_BASE_URL="https://api.openai.com/v1"
+
+python -m nlp.app.run_assistant --provider openai
+```
+- **Giới hạn chi phí & kết nối:** Khi không đặt `OPENAI_API_KEY` hoặc khi mất kết nối mạng, hệ thống tự động chuyển về `MockLLMClient` (`mock-grounded-extractive-v1`) để đảm bảo tính tái lập 100% khi chấm bài offline.
+
+#### c) Xem các file Trace & Output
+Sau khi chạy `python -m nlp.app.run_assistant`, kiểm tra các file xuất tại `python/nlp/app/output/` (đồng thời được đồng bộ ra `output/` ở thư mục gốc):
+- `output/dialogue.txt`: Trace chi tiết từng lượt hội thoại gồm 7 mục: (1) Câu gốc, (2) `DialogueState` trước, (3) `resolved_query` sau khi giải tham chiếu, (4) Các chunk truy xuất kèm `parse_status`, `retrieval_status`, `score`, (5) Câu trả lời và trạng thái (`ANSWERED`, `INSUFFICIENT_CONTEXT`, `NO_RELEVANT_CONTEXT`, `NEED_CLARIFICATION`), (6) Nguồn trích dẫn, (7) `DialogueState` sau.
+- `output/answer.txt`: Danh sách câu trả lời chuẩn hóa kèm nguồn và chunk IDs.
+- `output/evaluation.txt`: Thống kê tổng hợp theo từng tầng (Parser, Retriever, Answer Guard, và Reference Resolution).
+- `output/retrieval.txt`: Trace truy xuất top-k chunk của `run_retrieval.py`.
+
+#### d) Gọi qua HTTP API (`/retrieve`, `/answer`, `/reset`)
+Selain endpoint `/retrieve`, service `nlp.app.api` hỗ trợ thêm:
+- `POST http://127.0.0.1:8000/answer` với JSON `{"question": "Chương 4 nói về gì?"}` hoặc lượt tiếp theo `{"question": "Nó có liên quan đến parsing không?"}`.
+- `POST http://127.0.0.1:8000/reset` để xóa `DialogueState` trên server.
+
 ---
 
 ## 4. Kiến trúc hệ thống (System Architecture)

@@ -1,0 +1,107 @@
+======================================================================
+PHẦN IV: BÁO CÁO ĐÁNH GIÁ HỆ THỐNG COURSE ASSISTANT (NHÁNH LLM/RAG & HỘI THOẠI)
+======================================================================
+Mô hình LLM / Adapter sử dụng : mock-grounded-extractive-v1
+
+I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
+----------------------------------------------------------------------
+1. Đánh giá trên tập kịch bản hội thoại & hỏi đáp end-to-end (input/dialogues.txt):
+   - Tổng số lượt kiểm thử (Total turns)       : 25
+   - Số lượt xử lý đúng theo kỳ vọng            : 25/25 (100.0%)
+   - Phân bố trạng thái đầu ra (Answer Status):
+     + ANSWERED (Trả lời có căn cứ & trích dẫn) : 17
+     + INSUFFICIENT_CONTEXT (Chặn thiếu dữ liệu): 3
+     + NO_RELEVANT_CONTEXT (Chặn ngoài miền)    : 1
+     + NEED_CLARIFICATION (Yêu cầu làm rõ)      : 4
+   - Phân bố trạng thái Parser (Phần I CFG trên resolved_query):
+     + PARSED                                   : 13
+     + UNPARSED (Fallback sang TF-IDF retrieval): 7
+     + SKIPPED (Lượt hỏi làm rõ / ngoài KB)     : 5
+   - Phân bố trạng thái Retriever (Phần II TF-IDF + Semantic):
+     + FOUND                                    : 19
+     + NO_RELEVANT_CONTEXT                      : 2
+     + SKIPPED                                  : 4
+   - Giải tham chiếu ngữ cảnh cục bộ (Phần III):
+     + Tổng số lượt có tham chiếu               : 14/14 (Độ chính xác giải tham chiếu: 100.0%)
+       * NEXT_CHAPTER             : 5
+       * PRONOUN_IT               : 2
+       * RESOURCE_OF_THIS_PART    : 3
+       * THIS_CHAPTER             : 2
+       * THIS_CONTENT             : 1
+       * THIS_PART                : 1
+
+2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl - 1.497 mẫu):
+   - Tổng số mẫu kiểm thử                      : 1.497 câu
+   - Hit@3 (Có ngữ cảnh đúng trong Top-3 chunk): 1.439 / 1.440 (99.9%)
+   - Câu ngoài miền (UNKNOWN) từ chối đúng     : 3 / 3 (100.0%)
+   - Câu thiếu thông tin (INSUFFICIENT_CONTEXT): 54 / 54 trường hợp được nhận diện
+
+II. CÁC VÍ DỤ MINH HỌA BẮT BUỘC CHO NHÁNH LLM/RAG (MỤC 6 - TRANG 8 ASSIGNMENT.PDF)
+----------------------------------------------------------------------
+1. Ví dụ câu trả lời đúng và có căn cứ (Grounded Answer):
+   - Câu hỏi   : "Chương 4 nói về gì?"
+   - Truy xuất : topics-chapter-4-features-and-augmented-grammar-3 (score=0.3950, topics.txt / CHAPTER 4)
+   - Trả lời   : "CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR — Tóm tắt: The chapter extends formal grammar
+                 with feature systems and augmented grammar. It covers lexicon, parsing with features,
+                 augmented transition networks, generalized feature systems and unification grammar...
+                 [Nguồn: topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR]"
+   - Ví dụ 2 (Hội thoại giải tham chiếu): "Tuần 5 học những nội dung gì?" -> "Tài liệu của phần này ở đâu?"
+     + Giải tham chiếu : "Tài liệu tham khảo cho Tuần 5 (Chương 4, Parsing) là gì?"
+     + Trả lời có căn cứ: Trích dẫn chính xác TEXTBOOK 1 (Natural Language Understanding - James Allen)
+       và TEXTBOOK 3 (Xử lý ngôn ngữ tự nhiên - Phan Thị Tươi) [Nguồn: resources.txt / TEXTBOOK 1, TEXTBOOK 3].
+
+2. Ví dụ câu hỏi không có thông tin trong Knowledge Base (No Relevant Context):
+   - Câu hỏi   : "Hôm nay ở TP.HCM có mưa không?"
+   - Truy xuất : retrieval_status = NO_RELEVANT_CONTEXT (Không có chunk nào vượt ngưỡng min_score=0.08)
+   - Trả lời   : "Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085
+                 để trả lời câu hỏi: 'Hôm nay ở TP.HCM có mưa không?'." (status=NO_RELEVANT_CONTEXT, sources=[])
+
+3. Ví dụ trường hợp hệ thống có nguy cơ sinh thông tin không có trong dữ liệu (Hallucination Risk):
+   - Trường hợp A (Hỏi ngày hạn nộp cụ thể): "Deadline của bài tập lớn là khi nào?"
+     + Nguy cơ Hallucination: Retriever vẫn tìm thấy chunk `assignments-luu-y-0` (score=0.4687) vì khớp từ khóa
+       "bài tập lớn". Tuy nhiên nội dung file `assignments.txt` chỉ ghi đây là DỮ LIỆU MẪU và không có ngày nộp.
+       Nếu đưa thẳng vào LLM không kiểm soát, LLM có nguy cơ tự bịa ra một ngày hạn nộp giả định.
+     + Cách khắc phục: Tầng `answer_guard` phát hiện truy vấn `GET_DEADLINE` trên dữ liệu mẫu không có mốc thời gian
+       chính thức và trả về `status=INSUFFICIENT_CONTEXT`: nêu rõ tài liệu chỉ là dữ liệu mẫu, không bịa ngày nộp.
+   - Trường hợp B (Hỏi thuộc tính không có trong đề cương): "Phòng học của môn CO3085 ở đâu?"
+     + Nguy cơ Hallucination: Retriever lấy ra `course_info.txt` vì khớp mã môn `CO3085`, nhưng file chỉ chứa số
+       tín chỉ và mô tả môn học, không có phòng học. Guard chặn lại với `status=INSUFFICIENT_CONTEXT`.
+   - Trường hợp C (Tham chiếu hội thoại mơ hồ / vượt ngưỡng chương): "Còn chương sau?" sau Chương 12
+     + Nguy cơ Hallucination: Chương 12 là chương cuối cùng trong đề cương. Nếu để LLM tự suy diễn "Chương 13",
+       hệ thống sẽ sinh ảo nội dung. `DialogueManager` kiểm tra `CH13 not in kb_chapters` và chặn ngay với
+       `status=INSUFFICIENT_CONTEXT`.
+
+III. MỘT SỐ TRƯỜNG HỢP TRẢ LỜI SAI / HẠN CHẾ & PHÂN TÍCH NGUYÊN NHÂN LỖI
+----------------------------------------------------------------------
+1. Lỗi ở tầng Cú pháp / Văn phạm (Parser UNPARSED trên câu diễn đạt tự do):
+   - Hiện tượng : Các câu hỏi tự do như "Chương 11 có hỏi đáp không?" hoặc "Midterm bao nhiêu phút?"
+                  nhận `parse_status=UNPARSED` do CFG ở Phần I có phạm vi hữu hạn.
+   - Nguyên nhân: Văn phạm CFG chỉ bao phủ các mẫu câu chuẩn hóa để tránh bùng nổ tổ hợp khi sinh câu.
+   - Khắc phục  : Hệ thống không dừng lại khi `UNPARSED` mà tự động chuyển sang rút trích thực thể bề mặt
+                  kết hợp TF-IDF retrieval để vẫn tìm đúng chunk liên quan.
+2. Lỗi xếp hạng ở tầng Retrieval khi câu hỏi quá ngắn / trùng từ khóa chung:
+   - Hiện tượng : Câu hỏi "Kế hoạch học tập kéo dài bao lâu?" (SYN0006 trong bộ 1.497 mẫu) có từ "kéo dài bao lâu"
+                  trùng mạnh với `faq-q15-14` ("Final kéo dài bao lâu?") và `faq-q14-13` ("Midterm kéo dài bao lâu?"),
+                  làm 2 chunk FAQ cạnh tranh điểm lexical với `schedule.txt`.
+   - Nguyên nhân: TF-IDF tính trọng số theo từ vựng cục bộ và nhạy với cụm từ hiếm trùng khớp chính xác.
+   - Khắc phục  : Kết hợp điểm Semantic Frame (`0.75 * lexical + 0.25 * semantic`) giúp đẩy chunk đúng của
+                  `schedule.txt` lên vị trí số 1 (score=0.4167).
+
+IV. NHẬN XÉT ƯU ĐIỂM VÀ HẠN CHẾ CỦA PHƯƠNG PHÁP ĐÃ SỬ DỤNG
+----------------------------------------------------------------------
+1. Ưu điểm:
+   - Minh bạch, giải thích được từng bước (Explainable NLP Pipeline): Giữ nguyên vai trò của CFG Parser Phần I,
+     kết hợp tường minh giữa điểm từ vựng TF-IDF (0.75) và điểm ngữ nghĩa Intent/Entity (0.25).
+   - Kiểm soát chặt chẽ nguồn trích dẫn và chống Hallucination: Mọi câu trả lời `ANSWERED` đều đính kèm
+     `[Nguồn: file / section]`; các câu ngoài miền, thiếu dữ liệu hoặc mơ hồ tham chiếu đều được phân loại rõ
+     (`NO_RELEVANT_CONTEXT`, `INSUFFICIENT_CONTEXT`, `NEED_CLARIFICATION`).
+   - Xử lý hiệu quả ngữ cảnh hội thoại cục bộ (Phần III): Giải tham chiếu chính xác cho "nó", "chương này",
+     "phần này", "nội dung này", "tài liệu của phần này", "còn chương sau?" trước khi đưa vào Retriever.
+   - Chạy độc lập (Offline Reproducibility): Có `MockLLMClient` chạy offline không cần API key và adapter
+     `OpenAICompatibleLLMClient` khi kết nối model thật.
+2. Hạn chế:
+   - Văn phạm CFG cần cập nhật thủ công nếu mở rộng sang các cấu trúc câu khẩu ngữ phức tạp mới.
+   - TF-IDF dựa trên khớp từ vựng và danh sách đồng nghĩa (`entities.txt`), chưa tự bắt được các cách diễn đạt
+     ẩn dụ nếu không có từ khóa hoặc thực thể chung.
+   - Quản lý hội thoại cục bộ hiện thiết kế cho tham chiếu 1 bước liền kề (local discourse context), chưa
+     hỗ trợ suy luận đa bước xuyên qua nhiều chủ đề đan xen phức tạp.

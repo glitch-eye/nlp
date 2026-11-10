@@ -1,0 +1,42 @@
+# Kịch bản 1: Câu hỏi có nguồn + Giải tham chiếu ("nó", "chương này", "còn chương sau?", "tài liệu của phần này")
+=== DIALOGUE 1: Hỏi về Chương 4, giải tham chiếu và tăng chương ===
+Môn NLP có bao nhiêu tín chỉ?
+Chương 4 nói về gì?
+Nó có liên quan đến parsing không?
+Chương này học vào tuần nào?
+Còn chương sau?
+Tài liệu của phần này là gì?
+
+# Kịch bản 2: Giải tham chiếu từ sample_queries.txt (Q031-Q034: "còn chương sau?", "phần này", "nội dung này")
+=== DIALOGUE 2: Chương 11 -> Chương 12 -> Vượt ngưỡng KB & Bài tập lớn Phần I ===
+Chương 11 có hỏi đáp không?
+Còn chương sau?
+Nội dung này học vào tuần nào?
+Còn chương sau?
+RESET
+Bài tập lớn có phần parser không?
+Phần này cần xuất file gì?
+RESET
+Tuần 5 học những nội dung gì?
+Tài liệu của phần này ở đâu?
+
+# Kịch bản 3: Câu hỏi ngoài miền (NO_RELEVANT_CONTEXT) và không đủ ngữ cảnh (INSUFFICIENT_CONTEXT)
+=== DIALOGUE 3: Kiểm tra No-Context Guard và Insufficient-Context ===
+Deadline của bài tập lớn là khi nào?
+Hôm nay ở TP.HCM có mưa không?
+Phòng học của môn CO3085 ở đâu?
+Quy định về LLM/RAG là gì?
+
+# Kịch bản 4: Câu hỏi thiếu tiền từ (antecedent) sau khi RESET -> NEED_CLARIFICATION
+=== DIALOGUE 4: Thiếu tiền từ khi bắt đầu hội thoại mới ===
+Nó học vào tuần nào?
+Còn chương sau?
+Tài liệu của phần này là gì?
+
+# Kịch bản 5: Câu hỏi có nhiều tiền từ cùng loại gây mơ hồ -> NEED_CLARIFICATION
+=== DIALOGUE 5: Tham chiếu mơ hồ giữa nhiều chương ===
+Chương 3 và Chương 4 khác nhau như thế nào?
+Chương này học vào tuần nào?
+Chương 3 học vào tuần nào?
+Còn chương sau?
+

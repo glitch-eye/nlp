@@ -1,0 +1,262 @@
+=== Question 1 ===
+1. Câu hỏi đầu vào (Input Question)       : Môn NLP có bao nhiêu tín chỉ?
+   Truy vấn sau giải tham chiếu           : Môn NLP có bao nhiêu tín chỉ?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_COURSE_INFO, entities={"course": "CO3085"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q1-0, course-info-course-description-2, course-info-course-id-co3085-1]
+  [1] faq-q1-0 (score=0.7737 | faq.txt / Q1): Q1: question: Môn NLP có bao nhiêu tín chỉ? answer: Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ.
+  [2] course-info-course-description-2 (score=0.4758 | course_info.txt / course_description): course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phần chính: (1) Xử lý cú pháp, (2) Diễn dịch ngữ nghĩa, và (3) Ngữ cảnh và tri thức thế giới.
+  [3] course-info-course-id-co3085-1 (score=0.4469 | course_info.txt / course_id: CO3085): course_id: CO3085 course_name: Xử lý Ngôn ngữ Tự nhiên course_name_en: Natural Language Processing semester: HK261 credits: 3 ects: 6 course_type: Specialty / Graduation knowledge block department: Khoa Khoa học và Kỹ thuật Máy tính format: 2 lecture periods per week, 15 weeks total_course_hours: 150 lecture_hours: 30 major_assignment_hours: 45 self_study_hours: 60
+   Nguồn trích dẫn (Sources)              : faq.txt / Q1, course_info.txt / course_description, course_info.txt / course_id: CO3085
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ. [Nguồn: faq.txt / Q1] Ngoài ra: course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phần chính: (1) Xử lý cú pháp, (2) Diễn dịch ngữ nghĩa, và (3) Ngữ cảnh và tri thức thế giới. [Nguồn: course_info.txt / course_description]
+
+=== Question 2 ===
+1. Câu hỏi đầu vào (Input Question)       : Chương 4 nói về gì?
+   Truy vấn sau giải tham chiếu           : Chương 4 nói về gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_TOPIC, entities={"chapter": "CH04"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q5-4, topics-chapter-4-features-and-augmented-grammar-3, schedule-week-05-5]
+  [1] faq-q5-4 (score=0.5116 | faq.txt / Q5): Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
+  [2] topics-chapter-4-features-and-augmented-grammar-3 (score=0.4051 | topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR): CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR chapter_id: CH04 part: Syntactic Processing keywords: feature, augmented grammar, lexicon, unification summary: The chapter extends formal grammar with feature systems and augmented grammar. It covers lexicon, parsing with features, augmented transition networks, generalized feature systems and unification grammar. subtopics: 4.1 Feature systems and augmented grammars 4.2 Basic feature systems for English 4.3 Lexicon 4.4 Simple grammar using feature systems 4.5 Parsing with features 4.6 Augmented transition networks 4.7 Generalized feature systems and unification grammar
+  [3] schedule-week-05-5 (score=0.3331 | schedule.txt / WEEK 05): WEEK 05 part: Syntactic Processing chapter: Chapter 4 topics: - augmented transition networks - generalized feature systems - unification grammar activity: feature-based parsing exercises
+   Nguồn trích dẫn (Sources)              : faq.txt / Q5, topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR, schedule.txt / WEEK 05
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR — Tóm tắt: The chapter extends formal grammar with feature systems and augmented grammar. It covers lexicon, parsing with features, augmented transition networks, generalized feature systems and unification grammar. — Các mục chi tiết: 4.1 Feature systems and augmented grammars 4.2 Basic feature systems for English 4.3 Lexicon 4.4 Simple grammar using feature systems 4.5 Parsing with features 4.6 Augmented transition networks 4.7 Generalized feature systems and unification grammar [Nguồn: topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR]
+
+=== Question 3 ===
+1. Câu hỏi đầu vào (Input Question)       : Nó có liên quan đến parsing không?
+   Truy vấn sau giải tham chiếu           : Chương 4 có liên quan đến parsing không?
+   Trạng thái Parse & Intent/Entity       : parse_status=UNPARSED, intent=GET_TOPIC, entities={"chapter": "CH04", "topic": "PARSING"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=topics-chapter-4-features-and-augmented-grammar-3, schedule-week-05-5, schedule-week-04-4]
+  [1] topics-chapter-4-features-and-augmented-grammar-3 (score=0.4031 | topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR): CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR chapter_id: CH04 part: Syntactic Processing keywords: feature, augmented grammar, lexicon, unification summary: The chapter extends formal grammar with feature systems and augmented grammar. It covers lexicon, parsing with features, augmented transition networks, generalized feature systems and unification grammar. subtopics: 4.1 Feature systems and augmented grammars 4.2 Basic feature systems for English 4.3 Lexicon 4.4 Simple grammar using feature systems 4.5 Parsing with features 4.6 Augmented transition networks 4.7 Generalized feature systems and unification grammar
+  [2] schedule-week-05-5 (score=0.3498 | schedule.txt / WEEK 05): WEEK 05 part: Syntactic Processing chapter: Chapter 4 topics: - augmented transition networks - generalized feature systems - unification grammar activity: feature-based parsing exercises
+  [3] schedule-week-04-4 (score=0.3449 | schedule.txt / WEEK 04): WEEK 04 part: Syntactic Processing chapter: Chapter 4 topics: - feature systems - augmented grammars - feature systems for English - lexicon - grammar using feature systems - parsing with features
+   Nguồn trích dẫn (Sources)              : topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR, schedule.txt / WEEK 05, schedule.txt / WEEK 04
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] Có. CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR — Tóm tắt: The chapter extends formal grammar with feature systems and augmented grammar. It covers lexicon, parsing with features, augmented transition networks, generalized feature systems and unification grammar. — Các mục chi tiết: 4.1 Feature systems and augmented grammars 4.2 Basic feature systems for English 4.3 Lexicon 4.4 Simple grammar using feature systems 4.5 Parsing with features 4.6 Augmented transition networks 4.7 Generalized feature systems and unification grammar [Nguồn: topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR]
+
+=== Question 4 ===
+1. Câu hỏi đầu vào (Input Question)       : Chương này học vào tuần nào?
+   Truy vấn sau giải tham chiếu           : Chương 4 học vào tuần nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_SCHEDULE, entities={"chapter": "CH04"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q5-4, schedule-week-05-5, schedule-week-04-4]
+  [1] faq-q5-4 (score=0.5523 | faq.txt / Q5): Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
+  [2] schedule-week-05-5 (score=0.4202 | schedule.txt / WEEK 05): WEEK 05 part: Syntactic Processing chapter: Chapter 4 topics: - augmented transition networks - generalized feature systems - unification grammar activity: feature-based parsing exercises
+  [3] schedule-week-04-4 (score=0.4146 | schedule.txt / WEEK 04): WEEK 04 part: Syntactic Processing chapter: Chapter 4 topics: - feature systems - augmented grammars - feature systems for English - lexicon - grammar using feature systems - parsing with features
+   Nguồn trích dẫn (Sources)              : faq.txt / Q5, schedule.txt / WEEK 05, schedule.txt / WEEK 04
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] WEEK 05 học Chapter 4 với các nội dung: - augmented transition networks - generalized feature systems - unification grammar. [Nguồn: schedule.txt / WEEK 05] Bên cạnh đó: WEEK 04 học Chapter 4 với các nội dung: - feature systems - augmented grammars - feature systems for English - lexicon - grammar using feature systems - parsing with features. [Nguồn: schedule.txt / WEEK 04]
+
+=== Question 5 ===
+1. Câu hỏi đầu vào (Input Question)       : Còn chương sau?
+   Truy vấn sau giải tham chiếu           : Chương 5 học vào tuần nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_SCHEDULE, entities={"chapter": "CH05"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=schedule-week-06-6, topics-chapter-5-grammar-for-natural-language-4, faq-q7-6]
+  [1] schedule-week-06-6 (score=0.4262 | schedule.txt / WEEK 06): WEEK 06 part: Syntactic Processing chapter: Chapter 5 topics: - grammars for natural language - auxiliary verbs and verb phrases - movement phenomena in language - handling questions in context-free grammars - relative clauses
+  [2] topics-chapter-5-grammar-for-natural-language-4 (score=0.3278 | topics.txt / CHAPTER 5: GRAMMAR FOR NATURAL LANGUAGE): CHAPTER 5: GRAMMAR FOR NATURAL LANGUAGE chapter_id: CH05 part: Syntactic Processing keywords: natural language grammar, auxiliary verbs, movement, wh-questions, relative clauses summary: The chapter develops comprehensive grammars for natural language phenomena including auxiliary verbs, verb phrases, movement phenomena, yes/no and wh-questions, and relative clauses. subtopics: 5.1 Auxiliary verbs and verb phrases 5.2 Movement phenomena in language 5.3 Handling questions in context-free grammars 5.4 Relative clauses 5.5 The hold mechanism in ATNs
+  [3] faq-q7-6 (score=0.2125 | faq.txt / Q7): Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
+   Nguồn trích dẫn (Sources)              : schedule.txt / WEEK 06, topics.txt / CHAPTER 5: GRAMMAR FOR NATURAL LANGUAGE, faq.txt / Q7
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] WEEK 06 học Chapter 5 với các nội dung: - grammars for natural language - auxiliary verbs and verb phrases - movement phenomena in language - handling questions in context-free grammars - relative clauses. [Nguồn: schedule.txt / WEEK 06]
+
+=== Question 6 ===
+1. Câu hỏi đầu vào (Input Question)       : Tài liệu của phần này là gì?
+   Truy vấn sau giải tham chiếu           : Tài liệu tham khảo cho Chương 5 là gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=UNPARSED, intent=GET_RESOURCE, entities={"chapter": "CH05"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=resources-textbook-3-2, resources-textbook-1-0, resources-textbook-2-1]
+  [1] resources-textbook-3-2 (score=0.2385 | resources.txt / TEXTBOOK 3): TEXTBOOK 3 title: Xử lý ngôn ngữ tự nhiên author: Phan Thị Tươi publisher: Nhà xuất bản Đại học Quốc gia TP Hồ Chí Minh year: 2012 usage: Vietnamese NLP reference
+  [2] resources-textbook-1-0 (score=0.2384 | resources.txt / TEXTBOOK 1): TEXTBOOK 1 title: Natural Language Understanding author: James Allen publisher: Benjamin/Cummings year: 1995 usage: main course textbook covering Part I (Syntactic Processing), Part II (Semantic Interpretation), and Part III (Context and World Knowledge)
+  [3] resources-textbook-2-1 (score=0.2201 | resources.txt / TEXTBOOK 2): TEXTBOOK 2 title: Introduction to Natural Language Processing author: Jacob Eisenstein publisher: The MIT Press year: 2019 usage: NLP foundations and statistical methods
+   Nguồn trích dẫn (Sources)              : resources.txt / TEXTBOOK 3, resources.txt / TEXTBOOK 1, resources.txt / TEXTBOOK 2
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] TEXTBOOK 3 — 'Xử lý ngôn ngữ tự nhiên' (Tác giả: Phan Thị Tươi), công dụng: Vietnamese NLP reference. [Nguồn: resources.txt / TEXTBOOK 3] Ngoài ra còn có: TEXTBOOK 1 — 'Natural Language Understanding' (Tác giả: James Allen), công dụng: main course textbook covering Part I (Syntactic Processing), Part II (Semantic Interpretation), and Part III (Context and World Knowledge). [Nguồn: resources.txt / TEXTBOOK 1]
+
+=== Question 7 ===
+1. Câu hỏi đầu vào (Input Question)       : Chương 11 có hỏi đáp không?
+   Truy vấn sau giải tham chiếu           : Chương 11 có hỏi đáp không?
+   Trạng thái Parse & Intent/Entity       : parse_status=UNPARSED, intent=GET_TOPIC, entities={"chapter": "CH11", "topic": "QUESTION_ANSWERING"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=topics-chapter-11-knowledge-representation-and-reasoning-10, faq-q7-6, schedule-week-13-13]
+  [1] topics-chapter-11-knowledge-representation-and-reasoning-10 (score=0.4646 | topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING): CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING chapter_id: CH11 part: Context and World Knowledge keywords: knowledge representation, reasoning, frame, QA summary: The chapter introduces knowledge representation and reasoning and applies them to simple natural-language question answering. subtopics: 11.1 Knowledge representation 11.2 Frames: representing stereotypical information 11.3 Handling natural language quantification 11.4 Time and aspectual classes of verbs 11.5 Procedural semantics and question answering
+  [2] faq-q7-6 (score=0.3827 | faq.txt / Q7): Q7: question: Chương nào học về knowledge representation? answer: Chương 11.
+  [3] schedule-week-13-13 (score=0.3740 | schedule.txt / WEEK 13): WEEK 13 part: Context and World Knowledge chapter: Chapter 11 topics: - knowledge representation - frames - natural language quantification - time and aspectual classes - procedural semantics - question answering
+   Nguồn trích dẫn (Sources)              : topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING, faq.txt / Q7, schedule.txt / WEEK 13
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] Có. CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING — Tóm tắt: The chapter introduces knowledge representation and reasoning and applies them to simple natural-language question answering. — Các mục chi tiết: 11.1 Knowledge representation 11.2 Frames: representing stereotypical information 11.3 Handling natural language quantification 11.4 Time and aspectual classes of verbs 11.5 Procedural semantics and question answering [Nguồn: topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING]
+
+=== Question 8 ===
+1. Câu hỏi đầu vào (Input Question)       : Còn chương sau?
+   Truy vấn sau giải tham chiếu           : Chương 12 nói về gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_TOPIC, entities={"chapter": "CH12"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q8-7, topics-chapter-12-discourse-context-and-reference-11, schedule-week-14-14]
+  [1] faq-q8-7 (score=0.5550 | faq.txt / Q8): Q8: question: Chương nào học về local discourse context? answer: Chương 12.
+  [2] topics-chapter-12-discourse-context-and-reference-11 (score=0.4421 | topics.txt / CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE): CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE chapter_id: CH12 part: Context and World Knowledge keywords: discourse context, reference, anaphora, pronoun, centering summary: The chapter introduces local discourse context and discourse entities, with emphasis on reference expressions, pronouns, centering, definite descriptions, sets, ellipsis and surface anaphora. subtopics: 12.1 Defining local discourse context and discourse entities 12.2 Simple model of anaphora based on history list 12.3 Pronouns and centering 12.4 Definite descriptions 12.5 Definite reference and sets 12.6 Ellipsis 12.7 Surface anaphora
+  [3] schedule-week-14-14 (score=0.3330 | schedule.txt / WEEK 14): WEEK 14 part: Context and World Knowledge chapter: Chapter 12 topics: - local discourse context - discourse entities - anaphora - pronouns and centering - definite descriptions - definite reference and sets - ellipsis - surface anaphora
+   Nguồn trích dẫn (Sources)              : faq.txt / Q8, topics.txt / CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE, schedule.txt / WEEK 14
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE — Tóm tắt: The chapter introduces local discourse context and discourse entities, with emphasis on reference expressions, pronouns, centering, definite descriptions, sets, ellipsis and surface anaphora. — Các mục chi tiết: 12.1 Defining local discourse context and discourse entities 12.2 Simple model of anaphora based on history list 12.3 Pronouns and centering 12.4 Definite descriptions 12.5 Definite reference and sets 12.6 Ellipsis 12.7 Surface anaphora [Nguồn: topics.txt / CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE]
+
+=== Question 9 ===
+1. Câu hỏi đầu vào (Input Question)       : Nội dung này học vào tuần nào?
+   Truy vấn sau giải tham chiếu           : Chương 12 học vào tuần nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_SCHEDULE, entities={"chapter": "CH12"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q8-7, schedule-week-14-14, topics-chapter-12-discourse-context-and-reference-11]
+  [1] faq-q8-7 (score=0.5933 | faq.txt / Q8): Q8: question: Chương nào học về local discourse context? answer: Chương 12.
+  [2] schedule-week-14-14 (score=0.4110 | schedule.txt / WEEK 14): WEEK 14 part: Context and World Knowledge chapter: Chapter 12 topics: - local discourse context - discourse entities - anaphora - pronouns and centering - definite descriptions - definite reference and sets - ellipsis - surface anaphora
+  [3] topics-chapter-12-discourse-context-and-reference-11 (score=0.3482 | topics.txt / CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE): CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE chapter_id: CH12 part: Context and World Knowledge keywords: discourse context, reference, anaphora, pronoun, centering summary: The chapter introduces local discourse context and discourse entities, with emphasis on reference expressions, pronouns, centering, definite descriptions, sets, ellipsis and surface anaphora. subtopics: 12.1 Defining local discourse context and discourse entities 12.2 Simple model of anaphora based on history list 12.3 Pronouns and centering 12.4 Definite descriptions 12.5 Definite reference and sets 12.6 Ellipsis 12.7 Surface anaphora
+   Nguồn trích dẫn (Sources)              : faq.txt / Q8, schedule.txt / WEEK 14, topics.txt / CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] WEEK 14 học Chapter 12 với các nội dung: - local discourse context - discourse entities - anaphora - pronouns and centering - definite descriptions - definite reference and sets - ellipsis - surface anaphora. [Nguồn: schedule.txt / WEEK 14]
+
+=== Question 10 ===
+1. Câu hỏi đầu vào (Input Question)       : Còn chương sau?
+   Truy vấn sau giải tham chiếu           : Chương 13 nói về gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=SKIPPED, intent=GET_SCHEDULE, entities={"chapter": "CH13"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=NO_RELEVANT_CONTEXT, chunk_ids=(none)]
+  (Không có tài liệu truy xuất)
+   Nguồn trích dẫn (Sources)              : (none)
+3. Câu trả lời của hệ thống (Answer)      : [status=INSUFFICIENT_CONTEXT] Sau Chương 12 là Chương 13, tuy nhiên cơ sở tri thức môn học hiện chỉ có đến Chương 12 nên không có dữ liệu cho Chương 13.
+
+=== Question 11 ===
+1. Câu hỏi đầu vào (Input Question)       : Bài tập lớn có phần parser không?
+   Truy vấn sau giải tham chiếu           : Bài tập lớn có phần parser không?
+   Trạng thái Parse & Intent/Entity       : parse_status=UNPARSED, intent=GET_ASSIGNMENT, entities={"assignment": "BTL01", "part": "PART_I", "topic": "PARSING"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q13-12, assignments-luu-y-0, assignments-part-i-grammar-and-parser-1]
+  [1] faq-q13-12 (score=0.5165 | faq.txt / Q13): Q13: question: Bài tập lớn gồm những phần nào? answer: Bài tập lớn gồm Phần I (Grammar & Parser), Phần II (Semantic Interpretation & QA hoặc LLM/RAG), Phần III (Local Discourse Context) và Phần IV (Evaluation).
+  [2] assignments-luu-y-0 (score=0.4389 | assignments.txt / Lưu ý): Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering.
+  [3] assignments-part-i-grammar-and-parser-1 (score=0.2746 | assignments.txt / PART I - Grammar and Parser): PART I - Grammar and Parser --------------------------- requirements: - xây dựng grammar cho miền Course Assistant - sinh câu hợp lệ từ grammar - xây dựng parser - xuất parse tree - xử lý câu không hợp lệ suggested_outputs: output/grammar.txt output/samples.txt output/parse-results.txt
+   Nguồn trích dẫn (Sources)              : faq.txt / Q13, assignments.txt / Lưu ý, assignments.txt / PART I - Grammar and Parser
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] Có. PART I - Grammar and Parser có yêu cầu: - xây dựng grammar cho miền Course Assistant - sinh câu hợp lệ từ grammar - xây dựng parser - xuất parse tree - xử lý câu không hợp lệ. Đầu ra gợi ý: output/grammar.txt output/samples.txt output/parse-results.txt. [Nguồn: assignments.txt / PART I - Grammar and Parser]
+
+=== Question 12 ===
+1. Câu hỏi đầu vào (Input Question)       : Phần này cần xuất file gì?
+   Truy vấn sau giải tham chiếu           : Phần I cần xuất file gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_ASSIGNMENT, entities={"part": "PART_I"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=assignments-part-i-grammar-and-parser-1, faq-q13-12, faq-q2-1]
+  [1] assignments-part-i-grammar-and-parser-1 (score=0.4169 | assignments.txt / PART I - Grammar and Parser): PART I - Grammar and Parser --------------------------- requirements: - xây dựng grammar cho miền Course Assistant - sinh câu hợp lệ từ grammar - xây dựng parser - xuất parse tree - xử lý câu không hợp lệ suggested_outputs: output/grammar.txt output/samples.txt output/parse-results.txt
+  [2] faq-q13-12 (score=0.3960 | faq.txt / Q13): Q13: question: Bài tập lớn gồm những phần nào? answer: Bài tập lớn gồm Phần I (Grammar & Parser), Phần II (Semantic Interpretation & QA hoặc LLM/RAG), Phần III (Local Discourse Context) và Phần IV (Evaluation).
+  [3] faq-q2-1 (score=0.3196 | faq.txt / Q2): Q2: question: NLP có những phần chính nào? answer: Môn học gồm ba phần chính: Xử lý cú pháp; Diễn dịch ngữ nghĩa; và Ngữ cảnh và tri thức thế giới.
+   Nguồn trích dẫn (Sources)              : assignments.txt / PART I - Grammar and Parser, faq.txt / Q13, faq.txt / Q2
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] PART I - Grammar and Parser yêu cầu xuất các file đầu ra: output/grammar.txt output/samples.txt output/parse-results.txt (Yêu cầu: - xây dựng grammar cho miền Course Assistant - sinh câu hợp lệ từ grammar - xây dựng parser - xuất parse tree - xử lý câu không hợp lệ). [Nguồn: assignments.txt / PART I - Grammar and Parser]
+
+=== Question 13 ===
+1. Câu hỏi đầu vào (Input Question)       : Tuần 5 học những nội dung gì?
+   Truy vấn sau giải tham chiếu           : Tuần 5 học những nội dung gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_SCHEDULE, entities={"week": "WEEK_05"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=schedule-week-05-5, faq-q10-9, schedule-week-06-6]
+  [1] schedule-week-05-5 (score=0.3965 | schedule.txt / WEEK 05): WEEK 05 part: Syntactic Processing chapter: Chapter 4 topics: - augmented transition networks - generalized feature systems - unification grammar activity: feature-based parsing exercises
+  [2] faq-q10-9 (score=0.1575 | faq.txt / Q10): Q10: question: L.O.2.5 liên quan đến nội dung gì? answer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập nhằng từ ở mức câu.
+  [3] schedule-week-06-6 (score=0.1307 | schedule.txt / WEEK 06): WEEK 06 part: Syntactic Processing chapter: Chapter 5 topics: - grammars for natural language - auxiliary verbs and verb phrases - movement phenomena in language - handling questions in context-free grammars - relative clauses
+   Nguồn trích dẫn (Sources)              : schedule.txt / WEEK 05, faq.txt / Q10, schedule.txt / WEEK 06
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] WEEK 05 học Chapter 4 với các nội dung: - augmented transition networks - generalized feature systems - unification grammar. [Nguồn: schedule.txt / WEEK 05] Bên cạnh đó: WEEK 06 học Chapter 5 với các nội dung: - grammars for natural language - auxiliary verbs and verb phrases - movement phenomena in language - handling questions in context-free grammars - relative clauses. [Nguồn: schedule.txt / WEEK 06]
+
+=== Question 14 ===
+1. Câu hỏi đầu vào (Input Question)       : Tài liệu của phần này ở đâu?
+   Truy vấn sau giải tham chiếu           : Tài liệu tham khảo cho Tuần 5 (Phần I, nét và văn phạm gia tố) là gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=UNPARSED, intent=GET_RESOURCE, entities={"week": "WEEK_05", "topic": "SYNTACTIC_PROCESSING", "chapter": "CH04", "part": "PART_I"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=course-info-detailed-learning-outcomes-6, course-info-learning-outcomes-5, faq-q2-1]
+  [1] course-info-detailed-learning-outcomes-6 (score=0.2532 | course_info.txt / detailed_learning_outcomes): detailed_learning_outcomes: LO1.1 - Hiểu cấu trúc hệ thống NLP, ứng dụng và cách đánh giá hệ thống hiểu ngôn ngữ tự nhiên. LO2.1 - Kiến thức cơ sở về cú pháp tiếng Anh. LO2.2 - Kiến thức cơ bản về văn phạm và phân tích cú pháp. LO2.3 - Kiến thức về nét và văn phạm gia tố. LO2.4 - Kiến thức tạo văn phạm cho ngôn ngữ tự nhiên và phương pháp parsing. LO2.5 - Kiến thức xác suất để giải quyết nhập nhằng từ ở mức câu. LO3.1 - Kiến thức về ngôn ngữ dạng luận lý và tạo dạng luận lý đơn giản. LO3.2 - Tạo tự động diễn dịch ngữ nghĩa cho câu tự nhiên. LO3.3 - Giải quyết nhập nhằng ngữ nghĩa dựa trên tri thức và thống kê. LO3.4 - Diễn dịch ngữ nghĩa bằng quan hệ văn phạm và văn phạm ngữ nghĩa. LO4.1 - Biểu diễn tri thức, suy diễn và xây dựng hệ thống hỏi đáp đơn giản. LO4.2 - Ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.
+  [2] course-info-learning-outcomes-5 (score=0.2402 | course_info.txt / learning_outcomes): learning_outcomes: LO1 - Tổng quan về tổ chức hệ thống NLP và các ứng dụng. LO2 - Xử lý cú pháp; xây dựng văn phạm đơn giản và phân tích cú pháp. LO3 - Diễn dịch ngữ nghĩa; tạo dạng luận lý và giải quyết nhập nhằng. LO4 - Ngữ nghĩa và tri thức thế giới; xây dựng cơ sở tri thức và hệ thống hỏi đáp đơn giản.
+  [3] faq-q2-1 (score=0.2194 | faq.txt / Q2): Q2: question: NLP có những phần chính nào? answer: Môn học gồm ba phần chính: Xử lý cú pháp; Diễn dịch ngữ nghĩa; và Ngữ cảnh và tri thức thế giới.
+   Nguồn trích dẫn (Sources)              : course_info.txt / detailed_learning_outcomes, course_info.txt / learning_outcomes, faq.txt / Q2
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] learning_outcomes: LO1 - Tổng quan về tổ chức hệ thống NLP và các ứng dụng. LO2 - Xử lý cú pháp; xây dựng văn phạm đơn giản và phân tích cú pháp. LO3 - Diễn dịch ngữ nghĩa; tạo dạng luận lý và giải quyết nhập nhằng. LO4 - Ngữ nghĩa và tri thức thế giới; xây dựng cơ sở tri thức và hệ thống hỏi đáp đơn giản. [Nguồn: course_info.txt / learning_outcomes]
+
+=== Question 15 ===
+1. Câu hỏi đầu vào (Input Question)       : Deadline của bài tập lớn là khi nào?
+   Truy vấn sau giải tham chiếu           : Deadline của bài tập lớn là khi nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_DEADLINE, entities={"assignment": "BTL01"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q13-12, assignments-luu-y-0, regulations-luu-y-0]
+  [1] faq-q13-12 (score=0.4908 | faq.txt / Q13): Q13: question: Bài tập lớn gồm những phần nào? answer: Bài tập lớn gồm Phần I (Grammar & Parser), Phần II (Semantic Interpretation & QA hoặc LLM/RAG), Phần III (Local Discourse Context) và Phần IV (Evaluation).
+  [2] assignments-luu-y-0 (score=0.4773 | assignments.txt / Lưu ý): Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering.
+  [3] regulations-luu-y-0 (score=0.1848 | regulations.txt / Lưu ý): Lưu ý: Các quy định chi tiết về deadline, format nộp bài và chính sách lớp học trong file này là dữ liệu MẪU phục vụ Course Assistant. Khi triển khai thực tế, các thông tin này phải được thay bằng thông tin chính thức.
+   Nguồn trích dẫn (Sources)              : faq.txt / Q13, assignments.txt / Lưu ý, regulations.txt / Lưu ý
+3. Câu trả lời của hệ thống (Answer)      : [status=INSUFFICIENT_CONTEXT] Cơ sở tri thức hiện tại không có ngày giờ hạn nộp chính thức cho bài tập lớn (tài liệu chỉ ghi nhận đây là dữ liệu mẫu phục vụ Course Assistant và cần thay bằng lịch chính thức của lớp). [Nguồn: faq.txt / Q13]
+
+=== Question 16 ===
+1. Câu hỏi đầu vào (Input Question)       : Hôm nay ở TP.HCM có mưa không?
+   Truy vấn sau giải tham chiếu           : Hôm nay ở TP.HCM có mưa không?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=UNKNOWN, entities={}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=NO_RELEVANT_CONTEXT, chunk_ids=(none)]
+  (Không có tài liệu truy xuất)
+   Nguồn trích dẫn (Sources)              : (none)
+3. Câu trả lời của hệ thống (Answer)      : [status=NO_RELEVANT_CONTEXT] Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085 để trả lời câu hỏi: 'Hôm nay ở TP.HCM có mưa không?'.
+
+=== Question 17 ===
+1. Câu hỏi đầu vào (Input Question)       : Phòng học của môn CO3085 ở đâu?
+   Truy vấn sau giải tham chiếu           : Phòng học của môn CO3085 ở đâu?
+   Trạng thái Parse & Intent/Entity       : parse_status=UNPARSED, intent=NONE, entities={"course": "CO3085"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q1-0, course-info-course-description-2, resources-textbook-3-2]
+  [1] faq-q1-0 (score=0.5207 | faq.txt / Q1): Q1: question: Môn NLP có bao nhiêu tín chỉ? answer: Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ.
+  [2] course-info-course-description-2 (score=0.3851 | course_info.txt / course_description): course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phần chính: (1) Xử lý cú pháp, (2) Diễn dịch ngữ nghĩa, và (3) Ngữ cảnh và tri thức thế giới.
+  [3] resources-textbook-3-2 (score=0.3072 | resources.txt / TEXTBOOK 3): TEXTBOOK 3 title: Xử lý ngôn ngữ tự nhiên author: Phan Thị Tươi publisher: Nhà xuất bản Đại học Quốc gia TP Hồ Chí Minh year: 2012 usage: Vietnamese NLP reference
+   Nguồn trích dẫn (Sources)              : faq.txt / Q1, course_info.txt / course_description, resources.txt / TEXTBOOK 3
+3. Câu trả lời của hệ thống (Answer)      : [status=INSUFFICIENT_CONTEXT] Các đoạn tài liệu truy xuất được không có thông tin cụ thể về phòng học cho câu hỏi này. [Nguồn: faq.txt / Q1]
+
+=== Question 18 ===
+1. Câu hỏi đầu vào (Input Question)       : Quy định về LLM/RAG là gì?
+   Truy vấn sau giải tham chiếu           : Quy định về LLM/RAG là gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_RULE, entities={"rule": "LLM_RAG"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=regulations-llm-rag-7, assignments-llm-rag-extension-5, faq-q12-11]
+  [1] regulations-llm-rag-7 (score=0.5113 | regulations.txt / LLM_RAG): LLM_RAG: LLM/RAG nếu được sử dụng chỉ nên đóng vai trò mở rộng. Sinh viên phải mô tả rõ mô hình, dữ liệu, retrieval và cách đánh giá.
+  [2] assignments-llm-rag-extension-5 (score=0.4828 | assignments.txt / LLM/RAG EXTENSION): LLM/RAG EXTENSION ----------------- status: optional description: Sinh viên có thể mở rộng bằng retrieval và/hoặc LLM. Phần này chỉ là mở rộng của NLP, không bắt buộc. not_required: - agent - multi-agent - fine-tuning LLM - huấn luyện language model - RAG pipeline quy mô lớn
+  [3] faq-q12-11 (score=0.4598 | faq.txt / Q12): Q12: question: Bài tập lớn có thể sử dụng LLM hoặc RAG không? answer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi.
+   Nguồn trích dẫn (Sources)              : regulations.txt / LLM_RAG, assignments.txt / LLM/RAG EXTENSION, faq.txt / Q12
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] LLM_RAG: LLM/RAG nếu được sử dụng chỉ nên đóng vai trò mở rộng. Sinh viên phải mô tả rõ mô hình, dữ liệu, retrieval và cách đánh giá. [Nguồn: regulations.txt / LLM_RAG]
+
+=== Question 19 ===
+1. Câu hỏi đầu vào (Input Question)       : Nó học vào tuần nào?
+   Truy vấn sau giải tham chiếu           : Nó học vào tuần nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=SKIPPED, intent=NONE, entities={}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=SKIPPED, chunk_ids=(none)]
+  (Không có tài liệu truy xuất)
+   Nguồn trích dẫn (Sources)              : (none)
+3. Câu trả lời của hệ thống (Answer)      : [status=NEED_CLARIFICATION] Câu hỏi có từ tham chiếu 'Nó' nhưng chưa có ngữ cảnh trước đó. Bạn vui lòng nêu rõ chủ đề, phần hoặc chương muốn hỏi.
+
+=== Question 20 ===
+1. Câu hỏi đầu vào (Input Question)       : Còn chương sau?
+   Truy vấn sau giải tham chiếu           : Còn chương sau?
+   Trạng thái Parse & Intent/Entity       : parse_status=SKIPPED, intent=NONE, entities={}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=SKIPPED, chunk_ids=(none)]
+  (Không có tài liệu truy xuất)
+   Nguồn trích dẫn (Sources)              : (none)
+3. Câu trả lời của hệ thống (Answer)      : [status=NEED_CLARIFICATION] Bạn đang hỏi 'chương sau' nhưng chưa có chương nào trong ngữ cảnh trước đó. Bạn muốn hỏi tiếp theo của chương mấy?
+
+=== Question 21 ===
+1. Câu hỏi đầu vào (Input Question)       : Tài liệu của phần này là gì?
+   Truy vấn sau giải tham chiếu           : Tài liệu của phần này là gì?
+   Trạng thái Parse & Intent/Entity       : parse_status=SKIPPED, intent=NONE, entities={}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=SKIPPED, chunk_ids=(none)]
+  (Không có tài liệu truy xuất)
+   Nguồn trích dẫn (Sources)              : (none)
+3. Câu trả lời của hệ thống (Answer)      : [status=NEED_CLARIFICATION] Bạn muốn tìm tài liệu tham khảo của phần/chương nào? Vui lòng nêu rõ chủ đề hoặc chương học.
+
+=== Question 22 ===
+1. Câu hỏi đầu vào (Input Question)       : Chương 3 và Chương 4 khác nhau như thế nào?
+   Truy vấn sau giải tham chiếu           : Chương 3 và Chương 4 khác nhau như thế nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=UNPARSED, intent=GET_TOPIC, entities={"chapter": "CH03"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q5-4, faq-q3-2, faq-q4-3]
+  [1] faq-q5-4 (score=0.4166 | faq.txt / Q5): Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
+  [2] faq-q3-2 (score=0.3657 | faq.txt / Q3): Q3: question: Chương nào học về CFG? answer: CFG được trình bày trong Chương 3, Grammar and Parsing.
+  [3] faq-q4-3 (score=0.3361 | faq.txt / Q4): Q4: question: Chương nào học về PCFG? answer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê.
+   Nguồn trích dẫn (Sources)              : faq.txt / Q5, faq.txt / Q3, faq.txt / Q4
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]
+
+=== Question 23 ===
+1. Câu hỏi đầu vào (Input Question)       : Chương này học vào tuần nào?
+   Truy vấn sau giải tham chiếu           : Chương này học vào tuần nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=SKIPPED, intent=NONE, entities={}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=SKIPPED, chunk_ids=(none)]
+  (Không có tài liệu truy xuất)
+   Nguồn trích dẫn (Sources)              : (none)
+3. Câu trả lời của hệ thống (Answer)      : [status=NEED_CLARIFICATION] Lượt trước nhắc tới nhiều chương (Chương 3, Chương 4). Bạn muốn hỏi chương nào?
+
+=== Question 24 ===
+1. Câu hỏi đầu vào (Input Question)       : Chương 3 học vào tuần nào?
+   Truy vấn sau giải tham chiếu           : Chương 3 học vào tuần nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_SCHEDULE, entities={"chapter": "CH03"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q3-2, faq-q4-3, schedule-week-03-3]
+  [1] faq-q3-2 (score=0.5153 | faq.txt / Q3): Q3: question: Chương nào học về CFG? answer: CFG được trình bày trong Chương 3, Grammar and Parsing.
+  [2] faq-q4-3 (score=0.4609 | faq.txt / Q4): Q4: question: Chương nào học về PCFG? answer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê.
+  [3] schedule-week-03-3 (score=0.3814 | schedule.txt / WEEK 03): WEEK 03 part: Syntactic Processing chapter: Chapter 3 topics: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies
+   Nguồn trích dẫn (Sources)              : faq.txt / Q3, faq.txt / Q4, schedule.txt / WEEK 03
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] WEEK 03 học Chapter 3 với các nội dung: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies. [Nguồn: schedule.txt / WEEK 03]
+
+=== Question 25 ===
+1. Câu hỏi đầu vào (Input Question)       : Còn chương sau?
+   Truy vấn sau giải tham chiếu           : Chương 4 học vào tuần nào?
+   Trạng thái Parse & Intent/Entity       : parse_status=PARSED, intent=GET_SCHEDULE, entities={"chapter": "CH04"}
+2. Thông tin/tài liệu truy xuất (Context) : [retrieval_status=FOUND, chunk_ids=faq-q5-4, schedule-week-05-5, schedule-week-04-4]
+  [1] faq-q5-4 (score=0.5523 | faq.txt / Q5): Q5: question: Chương nào học về Features và Augmented Grammar? answer: Chương 4.
+  [2] schedule-week-05-5 (score=0.4202 | schedule.txt / WEEK 05): WEEK 05 part: Syntactic Processing chapter: Chapter 4 topics: - augmented transition networks - generalized feature systems - unification grammar activity: feature-based parsing exercises
+  [3] schedule-week-04-4 (score=0.4146 | schedule.txt / WEEK 04): WEEK 04 part: Syntactic Processing chapter: Chapter 4 topics: - feature systems - augmented grammars - feature systems for English - lexicon - grammar using feature systems - parsing with features
+   Nguồn trích dẫn (Sources)              : faq.txt / Q5, schedule.txt / WEEK 05, schedule.txt / WEEK 04
+3. Câu trả lời của hệ thống (Answer)      : [status=ANSWERED] WEEK 05 học Chapter 4 với các nội dung: - augmented transition networks - generalized feature systems - unification grammar. [Nguồn: schedule.txt / WEEK 05] Bên cạnh đó: WEEK 04 học Chapter 4 với các nội dung: - feature systems - augmented grammars - feature systems for English - lexicon - grammar using feature systems - parsing with features. [Nguồn: schedule.txt / WEEK 04]

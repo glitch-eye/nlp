@@ -5,12 +5,14 @@ import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+from nlp.app.assistant import CourseAssistant
+from nlp.app.dialogue import DialogueState
 from nlp.app.knowledge_base import KnowledgeBase, default_data_dir
 from nlp.app.retriever import Retriever
 
 
 class RetrievalService:
-    """Load the course knowledge base and fit the retrieval index once."""
+    """Load the course knowledge base, retrieval index, and CourseAssistant orchestrator once."""
 
     def __init__(self, data_dir=None, top_k=3, min_score=0.08, lexical_weight=0.75, min_lexical_score=0.0):
         self.data_dir = Path(data_dir or default_data_dir())
@@ -23,9 +25,37 @@ class RetrievalService:
             lexical_weight=lexical_weight,
             min_lexical_score=min_lexical_score,
         )
+        self.assistant = CourseAssistant(
+            knowledge_base=self.knowledge_base,
+            parser=self.retriever.parser,
+            retriever=self.retriever,
+            top_k=top_k,
+        )
+        self.dialogue_state = DialogueState()
 
-    def retrieve(self, query):
-        return self.retriever.retrieve(query)
+    def retrieve(self, query, use_dialogue=False, dialogue_state=None):
+        if not use_dialogue and dialogue_state is None:
+            return self.retriever.retrieve(query)
+        state = DialogueState.from_dict(dialogue_state) if dialogue_state is not None else self.dialogue_state
+        resolution = self.assistant.dialogue_manager.resolve(query, state)
+        resolved_query = resolution["resolved_query"]
+        parse_tree = self.assistant.parser.parse(resolved_query) if self.assistant.parser else None
+        semantic = self.assistant._build_semantic_frame(resolved_query, parse_tree, resolution)
+        res = self.retriever.retrieve(resolved_query, semantic=semantic)
+        res["original_query"] = query
+        res["resolved_query"] = resolved_query
+        res["resolution"] = resolution
+        return res
+
+    def answer(self, question, dialogue_state=None, reset=False):
+        if reset:
+            self.dialogue_state.reset()
+        state = DialogueState.from_dict(dialogue_state) if dialogue_state is not None else self.dialogue_state
+        return self.assistant.answer(question, dialogue_state=state)
+
+    def reset_dialogue(self):
+        self.dialogue_state.reset()
+        return self.dialogue_state.to_dict()
 
 
 def make_handler(service):
@@ -56,8 +86,11 @@ def make_handler(service):
             })
 
         def do_POST(self):
-            if self.path != "/retrieve":
+            if self.path not in ("/retrieve", "/answer", "/reset"):
                 self._send_json(404, {"error": "not_found"})
+                return
+            if self.path == "/reset":
+                self._send_json(200, {"status": "reset", "dialogue_state": service.reset_dialogue()})
                 return
             try:
                 content_length = int(self.headers.get("Content-Length", "0"))
@@ -75,11 +108,28 @@ def make_handler(service):
             if not isinstance(request, dict):
                 self._send_json(400, {"error": "json_object_required"})
                 return
-            query = request.get("query")
+            query = request.get("query") or request.get("question")
             if not isinstance(query, str) or not query.strip():
                 self._send_json(400, {"error": "non_empty_query_required"})
                 return
-            self._send_json(200, service.retrieve(query.strip()))
+            if self.path == "/answer":
+                self._send_json(
+                    200,
+                    service.answer(
+                        query.strip(),
+                        dialogue_state=request.get("dialogue_state"),
+                        reset=bool(request.get("reset", False)),
+                    ),
+                )
+                return
+            self._send_json(
+                200,
+                service.retrieve(
+                    query.strip(),
+                    use_dialogue=bool(request.get("use_dialogue", False)),
+                    dialogue_state=request.get("dialogue_state"),
+                ),
+            )
 
         def log_message(self, format_string, *args):
             # Keep the standard request log concise and avoid logging request bodies.
