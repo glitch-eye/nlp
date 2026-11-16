@@ -69,6 +69,27 @@ def format_dialogue_turn(turn_index, result):
     return "\n".join(lines)
 
 
+RAG_SECTIONS_UNAVAILABLE = [
+    "2. [Chưa sinh được phần đánh giá RAG đo trực tiếp - xem nlp/app/rag_evaluation.py]",
+    "II/III. [Các ví dụ grounded / no-info / hallucination được sinh bởi rag_evaluation.py, không viết tay.]",
+]
+
+
+def format_run_header(model_name, top_k):
+    """Header of output/answer.txt: which model/prompt produced the answers below."""
+    lines = [
+        "# Course Assistant - answer.txt",
+        "# Model ID : {}".format(model_name),
+        "# Prompt   : nlp/app/prompt_builder.py (chỉ trả lời theo CONTEXT; trích dẫn [Nguồn: file / section];",
+        "#            không đủ thông tin -> INSUFFICIENT_CONTEXT)",
+        "# Guard    : nlp/app/answer_guard.py (kiểm tra trích dẫn và thông tin không có trong nguồn)",
+        "# top_k    : {}".format(top_k),
+    ]
+    if "mock" in str(model_name).lower():
+        lines.append("# LƯU Ý   : đây là MOCK extractive chạy offline, KHÔNG phải kết quả của một LLM thật.")
+    return "\n".join(lines) + "\n\n"
+
+
 def format_single_answer(index, result):
     """Format one answer block for output/answer.txt (showing input question, retrieved context, and system answer per assignment.pdf section 4.2)."""
     sources_str = (
@@ -109,7 +130,7 @@ def format_single_answer(index, result):
     ])
 
 
-def format_evaluation_summary(results, llm_model):
+def format_evaluation_summary(results, llm_model, rag_lines=None):
     """Build comprehensive evaluation report matching Section 6 (Phần IV) of assignment.pdf."""
     status_counts = Counter(r.get("status", "UNKNOWN") for r in results)
     parse_counts = Counter(r.get("parse_status", "UNKNOWN") for r in results)
@@ -150,64 +171,9 @@ def format_evaluation_summary(results, llm_model):
     for rtype, cnt in sorted(ref_type_counts.items()):
         lines.append("       * {:<24} : {}".format(rtype, cnt))
 
+    lines.append("")
+    lines.extend(rag_lines or RAG_SECTIONS_UNAVAILABLE)
     lines.extend([
-        "",
-        "2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl - 1.497 mẫu):",
-        "   - Tổng số mẫu kiểm thử                      : 1.497 câu",
-        "   - Hit@3 (Có ngữ cảnh đúng trong Top-3 chunk): 1.439 / 1.440 (99.9%)",
-        "   - Câu ngoài miền (UNKNOWN) từ chối đúng     : 3 / 3 (100.0%)",
-        "   - Câu thiếu thông tin (INSUFFICIENT_CONTEXT): 54 / 54 trường hợp được nhận diện",
-        "",
-        "II. CÁC VÍ DỤ MINH HỌA BẮT BUỘC CHO NHÁNH LLM/RAG (MỤC 6 - TRANG 8 ASSIGNMENT.PDF)",
-        "----------------------------------------------------------------------",
-        "1. Ví dụ câu trả lời đúng và có căn cứ (Grounded Answer):",
-        "   - Câu hỏi   : \"Chương 4 nói về gì?\"",
-        "   - Truy xuất : topics-chapter-4-features-and-augmented-grammar-3 (score=0.3950, topics.txt / CHAPTER 4)",
-        "   - Trả lời   : \"CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR — Tóm tắt: The chapter extends formal grammar",
-        "                 with feature systems and augmented grammar. It covers lexicon, parsing with features,",
-        "                 augmented transition networks, generalized feature systems and unification grammar...",
-        "                 [Nguồn: topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR]\"",
-        "   - Ví dụ 2 (Hội thoại giải tham chiếu): \"Tuần 5 học những nội dung gì?\" -> \"Tài liệu của phần này ở đâu?\"",
-        "     + Giải tham chiếu : \"Tài liệu tham khảo cho Tuần 5 (Chương 4, Parsing) là gì?\"",
-        "     + Trả lời có căn cứ: Trích dẫn chính xác TEXTBOOK 1 (Natural Language Understanding - James Allen)",
-        "       và TEXTBOOK 3 (Xử lý ngôn ngữ tự nhiên - Phan Thị Tươi) [Nguồn: resources.txt / TEXTBOOK 1, TEXTBOOK 3].",
-        "",
-        "2. Ví dụ câu hỏi không có thông tin trong Knowledge Base (No Relevant Context):",
-        "   - Câu hỏi   : \"Hôm nay ở TP.HCM có mưa không?\"",
-        "   - Truy xuất : retrieval_status = NO_RELEVANT_CONTEXT (Không có chunk nào vượt ngưỡng min_score=0.08)",
-        "   - Trả lời   : \"Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085",
-        "                 để trả lời câu hỏi: 'Hôm nay ở TP.HCM có mưa không?'.\" (status=NO_RELEVANT_CONTEXT, sources=[])",
-        "",
-        "3. Ví dụ trường hợp hệ thống có nguy cơ sinh thông tin không có trong dữ liệu (Hallucination Risk):",
-        "   - Trường hợp A (Hỏi ngày hạn nộp cụ thể): \"Deadline của bài tập lớn là khi nào?\"",
-        "     + Nguy cơ Hallucination: Retriever vẫn tìm thấy chunk `assignments-luu-y-0` (score=0.4687) vì khớp từ khóa",
-        "       \"bài tập lớn\". Tuy nhiên nội dung file `assignments.txt` chỉ ghi đây là DỮ LIỆU MẪU và không có ngày nộp.",
-        "       Nếu đưa thẳng vào LLM không kiểm soát, LLM có nguy cơ tự bịa ra một ngày hạn nộp giả định.",
-        "     + Cách khắc phục: Tầng `answer_guard` phát hiện truy vấn `GET_DEADLINE` trên dữ liệu mẫu không có mốc thời gian",
-        "       chính thức và trả về `status=INSUFFICIENT_CONTEXT`: nêu rõ tài liệu chỉ là dữ liệu mẫu, không bịa ngày nộp.",
-        "   - Trường hợp B (Hỏi thuộc tính không có trong đề cương): \"Phòng học của môn CO3085 ở đâu?\"",
-        "     + Nguy cơ Hallucination: Retriever lấy ra `course_info.txt` vì khớp mã môn `CO3085`, nhưng file chỉ chứa số",
-        "       tín chỉ và mô tả môn học, không có phòng học. Guard chặn lại với `status=INSUFFICIENT_CONTEXT`.",
-        "   - Trường hợp C (Tham chiếu hội thoại mơ hồ / vượt ngưỡng chương): \"Còn chương sau?\" sau Chương 12",
-        "     + Nguy cơ Hallucination: Chương 12 là chương cuối cùng trong đề cương. Nếu để LLM tự suy diễn \"Chương 13\",",
-        "       hệ thống sẽ sinh ảo nội dung. `DialogueManager` kiểm tra `CH13 not in kb_chapters` và chặn ngay với",
-        "       `status=INSUFFICIENT_CONTEXT`.",
-        "",
-        "III. MỘT SỐ TRƯỜNG HỢP TRẢ LỜI SAI / HẠN CHẾ & PHÂN TÍCH NGUYÊN NHÂN LỖI",
-        "----------------------------------------------------------------------",
-        "1. Lỗi ở tầng Cú pháp / Văn phạm (Parser UNPARSED trên câu diễn đạt tự do):",
-        "   - Hiện tượng : Các câu hỏi tự do như \"Chương 11 có hỏi đáp không?\" hoặc \"Midterm bao nhiêu phút?\"",
-        "                  nhận `parse_status=UNPARSED` do CFG ở Phần I có phạm vi hữu hạn.",
-        "   - Nguyên nhân: Văn phạm CFG chỉ bao phủ các mẫu câu chuẩn hóa để tránh bùng nổ tổ hợp khi sinh câu.",
-        "   - Khắc phục  : Hệ thống không dừng lại khi `UNPARSED` mà tự động chuyển sang rút trích thực thể bề mặt",
-        "                  kết hợp TF-IDF retrieval để vẫn tìm đúng chunk liên quan.",
-        "2. Lỗi xếp hạng ở tầng Retrieval khi câu hỏi quá ngắn / trùng từ khóa chung:",
-        "   - Hiện tượng : Câu hỏi \"Kế hoạch học tập kéo dài bao lâu?\" (SYN0006 trong bộ 1.497 mẫu) có từ \"kéo dài bao lâu\"",
-        "                  trùng mạnh với `faq-q15-14` (\"Final kéo dài bao lâu?\") và `faq-q14-13` (\"Midterm kéo dài bao lâu?\"),",
-        "                  làm 2 chunk FAQ cạnh tranh điểm lexical với `schedule.txt`.",
-        "   - Nguyên nhân: TF-IDF tính trọng số theo từ vựng cục bộ và nhạy với cụm từ hiếm trùng khớp chính xác.",
-        "   - Khắc phục  : Kết hợp điểm Semantic Frame (`0.75 * lexical + 0.25 * semantic`) giúp đẩy chunk đúng của",
-        "                  `schedule.txt` lên vị trí số 1 (score=0.4167).",
         "",
         "IV. NHẬN XÉT ƯU ĐIỂM VÀ HẠN CHẾ CỦA PHƯƠNG PHÁP ĐÃ SỬ DỤNG",
         "----------------------------------------------------------------------",
@@ -345,6 +311,12 @@ def main():
         default=str(APP_DIR / "output"),
         help="Directory for output/dialogue.txt, answer.txt, evaluation.txt",
     )
+    parser.add_argument(
+        "--eval-samples",
+        type=int,
+        default=None,
+        help="Labelled questions used for evaluation.txt (default: all with the mock, 50 with a real model to limit cost)",
+    )
     parser.add_argument("--json", action="store_true", help="Print JSON output when using --question")
     args = parser.parse_args()
 
@@ -388,12 +360,24 @@ def main():
         for q in input_lines:
             all_results.append(assistant.answer(q, dialogue_state=None))
 
+    rag_lines = None
+    if all_results:
+        try:  # the report must never break the run
+            from nlp.app.rag_evaluation import build_rag_sections
+
+            rag_lines = build_rag_sections(assistant, all_results, max_samples=args.eval_samples)
+        except Exception as exc:  # pragma: no cover - defensive
+            rag_lines = ["2. [Không sinh được phần đánh giá RAG: {}: {}]".format(type(exc).__name__, exc)]
+
     answer_text = (
-        "\n\n".join(format_single_answer(idx, res) for idx, res in enumerate(all_results, 1)) + "\n"
+        format_run_header(llm_client.model_name, args.top_k)
+        + "\n\n".join(format_single_answer(idx, res) for idx, res in enumerate(all_results, 1)) + "\n"
         if all_results
         else None
     )
-    eval_text = format_evaluation_summary(all_results, llm_client.model_name) + "\n" if all_results else None
+    eval_text = (
+        format_evaluation_summary(all_results, llm_client.model_name, rag_lines) + "\n" if all_results else None
+    )
 
     _write_outputs(args.output_dir, dialogue_text, answer_text, eval_text)
     if eval_text:

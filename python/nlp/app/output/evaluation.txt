@@ -14,8 +14,8 @@ I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
      + NO_RELEVANT_CONTEXT (Chặn ngoài miền)    : 1
      + NEED_CLARIFICATION (Yêu cầu làm rõ)      : 4
    - Phân bố trạng thái Parser (Phần I CFG trên resolved_query):
-     + PARSED                                   : 13
-     + UNPARSED (Fallback sang TF-IDF retrieval): 7
+     + PARSED                                   : 18
+     + UNPARSED (Fallback sang TF-IDF retrieval): 2
      + SKIPPED (Lượt hỏi làm rõ / ngoài KB)     : 5
    - Phân bố trạng thái Retriever (Phần II TF-IDF + Semantic):
      + FOUND                                    : 19

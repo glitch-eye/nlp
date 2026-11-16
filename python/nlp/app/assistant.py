@@ -321,11 +321,19 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
         self.model_name = model or os.environ.get("LLM_MODEL", "gpt-4o-mini")
         self.base_url = (base_url or os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")).rstrip("/")
         self.timeout = timeout
+        self._requested_model = self.model_name
         self._fallback = MockLLMClient()
+
+    def _fallback_generate(self, prompt, question="", chunks=None, semantic=None):
+        # Report honestly: this answer did NOT come from the requested model.
+        self.model_name = "{} [FALLBACK: API unavailable, requested {}]".format(
+            self._fallback.model_name, self._requested_model
+        )
+        return self._fallback.generate(prompt, question=question, chunks=chunks, semantic=semantic)
 
     def generate(self, prompt, question="", chunks=None, semantic=None):
         if not self.api_key:
-            return self._fallback.generate(prompt, question=question, chunks=chunks, semantic=semantic)
+            return self._fallback_generate(prompt, question=question, chunks=chunks, semantic=semantic)
         url = "{}/chat/completions".format(self.base_url)
         payload = {
             "model": self.model_name,
@@ -336,7 +344,7 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
                     "content": (
                         "Bạn là trợ lý môn học Xử lý Ngôn ngữ Tự nhiên (CO3085). "
                         "Chỉ trả lời dựa trên CONTEXT được cung cấp và luôn trích dẫn [Nguồn: file / section]. "
-                        "Nếu CONTEXT không đủ thông tin, hãy nêu rõ không đủ dữ liệu."
+                        "Nếu CONTEXT không đủ thông tin, chỉ trả về đúng từ khoá INSUFFICIENT_CONTEXT."
                     ),
                 },
                 {"role": "user", "content": prompt},
@@ -356,7 +364,7 @@ class OpenAICompatibleLLMClient(BaseLLMClient):
                 body = json.loads(resp.read().decode("utf-8"))
                 return body["choices"][0]["message"]["content"].strip()
         except (urllib.error.URLError, KeyError, ValueError):
-            return self._fallback.generate(prompt, question=question, chunks=chunks, semantic=semantic)
+            return self._fallback_generate(prompt, question=question, chunks=chunks, semantic=semantic)
 
 
 def create_llm_client(provider=None, model=None):
@@ -364,7 +372,13 @@ def create_llm_client(provider=None, model=None):
     teammate_client_cls = _try_import("llm_client", "LLMClient")
     if teammate_client_cls is not None:
         try:
-            return teammate_client_cls()
+            # Forward the CLI/API choice; without this --provider/--model are silently ignored.
+            return teammate_client_cls(provider=provider, model=model)
+        except TypeError:
+            try:
+                return teammate_client_cls()
+            except Exception:
+                pass
         except Exception:
             pass
 
@@ -807,6 +821,7 @@ class CourseAssistant:
                 except Exception:
                     pass
 
+        citation_check = None
         if guard_result["status"] in ("NO_RELEVANT_CONTEXT", "INSUFFICIENT_CONTEXT"):
             status = guard_result["status"]
             answer_text = guard_result["answer"]
@@ -832,6 +847,16 @@ class CourseAssistant:
             except TypeError:
                 answer_text = self.llm_client.generate(prompt)
             status = "ANSWERED"
+
+            # Step 6b: validate the model output against the chunks actually sent
+            post_check = getattr(self._teammate_answer_guard, "check_answer", None)
+            if callable(post_check):
+                citation_check = post_check(answer_text, chunks)
+                answer_text, status = citation_check["answer"], citation_check["status"]
+                if status == "ANSWERED":
+                    sources = citation_check["sources"]  # only what the answer really cites
+                elif status == "INSUFFICIENT_CONTEXT":
+                    sources = []
 
         # Step 7: Update DialogueState when a turn is answered or grounded in retrieved chunks
         ambiguous_multi = DialogueManager.detect_multiple_entities_in_question(resolved_query)
@@ -865,6 +890,7 @@ class CourseAssistant:
             "parse_status": parse_status,
             "retrieval_status": retrieval_status,
             "status": status,
+            "citation_check": citation_check,
             "intent": semantic.get("intent"),
             "entities": semantic.get("entities") or {},
             "entity_ids": semantic.get("entity_ids") or [],
