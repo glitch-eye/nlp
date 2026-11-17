@@ -683,6 +683,12 @@ class CourseAssistant:
             "intent": intent,
             "entities": entities,
             "entity_ids": entity_ids,
+            "clauses": [{
+                "intent": intent,
+                "entities": dict(entities),
+                "entity_ids": list(entity_ids),
+                "parse_status": parse_status,
+            }],
             "parse_status": parse_status,
         }
 
