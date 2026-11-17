@@ -423,40 +423,35 @@
 
 
 # ---------------- [v5-natural] natural single-intent paraphrases ----------------
-# These alternatives broaden common Vietnamese question forms without introducing
-# generic multi-intent or multi-clause parsing. Keep each production tied to one Q_* intent.
+# Curated alternatives reuse semantic nonterminals so parser and semantic labels remain stable.
+# This version expands single-intent forms only; generic multi-intent is intentionally deferred.
 
 <Q_COURSE_INFO> ::= "Môn NLP có những nội dung chính nào?"
                    | "Nội dung chính của môn NLP gồm những gì?"
                    | "Môn học CO3085 trang bị cho sinh viên những kiến thức gì?"
                    | "Sinh viên sẽ học được những gì trong môn NLP?"
                    | "Môn NLP hướng đến những mục tiêu học tập nào?"
-                   | "Sau khi học xong môn NLP, sinh viên cần đạt được những năng lực nào?"
                    | "Đề cương môn NLP trình bày những nội dung nào?"
                    | "Môn CO3085 có bao nhiêu tín chỉ và mục tiêu học tập là gì?"
 
 <Q_SCHEDULE> ::= "Trong" <WEEK_REF> "sinh viên sẽ học những nội dung gì?"
                 | "Ở" <WEEK_REF> "lớp sẽ tìm hiểu những chủ đề nào?"
-                | "Tuần học thứ" <WEEK_NUMBER> "tập trung vào nội dung nào?"
+                | "Trong" <WEEK_REF> "môn học tập trung vào kiến thức nào?"
                 | "Nội dung nào được giảng dạy trong" <WEEK_REF> "?"
                 | "Giảng viên sẽ giới thiệu những kiến thức gì vào" <WEEK_REF> "?"
                 | "Chương trình học của" <WEEK_REF> "bao gồm những chủ đề nào?"
-                | "Trong tuần này, môn học sẽ đề cập đến nội dung gì?"
-                | "Chủ đề" <TOPIC_REF> "được xếp vào tuần học nào?"
-                | "Sinh viên học" <TOPIC_REF> "vào tuần thứ mấy?"
+                | "Chủ đề" <TOPIC_REF> "nằm ở tuần nào?"
+                | <TOPIC_REF> "được học vào tuần nào?"
                 | "Lịch trình môn học được phân bổ như thế nào?"
                 | "Môn học bắt đầu và kết thúc trong khoảng bao nhiêu tuần?"
 
-<Q_TOPIC> ::= "Trong" <CHAPTER_REF> "sinh viên sẽ tìm hiểu những nội dung nào?"
-             | "Kiến thức trọng tâm của" <CHAPTER_REF> "là gì?"
-             | "Ở" <CHAPTER_REF> "môn học giới thiệu những khái niệm nào?"
-             | "Những vấn đề nào được trình bày trong" <CHAPTER_REF> "?"
-             | "Nội dung của" <CHAPTER_REF> "tập trung vào vấn đề gì?"
-             | "Phần kiến thức về" <TOPIC_REF> "nằm trong chương nào?"
-             | "Sinh viên có thể tìm thấy nội dung" <TOPIC_REF> "ở đâu?"
-             | "Chủ đề" <TOPIC_REF> "được giới thiệu trong phần nào?"
-             | "Hai chương" <CHAPTER_REF> "và" <CHAPTER_REF> "có điểm khác biệt gì?"
-             | "Nội dung" <CHAPTER_REF> "có đề cập đến" <TOPIC_REF> "không?"
+<Q_TOPIC> ::= <CHAPTER_REF> "sinh viên sẽ tìm hiểu những nội dung nào?"
+             | <CHAPTER_REF> "trình bày những khái niệm cốt lõi nào?"
+             | <CHAPTER_REF> "tập trung vào vấn đề gì?"
+             | <CHAPTER_REF> "có đề cập đến" <TOPIC_REF> "không?"
+             | <TOPIC_REF> "được đề cập trong chương nào của môn học?"
+             | <TOPIC_REF> "nằm ở phần nào trong đề cương?"
+             | "Hai" <CHAPTER_REF> "và" <CHAPTER_REF> "có điểm khác biệt gì?"
 
 <Q_ASSIGNMENT> ::= <ASSIGNMENT_REF> "yêu cầu sinh viên thực hiện những công việc gì?"
                   | <ASSIGNMENT_REF> "cần xây dựng những thành phần nào?"
@@ -471,7 +466,6 @@
                 | "Sinh viên cần nộp" <ASSIGNMENT_REF> "trước thời điểm nào?"
                 | "Thông tin về hạn nộp" <ASSIGNMENT_REF> "được công bố ở đâu?"
                 | "Ngày hết hạn của" <ASSIGNMENT_REF> "là ngày nào?"
-                | "Còn bao lâu nữa thì đến hạn nộp" <ASSIGNMENT_REF> "?"
 
 <Q_RESOURCE> ::= "Bạn có thể gợi ý tài liệu để tìm hiểu" <RESOURCE_TOPIC> "không?"
                 | "Muốn học sâu hơn về" <RESOURCE_TOPIC> "thì nên đọc tài liệu nào?"
@@ -491,44 +485,33 @@
 <Q_LO> ::= "Sinh viên cần đạt được năng lực gì theo" <LO_REF> "?"
           | "Yêu cầu đầu ra được mô tả trong" <LO_REF> "là gì?"
           | "Sau môn học, sinh viên cần thể hiện điều gì theo" <LO_REF> "?"
-          | "Nội dung nào tương ứng với chuẩn đầu ra" <LO_REF> "?"
 
-# Additional natural alternatives for reusable answer tails.
 <COURSE_INFO_TAIL> ::= "môn học cung cấp những kiến thức nền tảng nào?"
                       | "sinh viên cần nắm được những kiến thức gì?"
                       | "những kỹ năng nào sẽ được hình thành?"
-                      | "môn học có những chuẩn đầu ra cụ thể nào?"
 
 <SCHEDULE_WEEK_TAIL> ::= "tuần đó tập trung vào kiến thức nào?"
                         | "sinh viên cần chuẩn bị những nội dung gì?"
                         | "nội dung nào là trọng tâm của buổi học?"
-                        | "trong buổi học, lớp sẽ tìm hiểu vấn đề gì?"
                         | "những khái niệm nào sẽ được giới thiệu?"
-                        | "sau tuần học này, sinh viên cần nắm được gì?"
 
 <SCHEDULE_CHAPTER_TAIL> ::= "được triển khai vào tuần học nào?"
                           | "được đưa vào kế hoạch giảng dạy ở tuần nào?"
-                          | "sinh viên sẽ học nội dung này vào thời điểm nào?"
 
 <TOPIC_CHAPTER_TAIL> ::= "sinh viên cần nắm được những kiến thức nào?"
                         | "những khái niệm cốt lõi được đề cập là gì?"
                         | "chương này giúp người học hiểu vấn đề gì?"
-                        | "các nội dung quan trọng được sắp xếp như thế nào?"
-                        | "phần kiến thức này được trình bày ra sao?"
 
 <TOPIC_WHERE_TAIL> ::= "được đề cập trong chương nào của môn học?"
                       | "nằm ở phần nào trong đề cương?"
                       | "được giới thiệu ở tuần học nào?"
-                      | "xuất hiện trong nội dung giảng dạy nào?"
 
 <ASSIGNMENT_TAIL> ::= "sinh viên cần đáp ứng những tiêu chí nào?"
                      | "các bước thực hiện chính là gì?"
-                     | "cần chuẩn bị những tài liệu và sản phẩm nào?"
                      | "kết quả cuối cùng cần thể hiện những nội dung gì?"
 
 <PART_TAIL> ::= "sinh viên cần triển khai những công việc cụ thể nào?"
                | "phần này cần có những nội dung gì?"
-               | "kết quả cần bàn giao sau khi hoàn thành là gì?"
 
 <DEADLINE_TAIL> ::= "được thông báo trong tài liệu nào?"
                    | "có được ghi rõ trong đề cương không?"
@@ -539,8 +522,6 @@
 
 <RULE_TAIL> ::= "sinh viên cần lưu ý những điểm nào?"
                | "những hành vi nào không được phép?"
-               | "trách nhiệm của sinh viên được quy định ra sao?"
 
 <LO_TAIL> ::= "sinh viên cần vận dụng được kiến thức nào?"
              | "năng lực này được thể hiện qua những kỹ năng gì?"
-             | "kết quả học tập cần đạt được là gì?"
