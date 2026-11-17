@@ -8,6 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from nlp.app.semantic_frame import chunk_frame, query_frame
 from nlp.app.text_utils import normalize
+from nlp.app.multi_intent import split_intent_clauses
 
 
 _normalize = normalize
@@ -131,6 +132,45 @@ class Retriever:
         return scores
 
     def retrieve(self, question, semantic=None, top_k=None):
+        clauses = split_intent_clauses(question, self.parser)
+        if len(clauses) > 1 and semantic is None:
+            child_results = [self.retrieve(clause, top_k=top_k) for clause in clauses]
+            ranked = []
+            seen = set()
+            for clause_index, result in enumerate(child_results):
+                for chunk, score, detail in zip(
+                    result.get("chunks", []), result.get("scores", []),
+                    result.get("score_details", []),
+                ):
+                    cid = chunk.get("chunk_id")
+                    if cid in seen:
+                        continue
+                    seen.add(cid)
+                    ranked.append((float(score), clause_index, chunk, detail))
+            ranked.sort(key=lambda item: (-item[0], item[1]))
+            limit = self.top_k if top_k is None else top_k
+            selected = ranked[:limit]
+            return {
+                "query": question,
+                "chunks": [item[2] for item in selected],
+                "scores": [item[0] for item in selected],
+                "retrieval_status": "FOUND" if selected else "NO_RELEVANT_CONTEXT",
+                "parse_status": "PARSED",
+                "intent": "MULTI_INTENT",
+                "intents": [item.get("intent") for item in child_results],
+                "clauses": [
+                    {"query": clause, "intent": item.get("intent"),
+                     "entity_ids": item.get("entity_ids", []),
+                     "retrieval_status": item.get("retrieval_status")}
+                    for clause, item in zip(clauses, child_results)
+                ],
+                "entity_ids": list(dict.fromkeys(
+                    eid for item in child_results for eid in item.get("entity_ids", [])
+                )),
+                "expanded_query": " AND ".join(item.get("expanded_query", clause)
+                                                for item, clause in zip(child_results, clauses)),
+                "score_details": [item[3] for item in selected],
+            }
         parsed_frame = query_frame(question, self.parser, self.aliases) if self.parser else None
         frame = semantic or parsed_frame
         query = self.expand_query(question, semantic=semantic)
