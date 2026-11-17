@@ -16,7 +16,7 @@ The frame is a retrieval *hint*; retrieved chunks remain the only evidence.
 
 import re
 
-from semantic_frame import frame_from_tree
+from nlp.app.semantic_frame import frame_from_tree
 
 UNPARSED = "UNPARSED"
 PARSED = "PARSED"

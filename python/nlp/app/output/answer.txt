@@ -1,3 +1,11 @@
+# Course Assistant - answer.txt
+# Model ID : mock-grounded-extractive-v1
+# Prompt   : nlp/app/prompt_builder.py (chỉ trả lời theo CONTEXT; trích dẫn [Nguồn: file / section];
+#            không đủ thông tin -> INSUFFICIENT_CONTEXT)
+# Guard    : nlp/app/answer_guard.py (kiểm tra trích dẫn và thông tin không có trong nguồn)
+# top_k    : 3
+# LƯU Ý   : đây là MOCK extractive chạy offline, KHÔNG phải kết quả của một LLM thật.
+
 === Question 1 ===
 1. Câu hỏi đầu vào (Input Question)       : Môn NLP có bao nhiêu tín chỉ?
    Truy vấn sau giải tham chiếu           : Môn NLP có bao nhiêu tín chỉ?

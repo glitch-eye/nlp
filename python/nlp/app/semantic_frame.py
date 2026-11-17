@@ -1,9 +1,9 @@
 """Build lightweight semantic frames from parsed queries and KB chunks."""
 
 import re
-from text_utils import normalize
+from nlp.app.text_utils import normalize
 
-from parser import CourseParser, ParseNode
+from nlp.app.parser import CourseParser, ParseNode
 
 
 TREE_INTENT_TO_INTENT = {

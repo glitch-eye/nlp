@@ -15,7 +15,7 @@ Two hooks, both optional for ``assistant.py``:
 import re
 import unicodedata
 
-from prompt_builder import SENTINEL
+from nlp.app.prompt_builder import SENTINEL
 
 NO_CONTEXT_MSG = (
     "Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085 "

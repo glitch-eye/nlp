@@ -23,7 +23,7 @@ import socket
 import urllib.error
 import urllib.request
 
-from prompt_builder import SENTINEL
+from nlp.app.prompt_builder import SENTINEL
 
 DEFAULT_MODEL = "gpt-4o-mini"
 DEFAULT_BASE_URL = "https://api.openai.com/v1"
