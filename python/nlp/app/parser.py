@@ -97,6 +97,18 @@ class CourseParser:
                 return children[0] if children else ParseNode("S")
         return None
 
+    def parse_clauses(self, sentence):
+        """Parse a query as independently validated intent clauses.
+
+        The returned list contains (clause_text, ParseNode) pairs.  If safe
+        coordination is not detected, the original query is returned as one
+        clause (with a possibly-None tree).
+        """
+        from nlp.app.multi_intent import split_intent_clauses
+
+        clauses = split_intent_clauses(sentence, self)
+        return [(clause, self.parse(clause)) for clause in clauses]
+
     def parse(self, sentence):
         """Return the first parse tree, or None if the sentence is not in the CFG."""
         normalized = unicodedata.normalize("NFC", sentence.strip())
