@@ -131,7 +131,7 @@ python -m nlp.app.run_assistant --provider openai
 Sau khi chạy `python -m nlp.app.run_assistant`, kiểm tra các file xuất tại `python/nlp/app/output/` (đồng thời được đồng bộ ra `output/` ở thư mục gốc):
 - `output/dialogue.txt`: Trace chi tiết từng lượt hội thoại gồm 7 mục: (1) Câu gốc, (2) `DialogueState` trước, (3) `resolved_query` sau khi giải tham chiếu, (4) Các chunk truy xuất kèm `parse_status`, `retrieval_status`, `score`, (5) Câu trả lời và trạng thái (`ANSWERED`, `INSUFFICIENT_CONTEXT`, `NO_RELEVANT_CONTEXT`, `NEED_CLARIFICATION`), (6) Nguồn trích dẫn, (7) `DialogueState` sau.
 - `output/answer.txt`: Danh sách câu trả lời chuẩn hóa kèm nguồn và chunk IDs.
-- `output/evaluation.txt`: Thống kê tổng hợp theo từng tầng (Parser, Retriever, Answer Guard, và Reference Resolution).
+- `output/assistant_run_summary.txt`: Thống kê của lần chạy hội thoại (Parser, Retriever, Answer Guard và Reference Resolution). Báo cáo đánh giá chuẩn `output/evaluation.txt` được tạo riêng bằng `python -m nlp.app.evaluation`.
 - `output/retrieval.txt`: Trace truy xuất top-k chunk của `run_retrieval.py`.
 
 #### d) Gọi qua HTTP API (`/retrieve`, `/answer`, `/reset`)
@@ -240,16 +240,24 @@ gợi ý ngữ nghĩa (ghi rõ *không phải bằng chứng*), câu hỏi và c
    (c) số, ngày, giờ, e-mail, URL trong câu trả lời mà **không có** trong các chunk đã gửi -> câu trả lời bị giữ lại
    (`NEEDS_REVIEW`, bản gốc nằm ở `citation_check.raw_answer`). `sources` chỉ liệt kê nguồn được trích dẫn.
 
-**Đánh giá (`rag_evaluation.py`)** - mọi số liệu và ví dụ trong mục II/III của `output/evaluation.txt` được **sinh bằng
-cách chạy hệ thống**, không viết tay: hit@k, tỷ lệ từ chối đúng, trích dẫn hợp lệ trên `samples_labeled.jsonl`; ví dụ
-grounded / không có thông tin / ngoài miền; và các thử nghiệm hallucination dùng một *model giả lập có kịch bản* (bịa ngày,
-bịa nguồn, không trích dẫn, tuân thủ sentinel) để kiểm tra guard - model này được ghi rõ là test double, không phải LLM thật.
+**Đánh giá tổng thể (`evaluation.py`)** là lệnh chuẩn tạo `output/evaluation.txt`. Báo cáo tích hợp Parser, Semantic,
+Retrieval, End-to-End và tái sử dụng nguyên phần đánh giá RAG từ `rag_evaluation.py`: grounded answers, câu hỏi không có
+thông tin/ngoài miền và các scripted hallucination probes kiểm tra Answer Guard. Scripted model chỉ là test double, không
+được xem là kết quả của LLM thật.
+
 ```bash
-python -m nlp.app.rag_evaluation --data-dir ../../NLP_Course_Assistant_Sample_Data   # ghi output/rag_evaluation.txt
-python -m nlp.app.run_assistant --eval-samples 100                                # số mẫu có nhãn dùng cho evaluation.txt
+# Báo cáo chuẩn Phần IV: evaluation.txt + evaluation_report.json
+python -m nlp.app.evaluation --data-dir ../../NLP_Course_Assistant_Sample_Data
+
+# Báo cáo RAG độc lập (nếu cần)
+python -m nlp.app.rag_evaluation --data-dir ../../NLP_Course_Assistant_Sample_Data
+
+# Chạy nhanh trên 100 mẫu
+python -m nlp.app.evaluation --max-samples 100
 ```
-Khi chạy với model thật, mặc định chỉ dùng 50 mẫu có nhãn để giới hạn chi phí (mock dùng toàn bộ); đổi bằng `--eval-samples`.
-Nếu không thấy thư mục dữ liệu, báo cáo in cảnh báo vì Knowledge Base khi đó chỉ được dựng lại từ trace và số liệu truy xuất không đại diện.
+Bộ đánh giá tổng thể mặc định dùng Mock LLM để không phát sinh chi phí API. Nếu dùng LLM thật cho demo/hỏi đáp,
+hãy ghi rõ model và cấu hình; không nhầm số liệu Mock với chất lượng LLM thật.
+Nếu không tìm thấy thư mục dữ liệu, Knowledge Base có thể rơi về trace fallback và số liệu retrieval không đại diện.
 
 **Hạn chế đã biết:**
 - Mock không đánh giá được độ liên quan: câu ngoài miền diễn đạt khác với mẫu của văn phạm (ví dụ "Thời tiết hôm nay thế nào?")
