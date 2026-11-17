@@ -445,7 +445,6 @@
 
 <Q_TOPIC> ::= <CHAPTER_REF> "sinh viên sẽ tìm hiểu những nội dung nào?"
              | <CHAPTER_REF> "trình bày những khái niệm cốt lõi nào?"
-             | <CHAPTER_REF> "tập trung vào vấn đề gì?"
              | <CHAPTER_REF> "có đề cập đến" <TOPIC_REF> "không?"
              | <TOPIC_REF> "được đề cập trong chương nào của môn học?"
              | <TOPIC_REF> "nằm ở phần nào trong đề cương?"
