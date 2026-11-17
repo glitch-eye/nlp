@@ -64,7 +64,7 @@ def _find_alias_entities(text, aliases):
 def query_frame(query, parser, aliases=()):
     """Parse a query and derive its intent/entities; return None on parse failure."""
     try:
-        tree = parser.parse(query)
+        tree = parser.parse_multi(query) if hasattr(parser, "parse_multi") else parser.parse(query)
     except Exception:
         # Retrieval must remain available if the CFG is temporarily malformed.
         return None
