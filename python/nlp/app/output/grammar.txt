@@ -440,8 +440,6 @@
                 | "Nội dung nào được giảng dạy trong" <WEEK_REF> "?"
                 | "Giảng viên sẽ giới thiệu những kiến thức gì vào" <WEEK_REF> "?"
                 | "Chương trình học của" <WEEK_REF> "bao gồm những chủ đề nào?"
-                | "Chủ đề" <TOPIC_REF> "nằm ở tuần nào?"
-                | <TOPIC_REF> "được học vào tuần nào?"
                 | "Lịch trình môn học được phân bổ như thế nào?"
                 | "Môn học bắt đầu và kết thúc trong khoảng bao nhiêu tuần?"
 
