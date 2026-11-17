@@ -25,6 +25,19 @@ class MultiIntentTests(unittest.TestCase):
         self.assertEqual(len(result), 2)
         self.assertTrue(all(tree is not None for _, tree in result))
 
+    def test_multi_parse_tree_and_semantic_frames(self):
+        query = "Chương 4 nói về gì và Tuần 5 học gì?"
+        tree = self.parser.parse_multi(query)
+        self.assertEqual(tree.label, "S_MULTI")
+        frame = frame_from_tree(tree, query, ())
+        self.assertEqual(frame["intent"], "MULTI_INTENT")
+        self.assertEqual(
+            [clause["intent"] for clause in frame["clauses"]],
+            ["GET_TOPIC", "GET_SCHEDULE"],
+        )
+        self.assertIn("CH04", frame["clauses"][0]["entity_ids"])
+        self.assertIn("WEEK_05", frame["clauses"][1]["entity_ids"])
+
     def test_single_intent_query_is_unchanged(self):
         query = "Chương 3 và Chương 4 khác nhau như thế nào?"
         self.assertEqual(split_intent_clauses(query, self.parser), [query])
