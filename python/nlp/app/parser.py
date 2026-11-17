@@ -114,8 +114,18 @@ class CourseParser:
         normalized = unicodedata.normalize("NFC", sentence.strip())
         return self._parse_cached(normalized)
 
+    def parse_multi(self, sentence):
+        """Return a normal tree or an S_MULTI tree containing validated clauses."""
+        parsed = self.parse_clauses(sentence)
+        if len(parsed) > 1 and all(tree is not None for _, tree in parsed):
+            clauses = tuple(
+                ParseNode("CLAUSE", (tree,)) for _, tree in parsed
+            )
+            return ParseNode("S_MULTI", clauses)
+        return self.parse(sentence)
+
     def parse_line(self, sentence):
-        node = self.parse(sentence)
+        node = self.parse_multi(sentence)
         return node.to_bracketed() if node is not None else "()"
 
     def parse_lines(self, sentences):
