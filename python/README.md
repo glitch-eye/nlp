@@ -58,7 +58,7 @@ Khởi động từ thư mục `sample-code-v1.0/python/`:
 - `GET http://127.0.0.1:8000/health`: kiểm tra service.
 - `POST http://127.0.0.1:8000/retrieve` với JSON `{"query":"Tuần 3 học gì?"}`: nhận `chunks`, `scores` và `retrieval_status`.
 
-````bash
+```bash
 curl -X POST http://127.0.0.1:8000/retrieve \
   -H 'Content-Type: application/json' \
   -d '{"query":"Tuần 3 học gì?"}'
