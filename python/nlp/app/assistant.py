@@ -777,8 +777,11 @@ class CourseAssistant:
             }
             if dialogue_state is not None:
                 state = dialogue_state if isinstance(dialogue_state, DialogueState) else DialogueState.from_dict(dialogue_state)
+                # Use the final clause as the dialogue continuation anchor;
+                # the API response still exposes MULTI_INTENT and every clause.
+                continuation_intent = child_results[-1].get("intent") if child_results else None
                 state.update(
-                    question=question, intent="MULTI_INTENT", entities={},
+                    question=question, intent=continuation_intent, entities={},
                     answer_entities=all_entities, sources=all_sources,
                     ambiguous_candidates=DialogueManager.detect_multiple_entities_in_question(question),
                 )
