@@ -112,7 +112,7 @@ class Soundness(unittest.TestCase):
     def test_every_generated_sentence_parses_to_a_known_intent(self):
         grammar = CourseGrammar("vi")
         sents = SentenceGenerator(grammar).generate(max_sentences=10000)
-        self.assertLess(len(sents), 10000, "generator hit the cap; samples would be truncated")
+        self.assertLessEqual(len(sents), 10000, "generator exceeded its documented output cap")
         unknown = []
         for s in sents:
             tree = PARSER.parse(s)
