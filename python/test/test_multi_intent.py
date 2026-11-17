@@ -4,6 +4,7 @@ import unittest
 from nlp.app.parser import CourseParser
 from nlp.app.semantic_frame import frame_from_tree
 from nlp.app.multi_intent import split_intent_clauses
+from nlp.app.semantic import interpret
 
 
 class MultiIntentTests(unittest.TestCase):
@@ -49,6 +50,13 @@ class MultiIntentTests(unittest.TestCase):
         )
         self.assertIn("CH04", frame["clauses"][0]["entity_ids"])
         self.assertIn("WEEK_05", frame["clauses"][1]["entity_ids"])
+
+        adapted = interpret(tree, query, aliases=())
+        self.assertEqual(adapted["intent"], "MULTI_INTENT")
+        self.assertEqual(
+            [clause["intent"] for clause in adapted["clauses"]],
+            ["GET_TOPIC", "GET_SCHEDULE"],
+        )
 
     def test_single_intent_query_is_unchanged(self):
         query = "Chương 3 và Chương 4 khác nhau như thế nào?"
