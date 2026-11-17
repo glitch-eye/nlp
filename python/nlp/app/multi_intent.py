@@ -58,14 +58,17 @@ def split_intent_clauses(query, parser):
         for end in range(index + 1, count + 1):
             candidate = " và ".join(part.strip() for part in raw_parts[index:end]).strip()
             candidate = candidate.rstrip("?!.,;:")
-            if suffix:
-                candidate += suffix
-            if not candidate or parser.parse(candidate) is None:
+            variants = [candidate + suffix] if suffix else [candidate, candidate + "?"]
+            validated = next(
+                (variant for variant in variants if variant and parser.parse(variant) is not None),
+                None,
+            )
+            if validated is None:
                 continue
             tail = best_from(end)
             if tail is None:
                 continue
-            option = [candidate] + tail
+            option = [validated] + tail
             if best is None or len(option) > len(best):
                 best = option
 
