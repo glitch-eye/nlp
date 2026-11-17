@@ -101,6 +101,12 @@ def interpret(parse_tree, question, aliases=None):
         "intent": base.get("intent"),
         "entities": entities,
         "entity_ids": entity_ids,
+        "clauses": [{
+            "intent": base.get("intent"),
+            "entities": dict(entities),
+            "entity_ids": list(entity_ids),
+            "parse_status": PARSED,
+        }],
         "parse_status": PARSED,
     }
 
