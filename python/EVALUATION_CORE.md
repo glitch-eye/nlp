@@ -5,7 +5,7 @@ It is intentionally independent of the experimental multi-intent work.
 
 ## Scope
 
-The evaluator measures four stages:
+The evaluator measures four core stages and appends the existing RAG evidence section:
 
 1. **Parser / CFG**
    - Parse-status accuracy against `parse_status` labels.
@@ -25,6 +25,9 @@ The evaluator measures four stages:
    - Retrieval hit rate on answerable questions.
    - Correct refusal rate, valid citation rate and over-answering.
    - The CLI uses the offline mock provider; these results are not a real-LLM quality score.
+5. **RAG evidence (reused from `rag_evaluation.py`)**
+   - Grounded answer examples, no-information / out-of-domain examples.
+   - Scripted hallucination probes that exercise the real Answer Guard. Scripted models are test doubles, not real LLM results.
 
 ## Dataset
 
@@ -64,16 +67,19 @@ Skip selected stages when debugging:
 ```bash
 python -m nlp.app.evaluation --skip-e2e
 python -m nlp.app.evaluation --skip-retrieval --skip-e2e
+
+# Use a small subset for a quick smoke run
+python -m nlp.app.evaluation --max-samples 100
 ```
 
 Use `--max-samples N` for a quick smoke run. It takes an evenly spaced subset; omit it for the full dataset.
 
 ## Outputs
 
-By default, reports are written to `nlp/app/output/evaluation/`:
+By default, reports are written to `nlp/app/output/`:
 
+- `evaluation.txt`: consolidated report for Part IV, including Parser, Semantic, Retrieval, End-to-End and RAG evidence.
 - `evaluation_report.json`: full metrics, per-case failures, confusion tables, runtime and dataset provenance.
-- `evaluation_report.md`: compact human-readable summary.
 
 Generated reports are run artifacts and should not be committed unless the project explicitly wants to version a particular evaluation snapshot.
 
