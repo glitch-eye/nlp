@@ -149,7 +149,26 @@ class Retriever:
                     ranked.append((float(score), clause_index, chunk, detail))
             ranked.sort(key=lambda item: (-item[0], item[1]))
             limit = self.top_k if top_k is None else top_k
-            selected = ranked[:limit]
+            # Reserve one evidence slot per clause before filling remaining
+            # slots globally, so a high-scoring clause cannot erase another.
+            selected = []
+            selected_keys = set()
+            for clause_index in range(len(child_results)):
+                candidate = next(
+                    (item for item in ranked
+                     if item[1] == clause_index and item[2].get("chunk_id") not in selected_keys),
+                    None,
+                )
+                if candidate is not None and len(selected) < max(limit, len(child_results)):
+                    selected.append(candidate)
+                    selected_keys.add(candidate[2].get("chunk_id"))
+            for item in ranked:
+                if len(selected) >= max(limit, len(child_results)):
+                    break
+                cid = item[2].get("chunk_id")
+                if cid not in selected_keys:
+                    selected.append(item)
+                    selected_keys.add(cid)
             return {
                 "query": question,
                 "chunks": [item[2] for item in selected],
