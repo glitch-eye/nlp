@@ -318,7 +318,46 @@ def render_markdown(report):
             "| Over-answered insufficient-context cases | {} |".format(e2e["over_answered_count"]),
             "",
         ])
+    lines.extend(["## Representative failures", ""])
+    failure_groups = [
+        ("Parser", metrics["parser"].get("failures", [])),
+        ("Semantic", metrics["semantic"].get("failures", [])),
+        ("End-to-end", (e2e or {}).get("failures", [])),
+    ]
+    for stage, failures in failure_groups:
+        lines.append("### {} ({} cases; showing at most 10)".format(stage, len(failures)))
+        for case in failures[:10]:
+            lines.append("- {}: {}".format(case.get("sample_id", "unknown"), case.get("query", "")))
+            if stage == "Parser":
+                lines.append("  - expected={}, actual={}".format(
+                    case.get("expected_parse_status"), case.get("actual_parse_status")))
+            elif stage == "Semantic":
+                lines.append("  - expected intent={}, actual intent={}; missing entities={}, unexpected entities={}".format(
+                    case.get("expected_intent"), case.get("actual_intent"),
+                    case.get("missing_entities"), case.get("unexpected_entities")))
+            else:
+                lines.append("  - expected={}, actual status={}, expected chunks={}, retrieved={}".format(
+                    case.get("expected"), case.get("actual_status"),
+                    case.get("expected_chunks"), case.get("retrieved_chunks")))
+        if not failures:
+            lines.append("- No failures recorded.")
+        lines.append("")
     lines.extend([
+        "## Strengths observed in the implementation",
+        "",
+        "- The pipeline separates parsing, semantic interpretation, retrieval and answer generation, so failures can be inspected by stage.",
+        "- The aggregate evaluation uses the offline mock by default and records dataset/runtime provenance for repeatability.",
+        "- The RAG evidence section exercises grounded answers, no-information cases and scripted Answer Guard probes.",
+        "",
+        "## Limitations and error-analysis guidance",
+        "",
+        "- CFG coverage is limited to patterns represented in the grammar; unseen paraphrases may be UNPARSED.",
+        "- TF-IDF and rule-based semantic signals can miss relevant chunks when wording differs substantially.",
+        "- Mock results do not measure the quality of a real LLM; citation matching also does not prove full semantic entailment.",
+        "- AUTO_LABEL_REQUIRES_REVIEW labels and expected chunk IDs must be audited before interpreting scores as ground truth.",
+        "- If the external course dataset is unavailable, trace fallback data can make retrieval metrics unrepresentative.",
+        "- Inspect parser failures as grammar/tokenization gaps, semantic failures as intent/entity mapping gaps, and retrieval/end-to-end failures as KB coverage, ranking, answer-guard or label-quality issues.",
+        "",
         "## Interpretation cautions",
         "",
     ])
