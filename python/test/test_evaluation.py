@@ -103,9 +103,13 @@ class ReportTests(unittest.TestCase):
                 "intent_accuracy": 1.0, "entity_precision_micro": 1.0,
                 "entity_recall_micro": 1.0, "entity_f1_micro": 1.0,
             }
-            report = build_report(samples, path, parser_metrics, semantic_metrics)
+            report = build_report(
+                samples, path, parser_metrics, semantic_metrics,
+                rag_evidence=["RAG evidence probe: scripted model rejected by guard"],
+            )
             markdown = render_markdown(report)
             self.assertEqual(report["dataset"]["sample_count"], 1)
+            self.assertIn("scripted model rejected by guard", report["rag_evidence"])
             self.assertEqual(len(report["dataset"]["sha256"]), 64)
             self.assertIn("## Parser", markdown)
             self.assertIn("## Semantic interpretation", markdown)
