@@ -76,6 +76,25 @@ def query_frame(query, parser, aliases=()):
 
 def frame_from_tree(tree, query, aliases=()):
     """Derive a semantic frame from an already parsed query tree."""
+    if tree.label == "S_MULTI":
+        clause_frames = []
+        all_entities = []
+        for clause_node in tree.children:
+            if not isinstance(clause_node, ParseNode) or not clause_node.children:
+                continue
+            clause_tree = clause_node.children[0]
+            clause_query = _node_text(clause_tree)
+            clause_frame = frame_from_tree(clause_tree, clause_query, aliases)
+            clause_frames.append(clause_frame)
+            for entity_id in clause_frame.get("entity_ids", []):
+                if entity_id not in all_entities:
+                    all_entities.append(entity_id)
+        return {
+            "intent": "MULTI_INTENT",
+            "clauses": clause_frames,
+            "entity_ids": all_entities,
+            "parse_status": "PARSED",
+        }
     root_question = next(
         (node for node in tree.children
          if isinstance(node, ParseNode) and node.label.startswith("Q_")),
