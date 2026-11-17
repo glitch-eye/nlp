@@ -148,8 +148,17 @@ def frame_from_tree(tree, query, aliases=()):
         for match in re.finditer(pattern, normalized_query):
             entities.append(formatter(match.group(1)))
 
-    return {"intent": intent, "entity_ids": list(dict.fromkeys(entities)),
-            "parse_status": "PARSED"}
+    unique_entities = list(dict.fromkeys(entities))
+    return {
+        "intent": intent,
+        "entity_ids": unique_entities,
+        "clauses": [{
+            "intent": intent,
+            "entity_ids": list(unique_entities),
+            "parse_status": "PARSED",
+        }],
+        "parse_status": "PARSED",
+    }
 
 
 def chunk_frame(document):
