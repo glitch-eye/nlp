@@ -18,6 +18,18 @@ class MultiIntentTests(unittest.TestCase):
         self.assertIsNotNone(self.parser.parse(clauses[0]))
         self.assertIsNotNone(self.parser.parse(clauses[1]))
 
+    def test_punctuation_free_compound_question_is_split(self):
+        clauses = split_intent_clauses(
+            "Chương 4 nói về gì và Tuần 5 học gì", self.parser
+        )
+        self.assertEqual(len(clauses), 2)
+
+    def test_multiple_clauses_can_contain_a_lexical_and(self):
+        query = "Chương 4 nói về gì và Tài liệu nào nói về CFG và Parsing?"
+        clauses = split_intent_clauses(query, self.parser)
+        self.assertEqual(len(clauses), 2)
+        self.assertTrue(clauses[1].startswith("Tài liệu nào nói về CFG và Parsing"))
+
     def test_parse_clauses_api_returns_trees(self):
         result = self.parser.parse_clauses(
             "Chương 4 nói về gì và Tuần 5 học gì?"
