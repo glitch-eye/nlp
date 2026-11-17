@@ -356,7 +356,7 @@ def run_evaluation(samples, sample_path, data_dir=None, grammar_path=None,
     rag_evidence = None
     if include_end_to_end:
         from nlp.app.rag_evaluation import build_rag_sections
-        rag_evidence = build_rag_sections(assistant, samples_path=sample_path)
+        rag_evidence = build_rag_sections(assistant, samples_path=sample_path, max_samples=len(samples))
 
     return build_report(
         samples, sample_path, parser_metrics, semantic_metrics,
