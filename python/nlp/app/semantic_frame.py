@@ -109,7 +109,9 @@ def frame_from_tree(tree, query, aliases=()):
             if match:
                 entities.append("LO" + match.group(0))
         elif label in ("ASSIGNMENT_REF", "DEADLINE_REF"):
-            if intent in ("GET_ASSIGNMENT", "GET_DEADLINE"):
+            # Assignment references also provide context for policy questions
+            # such as whether AI tools may be used in the assignment.
+            if intent in ("GET_ASSIGNMENT", "GET_DEADLINE", "GET_RULE"):
                 entities.append("BTL01")
         elif label in ("RULE_OBJECT", "RULE_REF"):
             entities.append("LLM_RAG" if "llm" in value.casefold() else "AI_USAGE")
