@@ -145,7 +145,9 @@ nlp/app/output/grammar.txt
 
 Đây là CFG dạng text. `grammar_file.load_grammar()` đọc nonterminal dạng `<NAME>`, terminal phải đặt trong dấu ngoặc kép, các alternative phân tách bằng `|`. Start rule bắt buộc là `<S>`.
 
-Các nhánh gốc `Q_*` trong grammar được dùng để suy ra intent cho bộ dataset. Grammar được giới hạn theo các dạng câu hỏi thuộc miền Course Assistant và sample knowledge base; việc sinh được câu và parse thành công không chứng minh câu tự nhiên hoặc bao phủ mọi cách hỏi thực tế.
+Các nhánh gốc `Q_*` xác định intent. Grammar tập trung vào một ý định chính trên mỗi câu hỏi: thông tin môn học, lịch học, chủ đề, bài tập, deadline, tài liệu, quy định và chuẩn đầu ra. Các biến thể tự nhiên được xây dựng quanh các nonterminal có ý nghĩa như `WEEK_REF`, `CHAPTER_REF`, `TOPIC_REF`, `ASSIGNMENT_REF` và `RESOURCE_TOPIC` để Semantic Frame tiếp tục nhận diện được entity.
+
+Bản mở rộng `v5-natural` bổ sung cách hỏi tiếng Việt thường gặp (ví dụ: “Trong tuần 5 sinh viên sẽ học những nội dung gì?”, “Bài tập lớn yêu cầu sinh viên thực hiện những công việc gì?”) nhưng **chưa triển khai phối hợp nhiều intent hoặc mệnh đề tổng quát**. Câu ghép chỉ được thêm khi có quy tắc cú pháp và semantic frame tương ứng; không ghép tùy tiện các câu độc lập bằng “và”.
 
 ### 4.2 Sinh câu từ grammar
 
@@ -155,9 +157,7 @@ Chạy từ thư mục `python/`:
 python -m nlp.app.utils
 ```
 
-Mặc định tạo tối đa 10.000 câu tại `nlp/app/output/samples.txt`.
-
-Tùy chỉnh:
+Mặc định bộ sinh thử tạo tối đa 10.000 câu tại `nlp/app/output/samples.txt`. Có thể giới hạn số lượng:
 
 ```bash
 python -m nlp.app.utils \
@@ -165,9 +165,31 @@ python -m nlp.app.utils \
   --max-sentences 5000
 ```
 
-`SentenceGenerator` duyệt các derivation theo breadth-first, loại câu trùng và giới hạn mở rộng để tránh vòng lặp/đệ quy vô hạn. Giới hạn tối đa hiện tại là 10.000 câu.
+`SentenceGenerator` duyệt các derivation theo breadth-first, loại chuỗi trùng chính xác và giới hạn số lần mở rộng để tránh vòng lặp. **10.000 là giới hạn đầu ra, không phải cam kết có 10.000 câu tự nhiên hoặc 10.000 câu khác biệt về ý nghĩa.** Số câu thực tế phụ thuộc số production có thể kết hợp; việc parse thành công chỉ chứng minh câu phù hợp CFG, không tự chứng minh câu đúng ngữ nghĩa hay tự nhiên.
 
-### 4.3 Parse câu hỏi
+Quy trình kiểm tra chất lượng đề xuất:
+
+1. Sinh câu từ grammar và loại trùng chính xác.
+2. Parse lại toàn bộ câu sinh ra; câu không parse được là lỗi soundness của grammar/generator.
+3. Kiểm tra intent và entity qua Semantic Frame.
+4. Rà soát thủ công hoặc đánh giá bởi người nói tiếng Việt về độ tự nhiên, tính hợp lý và đúng ngữ cảnh môn học.
+5. Bổ sung tập câu hỏi viết tay độc lập để đo khả năng bao phủ cách diễn đạt thật, tránh chỉ đánh giá grammar bằng chính câu do grammar sinh ra.
+
+### 4.3 Kiểm thử grammar và generator
+
+Chạy từ thư mục `python/`:
+
+```bash
+python -m unittest discover -s test -p "test_grammar.py" -v
+```
+
+Bộ test kiểm tra:
+- Câu cũ vẫn parse ra cùng cây cú pháp.
+- Các cách hỏi mới parse đúng và giữ đúng intent/entity.
+- Câu sinh ra không trùng và đều parse được.
+- Các câu ngoài miền đã định nghĩa vẫn bị từ chối.
+
+### 4.4 Parse câu hỏi
 
 ```bash
 # Dùng mặc định input/sentences.txt và output/grammar.txt
