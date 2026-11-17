@@ -80,6 +80,34 @@ class NewCoverage(unittest.TestCase):
             self.assertIsNone(PARSER.parse(q), q)
 
 
+
+class NaturalVietnameseCoverage(unittest.TestCase):
+    CASES = [
+        ("Môn NLP có những nội dung chính nào?", "GET_COURSE_INFO", set()),
+        ("Trong tuần 5 sinh viên sẽ học những nội dung gì?", "GET_SCHEDULE", {"WEEK_05"}),
+        ("Chương 4 sinh viên sẽ tìm hiểu những nội dung nào?", "GET_TOPIC", {"CH04"}),
+        ("Bài tập lớn yêu cầu sinh viên thực hiện những công việc gì?", "GET_ASSIGNMENT", {"BTL01"}),
+        ("Muốn học sâu hơn về Python NLP thì nên đọc tài liệu nào?", "GET_RESOURCE", {"PYTHON_NLP"}),
+        ("Sinh viên có được phép sử dụng AI khi làm BTL không?", "GET_RULE", {"AI_USAGE", "BTL01"}),
+        ("Sinh viên cần đạt được năng lực gì theo L.O.2.5?", "GET_LO", {"LO2.5"}),
+    ]
+
+    def test_natural_paraphrases_keep_expected_intent_and_entities(self):
+        for question, expected_intent, expected_entities in self.CASES:
+            result = frame(question)
+            self.assertIsNotNone(result, "UNPARSED: " + question)
+            self.assertEqual(result["intent"], expected_intent, question)
+            self.assertTrue(
+                expected_entities <= set(result["entity_ids"]),
+                (question, result["entity_ids"]),
+            )
+
+    def test_generated_sentences_are_unique_and_parseable(self):
+        generated = SentenceGenerator(CourseGrammar("vi")).generate(max_sentences=10000)
+        self.assertEqual(len(generated), len(set(generated)))
+        for sentence in generated:
+            self.assertIsNotNone(PARSER.parse(sentence), sentence)
+
 class Soundness(unittest.TestCase):
     def test_every_generated_sentence_parses_to_a_known_intent(self):
         grammar = CourseGrammar("vi")
