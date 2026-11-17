@@ -222,7 +222,8 @@ def _dataset_digest(path):
 
 
 def build_report(samples, sample_path, parser_metrics, semantic_metrics,
-                 retrieval_metrics=None, e2e_metrics=None, config=None):
+                 retrieval_metrics=None, e2e_metrics=None, config=None,
+                 rag_evidence=None):
     """Create a JSON-safe report with provenance and measured metrics."""
     return {
         "schema_version": "1.0",
@@ -242,6 +243,7 @@ def build_report(samples, sample_path, parser_metrics, semantic_metrics,
             "retrieval": retrieval_metrics,
             "end_to_end": e2e_metrics,
         },
+        "rag_evidence": rag_evidence or [],
         "interpretation_notes": [
             "Metrics measure the supplied dataset; they are not proof of production quality.",
             "AUTO_LABEL_REQUIRES_REVIEW labels must be manually audited before academic claims.",
@@ -351,6 +353,10 @@ def run_evaluation(samples, sample_path, data_dir=None, grammar_path=None,
     semantic_metrics = evaluate_semantics(samples, parser, kb.aliases)
     retrieval_metrics = evaluate_retrieval(samples, retriever, top_k) if include_retrieval else None
     e2e_metrics = evaluate_end_to_end(samples, assistant) if include_end_to_end else None
+    rag_evidence = None
+    if include_end_to_end:
+        from nlp.app.rag_evaluation import build_rag_sections
+        rag_evidence = build_rag_sections(assistant, samples_path=sample_path)
 
     return build_report(
         samples, sample_path, parser_metrics, semantic_metrics,
@@ -368,6 +374,7 @@ def run_evaluation(samples, sample_path, data_dir=None, grammar_path=None,
                 "end_to_end": include_end_to_end,
             },
         },
+        rag_evidence=rag_evidence,
     )
 
 
@@ -377,7 +384,7 @@ def main():
     ap.add_argument("--samples", default=str(DEFAULT_SAMPLES), help="labelled JSONL dataset")
     ap.add_argument("--data-dir", help="optional full sample-data directory; otherwise use CourseAssistant fallback policy")
     ap.add_argument("--grammar", help="optional grammar file override")
-    ap.add_argument("--output-dir", default=str(app_dir / "output" / "evaluation"))
+    ap.add_argument("--output-dir", default=str(app_dir / "output"), help="directory for evaluation.txt and evaluation_report.json")
     ap.add_argument("--max-samples", type=int, help="evenly subsample N rows; default evaluates all")
     ap.add_argument("--top-k", type=int, default=3)
     ap.add_argument("--min-score", type=float, default=0.08)
@@ -400,13 +407,16 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     json_path = output_dir / "evaluation_report.json"
-    md_path = output_dir / "evaluation_report.md"
+    text_path = output_dir / "evaluation.txt"
     json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    md_path.write_text(render_markdown(report), encoding="utf-8")
+    text_report = render_markdown(report)
+    if report.get("rag_evidence"):
+        text_report += "\n\n## RAG evaluation evidence\n\n" + "\n".join(report["rag_evidence"])
+    text_path.write_text(text_report + "\n", encoding="utf-8")
     print("Evaluation complete: {} samples".format(len(samples)))
-    print("JSON: {}".format(json_path))
-    print("Markdown: {}".format(md_path))
-    print(render_markdown(report))
+    print("Report: {}".format(text_path))
+    print("Details: {}".format(json_path))
+    print(text_report)
 
 
 if __name__ == "__main__":
