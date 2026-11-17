@@ -73,7 +73,7 @@ def load_aliases(data_dir=None):
 
 def unparsed_frame():
     """Frame for questions the grammar did not accept. Deliberately has no intent."""
-    return {"intent": None, "entities": {}, "entity_ids": [], "parse_status": UNPARSED}
+    return {"intent": None, "entities": {}, "entity_ids": [], "clauses": [], "parse_status": UNPARSED}
 
 
 def interpret(parse_tree, question, aliases=None):
