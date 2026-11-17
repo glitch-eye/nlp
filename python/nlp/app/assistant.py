@@ -122,6 +122,7 @@ from nlp.app.knowledge_base import KnowledgeBase, default_data_dir
 from nlp.app.parser import CourseParser
 from nlp.app.retriever import Retriever
 from nlp.app.semantic_frame import frame_from_tree
+from nlp.app.multi_intent import split_intent_clauses
 
 
 def _try_import(module_name, attr_name=None):
@@ -711,7 +712,73 @@ class CourseAssistant:
         return None
 
     def answer(self, question, dialogue_state=None):
-        """Run end-to-end CourseAssistant pipeline for one question and optional DialogueState."""
+        """Run end-to-end pipeline; safely fan out independent intents and join results."""
+        clauses = split_intent_clauses(question, self.parser)
+        if len(clauses) > 1:
+            # Reuse the unchanged single-intent pipeline for each clause.
+            # Update dialogue state once at the parent turn, not child-by-child.
+            child_results = [self.answer(clause, dialogue_state=None) for clause in clauses]
+            successful = [item for item in child_results if item.get("status") == "ANSWERED"]
+            all_chunks, all_sources, all_ids, all_entities = [], [], [], []
+            seen_chunk_ids = set()
+            for item in child_results:
+                for chunk in item.get("chunks", []):
+                    chunk_id = chunk.get("chunk_id")
+                    if chunk_id not in seen_chunk_ids:
+                        seen_chunk_ids.add(chunk_id)
+                        all_chunks.append(chunk)
+                for source in item.get("sources", []):
+                    if source not in all_sources:
+                        all_sources.append(source)
+                for entity_id in item.get("entity_ids", []):
+                    if entity_id not in all_entities:
+                        all_entities.append(entity_id)
+                for chunk_id in item.get("retrieved_chunk_ids", []):
+                    if chunk_id not in all_ids:
+                        all_ids.append(chunk_id)
+            combined_answer = " ".join(
+                item.get("answer", "").strip() for item in child_results if item.get("answer")
+            )
+            combined_status = "ANSWERED" if successful else (
+                "INSUFFICIENT_CONTEXT" if any(item.get("status") == "INSUFFICIENT_CONTEXT" for item in child_results)
+                else "NO_RELEVANT_CONTEXT"
+            )
+            state_before = (
+                dialogue_state.to_dict() if isinstance(dialogue_state, DialogueState)
+                else DialogueState.from_dict(dialogue_state).to_dict()
+            )
+            combined = {
+                "question": question, "resolved_query": question,
+                "answer": combined_answer, "sources": all_sources,
+                "retrieved_chunk_ids": all_ids, "parse_status": "PARSED",
+                "retrieval_status": "FOUND" if all_chunks else "NO_RELEVANT_CONTEXT",
+                "status": combined_status,
+                "citation_check": {"status": "MULTI_INTENT", "clauses": [item.get("citation_check") for item in child_results]},
+                "intent": "MULTI_INTENT",
+                "intents": [item.get("intent") for item in child_results],
+                "clauses": [
+                    {"query": clause, "intent": item.get("intent"),
+                     "entity_ids": item.get("entity_ids", []),
+                     "status": item.get("status"), "answer": item.get("answer"),
+                     "sources": item.get("sources", [])}
+                    for clause, item in zip(clauses, child_results)
+                ],
+                "entities": {}, "entity_ids": all_entities,
+                "chunks": all_chunks, "scores": [],
+                "resolution": {"status": "MULTI_INTENT", "clauses": clauses},
+                "dialogue_state_before": state_before,
+                "dialogue_state_after": state_before,
+            }
+            if dialogue_state is not None:
+                state = dialogue_state if isinstance(dialogue_state, DialogueState) else DialogueState.from_dict(dialogue_state)
+                state.update(
+                    question=question, intent="MULTI_INTENT", entities={},
+                    answer_entities=all_entities, sources=all_sources,
+                    ambiguous_candidates=DialogueManager.detect_multiple_entities_in_question(question),
+                )
+                combined["dialogue_state_after"] = state.to_dict()
+            return combined
+
         use_dialogue = dialogue_state is not None
         state = (
             dialogue_state
