@@ -726,13 +726,15 @@ class CourseAssistant:
             child_results = [self.answer(clause, dialogue_state=None) for clause in clauses]
             successful = [item for item in child_results if item.get("status") == "ANSWERED"]
             all_chunks, all_sources, all_ids, all_entities = [], [], [], []
+            all_scores = []
             seen_chunk_ids = set()
             for item in child_results:
-                for chunk in item.get("chunks", []):
+                for chunk, score in zip(item.get("chunks", []), item.get("scores", [])):
                     chunk_id = chunk.get("chunk_id")
                     if chunk_id not in seen_chunk_ids:
                         seen_chunk_ids.add(chunk_id)
                         all_chunks.append(chunk)
+                        all_scores.append(score)
                 for source in item.get("sources", []):
                     if source not in all_sources:
                         all_sources.append(source)
@@ -749,6 +751,11 @@ class CourseAssistant:
                 "INSUFFICIENT_CONTEXT" if any(item.get("status") == "INSUFFICIENT_CONTEXT" for item in child_results)
                 else "NO_RELEVANT_CONTEXT"
             )
+            combined_entities = {}
+            for entity_id in all_entities:
+                category = entity_category(entity_id)
+                if category and category not in combined_entities:
+                    combined_entities[category] = entity_id
             state_before = (
                 dialogue_state.to_dict() if isinstance(dialogue_state, DialogueState)
                 else DialogueState.from_dict(dialogue_state).to_dict()
@@ -769,8 +776,8 @@ class CourseAssistant:
                      "sources": item.get("sources", [])}
                     for clause, item in zip(clauses, child_results)
                 ],
-                "entities": {}, "entity_ids": all_entities,
-                "chunks": all_chunks, "scores": [],
+                "entities": combined_entities, "entity_ids": all_entities,
+                "chunks": all_chunks, "scores": all_scores,
                 "resolution": {"status": "MULTI_INTENT", "clauses": clauses},
                 "dialogue_state_before": state_before,
                 "dialogue_state_after": state_before,
@@ -781,7 +788,7 @@ class CourseAssistant:
                 # the API response still exposes MULTI_INTENT and every clause.
                 continuation_intent = child_results[-1].get("intent") if child_results else None
                 state.update(
-                    question=question, intent=continuation_intent, entities={},
+                    question=question, intent=continuation_intent, entities=combined_entities,
                     answer_entities=all_entities, sources=all_sources,
                     ambiguous_candidates=DialogueManager.detect_multiple_entities_in_question(question),
                 )
