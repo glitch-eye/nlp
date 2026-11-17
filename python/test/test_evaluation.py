@@ -1,6 +1,6 @@
 """Tests for the mainline evaluation module.
 
-Run from python/: python -m unittest test.test_evaluation -v
+Run from python/: python -m unittest discover -s test -p test_evaluation.py -v
 """
 import json
 import tempfile
