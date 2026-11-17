@@ -1,5 +1,8 @@
 
-#  Course Assistant grammar v4 
+# Course Assistant grammar v5
+# Backward-compatible single-intent productions. Multi-intent coordination is
+# validated and composed by parser.parse_clauses() via multi_intent.py.
+
 
 <S> ::= <Q_COURSE_INFO>
       | <Q_SCHEDULE>
