@@ -208,6 +208,56 @@ Văn phạm thuộc lớp Ngữ pháp phi ngữ cảnh (CFG - Context-Free Gramm
    - Dữ liệu môn học được lưu trữ có cấu trúc (danh mục môn học, lịch học, đề cương, quy định).
    - Nếu không tìm thấy thông tin: đưa ra thông báo chuẩn *"Xin lỗi, tôi không tìm thấy thông tin này trong dữ liệu của môn học."* thay vì sinh ảo (hallucination).
 
+### 6.3 Nhánh LLM/RAG: model, prompt, answer guard và cách đánh giá
+
+Luồng một lượt: `Parser (Phần I) -> Semantic Frame -> Retriever -> check_context -> build_prompt -> LLMClient.generate -> check_answer`.
+LLM chỉ được gọi **sau** truy xuất và không thay thế parser/grammar.
+
+**Model và cấu hình (`llm_client.py`)** - mọi cấu hình qua biến môi trường, không có khoá trong mã nguồn:
+
+| Biến | Ý nghĩa | Mặc định |
+|---|---|---|
+| `LLM_PROVIDER` hoặc `--provider` | `mock` / `openai` / `auto` (`auto` = dùng API nếu có khoá) | `mock` |
+| `LLM_MODEL` hoặc `--model` | tên model (API tương thích OpenAI Chat Completions) | `gpt-4o-mini` |
+| `OPENAI_API_KEY` | khoá API, không bao giờ được ghi ra output/log | - |
+| `OPENAI_BASE_URL` | endpoint tương thích OpenAI | `https://api.openai.com/v1` |
+| `LLM_TIMEOUT` | giây | `30` |
+
+`model_name` ghi trong `output/answer.txt` và `output/evaluation.txt` luôn nêu **đúng nguồn của câu trả lời**:
+`mock-grounded-extractive-v1` là mô hình giả lập chạy offline (trích văn bản từ chunk, **không phải LLM thật**);
+nếu đã chọn API nhưng thiếu khoá hoặc mất kết nối, tên model có thêm `[FALLBACK: <lý do>, requested <model>]`.
+
+**Prompt (`prompt_builder.py`)** gồm: luật hệ thống (chỉ dùng CONTEXT; không đoán ngày/yêu cầu/quy định;
+không đủ thông tin thì trả đúng `INSUFFICIENT_CONTEXT`; trích dẫn `[Nguồn: file / section]` sao chép nguyên văn),
+gợi ý ngữ nghĩa (ghi rõ *không phải bằng chứng*), câu hỏi và các khối CONTEXT, mỗi khối có nhãn nguồn.
+
+**Answer guard (`answer_guard.py`)** gồm ba lớp:
+1. *Trước LLM* (`check_context`): không có chunk phù hợp, hoặc câu không có intent/entity mà không từ nào của câu
+   xuất hiện trong chunk -> `NO_RELEVANT_CONTEXT`, không gọi LLM.
+2. *Sau LLM, sentinel*: model trả `INSUFFICIENT_CONTEXT` -> `INSUFFICIENT_CONTEXT`, không nguồn.
+3. *Sau LLM, kiểm tra căn cứ* (`check_answer`): (a) trích dẫn phải khớp một chunk thực sự đưa vào prompt, trích dẫn
+   bịa bị loại và câu trả lời thành `NEEDS_REVIEW`; (b) câu trả lời không có trích dẫn hợp lệ -> `NEEDS_REVIEW`;
+   (c) số, ngày, giờ, e-mail, URL trong câu trả lời mà **không có** trong các chunk đã gửi -> câu trả lời bị giữ lại
+   (`NEEDS_REVIEW`, bản gốc nằm ở `citation_check.raw_answer`). `sources` chỉ liệt kê nguồn được trích dẫn.
+
+**Đánh giá (`rag_evaluation.py`)** - mọi số liệu và ví dụ trong mục II/III của `output/evaluation.txt` được **sinh bằng
+cách chạy hệ thống**, không viết tay: hit@k, tỷ lệ từ chối đúng, trích dẫn hợp lệ trên `samples_labeled.jsonl`; ví dụ
+grounded / không có thông tin / ngoài miền; và các thử nghiệm hallucination dùng một *model giả lập có kịch bản* (bịa ngày,
+bịa nguồn, không trích dẫn, tuân thủ sentinel) để kiểm tra guard - model này được ghi rõ là test double, không phải LLM thật.
+```bash
+python -m nlp.app.rag_evaluation --data-dir ../../NLP_Course_Assistant_Sample_Data   # ghi output/rag_evaluation.txt
+python -m nlp.app.run_assistant --eval-samples 100                                # số mẫu có nhãn dùng cho evaluation.txt
+```
+Khi chạy với model thật, mặc định chỉ dùng 50 mẫu có nhãn để giới hạn chi phí (mock dùng toàn bộ); đổi bằng `--eval-samples`.
+Nếu không thấy thư mục dữ liệu, báo cáo in cảnh báo vì Knowledge Base khi đó chỉ được dựng lại từ trace và số liệu truy xuất không đại diện.
+
+**Hạn chế đã biết:**
+- Mock không đánh giá được độ liên quan: câu ngoài miền diễn đạt khác với mẫu của văn phạm (ví dụ "Thời tiết hôm nay thế nào?")
+  có thể vẫn được trả lời bằng một chunk không liên quan. Với model thật, việc từ chối dựa vào sentinel `INSUFFICIENT_CONTEXT`.
+- Kiểm tra trích dẫn chỉ xác nhận nhãn khớp chunk đã gửi, không chứng minh từng câu được chunk đó ủng hộ; kiểm tra thông tin chỉ bao phủ
+  số/ngày/giờ/e-mail/URL, không bao phủ các khẳng định bằng lời (ví dụ tên người, "bắt buộc"/"không bắt buộc").
+- Nhãn trong `samples_labeled.jsonl` được gán tự động (`AUTO_LABEL_REQUIRES_REVIEW`), chưa rà soát thủ công.
+
 ---
 
 ## 7. Đánh giá và hạn chế của hệ thống

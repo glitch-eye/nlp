@@ -14,8 +14,8 @@ I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
      + NO_RELEVANT_CONTEXT (Chặn ngoài miền)    : 1
      + NEED_CLARIFICATION (Yêu cầu làm rõ)      : 4
    - Phân bố trạng thái Parser (Phần I CFG trên resolved_query):
-     + PARSED                                   : 13
-     + UNPARSED (Fallback sang TF-IDF retrieval): 7
+     + PARSED                                   : 18
+     + UNPARSED (Fallback sang TF-IDF retrieval): 2
      + SKIPPED (Lượt hỏi làm rõ / ngoài KB)     : 5
    - Phân bố trạng thái Retriever (Phần II TF-IDF + Semantic):
      + FOUND                                    : 19
@@ -30,62 +30,98 @@ I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
        * THIS_CONTENT             : 1
        * THIS_PART                : 1
 
-2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl - 1.497 mẫu):
-   - Tổng số mẫu kiểm thử                      : 1.497 câu
-   - Hit@3 (Có ngữ cảnh đúng trong Top-3 chunk): 1.439 / 1.440 (99.9%)
-   - Câu ngoài miền (UNKNOWN) từ chối đúng     : 3 / 3 (100.0%)
-   - Câu thiếu thông tin (INSUFFICIENT_CONTEXT): 54 / 54 trường hợp được nhận diện
+!!! CẢNH BÁO: không tìm thấy thư mục NLP_Course_Assistant_Sample_Data nên Knowledge Base được dựng lại từ
+!!! output/retrieval.txt (thiếu entities.txt và nhiều chunk). Số liệu TRUY XUẤT bên dưới KHÔNG đại diện cho
+!!! hệ thống thật; hãy chạy lại với --data-dir trỏ tới dữ liệu đầy đủ trước khi đưa vào báo cáo.
 
-II. CÁC VÍ DỤ MINH HỌA BẮT BUỘC CHO NHÁNH LLM/RAG (MỤC 6 - TRANG 8 ASSIGNMENT.PDF)
+2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl) [ĐO TRỰC TIẾP]:
+   - Tổng số mẫu kiểm thử                         : 1497
+   - Trạng thái nhãn                              : AUTO_LABEL_REQUIRES_REVIEW=1497
+   - Hit@k (có chunk kỳ vọng trong top-k)         : 927 / 1440 (64.4%)
+   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 1440 / 1440 (100.0%)
+   - Từ chối khi nhãn yêu cầu từ chối             : 23 / 57 (40.4%)
+   - Câu ANSWERED có trích dẫn hợp lệ             : 1474 / 1474 (100.0%)
+   - Số nguồn trung bình mỗi câu ANSWERED         : 1.21 (chỉ tính nguồn thực sự được trích dẫn)
+   - Câu bị đánh dấu NEEDS_REVIEW                 : 0
+   - Ma trận (nhãn kỳ vọng -> trạng thái thực tế):
+       EXPECTED_CONTEXT       -> ANSWERED               : 1440
+       INSUFFICIENT_CONTEXT   -> ANSWERED               : 34
+       INSUFFICIENT_CONTEXT   -> INSUFFICIENT_CONTEXT   : 20
+       NO_RELEVANT_CONTEXT    -> NO_RELEVANT_CONTEXT    : 3
+   Lưu ý: nhãn do build_sample_dataset gán tự động (AUTO_LABEL_REQUIRES_REVIEW), chưa rà soát thủ công.
+
+II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; model = mock-grounded-extractive-v1)
 ----------------------------------------------------------------------
-1. Ví dụ câu trả lời đúng và có căn cứ (Grounded Answer):
+1. Câu trả lời đúng và có căn cứ (Grounded Answer):
+   - Câu hỏi   : "Môn NLP có bao nhiêu tín chỉ?"
+   - Truy xuất : faq-q1-0, course-info-course-description-2, course-info-course-id-co3085-1
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q1, course_info.txt / course_description
+   - Trả lời   : "Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ. [Nguồn: faq.txt / Q1] Ngoài ra: course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phầ…"
    - Câu hỏi   : "Chương 4 nói về gì?"
-   - Truy xuất : topics-chapter-4-features-and-augmented-grammar-3 (score=0.3950, topics.txt / CHAPTER 4)
-   - Trả lời   : "CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR — Tóm tắt: The chapter extends formal grammar
-                 with feature systems and augmented grammar. It covers lexicon, parsing with features,
-                 augmented transition networks, generalized feature systems and unification grammar...
-                 [Nguồn: topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR]"
-   - Ví dụ 2 (Hội thoại giải tham chiếu): "Tuần 5 học những nội dung gì?" -> "Tài liệu của phần này ở đâu?"
-     + Giải tham chiếu : "Tài liệu tham khảo cho Tuần 5 (Chương 4, Parsing) là gì?"
-     + Trả lời có căn cứ: Trích dẫn chính xác TEXTBOOK 1 (Natural Language Understanding - James Allen)
-       và TEXTBOOK 3 (Xử lý ngôn ngữ tự nhiên - Phan Thị Tươi) [Nguồn: resources.txt / TEXTBOOK 1, TEXTBOOK 3].
+   - Truy xuất : faq-q5-4, topics-chapter-4-features-and-augmented-grammar-3, schedule-week-05-5
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+   - Trả lời   : "CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR — Tóm tắt: The chapter extends formal grammar with feature systems and augmented grammar. It covers lexicon, parsing with features, augmented transition networks, generalized feature syst…"
+   - Câu hỏi   : "Tuần 5 học những nội dung gì?"
+   - Truy xuất : schedule-week-05-5, faq-q10-9, schedule-week-06-6
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: schedule.txt / WEEK 05, schedule.txt / WEEK 06
+   - Trả lời   : "WEEK 05 học Chapter 4 với các nội dung: - augmented transition networks - generalized feature systems - unification grammar. [Nguồn: schedule.txt / WEEK 05] Bên cạnh đó: WEEK 06 học Chapter 5 với các nội dung: - grammars for natu…"
 
-2. Ví dụ câu hỏi không có thông tin trong Knowledge Base (No Relevant Context):
-   - Câu hỏi   : "Hôm nay ở TP.HCM có mưa không?"
-   - Truy xuất : retrieval_status = NO_RELEVANT_CONTEXT (Không có chunk nào vượt ngưỡng min_score=0.08)
-   - Trả lời   : "Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085
-                 để trả lời câu hỏi: 'Hôm nay ở TP.HCM có mưa không?'." (status=NO_RELEVANT_CONTEXT, sources=[])
+2. Câu hỏi không có thông tin trong Knowledge Base / ngoài phạm vi:
+   - [câu ngoài miền (mẫu của văn phạm)] "Hôm nay ở TP.HCM có mưa không?"
+       status=NO_RELEVANT_CONTEXT, retrieval_status=NO_RELEVANT_CONTEXT, sources=(không có)
+       Trả lời: "Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085 để trả lời câu hỏi: 'Hôm nay ở TP.HCM có mưa không?'."
+   - [thuộc tính không có trong dữ liệu] "Phòng học của môn CO3085 ở đâu?"
+       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=faq.txt / Q1, course_info.txt / course_description, resources.txt / TEXTBOOK 3
+       Trả lời: "Các đoạn tài liệu truy xuất được không có thông tin cụ thể về phòng học cho câu hỏi này. [Nguồn: faq.txt / Q1]"
+   - [mốc thời gian không có trong dữ liệu] "Deadline của bài tập lớn là khi nào?"
+       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=faq.txt / Q13, assignments.txt / Lưu ý, regulations.txt / Lưu ý
+       Trả lời: "Cơ sở tri thức hiện tại không có ngày giờ hạn nộp chính thức cho bài tập lớn (tài liệu chỉ ghi nhận đây là dữ liệu mẫu phục vụ Course Assistant và cần thay bằng lịch chính thức của lớp). [Nguồn: faq.…"
 
-3. Ví dụ trường hợp hệ thống có nguy cơ sinh thông tin không có trong dữ liệu (Hallucination Risk):
-   - Trường hợp A (Hỏi ngày hạn nộp cụ thể): "Deadline của bài tập lớn là khi nào?"
-     + Nguy cơ Hallucination: Retriever vẫn tìm thấy chunk `assignments-luu-y-0` (score=0.4687) vì khớp từ khóa
-       "bài tập lớn". Tuy nhiên nội dung file `assignments.txt` chỉ ghi đây là DỮ LIỆU MẪU và không có ngày nộp.
-       Nếu đưa thẳng vào LLM không kiểm soát, LLM có nguy cơ tự bịa ra một ngày hạn nộp giả định.
-     + Cách khắc phục: Tầng `answer_guard` phát hiện truy vấn `GET_DEADLINE` trên dữ liệu mẫu không có mốc thời gian
-       chính thức và trả về `status=INSUFFICIENT_CONTEXT`: nêu rõ tài liệu chỉ là dữ liệu mẫu, không bịa ngày nộp.
-   - Trường hợp B (Hỏi thuộc tính không có trong đề cương): "Phòng học của môn CO3085 ở đâu?"
-     + Nguy cơ Hallucination: Retriever lấy ra `course_info.txt` vì khớp mã môn `CO3085`, nhưng file chỉ chứa số
-       tín chỉ và mô tả môn học, không có phòng học. Guard chặn lại với `status=INSUFFICIENT_CONTEXT`.
-   - Trường hợp C (Tham chiếu hội thoại mơ hồ / vượt ngưỡng chương): "Còn chương sau?" sau Chương 12
-     + Nguy cơ Hallucination: Chương 12 là chương cuối cùng trong đề cương. Nếu để LLM tự suy diễn "Chương 13",
-       hệ thống sẽ sinh ảo nội dung. `DialogueManager` kiểm tra `CH13 not in kb_chapters` và chặn ngay với
-       `status=INSUFFICIENT_CONTEXT`.
+3. Nguy cơ sinh thông tin không có trong dữ liệu (Hallucination) - thử với model GIẢ LẬP có kịch bản:
+   (Model giả lập chỉ dùng để kiểm tra answer_guard; KHÔNG phải kết quả của một LLM thật.)
+   - Mô hình bịa ngày hạn nộp nhưng trích dẫn đúng nguồn | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần. Hạn nộp cuối cùng là 15/12/2026. [Nguồn: faq.txt / Q13]"
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=['15/12/2026']
+       Người dùng thấy: "Câu trả lời do mô hình sinh ra chứa thông tin không có trong tài liệu truy xuất (15/12/2026), nên hệ thống không đưa ra để tránh sai lệch."
+   - Mô hình trích dẫn nguồn không được gửi vào prompt | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần. [Nguồn: assignments.txt / MỤC 9]"
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=['[Nguồn: assignments.txt / MỤC 9]'], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Bài tập lớn gồm nhiều phần."
+   - Mô hình trả lời không trích dẫn nguồn | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần."
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Bài tập lớn gồm nhiều phần."
+   - Mô hình tuân thủ prompt, trả INSUFFICIENT_CONTEXT | Câu hỏi: "Python 3.12 có gì mới?"
+       Model trả về : "INSUFFICIENT_CONTEXT"
+       Guard        : status=INSUFFICIENT_CONTEXT, trích dẫn sai=[], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán."
 
-III. MỘT SỐ TRƯỜNG HỢP TRẢ LỜI SAI / HẠN CHẾ & PHÂN TÍCH NGUYÊN NHÂN LỖI
+III. TRƯỜNG HỢP SAI / HẠN CHẾ (liệt kê từ kết quả chạy thật)
 ----------------------------------------------------------------------
-1. Lỗi ở tầng Cú pháp / Văn phạm (Parser UNPARSED trên câu diễn đạt tự do):
-   - Hiện tượng : Các câu hỏi tự do như "Chương 11 có hỏi đáp không?" hoặc "Midterm bao nhiêu phút?"
-                  nhận `parse_status=UNPARSED` do CFG ở Phần I có phạm vi hữu hạn.
-   - Nguyên nhân: Văn phạm CFG chỉ bao phủ các mẫu câu chuẩn hóa để tránh bùng nổ tổ hợp khi sinh câu.
-   - Khắc phục  : Hệ thống không dừng lại khi `UNPARSED` mà tự động chuyển sang rút trích thực thể bề mặt
-                  kết hợp TF-IDF retrieval để vẫn tìm đúng chunk liên quan.
-2. Lỗi xếp hạng ở tầng Retrieval khi câu hỏi quá ngắn / trùng từ khóa chung:
-   - Hiện tượng : Câu hỏi "Kế hoạch học tập kéo dài bao lâu?" (SYN0006 trong bộ 1.497 mẫu) có từ "kéo dài bao lâu"
-                  trùng mạnh với `faq-q15-14` ("Final kéo dài bao lâu?") và `faq-q14-13` ("Midterm kéo dài bao lâu?"),
-                  làm 2 chunk FAQ cạnh tranh điểm lexical với `schedule.txt`.
-   - Nguyên nhân: TF-IDF tính trọng số theo từ vựng cục bộ và nhạy với cụm từ hiếm trùng khớp chính xác.
-   - Khắc phục  : Kết hợp điểm Semantic Frame (`0.75 * lexical + 0.25 * semantic`) giúp đẩy chunk đúng của
-                  `schedule.txt` lên vị trí số 1 (score=0.4167).
+1. Câu ngoài miền diễn đạt lại (không nằm trong mẫu của văn phạm): từ chối đúng 4 / 10
+   - Vẫn bị trả lời [ANSWERED]: "Thời tiết hôm nay thế nào?" -> "Lưu ý: Các quy định chi tiết về deadline, format nộp bài và chính sách lớp học trong file này là dữ liệu MẪU …"
+   - Vẫn bị trả lời [ANSWERED]: "Cho tôi công thức nấu phở" -> "external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập. [Nguồn: regulation…"
+   - Vẫn bị trả lời [ANSWERED]: "Bạn có thể viết giúp tôi một bài thơ không?" -> "Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi. …"
+   - Vẫn bị trả lời [ANSWERED]: "Python 3.12 có gì mới?" -> "REFERENCE 2 — 'Natural Language Processing with Python' (Tác giả: Steven Bird; Ewan Klein; Edward Loper), côn…"
+   - Vẫn bị trả lời [ANSWERED]: "Ai là tổng thống Mỹ hiện nay?" -> "AI_usage: Sinh viên phải khai báo việc sử dụng AI trong báo cáo, nghiên cứu và quá trình thực hiện theo quy đ…"
+   - Vẫn bị trả lời [ANSWERED]: "Phim nào đang chiếu rạp?" -> "L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu. [Nguồn: faq.txt / Q9] Ngoài ra: detailed_le…"
+   Nguyên nhân: bộ lọc trước LLM chỉ dựa trên điểm truy xuất và độ phủ từ vựng; mock không đánh giá được
+   sự liên quan. Với model thật, prompt yêu cầu trả INSUFFICIENT_CONTEXT và answer_guard xử lý (xem II.3, trường hợp cuối).
+2. Truy xuất sai (không có chunk kỳ vọng trong top-k): 513 / 1440
+   - SYN0015 "Chương nào nói về gán nhãn từ loại?": kỳ vọng ['topics-chapter-6-ambiguity-resolution-statistical-methods-5'] ; nhận ['faq-q7-6', 'faq-q8-7', 'faq-q5-4']
+   - SYN0017 "Chương nào nói về vai trò chủ đề?": kỳ vọng ['schedule-week-09-9', 'topics-chapter-7-semantics-and-logical-form-6'] ; nhận ['regulations-llm-rag-7', 'faq-q7-6', 'faq-q8-7']
+   - SYN0025 "Chương nào nói về cụm danh từ?": kỳ vọng ['schedule-week-02-2', 'topics-chapter-2-linguistic-background-english-syntax-1'] ; nhận ['topics-chapter-11-knowledge-representation-and-reasoning-10', 'topics-chapter-9-ambiguity-resolution-8', 'topics-chapter-10-other-strategies-for-semantic-interpretation-9']
+   - SYN0026 "Chương nào nói về cụm động từ?": kỳ vọng ['schedule-week-02-2', 'schedule-week-06-6', 'schedule-week-10-10', 'topics-chapter-2-linguistic-background-english-syntax-1', 'topics-chapter-5-grammar-for-natural-language-4', 'topics-chapter-8-linking-syntax-and-semantics-7'] ; nhận ['topics-chapter-11-knowledge-representation-and-reasoning-10', 'topics-chapter-9-ambiguity-resolution-8', 'topics-chapter-10-other-strategies-for-semantic-interpretation-9']
+   - SYN0027 "Chương nào nói về cụm tính từ?": kỳ vọng ['schedule-week-02-2', 'topics-chapter-2-linguistic-background-english-syntax-1'] ; nhận ['topics-chapter-11-knowledge-representation-and-reasoning-10', 'topics-chapter-9-ambiguity-resolution-8', 'topics-chapter-10-other-strategies-for-semantic-interpretation-9']
+3. Nhãn INSUFFICIENT_CONTEXT nhưng hệ thống vẫn trả lời: 34 / 54
+   Phân bố theo intent: {'GET_RESOURCE': 18, 'GET_SCHEDULE': 16}
+   - "Tài liệu nào nói về CFG?" -> trích dẫn: resources.txt / TEXTBOOK 1
+   - "Tài liệu nào nói về CFG và Parsing?" -> trích dẫn: faq.txt / Q3, topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+   - "Tài liệu nào nói về Parsing?" -> trích dẫn: course_info.txt / learning_outcomes
+   Cần rà soát thủ công: nếu nguồn được trích dẫn thực sự chứa đáp án thì lỗi nằm ở nhãn tự động chứ không ở hệ thống.
+4. Câu hội thoại mà văn phạm Phần I không nhận (UNPARSED): 2
+   - "Tài liệu tham khảo cho Tuần 5 (Phần I, nét và văn phạm gia tố) là gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=ANSWERED
+   - "Phòng học của môn CO3085 ở đâu?" -> hệ thống vẫn truy xuất bằng câu gốc, status=INSUFFICIENT_CONTEXT
 
 IV. NHẬN XÉT ƯU ĐIỂM VÀ HẠN CHẾ CỦA PHƯƠNG PHÁP ĐÃ SỬ DỤNG
 ----------------------------------------------------------------------

@@ -1,5 +1,5 @@
-# Bounded Course Assistant question grammar.
-# Each top-level Q_* category doubles as an intent label for the sample builder.
+
+#  Course Assistant grammar v4 
 
 <S> ::= <Q_COURSE_INFO>
       | <Q_SCHEDULE>
@@ -10,10 +10,31 @@
       | <Q_RULE>
       | <Q_LO>
       | <Q_UNKNOWN>
+       | <POLITE_PREFIX> <Q_ASSIGNMENT>
+       | <POLITE_PREFIX> <Q_DEADLINE>
+       | <POLITE_PREFIX> <Q_RULE>
+       | <POLITE_PREFIX> <Q_LO>
+       | <POLITE_PREFIX> <Q_RESOURCE>
+       | <INFORM_PREFIX> <Q_ASSIGNMENT>
+       | <INFORM_PREFIX> <Q_DEADLINE>
+       | <INFORM_PREFIX> <Q_RULE>
+       | <INFORM_PREFIX> <Q_LO>
+       | <POLITE_BASIC> <Q_SCHEDULE>
+       | <INFORM_BASIC> <Q_SCHEDULE>
+       | <POLITE_BASIC> <Q_TOPIC>
 
 <Q_COURSE_INFO> ::= <COURSE_REF> <COURSE_INFO_TAIL>
                    | <POLITE_PREFIX> <COURSE_REF> <COURSE_INFO_TAIL>
                    | <EXAM_REF> <EXAM_TAIL>
+                   # [v4] attribute-first WH questions + request form
+                   | <INFORM_PREFIX> <COURSE_REF> <COURSE_INFO_TAIL>
+                   | <INFORM_PREFIX> <COURSE_INFO_ATTR> <COURSE_REF>
+                   | "số tín chỉ của" <COURSE_REF> "là bao nhiêu?"
+                   | "mô tả của" <COURSE_REF> "là gì?"
+                   | "mục tiêu học tập của" <COURSE_REF> "là gì?"
+                   | "chuẩn đầu ra của" <COURSE_REF> "là gì?"
+                   | "đề cương của" <COURSE_REF> "gồm những gì?"
+                   | "thời lượng của" <EXAM_REF> "là bao lâu?"
 
 <POLITE_PREFIX> ::= "cho hỏi"
                    | "xin hỏi"
@@ -25,6 +46,8 @@
                | "CO3085"
                | "C03085"
                | "Xử lý Ngôn ngữ Tự nhiên"
+                # [v4] FAQ Q2 "NLP có những phần chính nào?" did not parse (only "Môn NLP" existed)
+                | "NLP"
 
 <COURSE_INFO_TAIL> ::= "có bao nhiêu tín chỉ?"
                       | "có mấy tín chỉ?"
@@ -33,6 +56,9 @@
                       | "có những phần chính nào?"
                       | "được chia thành những phần nào?"
                       | "có những mục tiêu học tập nào?"
+                      | "học về nội dung gì?"
+                      | "được mô tả như thế nào?"
+                      | "có chuẩn đầu ra nào?"
 
 <EXAM_REF> ::= "midterm"
               | "final"
@@ -40,11 +66,20 @@
               | "bài thi cuối kỳ"
 
 <EXAM_TAIL> ::= "kéo dài bao lâu?"
+               # [v4] fixes UNPARSED "Midterm bao nhiêu phút?" reported in evaluation.txt
+               | "bao nhiêu phút?"
+               | "có thời lượng bao nhiêu phút?"
+               | "làm bài trong bao lâu?"
 
 <Q_SCHEDULE> ::= <WEEK_REF> <SCHEDULE_WEEK_TAIL>
                | <CHAPTER_REF> <SCHEDULE_CHAPTER_TAIL>
                | <SCHEDULE_TOPIC_REF> <SCHEDULE_TOPIC_TAIL>
                | <SCHEDULE_WHEN>
+                # [v4] anaphoric subjects + "Khi nào học X?"
+                | <DEICTIC_CHAPTER> <SCHEDULE_CHAPTER_TAIL>
+                | <DEICTIC_WEEK> <SCHEDULE_WEEK_TAIL>
+                | "Khi nào học" <TOPIC_REF> "?"
+                | "Khi nào học" <CHAPTER_REF> "?"
 
 <SCHEDULE_TOPIC_REF> ::= "Phần" <TOPIC_REF>
                         | <TOPIC_REF>
@@ -89,12 +124,22 @@
                    | "Kế hoạch học tập kéo dài bao lâu?"
                    | "Có bao nhiêu tuần học?"
                    | "Một tuần học mấy tiết?"
+                   | "Môn học kéo dài bao nhiêu tuần?"
 
 <Q_TOPIC> ::= <CHAPTER_REF> <TOPIC_CHAPTER_TAIL>
             | "Chương nào nói về" <TOPIC_REF> "?"
             | "Chương nào đề cập đến" <TOPIC_REF> "?"
             | "Chương nào học về" <TOPIC_REF> "?"
             | <TOPIC_REF> <TOPIC_WHERE_TAIL>
+            | <CHAPTER_REF> <TOPIC_RELATED_TAIL>
+            | <CHAPTER_REF> "và" <CHAPTER_REF> <TOPIC_COMPARE_TAIL>
+             # [v4] anaphora (dialogues.txt scenario 1) + imperative requests
+             | <DEICTIC_CHAPTER> <TOPIC_CHAPTER_TAIL>
+             | <DEICTIC_PART> <TOPIC_CHAPTER_TAIL>
+             | <DEICTIC_CHAPTER> "có liên quan đến" <TOPIC_REF> "không?"
+             | <TOPIC_REQUEST_VERB> <CHAPTER_REF>
+             | "giải thích" <TOPIC_REF>
+             | "giới thiệu về" <TOPIC_REF>
 
 <CHAPTER_REF> ::= "chương" <CHAPTER_NUMBER>
 
@@ -124,6 +169,11 @@
                       | "thuộc nội dung của chương nào?"
                       | "được giới thiệu ở chương nào?"
 
+<TOPIC_RELATED_TAIL> ::= "có liên quan đến" <TOPIC_REF> "không?"
+                       | "có" <TOPIC_REF> "không?"
+
+<TOPIC_COMPARE_TAIL> ::= "khác nhau như thế nào?"
+
 <TOPIC_REF> ::= "CFG"
                | "CFG và Parsing"
                | "Parsing"
@@ -144,14 +194,24 @@
                | "cụm động từ"
                | "cụm tính từ"
                | "cụm trạng từ"
+               # [v4] English terms used verbatim in FAQ Q5-Q8
+               | "Features và Augmented Grammar"
+               | "semantic grammar"
+               | "knowledge representation"
+               | "local discourse context"
 
 <Q_ASSIGNMENT> ::= <ASSIGNMENT_REF> <ASSIGNMENT_TAIL>
                  | <PART_REF> <PART_TAIL>
                  | <TASK_REQUESTOR> <TASK_REQUEST>
+                  # [v4] anaphora (dialogues.txt scenario 2)
+                  | <DEICTIC_PART> <PART_TAIL>
+                  | <TASK_REQUESTOR> "phải nộp những gì?"
 
 <TASK_REQUESTOR> ::= "Tôi"
                     | "Sinh viên"
                     | <EMPTY>
+                    | "Em"
+                    | "Mình"
 
 <TASK_REQUEST> ::= "cần hoàn thành những bài tập nào?"
                   | "cần làm những bài tập nào?"
@@ -160,6 +220,9 @@
 
 <ASSIGNMENT_REF> ::= "bài tập lớn"
                    | "BTL"
+                    # [v4] student synonyms; semantic_frame maps ASSIGNMENT_REF -> BTL01 by label
+                    | "đồ án"
+                    | "project"
 
 <ASSIGNMENT_TAIL> ::= "yêu cầu làm gì?"
                     | "gồm những phần nào?"
@@ -169,6 +232,9 @@
                     | "bao gồm các phần nào?"
                     | "có những yêu cầu gì?"
                     | "cần nộp những sản phẩm nào?"
+                    | "có phần parser không?"
+                    | "có phần grammar không?"
+                    | "có phần hội thoại không?"
 
 <PART_REF> ::= "Phần I"
              | "Phần II"
@@ -183,11 +249,19 @@
               | "bao gồm những nhiệm vụ gì?"
 
 <Q_DEADLINE> ::= <DEADLINE_REF> <DEADLINE_TAIL>
+                # [v4] verb-final / WH-first forms: "Bài tập lớn nộp khi nào?"
+                | <ASSIGNMENT_REF> <DEADLINE_VERB_TAIL>
+                | "Khi nào phải nộp" <ASSIGNMENT_REF> "?"
+                | "Khi nào nộp" <ASSIGNMENT_REF> "?"
 
 <DEADLINE_REF> ::= "deadline bài tập lớn"
                  | "Deadline của bài tập lớn"
                  | "hạn nộp bài tập lớn"
                  | "thời hạn nộp bài"
+                  | "hạn chót bài tập lớn"
+                  | "deadline BTL"
+                  | "hạn nộp BTL"
+                  | "deadline đồ án"
 
 <DEADLINE_TAIL> ::= "là khi nào?"
                    | "khi nào?"
@@ -200,6 +274,23 @@
                | "Tài liệu nào nói về" <TOPIC_REF> "?"
                | "Tài liệu tham khảo về" <RESOURCE_TOPIC> "là gì?"
                | <RESOURCE_REQUEST>
+               | <RESOURCE_SCOPE_HEAD> "cho" <RESOURCE_SCOPE_REF> <RESOURCE_SCOPE_TAIL>
+                # [v4] spec Part III example "Tài liệu của phần này ở đâu?"
+                | <RESOURCE_SCOPE_HEAD> "của" <DEICTIC_SCOPE> <RESOURCE_SCOPE_TAIL>
+                | <RESOURCE_SCOPE_HEAD> "của" <CHAPTER_REF> <RESOURCE_SCOPE_TAIL>
+                | "Tài liệu nào liên quan đến" <TOPIC_REF> "?"
+                | "tìm tài liệu về" <TOPIC_REF>
+                | "tìm tài liệu về" <RESOURCE_TOPIC>
+
+<RESOURCE_SCOPE_HEAD> ::= "tài liệu tham khảo"
+                        | "tài liệu"
+
+<RESOURCE_SCOPE_REF> ::= <CHAPTER_REF>
+                       | <WEEK_REF>
+                       | <PART_REF>
+
+<RESOURCE_SCOPE_TAIL> ::= "là gì?"
+                        | "ở đâu?"
 
 <RESOURCE_REQUEST> ::= "liệt kê" <RESOURCE_REF>
 
@@ -225,6 +316,8 @@
 <Q_RULE> ::= <RULE_REF> <RULE_TAIL>
            | <RULE_QUESTION_PREFIX> <RULE_OBJECT> <RULE_QUESTION_TAIL>
            | <ASSIGNMENT_REF> <RULE_USAGE_PREFIX> <RULE_OBJECT> <RULE_QUESTION_TAIL>
+            # [v4] rule sections that exist in regulations.txt but had no entry
+            | <RULE_OTHER_REF> <RULE_TAIL>
 
 <RULE_REF> ::= "quy định về sử dụng AI"
              | "quy định về LLM/RAG"
@@ -233,6 +326,8 @@
 <RULE_OBJECT> ::= "AI"
                 | "LLM/RAG"
                 | "công cụ AI"
+                 # [v4] FAQ Q12 wording
+                 | "LLM hoặc RAG"
 
 <RULE_TAIL> ::= "là gì?"
                | "như thế nào?"
@@ -242,9 +337,14 @@
 <RULE_QUESTION_PREFIX> ::= "Có được dùng"
                          | "Có được sử dụng"
                          | "Sinh viên có thể dùng"
+                          | "Có thể dùng"
+                          | "Có thể sử dụng"
 
 <RULE_USAGE_PREFIX> ::= "có được sử dụng"
                        | "có được dùng"
+                       # [v4] FAQ Q12 "Bài tập lớn có thể sử dụng LLM hoặc RAG không?"
+                       | "có thể sử dụng"
+                       | "có thể dùng"
 
 <RULE_QUESTION_TAIL> ::= "không?"
                         | "trong bài tập lớn không?"
@@ -260,6 +360,8 @@
             | "mô tả năng lực gì?"
             | "đề cập đến kiến thức nào?"
             | "yêu cầu sinh viên có khả năng gì?"
+             # [v4] FAQ Q9-Q11 wording
+             | "liên quan đến nội dung gì?"
 
 <Q_UNKNOWN> ::= "Hôm nay ở TP.HCM có mưa không?"
               | "Ai là tổng thống của Pháp?"
@@ -271,3 +373,50 @@
 
 <CHAPTER_NUMBER> ::= "1" | "2" | "3" | "4" | "5" | "6"
                    | "7" | "8" | "9" | "10" | "11" | "12"
+
+# ---------------- [v4] new helper rules ----------------
+# single-value lead-ins for the two largest intents
+<POLITE_BASIC> ::= "cho hỏi"
+
+<INFORM_BASIC> ::= "cho biết"
+
+# request lead-in: "Cho biết tuần 5 học gì?"
+<INFORM_PREFIX> ::= "cho biết"
+                   | "cho tôi biết"
+
+# Part III anaphora (resolved by DialogueState; kept in the grammar so the raw turn also parses)
+<DEICTIC_CHAPTER> ::= "chương này"
+                     | "nội dung này"
+                     | "nó"
+
+<DEICTIC_PART> ::= "phần này"
+                  | "phần đó"
+
+<DEICTIC_WEEK> ::= "tuần này"
+                  | "tuần đó"
+
+<DEICTIC_SCOPE> ::= <DEICTIC_CHAPTER>
+                   | <DEICTIC_PART>
+                   | <DEICTIC_WEEK>
+
+<COURSE_INFO_ATTR> ::= "đề cương"
+                      | "thông tin chung"
+                      | "mô tả"
+                      | "số tín chỉ"
+                      | "chuẩn đầu ra"
+
+<TOPIC_REQUEST_VERB> ::= "tóm tắt"
+                        | "giới thiệu"
+                        | "cho biết nội dung"
+                        | "trình bày nội dung"
+
+<DEADLINE_VERB_TAIL> ::= "nộp khi nào?"
+                        | "phải nộp khi nào?"
+                        | "nộp vào ngày nào?"
+                        | "hết hạn khi nào?"
+
+# no entity id is emitted for these (semantic_frame only knows AI_USAGE / LLM_RAG): retrieval falls back to TF-IDF
+<RULE_OTHER_REF> ::= "quy định về thư viện bên ngoài"
+                    | "quy định về mã nguồn"
+                    | "quy định về liêm chính học thuật"
+                    | "quy định về đạo văn"
