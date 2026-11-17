@@ -27,10 +27,12 @@ def _with_sentence_punctuation(parts, original):
 
 
 def split_intent_clauses(query, parser):
-    """Return independently parseable clauses, or [query] when no safe split exists.
+    """Return the best independently parseable clause partition.
 
-    This deliberately uses the existing parser as a validation oracle rather
-    than guessing that every occurrence of "và" means multiple intents.
+    A dynamic-programming search allows "và" to remain inside a clause when it
+    is lexical coordination (for example "CFG và Parsing"), while splitting
+    other conjunctions into separate intents.  The original query is retained
+    if no multi-clause partition is validated by the existing CFG.
     """
     text = (query or "").strip()
     if not text or parser is None:
@@ -40,15 +42,38 @@ def split_intent_clauses(query, parser):
     if len(raw_parts) < 2:
         return [text]
 
-    parts = _with_sentence_punctuation(raw_parts, text)
-    if len(parts) < 2 or any(not part for part in parts):
-        return [text]
+    suffix = "?" if text.endswith("?") else (
+        "!" if text.endswith("!") else ("." if text.endswith(".") else "")
+    )
+    count = len(raw_parts)
+    memo = {}
 
-    # Every clause must be valid on its own.  This also protects coordinated
-    # entities and topic names that belong to one intent.
-    if all(parser.parse(part) is not None for part in parts):
-        return parts
-    return [text]
+    def best_from(index):
+        if index == count:
+            return []
+        if index in memo:
+            return memo[index]
+
+        best = None
+        for end in range(index + 1, count + 1):
+            candidate = " và ".join(part.strip() for part in raw_parts[index:end]).strip()
+            candidate = candidate.rstrip("?!.,;:")
+            if suffix:
+                candidate += suffix
+            if not candidate or parser.parse(candidate) is None:
+                continue
+            tail = best_from(end)
+            if tail is None:
+                continue
+            option = [candidate] + tail
+            if best is None or len(option) > len(best):
+                best = option
+
+        memo[index] = best
+        return best
+
+    partition = best_from(0)
+    return partition if partition and len(partition) > 1 else [text]
 
 
 def is_multi_intent_query(query, parser):
