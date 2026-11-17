@@ -276,7 +276,7 @@ def _write_outputs(output_dir, dialogue_text, answer_text, eval_text):
             p_ans.write_text(answer_text, encoding="utf-8")
             written.append(p_ans)
         if eval_text is not None:
-            p_eval = d / "evaluation.txt"
+            p_eval = d / "assistant_run_summary.txt"
             p_eval.write_text(eval_text, encoding="utf-8")
             written.append(p_eval)
     return written
