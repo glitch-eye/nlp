@@ -35,7 +35,7 @@ class EvaluationUtilities(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "bad.jsonl"
             path.write_text('{"query":"ok"}\n{bad json}\n', encoding="utf-8")
-            with self.assertRaisesRegex(ValueError, "line 2"):
+            with self.assertRaisesRegex(ValueError, r":2:"):
                 load_samples(path)
 
     def test_load_samples_validates_required_lists(self):
@@ -109,7 +109,7 @@ class ReportTests(unittest.TestCase):
             )
             markdown = render_markdown(report)
             self.assertEqual(report["dataset"]["sample_count"], 1)
-            self.assertIn("scripted model rejected by guard", report["rag_evidence"])
+            self.assertIn("RAG evidence probe: scripted model rejected by guard", report["rag_evidence"])
             self.assertEqual(len(report["dataset"]["sha256"]), 64)
             self.assertIn("## Parser", markdown)
             self.assertIn("## Semantic interpretation", markdown)
