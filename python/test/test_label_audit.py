@@ -94,6 +94,36 @@ class LabelAuditTests(unittest.TestCase):
         self.assertTrue(queue)
         self.assertTrue(all(item["review"]["review_status"] == "REVIEWED" for item in queue))
 
+    def test_multi_intent_labels_are_kept_in_audit_and_exported(self):
+        rows = [{
+            "sample_id": "M1", "query": "Chương 2 nói gì và LO 1.1 là gì?",
+            "parse_status": "PARSED", "parse_tree": "(S_MULTI ...)",
+            "intent": "MULTI_INTENT",
+            "clauses": [
+                {"intent": "GET_TOPIC", "entities": ["CH02"]},
+                {"intent": "GET_LO", "entities": ["LO1.1"]},
+            ],
+            "entities": ["CH02", "LO1.1"],
+            "expected_chunk_ids": ["topics-2", "lo-1.1"],
+            "expected_answerability": "EXPECTED_CONTEXT",
+        }]
+        queue = build_audit_queue(rows)
+        self.assertEqual(queue[0]["auto_label"]["clauses"], rows[0]["clauses"])
+        queue[0]["review"].update({
+            "review_status": "REVIEWED",
+            "correct_intent": "MULTI_INTENT",
+            "correct_clauses": [
+                {"intent": "GET_TOPIC", "entities": ["CH02"]},
+                {"intent": "GET_LO", "entities": ["LO1.1"]},
+            ],
+            "correct_entities": ["CH02", "LO1.1"],
+            "correct_expected_chunk_ids": ["topics-2", "lo-1.1"],
+            "correct_answerability": "EXPECTED_CONTEXT",
+        })
+        reviewed = apply_reviewed_labels(rows, queue)
+        self.assertEqual(reviewed[0]["intent"], "MULTI_INTENT")
+        self.assertEqual(len(reviewed[0]["clauses"]), 2)
+
     def test_normalize_supports_ascii_matching(self):
         self.assertEqual(normalize("Môn Cơ sở dữ liệu"), "mon co so du lieu")
 
