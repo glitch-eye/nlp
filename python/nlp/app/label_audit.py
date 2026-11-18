@@ -1,0 +1,246 @@
+"""Build a deterministic, stratified human-review queue for generated labels.
+
+The queue reduces review effort; it does not certify unreviewed rows as gold.
+"""
+import argparse
+import hashlib
+import json
+import re
+from collections import Counter, defaultdict
+from pathlib import Path
+
+
+def _tree_shape(parse_tree):
+    """Keep nonterminal structure while ignoring terminals and leaf values."""
+    if not parse_tree:
+        return "NO_TREE"
+    labels = re.findall(r"\(([A-Z][A-Z0-9_]*)", parse_tree)
+    return "/".join(labels) if labels else "NO_TREE"
+
+
+def _risk(row):
+    reasons = []
+    if row.get("parse_status") != "PARSED":
+        reasons.append("parse_not_successful")
+    if row.get("intent") in (None, "", "UNKNOWN"):
+        reasons.append("unknown_or_missing_intent")
+    if row.get("intent") == "MULTI_INTENT" and (
+        not isinstance(row.get("clauses"), list) or len(row.get("clauses")) < 2
+    ):
+        reasons.append("multi_intent_without_valid_clauses")
+    if row.get("expected_answerability") == "EXPECTED_CONTEXT" and not row.get("expected_chunk_ids"):
+        reasons.append("answerable_without_expected_chunks")
+    if row.get("intent") not in (None, "UNKNOWN") and not row.get("entities"):
+        reasons.append("intent_without_entities")
+    if row.get("expected_answerability") == "REVIEW":
+        reasons.append("answerability_requires_review")
+    return reasons
+
+
+def _group_key(row):
+    entities = tuple(sorted(set(row.get("entities") or [])))
+    chunk_count = len(row.get("expected_chunk_ids") or [])
+    chunk_bucket = "0" if chunk_count == 0 else "1" if chunk_count == 1 else "2-5" if chunk_count <= 5 else "6+"
+    clause_intents = tuple(sorted(
+        item.get("intent", "UNKNOWN") for item in (row.get("clauses") or [])
+        if isinstance(item, dict)
+    ))
+    intent_group = clause_intents if row.get("intent") == "MULTI_INTENT" else row.get("intent", "UNKNOWN")
+    return (
+        intent_group,
+        row.get("expected_answerability", "REVIEW"),
+        _tree_shape(row.get("parse_tree")),
+        entities,
+        chunk_bucket,
+    )
+
+
+def _stable_rank(row):
+    value = "{}\0{}".format(row.get("sample_id", ""), row.get("query", ""))
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def load_jsonl(path):
+    rows = []
+    for line_no, raw in enumerate(Path(path).read_text(encoding="utf-8-sig").splitlines(), 1):
+        if not raw.strip():
+            continue
+        try:
+            row = json.loads(raw)
+        except json.JSONDecodeError as error:
+            raise ValueError("Invalid JSON at line {}: {}".format(line_no, error))
+        if not isinstance(row, dict) or not isinstance(row.get("query"), str):
+            raise ValueError("Line {} must contain an object with query".format(line_no))
+        rows.append(row)
+    return rows
+
+
+def build_audit_queue(rows, per_stratum=2, max_samples=300):
+    if per_stratum < 1:
+        raise ValueError("per_stratum must be >= 1")
+    if max_samples < 1:
+        raise ValueError("max_samples must be >= 1")
+
+    groups = defaultdict(list)
+    for row in rows:
+        groups[_group_key(row)].append(row)
+
+    selected = []
+    # Allocate at least one slot to each stratum when possible, then fill
+    # remaining capacity proportionally by deterministic hash order.
+    ordered_groups = sorted(groups.items(), key=lambda item: repr(item[0]))
+    for key, members in ordered_groups:
+        ranked = sorted(members, key=_stable_rank)
+        for row in ranked[:per_stratum]:
+            selected.append((key, row))
+
+    if len(selected) > max_samples:
+        selected.sort(key=lambda item: (0 if _risk(item[1]) else 1, _stable_rank(item[1])))
+        selected = selected[:max_samples]
+    elif len(selected) < max_samples:
+        already = {row.get("sample_id") for _, row in selected}
+        remaining = [
+            (key, row) for key, members in ordered_groups for row in members
+            if row.get("sample_id") not in already
+        ]
+        remaining.sort(key=lambda item: (0 if _risk(item[1]) else 1, _stable_rank(item[1])))
+        selected.extend(remaining[:max_samples - len(selected)])
+
+    queue = []
+    for key, row in selected:
+        queue.append({
+            "sample_id": row.get("sample_id"),
+            "query": row["query"],
+            "auto_label": {
+                "parse_status": row.get("parse_status"),
+                "intent": row.get("intent"),
+                "entities": row.get("entities", []),
+                "clauses": row.get("clauses", []),
+                "expected_chunk_ids": row.get("expected_chunk_ids", []),
+                "expected_answerability": row.get("expected_answerability"),
+                "label_status": row.get("label_status", "UNSPECIFIED"),
+            },
+            "audit_group": hashlib.sha1(repr(key).encode("utf-8")).hexdigest()[:10],
+            "risk_flags": _risk(row),
+            "review": {
+                "review_status": "PENDING",
+                "correct_parse_status": None,
+                "correct_parse_tree": None,
+                "correct_intent": None,
+                "correct_clauses": None,
+                "correct_entities": None,
+                "correct_expected_chunk_ids": None,
+                "correct_answerability": None,
+                "reviewer_note": "",
+            },
+        })
+    return queue
+
+
+def apply_reviewed_labels(rows, queue):
+    """Create a reviewed-only gold subset; never overwrite auto labels in place."""
+    source_by_id = {row.get("sample_id"): row for row in rows}
+    reviewed = []
+    for item in queue:
+        review = item.get("review") or {}
+        status = review.get("review_status")
+        if status == "REJECTED":
+            continue
+        if status != "REVIEWED":
+            continue
+        sample_id = item.get("sample_id")
+        if sample_id not in source_by_id:
+            raise ValueError("Audit item references unknown sample_id: {}".format(sample_id))
+        required = (
+            "correct_intent", "correct_entities",
+            "correct_expected_chunk_ids", "correct_answerability",
+        )
+        missing = [key for key in required if review.get(key) is None]
+        if missing:
+            raise ValueError(
+                "Reviewed sample {} is missing: {}".format(sample_id, ", ".join(missing))
+            )
+        if not isinstance(review["correct_entities"], list):
+            raise ValueError("correct_entities must be a list for {}".format(sample_id))
+        if not isinstance(review["correct_expected_chunk_ids"], list):
+            raise ValueError("correct_expected_chunk_ids must be a list for {}".format(sample_id))
+        answerability = review["correct_answerability"]
+        if answerability not in {
+            "EXPECTED_CONTEXT", "INSUFFICIENT_CONTEXT", "NO_RELEVANT_CONTEXT", "REVIEW"
+        }:
+            raise ValueError("Unsupported correct_answerability for {}".format(sample_id))
+
+        gold = dict(source_by_id[sample_id])
+        gold["intent"] = review["correct_intent"]
+        if review["correct_intent"] == "MULTI_INTENT":
+            clauses = review.get("correct_clauses")
+            if not isinstance(clauses, list) or len(clauses) < 2:
+                raise ValueError("Reviewed multi-intent sample {} needs at least two correct_clauses".format(sample_id))
+            if any(not isinstance(clause, dict) or not clause.get("intent")
+                   or not isinstance(clause.get("entities", []), list) for clause in clauses):
+                raise ValueError("Each correct clause needs an intent and an entities list for {}".format(sample_id))
+            gold["clauses"] = clauses
+        else:
+            gold.pop("clauses", None)
+        gold["entities"] = review["correct_entities"]
+        gold["expected_chunk_ids"] = review["correct_expected_chunk_ids"]
+        gold["expected_answerability"] = answerability
+        if review.get("correct_parse_status") in ("PARSED", "UNPARSED"):
+            gold["parse_status"] = review["correct_parse_status"]
+        else:
+            gold.pop("parse_status", None)
+        if review.get("correct_parse_tree"):
+            gold["parse_tree"] = review["correct_parse_tree"]
+        else:
+            gold.pop("parse_tree", None)
+        gold["label_status"] = "REVIEWED"
+        gold["label_provenance"] = "human_review"
+        gold["reviewer_note"] = review.get("reviewer_note", "")
+        reviewed.append(gold)
+    if not reviewed:
+        raise ValueError("No REVIEWED rows with complete labels were found in the audit queue")
+    return reviewed
+
+
+def main():
+    app_dir = Path(__file__).resolve().parent
+    parser = argparse.ArgumentParser(description="Create a stratified label-review queue")
+    parser.add_argument("--input", default=str(app_dir / "output" / "samples_labeled.jsonl"))
+    parser.add_argument("--output", default=str(app_dir / "output" / "label_audit_queue.jsonl"))
+    parser.add_argument("--per-stratum", type=int, default=2)
+    parser.add_argument("--max-samples", type=int, default=300)
+    parser.add_argument("--apply-reviewed", action="store_true",
+                        help="export only completed human-reviewed labels")
+    parser.add_argument("--review-queue", default=str(app_dir / "output" / "label_audit_queue.jsonl"))
+    parser.add_argument("--reviewed-output", default=str(app_dir / "output" / "samples_reviewed.jsonl"))
+    args = parser.parse_args()
+
+    rows = load_jsonl(args.input)
+    if args.apply_reviewed:
+        queue = load_jsonl(args.review_queue)
+        reviewed = apply_reviewed_labels(rows, queue)
+        output = Path(args.reviewed_output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(
+            "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in reviewed),
+            encoding="utf-8",
+        )
+        print("Reviewed gold rows: {}".format(len(reviewed)))
+        print("Reviewed dataset: {}".format(output))
+        return
+
+    queue = build_audit_queue(rows, args.per_stratum, args.max_samples)
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in queue),
+        encoding="utf-8",
+    )
+    print("Input rows: {}".format(len(rows)))
+    print("Audit rows: {}".format(len(queue)))
+    print("Risk flags: {}".format(dict(Counter(flag for row in queue for flag in row["risk_flags"]))))
+    print("Audit queue: {}".format(output))
+
+
+if __name__ == "__main__":
+    main()
