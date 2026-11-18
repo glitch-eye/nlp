@@ -350,8 +350,8 @@ def render_markdown(report):
                 lines.append("  - expected={}, actual={}".format(
                     case.get("expected_parse_status"), case.get("actual_parse_status")))
             elif stage == "Semantic":
-                lines.append("  - expected intent={}, actual intent={}; missing entities={}, unexpected entities={}".format(
-                    case.get("expected_intent"), case.get("actual_intent"),
+                lines.append("  - expected intents={}, actual intents={}; missing entities={}, unexpected entities={}".format(
+                    case.get("expected_intents", [case.get("expected_intent")]), case.get("actual_intents", [case.get("actual_intent")]),
                     case.get("missing_entities"), case.get("unexpected_entities")))
             else:
                 lines.append("  - expected={}, actual status={}, expected chunks={}, retrieved={}".format(
