@@ -1,0 +1,46 @@
+# Kịch bản 1: Thông tin môn học + Chương 6 + Giải tham chiếu ("nó", "chương này", "còn chương sau?", "tài liệu của phần này")
+=== DIALOGUE 1: Hỏi về Chương 6, giải tham chiếu và tăng chương ===
+CO3085 có mấy tín chỉ?
+Chương 6 nói về gì?
+Nó có liên quan đến gán nhãn từ loại không?
+Chương này học vào tuần nào?
+Còn chương sau?
+Tài liệu của phần này là gì?
+
+# Kịch bản 2: Chương 8 -> Chương 9 & Bài tập lớn Phần hội thoại & Tuần 2
+=== DIALOGUE 2: Chương 8 -> Chương 9, Bài tập lớn Phần III & Tuần 2 ===
+Chương 8 học vào tuần nào?
+Còn chương sau?
+Nội dung này học vào tuần nào?
+RESET
+Bài tập lớn có phần hội thoại không?
+Phần này cần xuất file gì?
+RESET
+Tuần 2 học những nội dung gì?
+Tài liệu của phần này ở đâu?
+
+# Kịch bản 3: Kiểm tra hạn nộp, câu ngoài miền (NO_RELEVANT_CONTEXT), thiếu thông tin (INSUFFICIENT_CONTEXT) & L.O.3.3
+=== DIALOGUE 3: Kiểm tra No-Context Guard, Insufficient-Context & L.O.3.3 ===
+Hạn nộp bài tập lớn là khi nào?
+Hôm nay ở TP.HCM có mưa không?
+Phòng học của môn CO3085 ở đâu?
+L.O.3.3 mô tả năng lực gì?
+
+# Kịch bản 4: Câu hỏi thiếu tiền từ (antecedent) sau khi RESET -> NEED_CLARIFICATION
+=== DIALOGUE 4: Thiếu tiền từ khi bắt đầu hội thoại mới ===
+Nó học vào tuần nào?
+Còn chương sau?
+Tài liệu của phần này là gì?
+
+# Kịch bản 5: Câu hỏi có nhiều tiền từ cùng loại gây mơ hồ -> NEED_CLARIFICATION
+=== DIALOGUE 5: Tham chiếu mơ hồ giữa Chương 2 và Chương 3 ===
+Chương 2 và Chương 3 khác nhau như thế nào?
+Chương này học vào tuần nào?
+Chương 2 học vào tuần nào?
+Còn chương sau?
+
+# Kịch bản 6: Thời lượng thi & Quy định LLM/RAG
+=== DIALOGUE 6: Thời lượng thi Midterm/Final và quy định LLM/RAG ===
+Midterm bao nhiêu phút?
+Final bao nhiêu phút?
+Có được dùng LLM/RAG không?

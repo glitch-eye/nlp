@@ -1,0 +1,39 @@
+CO3085 có mấy tín chỉ?
+Cho hỏi CO3085 có bao nhiêu tín chỉ?
+Xin hỏi môn C03085 có mấy tín chỉ?
+Midterm bao nhiêu phút?
+Final bao nhiêu phút?
+Tuần 1 học gì?
+Tuần 2 học những nội dung gì?
+Tuần 7 học gì?
+Tuần 10 học những nội dung gì?
+Chương 2 học vào tuần nào?
+Chương 6 học vào tuần nào?
+Chương 9 học vào tuần nào?
+Khi nào học dạng luận lý?
+Phần văn phạm phụ thuộc nằm ở tuần nào?
+Chương 1 nói về gì?
+Chương 5 nói về gì?
+Chương 7 nói về gì?
+Chương 8 nói về gì?
+Chương 10 nói về gì?
+Chương nào nói về PCFG?
+Chương nào đề cập đến gán nhãn từ loại?
+Chương nào học về vai trò chủ đề?
+Chương 6 có liên quan đến gán nhãn từ loại không?
+Chương 2 và Chương 3 khác nhau như thế nào?
+giới thiệu về mạng ngữ nghĩa
+Phần II của bài tập lớn là gì?
+Bài tập lớn có phần hội thoại không?
+Sinh viên phải nộp những gì?
+Hạn nộp bài tập lớn là khi nào?
+Tài liệu nào nói về PCFG?
+Tài liệu nào liên quan đến đồng tham chiếu?
+Tài liệu tham khảo cho Chương 6 là gì?
+Tài liệu tham khảo cho Tuần 8 là gì?
+Tài liệu cho Phần I ở đâu?
+tìm tài liệu về semantic grammar
+Quy định về sử dụng AI là gì?
+Có được dùng LLM/RAG không?
+L.O.3.3 mô tả năng lực gì?
+L.O.4.2 yêu cầu sinh viên có khả năng gì?

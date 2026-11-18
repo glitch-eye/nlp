@@ -1,31 +1,30 @@
-# Kịch bản 1: Câu hỏi có nguồn + Giải tham chiếu ("nó", "chương này", "còn chương sau?", "tài liệu của phần này")
-=== DIALOGUE 1: Hỏi về Chương 4, giải tham chiếu và tăng chương ===
-Môn NLP có bao nhiêu tín chỉ?
-Chương 4 nói về gì?
-Nó có liên quan đến parsing không?
+# Kịch bản 1: Thông tin môn học + Chương 6 + Giải tham chiếu ("nó", "chương này", "còn chương sau?", "tài liệu của phần này")
+=== DIALOGUE 1: Hỏi về Chương 6, giải tham chiếu và tăng chương ===
+CO3085 có mấy tín chỉ?
+Chương 6 nói về gì?
+Nó có liên quan đến gán nhãn từ loại không?
 Chương này học vào tuần nào?
 Còn chương sau?
 Tài liệu của phần này là gì?
 
-# Kịch bản 2: Giải tham chiếu từ sample_queries.txt (Q031-Q034: "còn chương sau?", "phần này", "nội dung này")
-=== DIALOGUE 2: Chương 11 -> Chương 12 -> Vượt ngưỡng KB & Bài tập lớn Phần I ===
-Chương 11 có hỏi đáp không?
+# Kịch bản 2: Chương 8 -> Chương 9 & Bài tập lớn Phần hội thoại & Tuần 2
+=== DIALOGUE 2: Chương 8 -> Chương 9, Bài tập lớn Phần III & Tuần 2 ===
+Chương 8 học vào tuần nào?
 Còn chương sau?
 Nội dung này học vào tuần nào?
-Còn chương sau?
 RESET
-Bài tập lớn có phần parser không?
+Bài tập lớn có phần hội thoại không?
 Phần này cần xuất file gì?
 RESET
-Tuần 5 học những nội dung gì?
+Tuần 2 học những nội dung gì?
 Tài liệu của phần này ở đâu?
 
-# Kịch bản 3: Câu hỏi ngoài miền (NO_RELEVANT_CONTEXT) và không đủ ngữ cảnh (INSUFFICIENT_CONTEXT)
-=== DIALOGUE 3: Kiểm tra No-Context Guard và Insufficient-Context ===
-Deadline của bài tập lớn là khi nào?
+# Kịch bản 3: Kiểm tra hạn nộp, câu ngoài miền (NO_RELEVANT_CONTEXT), thiếu thông tin (INSUFFICIENT_CONTEXT) & L.O.3.3
+=== DIALOGUE 3: Kiểm tra No-Context Guard, Insufficient-Context & L.O.3.3 ===
+Hạn nộp bài tập lớn là khi nào?
 Hôm nay ở TP.HCM có mưa không?
 Phòng học của môn CO3085 ở đâu?
-Quy định về LLM/RAG là gì?
+L.O.3.3 mô tả năng lực gì?
 
 # Kịch bản 4: Câu hỏi thiếu tiền từ (antecedent) sau khi RESET -> NEED_CLARIFICATION
 === DIALOGUE 4: Thiếu tiền từ khi bắt đầu hội thoại mới ===
@@ -34,9 +33,14 @@ Còn chương sau?
 Tài liệu của phần này là gì?
 
 # Kịch bản 5: Câu hỏi có nhiều tiền từ cùng loại gây mơ hồ -> NEED_CLARIFICATION
-=== DIALOGUE 5: Tham chiếu mơ hồ giữa nhiều chương ===
-Chương 3 và Chương 4 khác nhau như thế nào?
+=== DIALOGUE 5: Tham chiếu mơ hồ giữa Chương 2 và Chương 3 ===
+Chương 2 và Chương 3 khác nhau như thế nào?
 Chương này học vào tuần nào?
-Chương 3 học vào tuần nào?
+Chương 2 học vào tuần nào?
 Còn chương sau?
 
+# Kịch bản 6: Thời lượng thi & Quy định LLM/RAG
+=== DIALOGUE 6: Thời lượng thi Midterm/Final và quy định LLM/RAG ===
+Midterm bao nhiêu phút?
+Final bao nhiêu phút?
+Có được dùng LLM/RAG không?
