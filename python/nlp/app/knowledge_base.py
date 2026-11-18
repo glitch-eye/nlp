@@ -1,7 +1,8 @@
-"""Load the sample course files into source-aware retrieval chunks."""
+"""Load the repository's course data into source-aware retrieval chunks."""
 
 import re
 from pathlib import Path
+
 from nlp.app.text_utils import normalize, slug
 
 
@@ -42,7 +43,6 @@ def load_entity_aliases(path):
         aliases.append((alias, entity_id, canonical))
         if canonical and canonical.casefold() != alias.casefold():
             aliases.append((canonical, entity_id, canonical))
-    # Longer phrases first so a specific alias wins over a substring.
     return sorted(aliases, key=lambda item: len(item[0]), reverse=True)
 
 
@@ -61,12 +61,10 @@ def _sections(text, kind):
     elif kind == "regulations":
         pattern = r"(?=^(?:attendance|academic_integrity|AI_usage|source_code|assignment_sharing|external_libraries|LLM_RAG|OUT_OF_SCOPE)\s*:)"
     else:
-        # Field and paragraph boundaries keep unrelated facts apart.
         blocks = [block.strip() for block in re.split(r"\n\s*\n", text) if block.strip()]
         return [(block, _section_name(block)) for block in blocks]
 
     pieces = [piece.strip() for piece in re.split(pattern, text, flags=re.MULTILINE) if piece.strip()]
-    # Strip a title banner while retaining any explanatory preamble below it.
     if pieces and re.match(r"^[A-Z][A-Z0-9 /&_-]+\n=+", pieces[0]):
         first_lines = pieces[0].splitlines()
         preamble = "\n".join(first_lines[2:]).strip()
@@ -95,13 +93,13 @@ def _entities_in(text, aliases):
         if needle.strip() and needle in normalized and entity_id not in found:
             found.append(entity_id)
     for pattern, formatter in (
-        (r"\bWEEK\s+0?(\d{1,2})\b", lambda match: "WEEK_{:02d}".format(int(match.group(1)))),
-        (r"\bCHAPTER\s+0?(\d{1,2})\b", lambda match: "CH{:02d}".format(int(match.group(1)))),
-        (r"\bL\s*\.?\s*O\s*\.?\s*(\d+\.\d+)\b", lambda match: "LO" + match.group(1)),
-        (r"\bmidterm\b", lambda match: "MIDTERM"),
-        (r"\bfinal\b", lambda match: "FINAL"),
-        (r"\bAI[_ ]usage\b", lambda match: "AI_USAGE"),
-        (r"\bLLM[_ /-]?RAG\b", lambda match: "LLM_RAG"),
+        (r"\\bWEEK\\s+0?(\\d{1,2})\\b", lambda match: "WEEK_{:02d}".format(int(match.group(1)))),
+        (r"\\bCHAPTER\\s+0?(\\d{1,2})\\b", lambda match: "CH{:02d}".format(int(match.group(1)))),
+        (r"\\bL\\s*\\.?\\s*O\\s*\\.?\\s*(\\d+\\.\\d+)\\b", lambda match: "LO" + match.group(1)),
+        (r"\\bmidterm\\b", lambda match: "MIDTERM"),
+        (r"\\bfinal\\b", lambda match: "FINAL"),
+        (r"\\bAI[_ ]usage\\b", lambda match: "AI_USAGE"),
+        (r"\\bLLM[_ /-]?RAG\\b", lambda match: "LLM_RAG"),
     ):
         for match in re.finditer(pattern, text, re.IGNORECASE):
             entity_id = formatter(match)
@@ -128,17 +126,28 @@ class KnowledgeBase:
     """Source documents split into retrievable chunks with stable metadata."""
 
     def __init__(self, data_dir, entity_file=None):
-        self.data_dir = Path(data_dir)
-        self.entity_file = Path(entity_file) if entity_file else self.data_dir / "entities.txt"
-        self.aliases = load_entity_aliases(self.entity_file) if self.entity_file.exists() else []
+        self.data_dir = Path(data_dir).resolve()
+        self.entity_file = Path(entity_file).resolve() if entity_file else self.data_dir / "entities.txt"
+        if not self.data_dir.is_dir():
+            raise FileNotFoundError("Course data directory does not exist: {}".format(self.data_dir))
+        missing = [name for name in DATA_FILES if not (self.data_dir / name).is_file()]
+        if not self.entity_file.is_file():
+            missing.append(self.entity_file.name)
+        if missing:
+            raise FileNotFoundError(
+                "Incomplete course dataset at {}. Missing: {}".format(
+                    self.data_dir, ", ".join(missing)
+                )
+            )
+        self.aliases = load_entity_aliases(self.entity_file)
         self.documents = self._load_documents()
+        if not self.documents:
+            raise ValueError("Course dataset contains no retrievable documents: {}".format(self.data_dir))
 
     def _load_documents(self):
         documents = []
         for filename, kind in DATA_FILES.items():
             path = self.data_dir / filename
-            if not path.exists():
-                continue
             for index, (text, section) in enumerate(_sections(_read_text(path), kind)):
                 if not text.strip():
                     continue
@@ -154,13 +163,16 @@ class KnowledgeBase:
 
 
 def default_data_dir():
-    """Find the sample dataset from the repository's standard layout."""
+    """Return the course dataset bundled inside this repository (python/data)."""
     app_dir = Path(__file__).resolve().parent
-    candidates = [
-        app_dir.parents[4] / "NLP_Course_Assistant_Sample_Data",
-        app_dir.parents[3] / "NLP_Course_Assistant_Sample_Data",
-    ]
-    for candidate in candidates:
-        if candidate.exists():
-            return candidate
-    raise FileNotFoundError("Could not find NLP_Course_Assistant_Sample_Data; pass data_dir explicitly")
+    data_dir = app_dir.parents[1] / "data"
+    required = list(DATA_FILES) + ["entities.txt"]
+    missing = [name for name in required if not (data_dir / name).is_file()]
+    if missing:
+        raise FileNotFoundError(
+            "Repository course dataset is incomplete at {}. Missing: {}. "
+            "Restore the files under python/data or pass --data-dir explicitly.".format(
+                data_dir, ", ".join(missing)
+            )
+        )
+    return data_dir

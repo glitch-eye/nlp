@@ -132,7 +132,6 @@
             | "Chương nào học về" <TOPIC_REF> "?"
             | <TOPIC_REF> <TOPIC_WHERE_TAIL>
             | <CHAPTER_REF> <TOPIC_RELATED_TAIL>
-            | <CHAPTER_REF> "và" <CHAPTER_REF> <TOPIC_COMPARE_TAIL>
              # [v4] anaphora (dialogues.txt scenario 1) + imperative requests
              | <DEICTIC_CHAPTER> <TOPIC_CHAPTER_TAIL>
              | <DEICTIC_PART> <TOPIC_CHAPTER_TAIL>
