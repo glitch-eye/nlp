@@ -188,9 +188,26 @@ def main():
     parser.add_argument("--output", default=str(app_dir / "output" / "label_audit_queue.jsonl"))
     parser.add_argument("--per-stratum", type=int, default=2)
     parser.add_argument("--max-samples", type=int, default=300)
+    parser.add_argument("--apply-reviewed", action="store_true",
+                        help="export only completed human-reviewed labels")
+    parser.add_argument("--review-queue", default=str(app_dir / "output" / "label_audit_queue.jsonl"))
+    parser.add_argument("--reviewed-output", default=str(app_dir / "output" / "samples_reviewed.jsonl"))
     args = parser.parse_args()
 
     rows = load_jsonl(args.input)
+    if args.apply_reviewed:
+        queue = load_jsonl(args.review_queue)
+        reviewed = apply_reviewed_labels(rows, queue)
+        output = Path(args.reviewed_output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(
+            "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in reviewed),
+            encoding="utf-8",
+        )
+        print("Reviewed gold rows: {}".format(len(reviewed)))
+        print("Reviewed dataset: {}".format(output))
+        return
+
     queue = build_audit_queue(rows, args.per_stratum, args.max_samples)
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
