@@ -38,6 +38,11 @@ OOD_PROBES = [
     "Tỷ giá đô la hôm nay thế nào?", "Phim nào đang chiếu rạp?",
 ]
 REFUSALS = ("NO_RELEVANT_CONTEXT", "INSUFFICIENT_CONTEXT")
+
+DEGRADED_WARNING = [
+    "CẢNH BÁO: Knowledge Base đang ở trạng thái degraded hoặc không dùng KnowledgeBase chuẩn.",
+    "Các kết quả retrieval/RAG trong báo cáo này có thể không đại diện cho dữ liệu môn học đầy đủ.",
+]
 def kb_is_degraded(assistant):
     """Return whether the assistant is using a non-standard/incomplete KB object."""
     from nlp.app.knowledge_base import KnowledgeBase
