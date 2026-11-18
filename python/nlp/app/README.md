@@ -601,7 +601,7 @@ pip install -e .
 Chạy test evaluation được thêm cho module aggregate:
 
 ```bash
-python -m unittest discover -s test -p "test_evaluation.py" -v
+python -m unittest discover -s test -p "test_evaluation*.py" -v
 ```
 
 Có thể chạy toàn bộ unittest suite:
@@ -625,8 +625,8 @@ Tất cả lệnh bên dưới chạy từ thư mục `python/`:
 | Retrieval độc lập | `python -m nlp.app.run_retrieval --labeled-jsonl nlp/app/output/samples_labeled.jsonl` |
 | Evaluation tổng thể | `python -m nlp.app.evaluation` |
 | RAG evaluation riêng | `python -m nlp.app.rag_evaluation` |
-| Test evaluation | `python -m unittest discover -s test -p "test_evaluation.py" -v` |
+| Test evaluation | `python -m unittest discover -s test -p "test_evaluation*.py" -v` |
 
 ---
 
-**Phạm vi thiết kế:** pipeline single-intent hiện tại; không mô tả multi-intent như một chức năng đã hoàn thành. Khi code, grammar, CLI hoặc schema thay đổi, cập nhật README này để giữ tài liệu package đồng bộ với implementation.
+**Phạm vi thiết kế:** pipeline single-intent và multi-intent. Multi-intent chỉ được kích hoạt khi các clause được xác thực độc lập; nếu không, hệ thống giữ nguyên luồng single-intent. Khi code, grammar, CLI hoặc schema thay đổi, cập nhật README này để giữ tài liệu package đồng bộ với implementation.
