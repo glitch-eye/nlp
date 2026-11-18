@@ -1,9 +1,9 @@
 # Course Assistant Evaluation
 
-- Generated: 2026-11-18T06:53:58.758475+00:00
+- Generated: 2026-11-18T08:14:05.337275+00:00
 - Dataset: nlp/app/output/samples_reviewed.jsonl
 - Samples: 300
-- SHA-256: `ac87be3b95038b66399194adf20278600afad8379334981b9409f45985cf485c`
+- SHA-256: `03e3a4f9a629dbc04761de93b60666f06655f05e27b4b7990d534787815a5034`
 - Knowledge base: full_dataset
 - KB documents: 76
 

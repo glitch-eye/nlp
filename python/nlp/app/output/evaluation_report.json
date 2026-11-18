@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-18T06:53:58.758475+00:00",
+  "generated_at": "2026-11-18T08:14:05.337275+00:00",
   "runtime": {
     "python": "3.13.3",
     "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O"
   },
   "dataset": {
     "path": "nlp/app/output/samples_reviewed.jsonl",
-    "sha256": "ac87be3b95038b66399194adf20278600afad8379334981b9409f45985cf485c",
+    "sha256": "03e3a4f9a629dbc04761de93b60666f06655f05e27b4b7990d534787815a5034",
     "sample_count": 300,
     "label_status_counts": {
       "REVIEWED": 300
@@ -54,7 +54,8 @@
       "intent_evaluated": 300,
       "intent_correct": 300,
       "intent_accuracy": 1.0,
-      "entity_true_positive": 85,
+      "intent_match_definition": "exact set match across all clause intents",
+      "entity_true_positive": 89,
       "entity_false_positive": 0,
       "entity_false_negative": 0,
       "entity_precision_micro": 1.0,
@@ -9468,7 +9469,8 @@
           "query": "Hai chương 3 và chương 11 có điểm khác biệt gì?",
           "intent": "GET_TOPIC",
           "entities": [
-            "CH03"
+            "CH03",
+            "CH11"
           ],
           "expected_answerability": "EXPECTED_CONTEXT",
           "expected_chunk_ids": [
@@ -9478,22 +9480,22 @@
           "hit_at_k": false,
           "retrieved": [
             {
+              "chunk_id": "faq-q7-6",
+              "score": 0.491865,
+              "source": "faq.txt",
+              "section": "Q7"
+            },
+            {
               "chunk_id": "faq-q3-2",
-              "score": 0.477779,
+              "score": 0.377779,
               "source": "faq.txt",
               "section": "Q3"
             },
             {
               "chunk_id": "faq-q4-3",
-              "score": 0.442264,
+              "score": 0.342264,
               "source": "faq.txt",
               "section": "Q4"
-            },
-            {
-              "chunk_id": "faq-q7-6",
-              "score": 0.391865,
-              "source": "faq.txt",
-              "section": "Q7"
             }
           ]
         },
@@ -10432,7 +10434,8 @@
           "query": "Hai chương 3 và chương 5 có điểm khác biệt gì?",
           "intent": "GET_TOPIC",
           "entities": [
-            "CH03"
+            "CH03",
+            "CH05"
           ],
           "expected_answerability": "EXPECTED_CONTEXT",
           "expected_chunk_ids": [
@@ -10443,13 +10446,13 @@
           "retrieved": [
             {
               "chunk_id": "faq-q3-2",
-              "score": 0.516283,
+              "score": 0.416283,
               "source": "faq.txt",
               "section": "Q3"
             },
             {
               "chunk_id": "faq-q4-3",
-              "score": 0.475613,
+              "score": 0.375613,
               "source": "faq.txt",
               "section": "Q4"
             },
@@ -10989,7 +10992,8 @@
           "query": "Hai chương 4 và chương 7 có điểm khác biệt gì?",
           "intent": "GET_TOPIC",
           "entities": [
-            "CH04"
+            "CH04",
+            "CH07"
           ],
           "expected_answerability": "EXPECTED_CONTEXT",
           "expected_chunk_ids": [
@@ -11000,7 +11004,7 @@
           "retrieved": [
             {
               "chunk_id": "faq-q5-4",
-              "score": 0.541701,
+              "score": 0.441701,
               "source": "faq.txt",
               "section": "Q5"
             },
@@ -11771,7 +11775,8 @@
           "query": "Hai chương 7 và chương 2 có điểm khác biệt gì?",
           "intent": "GET_TOPIC",
           "entities": [
-            "CH07"
+            "CH07",
+            "CH02"
           ],
           "expected_answerability": "EXPECTED_CONTEXT",
           "expected_chunk_ids": [
