@@ -133,6 +133,26 @@ Một số file JSON/trace khác có thể xuất hiện trong `output/` tùy c�
 | `evaluation.py` | Đánh giá tổng thể Parser, Semantic, Retrieval, End-to-End và RAG evidence |
 | `rag_evaluation.py` | Đánh giá RAG chuyên sâu độc lập, gồm grounded/no-info examples và scripted Answer Guard probes |
 
+## Nguồn dữ liệu Course Assistant
+
+Các chương trình Assistant, Retrieval, RAG Evaluation và bộ sinh dataset mặc định đọc dữ liệu nội bộ tại `python/data/`:
+
+- `course_info.txt`, `schedule.txt`, `topics.txt`
+- `assignments.txt`, `resources.txt`, `regulations.txt`, `faq.txt`
+- `entities.txt`, `sample_queries.txt`
+
+Không còn fallback dựng Knowledge Base từ `output/retrieval.txt`. Nếu thiếu dữ liệu bắt buộc, chương trình dừng và báo file còn thiếu thay vì âm thầm chạy trên dữ liệu một phần. Có thể truyền `--data-dir` để chủ động chọn một bộ dữ liệu khác có cùng cấu trúc.
+
+Chạy từ thư mục `python/`:
+
+```bash
+python -m nlp.app.run_assistant
+python -m nlp.app.run_retrieval
+python -m nlp.app.build_sample_dataset --max-sentences 10000
+python -m nlp.app.rag_evaluation --provider mock
+python -m nlp.app.evaluation
+```
+
 ## 4. Grammar, sentence generation và parser
 
 ### 4.1 Grammar là nguồn luật duy nhất
