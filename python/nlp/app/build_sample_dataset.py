@@ -67,8 +67,7 @@ def _add_alias_entity(text, aliases, found):
 
 
 def semantic_labels(tree, aliases):
-    frame = frame_from_tree(tree, " ".join(node_text(tree).split()), aliases)
-    return frame["intent"], frame["entity_ids"]
+    return frame_from_tree(tree, " ".join(node_text(tree).split()), aliases)
 
 
 def expected_chunks(intent, entity_ids, documents):
@@ -124,7 +123,7 @@ def build_records(grammar_path, data_dir, max_sentences=10000):
     aliases = load_entity_aliases(Path(data_dir) / "entities.txt")
     records = []
     for index, sentence in enumerate(sentences, 1):
-        tree = course_parser.parse(sentence)
+        tree = course_parser.parse_multi(sentence)
         if tree is None:
             records.append({
                 "sample_id": "SYN{:04d}".format(index),
@@ -139,15 +138,50 @@ def build_records(grammar_path, data_dir, max_sentences=10000):
             })
             continue
 
-        intent, entities = semantic_labels(tree, aliases)
-        expected = expected_chunks(intent, entities, knowledge_base.documents)
-        if intent == "GET_DEADLINE":
-            answerability = "INSUFFICIENT_CONTEXT"
-        elif intent == "UNKNOWN":
-            answerability = "NO_RELEVANT_CONTEXT"
+        frame = semantic_labels(tree, aliases)
+        intent = frame["intent"]
+        entities = frame.get("entity_ids", [])
+        clauses = frame.get("clauses") or [frame]
+        if intent == "MULTI_INTENT":
+            expected = []
+            clause_labels = []
+            answerabilities = []
+            for clause in clauses:
+                clause_intent = clause.get("intent", "UNKNOWN")
+                clause_entities = clause.get("entity_ids", [])
+                clause_expected = expected_chunks(clause_intent, clause_entities, knowledge_base.documents)
+                for chunk_id in clause_expected:
+                    if chunk_id not in expected:
+                        expected.append(chunk_id)
+                clause_labels.append({
+                    "intent": clause_intent,
+                    "entities": clause_entities,
+                })
+                if clause_intent == "GET_DEADLINE":
+                    answerabilities.append("INSUFFICIENT_CONTEXT")
+                elif clause_intent == "UNKNOWN":
+                    answerabilities.append("NO_RELEVANT_CONTEXT")
+                else:
+                    answerabilities.append(
+                        "EXPECTED_CONTEXT" if clause_expected else "INSUFFICIENT_CONTEXT"
+                    )
+            answerability = (
+                "EXPECTED_CONTEXT" if answerabilities and all(
+                    value == "EXPECTED_CONTEXT" for value in answerabilities
+                ) else "NO_RELEVANT_CONTEXT" if answerabilities and all(
+                    value == "NO_RELEVANT_CONTEXT" for value in answerabilities
+                ) else "INSUFFICIENT_CONTEXT"
+            )
         else:
-            answerability = "EXPECTED_CONTEXT" if expected else "INSUFFICIENT_CONTEXT"
-        records.append({
+            expected = expected_chunks(intent, entities, knowledge_base.documents)
+            clause_labels = []
+            if intent == "GET_DEADLINE":
+                answerability = "INSUFFICIENT_CONTEXT"
+            elif intent == "UNKNOWN":
+                answerability = "NO_RELEVANT_CONTEXT"
+            else:
+                answerability = "EXPECTED_CONTEXT" if expected else "INSUFFICIENT_CONTEXT"
+        record = {
             "sample_id": "SYN{:04d}".format(index),
             "query": sentence,
             "parse_status": "PARSED",
@@ -157,7 +191,10 @@ def build_records(grammar_path, data_dir, max_sentences=10000):
             "expected_chunk_ids": expected,
             "expected_answerability": answerability,
             "label_status": "AUTO_LABEL_REQUIRES_REVIEW",
-        })
+        }
+        if clause_labels:
+            record["clauses"] = clause_labels
+        records.append(record)
     return records
 
 
