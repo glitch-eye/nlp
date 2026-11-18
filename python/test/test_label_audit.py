@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from nlp.app.label_audit import build_audit_queue, load_jsonl
+from nlp.app.label_audit import apply_reviewed_labels, build_audit_queue, load_jsonl
 
 
 class LabelAuditTests(unittest.TestCase):
@@ -43,6 +43,32 @@ class LabelAuditTests(unittest.TestCase):
         row["expected_chunk_ids"] = []
         queue = build_audit_queue([row])
         self.assertIn("answerable_without_expected_chunks", queue[0]["risk_flags"])
+
+    def test_apply_reviewed_labels_exports_only_human_reviewed_rows(self):
+        rows = self._rows()
+        queue = build_audit_queue(rows, per_stratum=1, max_samples=3)
+        queue[0]["review"].update({
+            "review_status": "REVIEWED",
+            "correct_intent": "GET_TOPIC",
+            "correct_entities": ["CH01"],
+            "correct_expected_chunk_ids": ["topics-chapter-1"],
+            "correct_answerability": "EXPECTED_CONTEXT",
+            "correct_parse_status": "PARSED",
+            "reviewer_note": "Checked against source document",
+        })
+        queue[1]["review"]["review_status"] = "REJECTED"
+        reviewed = apply_reviewed_labels(rows, queue)
+        self.assertEqual(len(reviewed), 1)
+        self.assertEqual(reviewed[0]["label_status"], "REVIEWED")
+        self.assertEqual(reviewed[0]["label_provenance"], "human_review")
+        self.assertEqual(reviewed[0]["entities"], ["CH01"])
+
+    def test_apply_reviewed_labels_rejects_incomplete_review(self):
+        rows = self._rows()
+        queue = build_audit_queue(rows, per_stratum=1, max_samples=1)
+        queue[0]["review"]["review_status"] = "REVIEWED"
+        with self.assertRaisesRegex(ValueError, "missing"):
+            apply_reviewed_labels(rows, queue)
 
     def test_load_jsonl_reports_bad_line(self):
         with tempfile.TemporaryDirectory() as directory:
