@@ -409,7 +409,7 @@ Tùy chỉnh:
 ```bash
 python -m nlp.app.build_sample_dataset \
   --grammar nlp/app/output/grammar.txt \
-  --data-dir /path/to/NLP_Course_Assistant_Sample_Data \
+  --data-dir python/data \
   --output-jsonl nlp/app/output/samples_labeled.jsonl \
   --output-text nlp/app/output/samples.txt \
   --max-sentences 10000
@@ -447,9 +447,28 @@ python -m nlp.app.label_audit \
   --max-samples 300
 ```
 
-Hàng đợi có các trường `auto_label`, `risk_flags` và `review` riêng. Người review điền `correct_intent`, `correct_entities`, `correct_expected_chunk_ids`, `correct_answerability`, sau đó đổi `review_status` thành `REVIEWED` hoặc `REJECTED`. Không ghi đè nhãn tự động; giữ cả nhãn gốc và nhãn đã duyệt để truy vết.
+Hàng đợi có các trường `auto_label`, `risk_flags` và `review` riêng. Người review điền `correct_intent`, `correct_entities`, `correct_expected_chunk_ids`, `correct_answerability`; nếu đánh giá parser thì điền thêm `correct_parse_status` và `correct_parse_tree`. Sau đó đổi `review_status` thành `REVIEWED` hoặc `REJECTED`. Không ghi đè nhãn tự động.
 
-Lấy 2 mẫu mỗi tầng là bước audit ban đầu, không phải chứng nhận tất cả câu cùng tầng đều đúng. Khi phát hiện một lỗi theo template/production, sửa rule hoặc grammar rồi sinh lại dataset và audit lại. Dùng một tập câu hỏi viết tay, do người gán nhãn độc lập, làm held-out gold set cho metric chính thức. Nên đo độ đồng thuận giữa hai reviewer trên một phần mẫu nếu có đủ nhân lực.
+Sau khi review, xuất riêng tập gold chỉ gồm hàng đã duyệt:
+
+```bash
+python -m nlp.app.label_audit \
+  --input nlp/app/output/samples_labeled.jsonl \
+  --review-queue nlp/app/output/label_audit_queue.jsonl \
+  --apply-reviewed \
+  --reviewed-output nlp/app/output/samples_reviewed.jsonl
+```
+
+Chạy evaluation trên tập đã duyệt:
+
+```bash
+python -m nlp.app.evaluation --samples nlp/app/output/samples_reviewed.jsonl
+python -m nlp.app.rag_evaluation --samples nlp/app/output/samples_reviewed.jsonl
+```
+
+Lệnh export từ chối hàng `REVIEWED` còn thiếu trường nhãn bắt buộc và không đưa hàng `PENDING`/`REJECTED` vào gold set.
+
+Lấy 2 mẫu mỗi tầng là bước audit ban đầu, không phải chứng nhận tất cả câu cùng tầng đều đúng. Khi phát hiện một lỗi theo template/production, sửa rule hoặc grammar rồi sinh lại dataset và audit lại. Dùng thêm một tập câu hỏi viết tay, do người gán nhãn độc lập, làm held-out gold set cho metric chính thức. Nên đo độ đồng thuận giữa hai reviewer trên một phần mẫu nếu có đủ nhân lực.
 
 ## 10. Evaluation tổng thể và RAG evaluation
 
@@ -471,7 +490,7 @@ Chạy đầy đủ với data directory chỉ định:
 ```bash
 python -m nlp.app.evaluation \
   --samples nlp/app/output/samples_labeled.jsonl \
-  --data-dir /path/to/NLP_Course_Assistant_Sample_Data \
+  --data-dir python/data \
   --top-k 3 \
   --min-score 0.08
 ```
@@ -515,7 +534,7 @@ Mặc định tạo `nlp/app/output/rag_evaluation.txt`. Có thể chỉ định
 
 ```bash
 python -m nlp.app.rag_evaluation \
-  --data-dir /path/to/NLP_Course_Assistant_Sample_Data \
+  --data-dir python/data \
   --provider mock \
   --max-samples 100
 ```
