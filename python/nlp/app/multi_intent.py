@@ -8,7 +8,7 @@ parses with that CFG.  This prevents splitting lexical coordination such as
 import re
 
 
-_CONJUNCTION_RE = re.compile(r"\\s+và\\s+", re.IGNORECASE)
+_CONJUNCTION_RE = re.compile(r"\s+và\s+", re.IGNORECASE)
 
 
 def _with_sentence_punctuation(parts, original):
