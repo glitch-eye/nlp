@@ -1,0 +1,1208 @@
+Labeled sample retrieval evaluation
+Sample count: 300
+top_k: 3, min_score: 0.08
+query_mode: original_query_only
+Hit@3: 245/283 (86.6%)
+UNKNOWN rejected: 3/3 (100.0%)
+INSUFFICIENT_CONTEXT cases with retrieval: 14/14
+
+SYN2345 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Chương nào học về cụm tính từ?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN5760 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi tuần này học nội dung gì?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2878) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2783) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN7436 | FOUND | GET_RESOURCE | hit@k=True
+  query: tài liệu cho Phần I là gì?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-3-2 (0.2794) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN1383 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Em cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3105) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN4504 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi phần đó bao gồm những nhiệm vụ gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3235) assignments.txt / PART IV - Evaluation, assignments-luu-y-0 (0.3085) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2799) assignments.txt / PART I - Grammar and Parser
+SYN6599 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi phần đó bao gồm những kiến thức nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN6447 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi cụm danh từ thuộc nội dung của chương nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN0630 | FOUND | GET_SCHEDULE | hit@k=True
+  query: tuần này nội dung nào là trọng tâm của buổi học?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3520) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2750) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN5356 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Phần IV sinh viên cần triển khai những công việc cụ thể nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3274) assignments.txt / PART IV - Evaluation, assignments-llm-rag-extension-5 (0.3117) assignments.txt / LLM/RAG EXTENSION, assignments-part-i-grammar-and-parser-1 (0.2960) assignments.txt / PART I - Grammar and Parser
+SYN4575 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Phần II yêu cầu những đầu ra nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-ii-semantic-interpretation-and-qa-2 (0.3464) assignments.txt / PART II - Semantic Interpretation and QA, assignments-luu-y-0 (0.3140) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2908) assignments.txt / PART I - Grammar and Parser
+SYN6015 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết nội dung này được triển khai vào tuần học nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3032) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2731) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN4465 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Phần II sinh viên cần triển khai những công việc cụ thể nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3107) assignments.txt / Lưu ý, assignments-llm-rag-extension-5 (0.3104) assignments.txt / LLM/RAG EXTENSION, assignments-part-ii-semantic-interpretation-and-qa-2 (0.3021) assignments.txt / PART II - Semantic Interpretation and QA
+SYN3755 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Phần cụm trạng từ nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.3287) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2797) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN7438 | FOUND | GET_RESOURCE | hit@k=True
+  query: tài liệu cho Phần II là gì?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-3-2 (0.2794) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN0593 | FOUND | GET_SCHEDULE | hit@k=True
+  query: nội dung này được giảng dạy vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3435) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2769) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN6591 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi phần này nội dung chương gồm những gì?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN2059 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Em phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3733) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2935) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN1149 | FOUND | GET_TOPIC | hit@k=True
+  query: nó đề cập đến những nội dung gì?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN2241 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Khi nào học cụm danh từ?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.3382) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2949) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN4597 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Tôi cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3338) assignments.txt / Lưu ý, assignments-part-iii-local-discourse-context-3 (0.2855) assignments.txt / PART III - Local Discourse Context, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2811) assignments.txt / PART II - Semantic Interpretation and QA
+SYN5379 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết phần đó bao gồm những nhiệm vụ gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3264) assignments.txt / PART IV - Evaluation, assignments-luu-y-0 (0.2899) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2811) assignments.txt / PART I - Grammar and Parser
+SYN1063 | FOUND | GET_TOPIC | hit@k=True
+  query: cụm trạng từ được giới thiệu ở chương nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN6543 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi chương này chương này giúp người học hiểu vấn đề gì?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN5223 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Phần II cần xuất file gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-i-grammar-and-parser-1 (0.3386) assignments.txt / PART I - Grammar and Parser, assignments-luu-y-0 (0.2997) assignments.txt / Lưu ý, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2953) assignments.txt / PART II - Semantic Interpretation and QA
+SYN0082 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Khi nào học cụm tính từ?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3011) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2918) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1036 | FOUND | GET_TOPIC | hit@k=True
+  query: cụm động từ được dạy trong chương nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q3-2 (0.2521) faq.txt / Q3, faq-q4-3 (0.2507) faq.txt / Q4, topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING
+SYN0875 | FOUND | GET_TOPIC | hit@k=True
+  query: Parsing thuộc nội dung của chương nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2962) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2887) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2831) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN4862 | FOUND | GET_RULE | hit@k=True
+  query: xin hỏi quy định về thư viện bên ngoài những hành vi nào không được phép?
+  expected: regulations-luu-y-0, regulations-attendance-1, regulations-academic-integrity-2, regulations-ai-usage-3, regulations-source-code-4, regulations-assignment-sharing-5, regulations-external-libraries-6, regulations-llm-rag-7, regulations-out-of-scope-8
+  retrieved: regulations-external-libraries-6 (0.4606) regulations.txt / external_libraries, regulations-out-of-scope-8 (0.4153) regulations.txt / OUT_OF_SCOPE, regulations-ai-usage-3 (0.3595) regulations.txt / AI_usage
+SYN1348 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Phần I cần xuất file gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-i-grammar-and-parser-1 (0.3582) assignments.txt / PART I - Grammar and Parser, assignments-part-iv-evaluation-4 (0.2821) assignments.txt / PART IV - Evaluation, assignments-llm-rag-extension-5 (0.2742) assignments.txt / LLM/RAG EXTENSION
+SYN5790 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi tuần đó nội dung chính là gì?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3696) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2759) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN6478 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi cụm trạng từ được giảng dạy ở chương nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN6042 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết tuần này sinh viên học phần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.2758) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2701) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN6048 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết tuần này nội dung nào là trọng tâm của buổi học?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3469) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2737) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN8622 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Phần cụm danh từ nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.3580) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2726) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN2253 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Một tuần học mấy tiết?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2699) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN4614 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi phần đó cần xuất file gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3462) assignments.txt / PART IV - Evaluation, assignments-part-i-grammar-and-parser-1 (0.3006) assignments.txt / PART I - Grammar and Parser, assignments-luu-y-0 (0.2949) assignments.txt / Lưu ý
+SYN0081 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Khi nào học cụm động từ?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3026) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2930) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1735 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Phần I gồm những nhiệm vụ cụ thể nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.2945) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2903) assignments.txt / PART I - Grammar and Parser, assignments-llm-rag-extension-5 (0.2787) assignments.txt / LLM/RAG EXTENSION
+SYN2442 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi cụm trạng từ nằm ở phần nào trong đề cương?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN5724 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi chương này được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3240) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1597 | FOUND | GET_RULE | hit@k=True
+  query: quy định về mã nguồn là gì?
+  expected: regulations-luu-y-0, regulations-attendance-1, regulations-academic-integrity-2, regulations-ai-usage-3, regulations-source-code-4, regulations-assignment-sharing-5, regulations-external-libraries-6, regulations-llm-rag-7, regulations-out-of-scope-8
+  retrieved: regulations-source-code-4 (0.4416) regulations.txt / source_code, regulations-luu-y-0 (0.3979) regulations.txt / Lưu ý, regulations-ai-usage-3 (0.3634) regulations.txt / AI_usage
+SYN1235 | FOUND | GET_TOPIC | hit@k=False
+  query: nội dung này có liên quan đến cụm động từ không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q11-10 (0.3336) faq.txt / Q11, faq-q10-9 (0.3267) faq.txt / Q10, faq-q9-8 (0.3100) faq.txt / Q9
+SYN5730 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi chương này nằm trong kế hoạch của tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.4029) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0259 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Mình phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3338) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN1381 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Sinh viên cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3038) assignments.txt / Lưu ý, assignments-llm-rag-extension-5 (0.3020) assignments.txt / LLM/RAG EXTENSION, assignments-part-i-grammar-and-parser-1 (0.2764) assignments.txt / PART I - Grammar and Parser
+SYN1373 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Phần IV yêu cầu những đầu ra nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3633) assignments.txt / PART IV - Evaluation, assignments-part-i-grammar-and-parser-1 (0.2927) assignments.txt / PART I - Grammar and Parser, assignments-luu-y-0 (0.2897) assignments.txt / Lưu ý
+SYN6536 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi chương này nội dung trọng tâm là gì?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN1607 | FOUND | GET_RULE | hit@k=True
+  query: quy định về liêm chính học thuật sinh viên cần lưu ý những điểm nào?
+  expected: regulations-luu-y-0, regulations-attendance-1, regulations-academic-integrity-2, regulations-ai-usage-3, regulations-source-code-4, regulations-assignment-sharing-5, regulations-external-libraries-6, regulations-llm-rag-7, regulations-out-of-scope-8
+  retrieved: regulations-academic-integrity-2 (0.5097) regulations.txt / academic_integrity, regulations-luu-y-0 (0.4596) regulations.txt / Lưu ý, regulations-ai-usage-3 (0.4120) regulations.txt / AI_usage
+SYN1968 | FOUND | GET_RESOURCE | hit@k=True
+  query: xin hỏi Tài liệu nào nói về cụm tính từ?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3006) resources.txt / study_note, resources-textbook-3-2 (0.2731) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN0061 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Có bao nhiêu tuần học?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2749) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1910 | FOUND | GET_RESOURCE | hit@k=True
+  query: cho hỏi tìm tài liệu về cụm trạng từ
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3062) resources.txt / study_note, resources-textbook-3-2 (0.2757) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN4976 | FOUND | GET_RESOURCE | hit@k=True
+  query: cho hỏi giáo trình là gì?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3502) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN1139 | FOUND | GET_TOPIC | hit@k=True
+  query: nội dung này nội dung chương gồm những gì?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN0616 | FOUND | GET_SCHEDULE | hit@k=True
+  query: tuần này môn học dạy nội dung nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3411) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2785) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1671 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Tôi phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3918) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2905) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2847) assignments.txt / PART III - Local Discourse Context
+SYN7471 | FOUND | GET_RESOURCE | hit@k=True
+  query: tài liệu của tuần đó ở đâu?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2949) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN5367 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết phần này cần làm gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-llm-rag-extension-5 (0.3316) assignments.txt / LLM/RAG EXTENSION, assignments-luu-y-0 (0.3066) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2940) assignments.txt / PART I - Grammar and Parser
+SYN1967 | FOUND | GET_RESOURCE | hit@k=True
+  query: xin hỏi Tài liệu nào nói về cụm động từ?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3017) resources.txt / study_note, resources-textbook-3-2 (0.2736) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN2298 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Chương nào nói về cụm trạng từ?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN6654 | FOUND | GET_TOPIC | hit@k=False
+  query: cho hỏi nội dung này có liên quan đến cụm tính từ không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q11-10 (0.3020) faq.txt / Q11, faq-q10-9 (0.2957) faq.txt / Q10, faq-q9-8 (0.2807) faq.txt / Q9
+SYN0877 | FOUND | GET_TOPIC | hit@k=True
+  query: Parsing được giới thiệu ở tuần học nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2904) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2839) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2790) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN0186 | FOUND | GET_TOPIC | hit@k=True
+  query: giới thiệu về Parsing
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.3135) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.3033) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2955) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN0602 | FOUND | GET_SCHEDULE | hit@k=True
+  query: nó nằm trong tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3847) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1492 | FOUND | GET_RESOURCE | hit@k=True
+  query: giáo trình được sử dụng trong môn học là gì?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3828) resources.txt / study_note, resources-textbook-3-2 (0.2681) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN6679 | FOUND | GET_TOPIC | hit@k=False
+  query: cho hỏi nó có liên quan đến cụm trạng từ không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q11-10 (0.2816) faq.txt / Q11, faq-q10-9 (0.2754) faq.txt / Q10, faq-q9-8 (0.2572) faq.txt / Q9
+SYN2370 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi giải thích cụm trạng từ
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN5077 | FOUND | GET_RESOURCE | hit@k=True
+  query: xin hỏi giáo trình có thể tải hoặc truy cập ở đâu?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.4185) resources.txt / study_note, resources-textbook-1-0 (0.2697) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2688) resources.txt / TEXTBOOK 2
+SYN4484 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Tôi cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3585) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2883) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2828) assignments.txt / PART III - Local Discourse Context
+SYN2088 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Phần IV gồm những nhiệm vụ cụ thể nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3354) assignments.txt / PART IV - Evaluation, assignments-luu-y-0 (0.2979) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2805) assignments.txt / PART I - Grammar and Parser
+SYN4489 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Mình cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3465) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2840) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2792) assignments.txt / PART III - Local Discourse Context
+SYN5361 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Sinh viên cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3300) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.3115) assignments.txt / PART I - Grammar and Parser, assignments-llm-rag-extension-5 (0.2983) assignments.txt / LLM/RAG EXTENSION
+SYN3804 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cụm trạng từ được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3321) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2904) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1401 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: phần đó phần này cần có những nội dung gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3706) assignments.txt / PART IV - Evaluation, assignments-llm-rag-extension-5 (0.3453) assignments.txt / LLM/RAG EXTENSION, assignments-luu-y-0 (0.2887) assignments.txt / Lưu ý
+SYN0001 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: Môn NLP có những nội dung chính nào?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: course-info-course-description-2 (0.5208) course_info.txt / course_description, course-info-muc-tieu-3 (0.4647) course_info.txt / Mục tiêu, course-info-detailed-learning-outcomes-6 (0.4018) course_info.txt / detailed_learning_outcomes
+SYN9464 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Phần Parsing nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3050) schedule.txt / WEEK 03, schedule-week-05-5 (0.2861) schedule.txt / WEEK 05, schedule-week-12-12 (0.2846) schedule.txt / WEEK 12
+SYN1512 | FOUND | GET_RESOURCE | hit@k=True
+  query: sách tham khảo nên đọc những tài liệu nào?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2948) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN1907 | FOUND | GET_RESOURCE | hit@k=True
+  query: cho hỏi tìm tài liệu về cụm danh từ
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3009) resources.txt / study_note, resources-textbook-3-2 (0.2732) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN0368 | FOUND | GET_RESOURCE | hit@k=False
+  query: Tài liệu nào liên quan đến cụm tính từ?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: faq-q10-9 (0.2967) faq.txt / Q10, faq-q11-10 (0.2776) faq.txt / Q11, faq-q9-8 (0.2770) faq.txt / Q9
+SYN9494 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Phần cụm động từ nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.3128) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2737) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0251 | FOUND | GET_TOPIC | hit@k=True
+  query: cụm trạng từ nằm ở phần nào trong đề cương?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN0289 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Phần II yêu cầu sinh viên hoàn thành những công việc gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-llm-rag-extension-5 (0.3050) assignments.txt / LLM/RAG EXTENSION, assignments-part-ii-semantic-interpretation-and-qa-2 (0.3006) assignments.txt / PART II - Semantic Interpretation and QA, assignments-part-i-grammar-and-parser-1 (0.3000) assignments.txt / PART I - Grammar and Parser
+SYN7465 | FOUND | GET_RESOURCE | hit@k=True
+  query: tài liệu của phần này ở đâu?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2981) resources.txt / study_note, resources-textbook-3-2 (0.2830) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN1952 | FOUND | GET_RESOURCE | hit@k=True
+  query: xin hỏi Tài liệu nào nói về Parsing?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2829) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN1174 | FOUND | GET_TOPIC | hit@k=True
+  query: phần này sinh viên cần nắm được những kiến thức nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN5247 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Sinh viên cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3286) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.3104) assignments.txt / PART I - Grammar and Parser, assignments-llm-rag-extension-5 (0.2975) assignments.txt / LLM/RAG EXTENSION
+SYN6019 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết nó được dạy vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3961) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1525 | FOUND | GET_RESOURCE | hit@k=True
+  query: liệt kê tài liệu
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2, resources-textbook-3-2 (0.2500) resources.txt / TEXTBOOK 3
+SYN0066 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Khi nào học Parsing?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3187) schedule.txt / WEEK 03, schedule-week-05-5 (0.2951) schedule.txt / WEEK 05, schedule-week-12-12 (0.2932) schedule.txt / WEEK 12
+SYN0006 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: Đề cương môn NLP trình bày những nội dung nào?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: course-info-course-description-2 (0.4696) course_info.txt / course_description, course-info-muc-tieu-3 (0.4618) course_info.txt / Mục tiêu, course-info-detailed-learning-outcomes-6 (0.3847) course_info.txt / detailed_learning_outcomes
+SYN1399 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: phần đó bao gồm những nhiệm vụ gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3303) assignments.txt / PART IV - Evaluation, assignments-llm-rag-extension-5 (0.2689) assignments.txt / LLM/RAG EXTENSION, assignments-luu-y-0 (0.2655) assignments.txt / Lưu ý
+SYN4803 | FOUND | GET_RULE | hit@k=True
+  query: cho hỏi quy định về đạo văn được quy định ra sao?
+  expected: regulations-luu-y-0, regulations-attendance-1, regulations-academic-integrity-2, regulations-ai-usage-3, regulations-source-code-4, regulations-assignment-sharing-5, regulations-external-libraries-6, regulations-llm-rag-7, regulations-out-of-scope-8
+  retrieved: regulations-ai-usage-3 (0.4063) regulations.txt / AI_usage, regulations-luu-y-0 (0.4060) regulations.txt / Lưu ý, regulations-assignment-sharing-5 (0.3650) regulations.txt / assignment_sharing
+SYN9544 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết cụm tính từ nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.2873) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2744) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN4490 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Mình cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3480) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2846) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2796) assignments.txt / PART III - Local Discourse Context
+SYN0005 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: Môn NLP hướng đến những mục tiêu học tập nào?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: course-info-muc-tieu-3 (0.4738) course_info.txt / Mục tiêu, course-info-course-description-2 (0.4464) course_info.txt / course_description, course-info-detailed-learning-outcomes-6 (0.3799) course_info.txt / detailed_learning_outcomes
+SYN2094 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Sinh viên phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3603) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.3147) assignments.txt / PART I - Grammar and Parser, assignments-llm-rag-extension-5 (0.3009) assignments.txt / LLM/RAG EXTENSION
+SYN5250 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Em cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3383) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2908) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN5252 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Mình cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3288) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2864) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN7446 | FOUND | GET_RESOURCE | hit@k=True
+  query: tài liệu tham khảo của nội dung này là gì?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2780) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN0203 | FOUND | GET_TOPIC | hit@k=True
+  query: giới thiệu về cụm trạng từ
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN1170 | FOUND | GET_TOPIC | hit@k=True
+  query: phần này đề cập đến vấn đề nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-1-introduction-to-natural-language-processing-0 (0.2500) topics.txt / CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING, topics-chapter-2-linguistic-background-english-syntax-1 (0.2500) topics.txt / CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX, topics-chapter-3-grammar-and-parsing-2 (0.2500) topics.txt / CHAPTER 3: GRAMMAR AND PARSING
+SYN1672 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Sinh viên phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3786) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.3110) assignments.txt / PART I - Grammar and Parser, assignments-llm-rag-extension-5 (0.2980) assignments.txt / LLM/RAG EXTENSION
+SYN5563 | FOUND | GET_RULE | hit@k=True
+  query: cho biết quy định về đạo văn là gì?
+  expected: regulations-luu-y-0, regulations-attendance-1, regulations-academic-integrity-2, regulations-ai-usage-3, regulations-source-code-4, regulations-assignment-sharing-5, regulations-external-libraries-6, regulations-llm-rag-7, regulations-out-of-scope-8
+  retrieved: regulations-luu-y-0 (0.4094) regulations.txt / Lưu ý, regulations-ai-usage-3 (0.3721) regulations.txt / AI_usage, regulations-attendance-1 (0.2500) regulations.txt / attendance
+SYN7470 | FOUND | GET_RESOURCE | hit@k=True
+  query: tài liệu của tuần đó là gì?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2, resources-textbook-3-2 (0.2500) resources.txt / TEXTBOOK 3
+SYN4620 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3692) assignments.txt / Lưu ý, assignments-part-iii-local-discourse-context-3 (0.2879) assignments.txt / PART III - Local Discourse Context, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2832) assignments.txt / PART II - Semantic Interpretation and QA
+SYN7449 | FOUND | GET_RESOURCE | hit@k=True
+  query: tài liệu tham khảo của nó ở đâu?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2950) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN5626 | FOUND | GET_RULE | hit@k=True
+  query: cho tôi biết quy định về mã nguồn như thế nào?
+  expected: regulations-luu-y-0, regulations-attendance-1, regulations-academic-integrity-2, regulations-ai-usage-3, regulations-source-code-4, regulations-assignment-sharing-5, regulations-external-libraries-6, regulations-llm-rag-7, regulations-out-of-scope-8
+  retrieved: regulations-source-code-4 (0.4243) regulations.txt / source_code, regulations-ai-usage-3 (0.3531) regulations.txt / AI_usage, regulations-luu-y-0 (0.3498) regulations.txt / Lưu ý
+SYN1893 | FOUND | GET_RESOURCE | hit@k=True
+  query: cho hỏi tìm tài liệu về Parsing
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2818) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN1524 | FOUND | GET_RESOURCE | hit@k=True
+  query: liệt kê tài liệu tham khảo
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2, resources-textbook-3-2 (0.2500) resources.txt / TEXTBOOK 3
+SYN2257 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Khi nào học Parsing?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3101) schedule.txt / WEEK 03, schedule-week-05-5 (0.2895) schedule.txt / WEEK 05, schedule-week-12-12 (0.2878) schedule.txt / WEEK 12
+SYN1236 | FOUND | GET_TOPIC | hit@k=False
+  query: nội dung này có liên quan đến cụm tính từ không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q11-10 (0.3291) faq.txt / Q11, faq-q10-9 (0.3223) faq.txt / Q10, faq-q9-8 (0.3058) faq.txt / Q9
+SYN0009 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Môn học bắt đầu và kết thúc trong khoảng bao nhiêu tuần?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3419) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2642) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0393 | FOUND | GET_RESOURCE | hit@k=True
+  query: tìm tài liệu về cụm trạng từ
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3204) resources.txt / study_note, resources-textbook-3-2 (0.2822) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN0210 | FOUND | GET_TOPIC | hit@k=True
+  query: Parsing được đề cập trong chương nào của môn học?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2843) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2788) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2746) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN8628 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Phần cụm trạng từ nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.3152) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2746) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0114 | FOUND | GET_TOPIC | hit@k=True
+  query: Chương nào đề cập đến Parsing?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2913) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2846) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2796) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN4599 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Sinh viên cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3257) assignments.txt / Lưu ý, assignments-llm-rag-extension-5 (0.2989) assignments.txt / LLM/RAG EXTENSION, assignments-part-iii-local-discourse-context-3 (0.2820) assignments.txt / PART III - Local Discourse Context
+SYN4488 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Em cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3585) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2883) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2828) assignments.txt / PART III - Local Discourse Context
+SYN0391 | FOUND | GET_RESOURCE | hit@k=True
+  query: tìm tài liệu về cụm động từ
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3095) resources.txt / study_note, resources-textbook-3-2 (0.2772) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN2124 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Phần IV gồm những nhiệm vụ cụ thể nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-iv-evaluation-4 (0.3354) assignments.txt / PART IV - Evaluation, assignments-luu-y-0 (0.2979) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2805) assignments.txt / PART I - Grammar and Parser
+SYN0155 | FOUND | GET_TOPIC | hit@k=False
+  query: Chương nào học về cụm trạng từ?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q7-6 (0.3504) faq.txt / Q7, faq-q8-7 (0.3312) faq.txt / Q8, faq-q5-4 (0.3159) faq.txt / Q5
+SYN7466 | FOUND | GET_RESOURCE | hit@k=True
+  query: tài liệu của phần đó là gì?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-3-2 (0.2797) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN9465 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Phần Parsing được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2984) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-03-3 (0.2978) schedule.txt / WEEK 03, schedule-week-05-5 (0.2814) schedule.txt / WEEK 05
+SYN8642 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Parsing nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3037) schedule.txt / WEEK 03, schedule-week-05-5 (0.2853) schedule.txt / WEEK 05, schedule-week-12-12 (0.2838) schedule.txt / WEEK 12
+SYN1709 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Em phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3692) assignments.txt / Lưu ý, assignments-part-iii-local-discourse-context-3 (0.2879) assignments.txt / PART III - Local Discourse Context, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2832) assignments.txt / PART II - Semantic Interpretation and QA
+SYN6287 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Parsing nằm ở chương nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2940) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2869) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2815) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN5012 | FOUND | GET_RESOURCE | hit@k=True
+  query: cho hỏi liệt kê giáo trình
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3609) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN0454 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Môn học bắt đầu và kết thúc trong khoảng bao nhiêu tuần?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3366) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2634) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN8677 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi cụm trạng từ được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3204) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2847) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0290 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Phần III yêu cầu sinh viên hoàn thành những công việc gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-llm-rag-extension-5 (0.3050) assignments.txt / LLM/RAG EXTENSION, assignments-part-i-grammar-and-parser-1 (0.3000) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2890) assignments.txt / PART III - Local Discourse Context
+SYN2093 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Tôi phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3733) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2935) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN3799 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cụm động từ nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.2919) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2774) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1699 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Phần I gồm những nhiệm vụ cụ thể nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-part-i-grammar-and-parser-1 (0.3182) assignments.txt / PART I - Grammar and Parser, assignments-luu-y-0 (0.3166) assignments.txt / Lưu ý, assignments-llm-rag-extension-5 (0.2774) assignments.txt / LLM/RAG EXTENSION
+SYN0153 | FOUND | GET_TOPIC | hit@k=False
+  query: Chương nào học về cụm động từ?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q7-6 (0.2968) faq.txt / Q7, faq-q8-7 (0.2808) faq.txt / Q8, faq-q5-4 (0.2680) faq.txt / Q5
+SYN1385 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Mình cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3029) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN7732 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3365) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2900) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN7735 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3383) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2908) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN5114 | FOUND | GET_RESOURCE | hit@k=True
+  query: xin hỏi liệt kê tài liệu môn học
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-3-2 (0.2752) resources.txt / TEXTBOOK 3, resources-study-note-8 (0.2739) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN1220 | FOUND | GET_TOPIC | hit@k=False
+  query: nội dung này có liên quan đến Parsing không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q11-10 (0.3586) faq.txt / Q11, faq-q9-8 (0.3330) faq.txt / Q9, faq-q10-9 (0.3290) faq.txt / Q10
+SYN3749 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Phần cụm danh từ nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.3758) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2763) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN5365 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Mình cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3288) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2864) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN2224 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Môn học kéo dài bao nhiêu tuần?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2676) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1708 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Sinh viên phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3562) assignments.txt / Lưu ý, assignments-llm-rag-extension-5 (0.3016) assignments.txt / LLM/RAG EXTENSION, assignments-part-iii-local-discourse-context-3 (0.2838) assignments.txt / PART III - Local Discourse Context
+SYN1378 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Tôi cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3090) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN0011 | NO_RELEVANT_CONTEXT | UNKNOWN | hit@k=n/a
+  query: Hôm nay ở TP.HCM có mưa không?
+  expected: (none)
+  retrieved: (none)
+SYN0451 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Lịch trình môn học được phân bổ như thế nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3533) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2707) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0337 | FOUND | GET_RESOURCE | hit@k=True
+  query: Tài liệu nào nói về cụm danh từ?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.3066) resources.txt / study_note, resources-textbook-3-2 (0.2759) resources.txt / TEXTBOOK 3, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1
+SYN9495 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Phần cụm động từ được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3156) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.3059) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN5249 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Em cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3365) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2900) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN2401 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Parsing được đề cập trong chương nào của môn học?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2809) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2759) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2721) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN0452 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Môn học bắt đầu và kết thúc trong khoảng bao nhiêu tuần?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3328) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2628) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0257 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Sinh viên phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3354) assignments.txt / Lưu ý, assignments-llm-rag-extension-5 (0.3052) assignments.txt / LLM/RAG EXTENSION, assignments-part-i-grammar-and-parser-1 (0.2780) assignments.txt / PART I - Grammar and Parser
+SYN1673 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Em phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3918) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2905) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2847) assignments.txt / PART III - Local Discourse Context
+SYN6292 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Parsing nằm trong nội dung chương nào?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2895) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2831) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2783) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN5359 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Tôi cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3383) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2908) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN1382 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Em cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3090) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN5382 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3733) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2935) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN0012 | NO_RELEVANT_CONTEXT | UNKNOWN | hit@k=n/a
+  query: Ai là tổng thống của Pháp?
+  expected: (none)
+  retrieved: (none)
+SYN6662 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi nó có liên quan đến Parsing không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2837) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, faq-q11-10 (0.2808) faq.txt / Q11, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2783) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION
+SYN0062 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Một tuần học mấy tiết?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2715) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN3721 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Phần Parsing nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3114) schedule.txt / WEEK 03, schedule-week-05-5 (0.2903) schedule.txt / WEEK 05, schedule-week-12-12 (0.2886) schedule.txt / WEEK 12
+SYN9543 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết cụm động từ được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3182) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2836) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1384 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Mình cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3019) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN8675 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi cụm tính từ được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3137) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2813) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN2425 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Parsing nằm ở phần nào trong đề cương?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2856) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2799) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2755) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN0060 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Kế hoạch học tập kéo dài bao lâu?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.4167) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, faq-q15-14 (0.2907) faq.txt / Q15, faq-q14-13 (0.2894) faq.txt / Q14
+SYN2244 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Khi nào học cụm trạng từ?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2997) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2907) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0058 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Lịch học diễn ra khi nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3473) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2927) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN2223 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Một tuần học mấy tiết?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2688) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1869 | FOUND | GET_RESOURCE | hit@k=False
+  query: cho hỏi Tài liệu nào liên quan đến Parsing?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: faq-q11-10 (0.2718) faq.txt / Q11, faq-q9-8 (0.2712) faq.txt / Q9, faq-q10-9 (0.2680) faq.txt / Q10
+SYN0013 | NO_RELEVANT_CONTEXT | UNKNOWN | hit@k=n/a
+  query: Hãy giải bài tập xác suất này giúp tôi.
+  expected: (none)
+  retrieved: (none)
+SYN6638 | FOUND | GET_TOPIC | hit@k=False
+  query: cho hỏi nội dung này có liên quan đến Parsing không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q11-10 (0.3237) faq.txt / Q11, faq-q9-8 (0.3008) faq.txt / Q9, faq-q10-9 (0.2972) faq.txt / Q10
+SYN1710 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Mình phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3544) assignments.txt / Lưu ý, assignments-part-iii-local-discourse-context-3 (0.2832) assignments.txt / PART III - Local Discourse Context, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2791) assignments.txt / PART II - Semantic Interpretation and QA
+SYN2251 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Kế hoạch học tập kéo dài bao lâu?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.4073) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, faq-q15-14 (0.2757) faq.txt / Q15, faq-q14-13 (0.2745) faq.txt / Q14
+SYN2057 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Tôi phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3733) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2935) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN0258 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Em phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3477) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN1674 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Mình phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3767) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2862) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2810) assignments.txt / PART III - Local Discourse Context
+SYN1380 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Sinh viên cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3027) assignments.txt / Lưu ý, assignments-llm-rag-extension-5 (0.3010) assignments.txt / LLM/RAG EXTENSION, assignments-part-i-grammar-and-parser-1 (0.2758) assignments.txt / PART I - Grammar and Parser
+SYN0450 | FOUND | GET_RESOURCE | hit@k=True
+  query: xin hỏi Có sách hoặc giáo trình nào phù hợp với môn NLP không?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-3-2 (0.3916) resources.txt / TEXTBOOK 3, resources-study-note-8 (0.3913) resources.txt / study_note, resources-reference-3-5 (0.2979) resources.txt / REFERENCE 3
+SYN2281 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Chương nào nói về Parsing?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2910) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2844) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION, topics-chapter-4-features-and-augmented-grammar-3 (0.2794) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN0010 | FOUND | GET_RESOURCE | hit@k=True
+  query: Có sách hoặc giáo trình nào phù hợp với môn NLP không?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-3-2 (0.3952) resources.txt / TEXTBOOK 3, resources-study-note-8 (0.3950) resources.txt / study_note, resources-reference-3-5 (0.2992) resources.txt / REFERENCE 3
+SYN4485 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi Sinh viên cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3478) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.3074) assignments.txt / PART I - Grammar and Parser, assignments-llm-rag-extension-5 (0.2951) assignments.txt / LLM/RAG EXTENSION
+SYN4353 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3090) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN0002 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: Nội dung chính của môn NLP gồm những gì?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: course-info-course-description-2 (0.5205) course_info.txt / course_description, course-info-muc-tieu-3 (0.4046) course_info.txt / Mục tiêu, course-info-detailed-learning-outcomes-6 (0.3750) course_info.txt / detailed_learning_outcomes
+SYN7648 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3565) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2876) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2822) assignments.txt / PART III - Local Discourse Context
+SYN1707 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Tôi phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3692) assignments.txt / Lưu ý, assignments-part-iii-local-discourse-context-3 (0.2879) assignments.txt / PART III - Local Discourse Context, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2832) assignments.txt / PART II - Semantic Interpretation and QA
+SYN2250 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Môn học được tổ chức trong bao nhiêu tuần?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3210) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.3174) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN4354 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3105) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN7650 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi cần hoàn thành những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3321) assignments.txt / Lưu ý, assignments-part-iii-local-discourse-context-3 (0.2847) assignments.txt / PART III - Local Discourse Context, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2804) assignments.txt / PART II - Semantic Interpretation and QA
+SYN2227 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Khi nào học Parsing?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3050) schedule.txt / WEEK 03, schedule-week-05-5 (0.2861) schedule.txt / WEEK 05, schedule-week-12-12 (0.2846) schedule.txt / WEEK 12
+SYN5246 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Tôi cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3383) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2908) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN0008 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Lịch trình môn học được phân bổ như thế nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3639) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2728) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN5269 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3733) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2935) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN1402 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3477) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN2272 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Khi nào học cụm động từ?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2976) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2889) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN4601 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi Em cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3338) assignments.txt / Lưu ý, assignments-part-iii-local-discourse-context-3 (0.2855) assignments.txt / PART III - Local Discourse Context, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2811) assignments.txt / PART II - Semantic Interpretation and QA
+SYN3770 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Parsing được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3054) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-03-3 (0.3047) schedule.txt / WEEK 03, schedule-week-05-5 (0.2859) schedule.txt / WEEK 05
+SYN0352 | FOUND | GET_RESOURCE | hit@k=False
+  query: Tài liệu nào liên quan đến Parsing?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: faq-q11-10 (0.3111) faq.txt / Q11, faq-q9-8 (0.3104) faq.txt / Q9, faq-q10-9 (0.3066) faq.txt / Q10
+SYN2222 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Có bao nhiêu tuần học?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2709) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN2329 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Chương nào học về Parsing?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.2934) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, faq-q3-2 (0.2926) faq.txt / Q3, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2864) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION
+SYN0256 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Tôi phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3477) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN8594 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Phần Parsing nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3010) schedule.txt / WEEK 03, schedule-week-05-5 (0.2835) schedule.txt / WEEK 05, schedule-week-12-12 (0.2821) schedule.txt / WEEK 12
+SYN0453 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Lịch trình môn học được phân bổ như thế nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3578) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2716) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN1196 | FOUND | GET_TOPIC | hit@k=True
+  query: chương này có liên quan đến Parsing không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q11-10 (0.3059) faq.txt / Q11, topics-chapter-3-grammar-and-parsing-2 (0.2870) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2810) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION
+SYN0449 | FOUND | GET_RESOURCE | hit@k=True
+  query: cho hỏi Có sách hoặc giáo trình nào phù hợp với môn NLP không?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-textbook-3-2 (0.3875) resources.txt / TEXTBOOK 3, resources-study-note-8 (0.3873) resources.txt / study_note, resources-reference-3-5 (0.2966) resources.txt / REFERENCE 3
+SYN0004 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: Sinh viên sẽ học được những gì trong môn NLP?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: course-info-course-description-2 (0.4633) course_info.txt / course_description, course-info-muc-tieu-3 (0.4540) course_info.txt / Mục tiêu, course-info-detailed-learning-outcomes-6 (0.3660) course_info.txt / detailed_learning_outcomes
+SYN0323 | FOUND | GET_RESOURCE | hit@k=True
+  query: Tài liệu nào nói về Parsing?
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2863) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN1379 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: Tôi cần làm những bài tập nào?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3105) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2500) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN2221 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Kế hoạch học tập kéo dài bao lâu?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.4006) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, faq-q15-14 (0.2650) faq.txt / Q15, faq-q14-13 (0.2638) faq.txt / Q14
+SYN0063 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Môn học kéo dài bao nhiêu tuần?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2698) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN2271 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Khi nào học cụm danh từ?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-01-1 (0.3448) schedule.txt / WEEK 01, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2983) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN0376 | FOUND | GET_RESOURCE | hit@k=True
+  query: tìm tài liệu về Parsing
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2897) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN0138 | FOUND | GET_TOPIC | hit@k=False
+  query: Chương nào học về Parsing?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-2-linguistic-background-english-syntax-1, topics-chapter-3-grammar-and-parsing-2, topics-chapter-4-features-and-augmented-grammar-3, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5, topics-chapter-7-semantics-and-logical-form-6, topics-chapter-8-linking-syntax-and-semantics-7, topics-chapter-9-ambiguity-resolution-8, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q3-2 (0.3637) faq.txt / Q3, faq-q7-6 (0.3477) faq.txt / Q7, faq-q8-7 (0.3286) faq.txt / Q8
+SYN2058 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Sinh viên phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3603) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.3147) assignments.txt / PART I - Grammar and Parser, assignments-llm-rag-extension-5 (0.3009) assignments.txt / LLM/RAG EXTENSION
+SYN2249 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Lịch học diễn ra khi nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3386) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2889) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN2005 | FOUND | GET_RESOURCE | hit@k=True
+  query: xin hỏi tìm tài liệu về Parsing
+  expected: resources-textbook-1-0, resources-textbook-2-1, resources-textbook-3-2, resources-reference-1-3, resources-reference-2-4, resources-reference-3-5, resources-reference-4-6, resources-reference-5-7, resources-study-note-8
+  retrieved: resources-study-note-8 (0.2854) resources.txt / study_note, resources-textbook-1-0 (0.2500) resources.txt / TEXTBOOK 1, resources-textbook-2-1 (0.2500) resources.txt / TEXTBOOK 2
+SYN4507 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3918) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2905) assignments.txt / PART I - Grammar and Parser, assignments-part-iii-local-discourse-context-3 (0.2847) assignments.txt / PART III - Local Discourse Context
+SYN2252 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Có bao nhiêu tuần học?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2724) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2500) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN9512 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Parsing nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3085) schedule.txt / WEEK 03, schedule-week-05-5 (0.2884) schedule.txt / WEEK 05, schedule-week-12-12 (0.2868) schedule.txt / WEEK 12
+SYN8595 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Phần Parsing được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2957) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-03-3 (0.2951) schedule.txt / WEEK 03, schedule-week-05-5 (0.2796) schedule.txt / WEEK 05
+SYN2219 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Lịch học diễn ra khi nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3330) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-01-1 (0.2864) schedule.txt / WEEK 01, schedule-week-02-2 (0.2500) schedule.txt / WEEK 02
+SYN8643 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho hỏi Parsing được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2976) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-03-3 (0.2970) schedule.txt / WEEK 03, schedule-week-05-5 (0.2808) schedule.txt / WEEK 05
+SYN2095 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Em phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3733) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2935) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN3769 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Parsing nằm ở tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-week-03-3 (0.3163) schedule.txt / WEEK 03, schedule-week-05-5 (0.2936) schedule.txt / WEEK 05, schedule-week-12-12 (0.2917) schedule.txt / WEEK 12
+SYN9513 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết Parsing được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3007) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-03-3 (0.3000) schedule.txt / WEEK 03, schedule-week-05-5 (0.2829) schedule.txt / WEEK 05
+SYN2060 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho biết Mình phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3584) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2883) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN2096 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho tôi biết Mình phải nộp những gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3584) assignments.txt / Lưu ý, assignments-part-i-grammar-and-parser-1 (0.2883) assignments.txt / PART I - Grammar and Parser, assignments-part-ii-semantic-interpretation-and-qa-2 (0.2500) assignments.txt / PART II - Semantic Interpretation and QA
+SYN3722 | FOUND | GET_SCHEDULE | hit@k=True
+  query: Phần Parsing được học vào tuần nào?
+  expected: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0, schedule-week-01-1, schedule-week-02-2, schedule-week-03-3, schedule-week-04-4, schedule-week-05-5, schedule-week-06-6, schedule-week-07-7, schedule-week-08-8, schedule-week-09-9, schedule-week-10-10, schedule-week-11-11, schedule-week-12-12, schedule-week-13-13, schedule-week-14-14, schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3025) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, schedule-week-03-3 (0.3018) schedule.txt / WEEK 03, schedule-week-05-5 (0.2840) schedule.txt / WEEK 05
+SYN7318 | FOUND | GET_TOPIC | hit@k=False
+  query: Hai chương 3 và chương 11 có điểm khác biệt gì?
+  expected: topics-chapter-3-grammar-and-parsing-2
+  retrieved: faq-q3-2 (0.4778) faq.txt / Q3, faq-q4-3 (0.4423) faq.txt / Q4, faq-q7-6 (0.3919) faq.txt / Q7
+SYN8050 | FOUND | GET_SCHEDULE | hit@k=False
+  query: cho hỏi tuần 12 có những chủ đề nào?
+  expected: schedule-week-12-12
+  retrieved: faq-q12-11 (0.1534) faq.txt / Q12, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.1299) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, faq-q2-1 (0.1272) faq.txt / Q2
+SYN6092 | FOUND | GET_SCHEDULE | hit@k=False
+  query: cho biết Trong tuần 10 sinh viên sẽ học những nội dung gì?
+  expected: schedule-week-10-10
+  retrieved: regulations-academic-integrity-2 (0.1593) regulations.txt / academic_integrity, faq-q12-11 (0.1207) faq.txt / Q12, regulations-ai-usage-3 (0.1206) regulations.txt / AI_usage
+SYN0946 | FOUND | GET_TOPIC | hit@k=True
+  query: giới hạn lựa chọn nằm ở chương nào?
+  expected: topics-chapter-9-ambiguity-resolution-8
+  retrieved: topics-chapter-9-ambiguity-resolution-8 (0.3386) topics.txt / CHAPTER 9: AMBIGUITY RESOLUTION, faq-q7-6 (0.1502) faq.txt / Q7, faq-q8-7 (0.1421) faq.txt / Q8
+SYN9811 | FOUND | GET_TOPIC | hit@k=False
+  query: cho hỏi chương 1 có đề cập đến PCFG không?
+  expected: topics-chapter-1-introduction-to-natural-language-processing-0, topics-chapter-10-other-strategies-for-semantic-interpretation-9, topics-chapter-11-knowledge-representation-and-reasoning-10, topics-chapter-12-discourse-context-and-reference-11
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.3638) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, faq-q4-3 (0.3043) faq.txt / Q4, topics-chapter-6-ambiguity-resolution-statistical-methods-5 (0.2865) topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS
+SYN2289 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi Chương nào nói về mạng ngữ nghĩa?
+  expected: topics-chapter-9-ambiguity-resolution-8
+  retrieved: topics-chapter-9-ambiguity-resolution-8 (0.3225) topics.txt / CHAPTER 9: AMBIGUITY RESOLUTION, course-info-detailed-learning-outcomes-6 (0.1618) course_info.txt / detailed_learning_outcomes, faq-q7-6 (0.1610) faq.txt / Q7
+SYN6271 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi CFG thuộc nội dung của chương nào?
+  expected: topics-chapter-3-grammar-and-parsing-2, topics-chapter-5-grammar-for-natural-language-4, topics-chapter-6-ambiguity-resolution-statistical-methods-5
+  retrieved: faq-q3-2 (0.5190) faq.txt / Q3, topics-chapter-3-grammar-and-parsing-2 (0.4356) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, schedule-week-03-3 (0.3731) schedule.txt / WEEK 03
+SYN2533 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: cho hỏi Xử lý Ngôn ngữ Tự nhiên được mô tả như thế nào?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.5364) faq.txt / Q1, course-info-course-description-2 (0.5357) course_info.txt / course_description, resources-textbook-3-2 (0.4602) resources.txt / TEXTBOOK 3
+SYN0418 | FOUND | GET_RESOURCE | hit@k=True
+  query: Sinh viên nên bắt đầu đọc tài liệu nào về statistical NLP?
+  expected: resources-textbook-2-1, resources-reference-1-3
+  retrieved: resources-reference-1-3 (0.3553) resources.txt / REFERENCE 1, resources-textbook-2-1 (0.3387) resources.txt / TEXTBOOK 2, resources-study-note-8 (0.2294) resources.txt / study_note
+SYN3066 | FOUND | GET_SCHEDULE | hit@k=False
+  query: tuần 6 sinh viên cần chuẩn bị những nội dung gì?
+  expected: schedule-week-06-6
+  retrieved: regulations-academic-integrity-2 (0.1733) regulations.txt / academic_integrity, regulations-external-libraries-6 (0.1510) regulations.txt / external_libraries, faq-q11-10 (0.1299) faq.txt / Q11
+SYN7825 | FOUND | GET_SCHEDULE | hit@k=False
+  query: cho hỏi tuần 1 lớp sẽ học những gì?
+  expected: schedule-week-01-1
+  retrieved: faq-q12-11 (0.1031) faq.txt / Q12, regulations-academic-integrity-2 (0.0969) regulations.txt / academic_integrity, regulations-assignment-sharing-5 (0.0947) regulations.txt / assignment_sharing
+SYN4960 | FOUND | GET_LO | hit@k=n/a
+  query: xin hỏi L.O.4.2 năng lực này được thể hiện qua những kỹ năng gì?
+  expected: (none)
+  retrieved: faq-q9-8 (0.1971) faq.txt / Q9, faq-q10-9 (0.1851) faq.txt / Q10, course-info-muc-tieu-3 (0.1804) course_info.txt / Mục tiêu
+SYN0447 | FOUND | GET_LO | hit@k=n/a
+  query: Sau môn học, sinh viên cần thể hiện điều gì theo L.O.3.3?
+  expected: (none)
+  retrieved: faq-q11-10 (0.2403) faq.txt / Q11, regulations-ai-usage-3 (0.2096) regulations.txt / AI_usage, faq-q10-9 (0.1983) faq.txt / Q10
+SYN4212 | FOUND | GET_TOPIC | hit@k=False
+  query: chương 7 có đề cập đến PCFG không?
+  expected: topics-chapter-7-semantics-and-logical-form-6
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.3263) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, faq-q4-3 (0.3087) faq.txt / Q4, topics-chapter-6-ambiguity-resolution-statistical-methods-5 (0.3030) topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS
+SYN3419 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: tuần thứ 8 các chủ đề nào được giới thiệu?
+  expected: (none)
+  retrieved: regulations-external-libraries-6 (0.2466) regulations.txt / external_libraries, regulations-academic-integrity-2 (0.1615) regulations.txt / academic_integrity, schedule-week-10-10 (0.1182) schedule.txt / WEEK 10
+SYN3652 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: chương 7 nằm trong kế hoạch của tuần nào?
+  expected: (none)
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2177) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, faq-q4-3 (0.2133) faq.txt / Q4, faq-q3-2 (0.1914) faq.txt / Q3
+SYN4294 | FOUND | GET_TOPIC | hit@k=False
+  query: chương 10 có đề cập đến hỏi đáp không?
+  expected: topics-chapter-10-other-strategies-for-semantic-interpretation-9
+  retrieved: faq-q6-5 (0.3528) faq.txt / Q6, course-info-learning-outcomes-5 (0.2135) course_info.txt / learning_outcomes, assignments-luu-y-0 (0.1873) assignments.txt / Lưu ý
+SYN7046 | FOUND | GET_TOPIC | hit@k=True
+  query: chương 8 có liên quan đến Parsing không?
+  expected: topics-chapter-8-linking-syntax-and-semantics-7
+  retrieved: faq-q11-10 (0.2375) faq.txt / Q11, topics-chapter-8-linking-syntax-and-semantics-7 (0.2270) topics.txt / CHAPTER 8: LINKING SYNTAX AND SEMANTICS, faq-q9-8 (0.2161) faq.txt / Q9
+SYN2875 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: cho biết thông tin chung CO3085
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.6215) faq.txt / Q1, course-info-course-description-2 (0.4788) course_info.txt / course_description, course-info-course-id-co3085-1 (0.4333) course_info.txt / course_id: CO3085
+SYN0213 | FOUND | GET_TOPIC | hit@k=True
+  query: nét và văn phạm gia tố được đề cập trong chương nào của môn học?
+  expected: topics-chapter-4-features-and-augmented-grammar-3
+  retrieved: faq-q5-4 (0.4262) faq.txt / Q5, course-info-detailed-learning-outcomes-6 (0.4115) course_info.txt / detailed_learning_outcomes, topics-chapter-4-features-and-augmented-grammar-3 (0.3060) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN9645 | FOUND | GET_TOPIC | hit@k=False
+  query: cho hỏi chương 6 bao gồm những kiến thức nào?
+  expected: topics-chapter-6-ambiguity-resolution-statistical-methods-5
+  retrieved: faq-q4-3 (0.4408) faq.txt / Q4, faq-q7-6 (0.1541) faq.txt / Q7, faq-q2-1 (0.1510) faq.txt / Q2
+SYN1711 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: xin hỏi bài tập lớn yêu cầu sinh viên thực hiện những công việc gì?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.4288) assignments.txt / Lưu ý, regulations-external-libraries-6 (0.2500) regulations.txt / external_libraries, regulations-attendance-1 (0.1985) regulations.txt / attendance
+SYN8990 | FOUND | GET_SCHEDULE | hit@k=False
+  query: cho biết tuần 15 nội dung chính là gì?
+  expected: schedule-week-15-15
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.1772) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, regulations-academic-integrity-2 (0.1333) regulations.txt / academic_integrity, faq-q11-10 (0.1240) faq.txt / Q11
+SYN4347 | FOUND | GET_TOPIC | hit@k=True
+  query: chương 12 có đề cập đến cụm tính từ không?
+  expected: topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q8-7 (0.5183) faq.txt / Q8, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.1641) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, topics-chapter-12-discourse-context-and-reference-11 (0.1436) topics.txt / CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE
+SYN4886 | FOUND | GET_RULE | hit@k=True
+  query: xin hỏi Sinh viên có được phép sử dụng LLM/RAG khi làm BTL không?
+  expected: regulations-ai-usage-3, regulations-llm-rag-7
+  retrieved: faq-q12-11 (0.3369) faq.txt / Q12, regulations-llm-rag-7 (0.2972) regulations.txt / LLM_RAG, regulations-external-libraries-6 (0.2239) regulations.txt / external_libraries
+SYN4411 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi BTL có phần hỏi đáp không?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3778) assignments.txt / Lưu ý, course-info-learning-outcomes-5 (0.1608) course_info.txt / learning_outcomes, faq-q12-11 (0.1349) faq.txt / Q12
+SYN4021 | FOUND | GET_TOPIC | hit@k=False
+  query: tóm tắt chương 5
+  expected: topics-chapter-5-grammar-for-natural-language-4
+  retrieved: faq-q7-6 (0.2173) faq.txt / Q7, faq-q8-7 (0.2052) faq.txt / Q8, faq-q5-4 (0.1956) faq.txt / Q5
+SYN0733 | FOUND | GET_SCHEDULE | hit@k=False
+  query: Trong tuần 9 môn học tập trung vào kiến thức nào?
+  expected: schedule-week-09-9
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.1541) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, regulations-external-libraries-6 (0.1178) regulations.txt / external_libraries, schedule-week-11-11 (0.1166) schedule.txt / WEEK 11
+SYN7312 | FOUND | GET_TOPIC | hit@k=False
+  query: Hai chương 3 và chương 5 có điểm khác biệt gì?
+  expected: topics-chapter-3-grammar-and-parsing-2
+  retrieved: faq-q3-2 (0.5163) faq.txt / Q3, faq-q4-3 (0.4756) faq.txt / Q4, faq-q5-4 (0.1864) faq.txt / Q5
+SYN3851 | FOUND | GET_TOPIC | hit@k=False
+  query: chương 3 bao gồm những kiến thức nào?
+  expected: topics-chapter-3-grammar-and-parsing-2
+  retrieved: faq-q3-2 (0.4941) faq.txt / Q3, faq-q4-3 (0.4365) faq.txt / Q4, faq-q7-6 (0.1713) faq.txt / Q7
+SYN2812 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: cho tôi biết CO3085 có mấy tín chỉ?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.6793) faq.txt / Q1, course-info-course-id-co3085-1 (0.4510) course_info.txt / course_id: CO3085, course-info-course-description-2 (0.4506) course_info.txt / course_description
+SYN5143 | FOUND | GET_RESOURCE | hit@k=n/a
+  query: xin hỏi Tài liệu phục vụ cho tuần thứ 2 gồm những gì?
+  expected: (none)
+  retrieved: regulations-external-libraries-6 (0.1680) regulations.txt / external_libraries, regulations-academic-integrity-2 (0.1285) regulations.txt / academic_integrity, faq-q2-1 (0.1111) faq.txt / Q2
+SYN9980 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi chương 8 có đề cập đến văn phạm phụ thuộc không?
+  expected: topics-chapter-8-linking-syntax-and-semantics-7
+  retrieved: topics-chapter-3-grammar-and-parsing-2 (0.1845) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, topics-chapter-8-linking-syntax-and-semantics-7 (0.1541) topics.txt / CHAPTER 8: LINKING SYNTAX AND SEMANTICS, schedule-week-03-3 (0.1507) schedule.txt / WEEK 03
+SYN0824 | FOUND | GET_SCHEDULE | hit@k=False
+  query: Chương trình học của tuần 10 bao gồm những chủ đề nào?
+  expected: schedule-week-10-10
+  retrieved: faq-q6-5 (0.1804) faq.txt / Q6, faq-q3-2 (0.1788) faq.txt / Q3, faq-q2-1 (0.1635) faq.txt / Q2
+SYN9194 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: cho biết tuần thứ 10 có nội dung học gì?
+  expected: (none)
+  retrieved: regulations-external-libraries-6 (0.2322) regulations.txt / external_libraries, regulations-academic-integrity-2 (0.1850) regulations.txt / academic_integrity, faq-q11-10 (0.1460) faq.txt / Q11
+SYN6963 | FOUND | GET_TOPIC | hit@k=False
+  query: chương 6 có liên quan đến đồng tham chiếu không?
+  expected: topics-chapter-6-ambiguity-resolution-statistical-methods-5
+  retrieved: faq-q9-8 (0.4113) faq.txt / Q9, faq-q4-3 (0.2926) faq.txt / Q4, assignments-part-iii-local-discourse-context-3 (0.2139) assignments.txt / PART III - Local Discourse Context
+SYN5603 | FOUND | GET_RULE | hit@k=True
+  query: cho tôi biết quy định về sử dụng AI được quy định ra sao?
+  expected: regulations-ai-usage-3, regulations-llm-rag-7
+  retrieved: regulations-ai-usage-3 (0.3494) regulations.txt / AI_usage, regulations-luu-y-0 (0.2009) regulations.txt / Lưu ý, regulations-assignment-sharing-5 (0.1612) regulations.txt / assignment_sharing
+SYN1747 | FOUND | GET_DEADLINE | hit@k=n/a
+  query: cho hỏi Khi nào nộp bài tập lớn?
+  expected: (none)
+  retrieved: assignments-luu-y-0 (0.4717) assignments.txt / Lưu ý, faq-q12-11 (0.1590) faq.txt / Q12, regulations-luu-y-0 (0.1246) regulations.txt / Lưu ý
+SYN0051 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: đề cương của C03085 gồm những gì?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3588) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, course-info-course-description-2 (0.3347) course_info.txt / course_description, faq-q1-0 (0.2967) faq.txt / Q1
+SYN6839 | FOUND | GET_TOPIC | hit@k=False
+  query: chương 3 có văn phạm ngữ nghĩa không?
+  expected: topics-chapter-3-grammar-and-parsing-2
+  retrieved: course-info-detailed-learning-outcomes-6 (0.3360) course_info.txt / detailed_learning_outcomes, faq-q3-2 (0.3101) faq.txt / Q3, faq-q4-3 (0.2717) faq.txt / Q4
+SYN2594 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: xin hỏi môn C03085 có những phần chính nào?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.4388) faq.txt / Q1, course-info-course-description-2 (0.3913) course_info.txt / course_description, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3440) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong
+SYN5914 | FOUND | GET_SCHEDULE | hit@k=False
+  query: cho hỏi Nội dung nào được giảng dạy trong tuần 12?
+  expected: schedule-week-12-12
+  retrieved: schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.2078) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, faq-q4-3 (0.1495) faq.txt / Q4, assignments-luu-y-0 (0.1492) assignments.txt / Lưu ý
+SYN6794 | FOUND | GET_TOPIC | hit@k=False
+  query: chương 2 có tham chiếu không?
+  expected: topics-chapter-2-linguistic-background-english-syntax-1
+  retrieved: faq-q9-8 (0.3314) faq.txt / Q9, assignments-part-iii-local-discourse-context-3 (0.2440) assignments.txt / PART III - Local Discourse Context, course-info-detailed-learning-outcomes-6 (0.2027) course_info.txt / detailed_learning_outcomes
+SYN1912 | FOUND | GET_RESOURCE | hit@k=n/a
+  query: cho hỏi tìm tài liệu về semantic grammar
+  expected: (none)
+  retrieved: course-info-detailed-learning-outcomes-6 (0.4361) course_info.txt / detailed_learning_outcomes, faq-q6-5 (0.4063) faq.txt / Q6, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.3080) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION
+SYN7326 | FOUND | GET_TOPIC | hit@k=False
+  query: Hai chương 4 và chương 7 có điểm khác biệt gì?
+  expected: topics-chapter-4-features-and-augmented-grammar-3
+  retrieved: faq-q5-4 (0.5417) faq.txt / Q5, faq-q7-6 (0.1747) faq.txt / Q7, faq-q8-7 (0.1651) faq.txt / Q8
+SYN8952 | FOUND | GET_SCHEDULE | hit@k=True
+  query: cho biết tuần 13 các chủ đề nào được giới thiệu?
+  expected: schedule-week-13-13
+  retrieved: schedule-week-13-13 (0.1289) schedule.txt / WEEK 13, faq-q4-3 (0.1144) faq.txt / Q4, regulations-external-libraries-6 (0.1142) regulations.txt / external_libraries
+SYN6871 | FOUND | GET_TOPIC | hit@k=False
+  query: chương 4 có liên quan đến cụm trạng từ không?
+  expected: topics-chapter-4-features-and-augmented-grammar-3
+  retrieved: faq-q5-4 (0.5041) faq.txt / Q5, faq-q9-8 (0.2750) faq.txt / Q9, faq-q11-10 (0.2500) faq.txt / Q11
+SYN4433 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: cho hỏi đồ án có phần hội thoại không?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3451) assignments.txt / Lưu ý, assignments-part-iv-evaluation-4 (0.1563) assignments.txt / PART IV - Evaluation, faq-q12-11 (0.1507) faq.txt / Q12
+SYN2681 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: cho biết môn CO3085 có bao nhiêu tín chỉ?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.8067) faq.txt / Q1, course-info-course-description-2 (0.4615) course_info.txt / course_description, resources-textbook-3-2 (0.4099) resources.txt / TEXTBOOK 3
+SYN8699 | FOUND | GET_SCHEDULE | hit@k=False
+  query: cho biết tuần 1 sinh viên học phần nào?
+  expected: schedule-week-01-1
+  retrieved: regulations-academic-integrity-2 (0.2188) regulations.txt / academic_integrity, regulations-external-libraries-6 (0.1370) regulations.txt / external_libraries, faq-q2-1 (0.1217) faq.txt / Q2
+SYN3272 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: tuần thứ 1 các chủ đề nào được giới thiệu?
+  expected: (none)
+  retrieved: regulations-external-libraries-6 (0.2619) regulations.txt / external_libraries, regulations-academic-integrity-2 (0.1715) regulations.txt / academic_integrity, regulations-attendance-1 (0.1207) regulations.txt / attendance
+SYN0099 | FOUND | GET_TOPIC | hit@k=True
+  query: Chương nào nói về văn phạm ngữ nghĩa?
+  expected: topics-chapter-10-other-strategies-for-semantic-interpretation-9
+  retrieved: course-info-detailed-learning-outcomes-6 (0.4500) course_info.txt / detailed_learning_outcomes, faq-q6-5 (0.4039) faq.txt / Q6, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.2957) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION
+SYN9739 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi chương 11 nội dung chương gồm những gì?
+  expected: topics-chapter-11-knowledge-representation-and-reasoning-10
+  retrieved: faq-q7-6 (0.5477) faq.txt / Q7, topics-chapter-11-knowledge-representation-and-reasoning-10 (0.1585) topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING, faq-q8-7 (0.1288) faq.txt / Q8
+SYN0828 | FOUND | GET_SCHEDULE | hit@k=False
+  query: Chương trình học của tuần 14 bao gồm những chủ đề nào?
+  expected: schedule-week-14-14
+  retrieved: faq-q3-2 (0.1746) faq.txt / Q3, faq-q2-1 (0.1596) faq.txt / Q2, regulations-ai-usage-3 (0.1527) regulations.txt / AI_usage
+SYN2034 | FOUND | GET_RESOURCE | hit@k=True
+  query: xin hỏi Bạn có thể gợi ý tài liệu để tìm hiểu machine translation không?
+  expected: resources-reference-4-6
+  retrieved: resources-reference-4-6 (0.4618) resources.txt / REFERENCE 4, regulations-out-of-scope-8 (0.1637) regulations.txt / OUT_OF_SCOPE, course-info-muc-tieu-3 (0.1622) course_info.txt / Mục tiêu
+SYN9368 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: cho biết chương 5 được xếp vào tuần học nào?
+  expected: (none)
+  retrieved: faq-q3-2 (0.2235) faq.txt / Q3, faq-q7-6 (0.2123) faq.txt / Q7, faq-q4-3 (0.2031) faq.txt / Q4
+SYN8451 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: cho hỏi chương 1 xuất hiện trong tuần nào?
+  expected: (none)
+  retrieved: faq-q3-2 (0.1941) faq.txt / Q3, faq-q4-3 (0.1816) faq.txt / Q4, faq-q7-6 (0.1768) faq.txt / Q7
+SYN9093 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: cho biết tuần thứ 5 được bố trí nội dung gì?
+  expected: (none)
+  retrieved: regulations-external-libraries-6 (0.2472) regulations.txt / external_libraries, faq-q9-8 (0.1680) faq.txt / Q9, faq-q11-10 (0.1520) faq.txt / Q11
+SYN9977 | FOUND | GET_TOPIC | hit@k=False
+  query: cho hỏi chương 8 có đề cập đến CFG và Parsing không?
+  expected: topics-chapter-8-linking-syntax-and-semantics-7
+  retrieved: faq-q3-2 (0.3659) faq.txt / Q3, topics-chapter-3-grammar-and-parsing-2 (0.3122) topics.txt / CHAPTER 3: GRAMMAR AND PARSING, schedule-week-03-3 (0.2597) schedule.txt / WEEK 03
+SYN8632 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: cho hỏi Phần semantic grammar nằm ở tuần nào?
+  expected: (none)
+  retrieved: course-info-detailed-learning-outcomes-6 (0.4273) course_info.txt / detailed_learning_outcomes, faq-q6-5 (0.4059) faq.txt / Q6, topics-chapter-10-other-strategies-for-semantic-interpretation-9 (0.3039) topics.txt / CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION
+SYN2508 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: cho hỏi CO3085 có chuẩn đầu ra nào?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.5766) faq.txt / Q1, course-info-course-description-2 (0.4685) course_info.txt / course_description, course-info-course-id-co3085-1 (0.4250) course_info.txt / course_id: CO3085
+SYN1314 | FOUND | GET_ASSIGNMENT | hit@k=True
+  query: BTL có phần hội thoại không?
+  expected: assignments-luu-y-0, assignments-part-i-grammar-and-parser-1, assignments-part-ii-semantic-interpretation-and-qa-2, assignments-part-iii-local-discourse-context-3, assignments-part-iv-evaluation-4, assignments-llm-rag-extension-5
+  retrieved: assignments-luu-y-0 (0.3223) assignments.txt / Lưu ý, assignments-part-iii-local-discourse-context-3 (0.1577) assignments.txt / PART III - Local Discourse Context, faq-q12-11 (0.1459) faq.txt / Q12
+SYN6334 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi gán nhãn từ loại xuất hiện trong chương nào?
+  expected: topics-chapter-6-ambiguity-resolution-statistical-methods-5
+  retrieved: topics-chapter-6-ambiguity-resolution-statistical-methods-5 (0.3111) topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS, faq-q3-2 (0.1568) faq.txt / Q3, faq-q4-3 (0.1481) faq.txt / Q4
+SYN6523 | FOUND | GET_TOPIC | hit@k=True
+  query: cho hỏi local discourse context nằm trong nội dung chương nào?
+  expected: topics-chapter-12-discourse-context-and-reference-11
+  retrieved: faq-q8-7 (0.5501) faq.txt / Q8, topics-chapter-12-discourse-context-and-reference-11 (0.4376) topics.txt / CHAPTER 12: DISCOURSE CONTEXT AND REFERENCE, schedule-week-14-14 (0.4078) schedule.txt / WEEK 14
+SYN4039 | FOUND | GET_TOPIC | hit@k=True
+  query: giới thiệu chương 11
+  expected: topics-chapter-11-knowledge-representation-and-reasoning-10
+  retrieved: faq-q7-6 (0.6449) faq.txt / Q7, topics-chapter-11-knowledge-representation-and-reasoning-10 (0.2006) topics.txt / CHAPTER 11: KNOWLEDGE REPRESENTATION AND REASONING, faq-q8-7 (0.1428) faq.txt / Q8
+SYN2622 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: xin hỏi C03085 có những mục tiêu học tập nào?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.3408) faq.txt / Q1, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3252) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong, course-info-course-description-2 (0.3152) course_info.txt / course_description
+SYN1943 | FOUND | GET_RESOURCE | hit@k=True
+  query: cho hỏi Những tài liệu nào hỗ trợ việc học xử lý ngôn ngữ tự nhiên bằng Python?
+  expected: resources-reference-2-4
+  retrieved: resources-reference-2-4 (0.3667) resources.txt / REFERENCE 2, resources-textbook-3-2 (0.3305) resources.txt / TEXTBOOK 3, faq-q1-0 (0.3015) faq.txt / Q1
+SYN7357 | FOUND | GET_TOPIC | hit@k=False
+  query: Hai chương 7 và chương 2 có điểm khác biệt gì?
+  expected: topics-chapter-7-semantics-and-logical-form-6
+  retrieved: faq-q5-4 (0.1889) faq.txt / Q5, faq-q7-6 (0.1883) faq.txt / Q7, faq-q8-7 (0.1779) faq.txt / Q8
+SYN0017 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: số tín chỉ của môn C03085 là bao nhiêu?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.6232) faq.txt / Q1, course-info-course-description-2 (0.3579) course_info.txt / course_description, schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0 (0.3097) schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong
+SYN0902 | FOUND | GET_TOPIC | hit@k=True
+  query: nét và văn phạm gia tố nằm ở chương nào?
+  expected: topics-chapter-4-features-and-augmented-grammar-3
+  retrieved: course-info-detailed-learning-outcomes-6 (0.4370) course_info.txt / detailed_learning_outcomes, faq-q5-4 (0.4356) faq.txt / Q5, topics-chapter-4-features-and-augmented-grammar-3 (0.3125) topics.txt / CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR
+SYN6706 | FOUND | GET_TOPIC | hit@k=False
+  query: cho hỏi chương 11 trình bày những khái niệm cốt lõi nào?
+  expected: topics-chapter-11-knowledge-representation-and-reasoning-10
+  retrieved: faq-q7-6 (0.5311) faq.txt / Q7, faq-q3-2 (0.2024) faq.txt / Q3, faq-q4-3 (0.1657) faq.txt / Q4
+SYN9481 | FOUND | GET_SCHEDULE | hit@k=n/a
+  query: cho biết Phần mạng ngữ nghĩa được học vào tuần nào?
+  expected: (none)
+  retrieved: topics-chapter-9-ambiguity-resolution-8 (0.2686) topics.txt / CHAPTER 9: AMBIGUITY RESOLUTION, faq-q2-1 (0.1981) faq.txt / Q2, schedule-week-01-1 (0.1429) schedule.txt / WEEK 01
+SYN2752 | FOUND | GET_COURSE_INFO | hit@k=True
+  query: cho biết NLP có những mục tiêu học tập nào?
+  expected: course-info-course-information-0, course-info-course-id-co3085-1, course-info-course-description-2, course-info-muc-tieu-3, course-info-main-parts-4, course-info-learning-outcomes-5, course-info-detailed-learning-outcomes-6, course-info-assessment-7, course-info-exam-format-8
+  retrieved: faq-q1-0 (0.4598) faq.txt / Q1, course-info-course-description-2 (0.4259) course_info.txt / course_description, resources-textbook-3-2 (0.3819) resources.txt / TEXTBOOK 3

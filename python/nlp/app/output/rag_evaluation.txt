@@ -1,0 +1,87 @@
+2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl) [ĐO TRỰC TIẾP]:
+   - Tổng số mẫu kiểm thử                         : 300
+   - Trạng thái nhãn                              : REVIEWED=300
+   - Hit@k (có chunk kỳ vọng trong top-k)         : 264 / 283 (93.3%)
+   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 283 / 283 (100.0%)
+   - Từ chối khi nhãn yêu cầu từ chối             : 4 / 17 (23.5%)
+   - Câu ANSWERED có trích dẫn hợp lệ             : 296 / 296 (100.0%)
+   - Số nguồn trung bình mỗi câu ANSWERED         : 1.42 (chỉ tính nguồn thực sự được trích dẫn)
+   - Câu bị đánh dấu NEEDS_REVIEW                 : 0
+   - Ma trận (nhãn kỳ vọng -> trạng thái thực tế):
+       EXPECTED_CONTEXT       -> ANSWERED               : 283
+       INSUFFICIENT_CONTEXT   -> ANSWERED               : 13
+       INSUFFICIENT_CONTEXT   -> INSUFFICIENT_CONTEXT   : 1
+       NO_RELEVANT_CONTEXT    -> NO_RELEVANT_CONTEXT    : 3
+   Lưu ý: nhãn do build_sample_dataset gán tự động (AUTO_LABEL_REQUIRES_REVIEW), chưa rà soát thủ công.
+
+II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; model = mock-grounded-extractive-v1)
+----------------------------------------------------------------------
+1. Câu trả lời đúng và có căn cứ (Grounded Answer):
+   - Câu hỏi   : "Môn NLP có bao nhiêu tín chỉ?"
+   - Truy xuất : faq-q1-0, course-info-course-description-2, course-info-course-id-co3085-1
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q1, course_info.txt / course_description
+   - Trả lời   : "Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ. [Nguồn: faq.txt / Q1] Ngoài ra: course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phầ…"
+   - Câu hỏi   : "Chương 4 nói về gì?"
+   - Truy xuất : faq-q5-4, faq-q7-6, faq-q8-7
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q5
+   - Trả lời   : "Chương 4. [Nguồn: faq.txt / Q5]"
+   - Câu hỏi   : "Tuần 5 học những nội dung gì?"
+   - Truy xuất : faq-q10-9, schedule-week-06-6, faq-q11-10
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: schedule.txt / WEEK 06
+   - Trả lời   : "WEEK 06 học Chapter 5 với các nội dung: - auxiliary verbs and verb phrases - movement phenomena - handling questions in CFG - relative clauses. [Nguồn: schedule.txt / WEEK 06]"
+
+2. Câu hỏi không có thông tin trong Knowledge Base / ngoài phạm vi:
+   - [câu ngoài miền (mẫu của văn phạm)] "Hôm nay ở TP.HCM có mưa không?"
+       status=NO_RELEVANT_CONTEXT, retrieval_status=NO_RELEVANT_CONTEXT, sources=(không có)
+       Trả lời: "Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085 để trả lời câu hỏi: 'Hôm nay ở TP.HCM có mưa không?'."
+   - [thuộc tính không có trong dữ liệu] "Phòng học của môn CO3085 ở đâu?"
+       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=faq.txt / Q1, course_info.txt / course_description, resources.txt / TEXTBOOK 3
+       Trả lời: "Các đoạn tài liệu truy xuất được không có thông tin cụ thể về phòng học cho câu hỏi này. [Nguồn: faq.txt / Q1]"
+   - [mốc thời gian không có trong dữ liệu] "Deadline của bài tập lớn là khi nào?"
+       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=assignments.txt / Lưu ý, regulations.txt / Lưu ý, assignments.txt / LLM/RAG EXTENSION
+       Trả lời: "Cơ sở tri thức hiện tại không có ngày giờ hạn nộp chính thức cho bài tập lớn (tài liệu chỉ ghi nhận đây là dữ liệu mẫu phục vụ Course Assistant và cần thay bằng lịch chính thức của lớp). [Nguồn: assi…"
+
+3. Nguy cơ sinh thông tin không có trong dữ liệu (Hallucination) - thử với model GIẢ LẬP có kịch bản:
+   (Model giả lập chỉ dùng để kiểm tra answer_guard; KHÔNG phải kết quả của một LLM thật.)
+   - Mô hình bịa ngày hạn nộp nhưng trích dẫn đúng nguồn | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần. Hạn nộp cuối cùng là 15/12/2026. [Nguồn: assignments.txt / Lưu ý]"
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=['15/12/2026']
+       Người dùng thấy: "Câu trả lời do mô hình sinh ra chứa thông tin không có trong tài liệu truy xuất (15/12/2026), nên hệ thống không đưa ra để tránh sai lệch."
+   - Mô hình trích dẫn nguồn không được gửi vào prompt | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần. [Nguồn: assignments.txt / MỤC 9]"
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=['[Nguồn: assignments.txt / MỤC 9]'], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Bài tập lớn gồm nhiều phần."
+   - Mô hình trả lời không trích dẫn nguồn | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần."
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Bài tập lớn gồm nhiều phần."
+   - Mô hình tuân thủ prompt, trả INSUFFICIENT_CONTEXT | Câu hỏi: "Python 3.12 có gì mới?"
+       Model trả về : "INSUFFICIENT_CONTEXT"
+       Guard        : status=INSUFFICIENT_CONTEXT, trích dẫn sai=[], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán."
+
+III. TRƯỜNG HỢP SAI / HẠN CHẾ (liệt kê từ kết quả chạy thật)
+----------------------------------------------------------------------
+1. Câu ngoài miền diễn đạt lại (không nằm trong mẫu của văn phạm): từ chối đúng 3 / 10
+   - Vẫn bị trả lời [ANSWERED]: "Thời tiết hôm nay thế nào?" -> "Lưu ý: Các quy định chi tiết về deadline, format nộp bài và chính sách lớp học trong file này là dữ liệu MẪU …"
+   - Vẫn bị trả lời [ANSWERED]: "Cho tôi công thức nấu phở" -> "external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập. [Nguồn: regulation…"
+   - Vẫn bị trả lời [ANSWERED]: "Bạn có thể viết giúp tôi một bài thơ không?" -> "Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi. …"
+   - Vẫn bị trả lời [ANSWERED]: "Python 3.12 có gì mới?" -> "REFERENCE 2 — 'Natural Language Processing with Python' (Tác giả: Steven Bird; Ewan Klein; Edward Loper), côn…"
+   - Vẫn bị trả lời [ANSWERED]: "Làm sao để nấu cơm cho ngon?" -> "assignment_sharing: Không được sao chép hoặc chia sẻ bài làm giữa các nhóm. [Nguồn: regulations.txt / assignm…"
+   - Vẫn bị trả lời [ANSWERED]: "Ai là tổng thống Mỹ hiện nay?" -> "AI_usage: Sinh viên phải khai báo việc sử dụng AI trong báo cáo, nghiên cứu và quá trình thực hiện theo quy đ…"
+   - Vẫn bị trả lời [ANSWERED]: "Phim nào đang chiếu rạp?" -> "detailed_learning_outcomes: LO1.1 - Hiểu cấu trúc hệ thống NLP, ứng dụng và cách đánh giá hệ thống hiểu ngôn …"
+   Nguyên nhân: bộ lọc trước LLM chỉ dựa trên điểm truy xuất và độ phủ từ vựng; mock không đánh giá được
+   sự liên quan. Với model thật, prompt yêu cầu trả INSUFFICIENT_CONTEXT và answer_guard xử lý (xem II.3, trường hợp cuối).
+2. Truy xuất sai (không có chunk kỳ vọng trong top-k): 19 / 283
+   - SYN7318 "Hai chương 3 và chương 11 có điểm khác biệt gì?": kỳ vọng ['topics-chapter-3-grammar-and-parsing-2'] ; nhận ['faq-q7-6', 'faq-q3-2', 'faq-q4-3']
+   - SYN9811 "cho hỏi chương 1 có đề cập đến PCFG không?": kỳ vọng ['topics-chapter-1-introduction-to-natural-language-processing-0', 'topics-chapter-10-other-strategies-for-semantic-interpretation-9', 'topics-chapter-11-knowledge-representation-and-reasoning-10', 'topics-chapter-12-discourse-context-and-reference-11'] ; nhận ['topics-chapter-3-grammar-and-parsing-2', 'topics-chapter-6-ambiguity-resolution-statistical-methods-5', 'faq-q4-3']
+   - SYN3066 "tuần 6 sinh viên cần chuẩn bị những nội dung gì?": kỳ vọng ['schedule-week-06-6'] ; nhận ['regulations-academic-integrity-2', 'regulations-external-libraries-6', 'schedule-week-07-7']
+   - SYN4212 "chương 7 có đề cập đến PCFG không?": kỳ vọng ['topics-chapter-7-semantics-and-logical-form-6'] ; nhận ['topics-chapter-3-grammar-and-parsing-2', 'topics-chapter-6-ambiguity-resolution-statistical-methods-5', 'faq-q4-3']
+   - SYN4294 "chương 10 có đề cập đến hỏi đáp không?": kỳ vọng ['topics-chapter-10-other-strategies-for-semantic-interpretation-9'] ; nhận ['faq-q6-5', 'topics-chapter-11-knowledge-representation-and-reasoning-10', 'course-info-learning-outcomes-5']
+3. Nhãn INSUFFICIENT_CONTEXT nhưng hệ thống vẫn trả lời: 13 / 14
+   Phân bố theo intent: {'GET_LO': 2, 'GET_SCHEDULE': 9, 'GET_RESOURCE': 2}
+   - "xin hỏi L.O.4.2 năng lực này được thể hiện qua những kỹ năng gì?" -> trích dẫn: faq.txt / Q9
+   - "Sau môn học, sinh viên cần thể hiện điều gì theo L.O.3.3?" -> trích dẫn: faq.txt / Q11
+   - "tuần thứ 8 các chủ đề nào được giới thiệu?" -> trích dẫn: schedule.txt / WEEK 10
+   Cần rà soát thủ công: nếu nguồn được trích dẫn thực sự chứa đáp án thì lỗi nằm ở nhãn tự động chứ không ở hệ thống.
+4. Câu hội thoại mà văn phạm Phần I không nhận (UNPARSED): 0
