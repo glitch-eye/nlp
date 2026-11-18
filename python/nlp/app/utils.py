@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 APP_DIR = Path(__file__).resolve().parent
-PACKAGE_ROOT = APP_DIR.parents[2]  # hcmut/, so `iaslab.*` imports resolve.
+PACKAGE_ROOT = APP_DIR.parents[2]  
 if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
