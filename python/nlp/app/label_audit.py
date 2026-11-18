@@ -114,6 +114,8 @@ def build_audit_queue(rows, per_stratum=2, max_samples=300):
             "risk_flags": _risk(row),
             "review": {
                 "review_status": "PENDING",
+                "correct_parse_status": None,
+                "correct_parse_tree": None,
                 "correct_intent": None,
                 "correct_entities": None,
                 "correct_expected_chunk_ids": None,
@@ -122,6 +124,61 @@ def build_audit_queue(rows, per_stratum=2, max_samples=300):
             },
         })
     return queue
+
+
+def apply_reviewed_labels(rows, queue):
+    """Create a reviewed-only gold subset; never overwrite auto labels in place."""
+    source_by_id = {row.get("sample_id"): row for row in rows}
+    reviewed = []
+    for item in queue:
+        review = item.get("review") or {}
+        status = review.get("review_status")
+        if status == "REJECTED":
+            continue
+        if status != "REVIEWED":
+            continue
+        sample_id = item.get("sample_id")
+        if sample_id not in source_by_id:
+            raise ValueError("Audit item references unknown sample_id: {}".format(sample_id))
+        required = (
+            "correct_intent", "correct_entities",
+            "correct_expected_chunk_ids", "correct_answerability",
+        )
+        missing = [key for key in required if review.get(key) is None]
+        if missing:
+            raise ValueError(
+                "Reviewed sample {} is missing: {}".format(sample_id, ", ".join(missing))
+            )
+        if not isinstance(review["correct_entities"], list):
+            raise ValueError("correct_entities must be a list for {}".format(sample_id))
+        if not isinstance(review["correct_expected_chunk_ids"], list):
+            raise ValueError("correct_expected_chunk_ids must be a list for {}".format(sample_id))
+        answerability = review["correct_answerability"]
+        if answerability not in {
+            "EXPECTED_CONTEXT", "INSUFFICIENT_CONTEXT", "NO_RELEVANT_CONTEXT", "REVIEW"
+        }:
+            raise ValueError("Unsupported correct_answerability for {}".format(sample_id))
+
+        gold = dict(source_by_id[sample_id])
+        gold["intent"] = review["correct_intent"]
+        gold["entities"] = review["correct_entities"]
+        gold["expected_chunk_ids"] = review["correct_expected_chunk_ids"]
+        gold["expected_answerability"] = answerability
+        if review.get("correct_parse_status") in ("PARSED", "UNPARSED"):
+            gold["parse_status"] = review["correct_parse_status"]
+        else:
+            gold.pop("parse_status", None)
+        if review.get("correct_parse_tree"):
+            gold["parse_tree"] = review["correct_parse_tree"]
+        else:
+            gold.pop("parse_tree", None)
+        gold["label_status"] = "REVIEWED"
+        gold["label_provenance"] = "human_review"
+        gold["reviewer_note"] = review.get("reviewer_note", "")
+        reviewed.append(gold)
+    if not reviewed:
+        raise ValueError("No REVIEWED rows with complete labels were found in the audit queue")
+    return reviewed
 
 
 def main():
