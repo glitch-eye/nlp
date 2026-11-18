@@ -72,6 +72,11 @@ def _ratio(numerator, denominator):
     return numerator / float(denominator) if denominator else None
 
 
+def _parse_query(parser, query):
+    parse_multi = getattr(parser, "parse_multi", None)
+    return parse_multi(query) if callable(parse_multi) else parser.parse(query)
+
+
 def evaluate_parser(samples, parser):
     """Compare actual CFG acceptance with the dataset's expected parse_status."""
     confusion = Counter()
@@ -79,7 +84,7 @@ def evaluate_parser(samples, parser):
     exact_tree_checked = 0
     exact_tree_matches = 0
     for row in samples:
-        tree = parser.parse(row["query"])
+        tree = _parse_query(parser, row["query"])
         actual = "PARSED" if tree is not None else "UNPARSED"
         expected = row.get("parse_status")
         if expected in ("PARSED", "UNPARSED"):
@@ -114,23 +119,36 @@ def evaluate_parser(samples, parser):
     }
 
 
+def _intent_set_from_row(row):
+    if isinstance(row.get("intents"), list):
+        return {value for value in row["intents"] if value}
+    clauses = row.get("clauses")
+    if isinstance(clauses, list):
+        return {item.get("intent") for item in clauses if isinstance(item, dict) and item.get("intent")}
+    intent = row.get("intent")
+    return {intent} if intent and intent != "MULTI_INTENT" else set()
+
+
 def evaluate_semantics(samples, parser, aliases=()):
-    """Measure intent accuracy and micro entity precision/recall/F1."""
+    """Measure exact clause-intent-set accuracy and micro entity metrics."""
     intent_total = intent_correct = 0
     entity_tp = entity_fp = entity_fn = 0
     cases = []
     for row in samples:
-        expected_intent = row.get("intent")
-        if expected_intent is None:
+        expected_intents = _intent_set_from_row(row)
+        if not expected_intents:
             continue
-        tree = parser.parse(row["query"])
+        tree = _parse_query(parser, row["query"])
         frame = frame_from_tree(tree, row["query"], aliases) if tree is not None else {
-            "intent": None, "entity_ids": []
+            "intent": None, "entity_ids": [], "clauses": []
         }
-        actual_intent = frame.get("intent")
+        actual_clauses = frame.get("clauses") or [frame]
+        actual_intents = {item.get("intent") for item in actual_clauses
+                          if isinstance(item, dict) and item.get("intent")}
+        if frame.get("intent") == "MULTI_INTENT":
+            actual_intents.discard("MULTI_INTENT")
         intent_total += 1
-        intent_correct += int(actual_intent == expected_intent)
-
+        intent_correct += int(actual_intents == expected_intents)
         expected_entities = set(row.get("entities") or [])
         actual_entities = set(frame.get("entity_ids") or [])
         tp = len(expected_entities & actual_entities)
@@ -139,10 +157,11 @@ def evaluate_semantics(samples, parser, aliases=()):
         entity_tp += tp
         entity_fp += fp
         entity_fn += fn
-        if actual_intent != expected_intent or fp or fn:
+        if actual_intents != expected_intents or fp or fn:
             cases.append({
                 "sample_id": row["sample_id"], "query": row["query"],
-                "expected_intent": expected_intent, "actual_intent": actual_intent,
+                "expected_intents": sorted(expected_intents),
+                "actual_intents": sorted(actual_intents),
                 "expected_entities": sorted(expected_entities),
                 "actual_entities": sorted(actual_entities),
                 "missing_entities": sorted(expected_entities - actual_entities),
@@ -150,15 +169,14 @@ def evaluate_semantics(samples, parser, aliases=()):
             })
     precision = _ratio(entity_tp, entity_tp + entity_fp)
     recall = _ratio(entity_tp, entity_tp + entity_fn)
-    f1 = (
-        2 * precision * recall / (precision + recall)
-        if precision is not None and recall is not None and precision + recall
-        else (1.0 if precision == 1.0 and recall == 1.0 else None)
-    )
+    f1 = (2 * precision * recall / (precision + recall)
+          if precision is not None and recall is not None and precision + recall
+          else (1.0 if precision == 1.0 and recall == 1.0 else None))
     return {
         "intent_evaluated": intent_total,
         "intent_correct": intent_correct,
         "intent_accuracy": _ratio(intent_correct, intent_total),
+        "intent_match_definition": "exact set match across all clause intents",
         "entity_true_positive": entity_tp,
         "entity_false_positive": entity_fp,
         "entity_false_negative": entity_fn,
