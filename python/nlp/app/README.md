@@ -431,9 +431,25 @@ Mỗi record gồm các trường chính:
 | `expected_answerability` | `EXPECTED_CONTEXT`, `INSUFFICIENT_CONTEXT`, `NO_RELEVANT_CONTEXT` hoặc `REVIEW` |
 | `label_status` | Trạng thái rà soát nhãn |
 
-Builder sinh câu từ grammar, parse lại, lấy intent từ nhánh `Q_*`, chuẩn hóa entity IDs và đối chiếu với chunk metadata. Các nhãn tự động được đánh dấu `AUTO_LABEL_REQUIRES_REVIEW`; phải rà thủ công query, intent, entities và expected chunks trước khi coi dataset là gold set.
+Builder sinh câu từ grammar, parse lại, lấy intent từ nhánh `Q_*`, chuẩn hóa entity IDs và đối chiếu với chunk metadata. Các nhãn tự động được đánh dấu `AUTO_LABEL_REQUIRES_REVIEW`; **không được coi là gold label**.
 
-Dataset được sinh từ grammar chủ yếu đo tính nhất quán giữa grammar/parser/semantic mapping. Nó không tự đo độ tự nhiên của câu hoặc khả năng hiểu cách diễn đạt thực tế. Nên bổ sung câu hỏi viết tay và giữ tập kiểm tra riêng không dùng để chỉnh grammar.
+Có nguy cơ rò rỉ đánh giá nếu nhãn intent/entity được tạo bằng cùng logic Semantic Frame mà Evaluation dùng để chấm. Tập grammar-generated phù hợp để kiểm tra độ phủ, parseability và regression; không đủ độc lập để tuyên bố semantic accuracy trên dữ liệu thực tế. Tương tự, expected chunks được suy ra bằng heuristic từ metadata nên cần audit trước khi dùng làm retrieval ground truth.
+
+### 9.3 Tạo hàng đợi kiểm tra nhãn thay vì đọc toàn bộ 10.000 câu
+
+Tạo một hàng đợi audit có chọn lọc, phân tầng theo intent, answerability, hình dạng parse tree, entity set và số expected chunks:
+
+```bash
+python -m nlp.app.label_audit \
+  --input nlp/app/output/samples_labeled.jsonl \
+  --output nlp/app/output/label_audit_queue.jsonl \
+  --per-stratum 2 \
+  --max-samples 300
+```
+
+Hàng đợi có các trường `auto_label`, `risk_flags` và `review` riêng. Người review điền `correct_intent`, `correct_entities`, `correct_expected_chunk_ids`, `correct_answerability`, sau đó đổi `review_status` thành `REVIEWED` hoặc `REJECTED`. Không ghi đè nhãn tự động; giữ cả nhãn gốc và nhãn đã duyệt để truy vết.
+
+Lấy 2 mẫu mỗi tầng là bước audit ban đầu, không phải chứng nhận tất cả câu cùng tầng đều đúng. Khi phát hiện một lỗi theo template/production, sửa rule hoặc grammar rồi sinh lại dataset và audit lại. Dùng một tập câu hỏi viết tay, do người gán nhãn độc lập, làm held-out gold set cho metric chính thức. Nên đo độ đồng thuận giữa hai reviewer trên một phần mẫu nếu có đủ nhân lực.
 
 ## 10. Evaluation tổng thể và RAG evaluation
 
