@@ -8,7 +8,7 @@
 * **Khoa:** Khoa Khoa học và Kỹ thuật Máy tính – Trường Đại học Bách khoa – ĐHQG TP.HCM
 * **Danh sách thành viên:**
   - Sinh viên 1: `Nguyễn Văn Bảo` – MSSV: `2433037`
-  - Sinh viên 2: `[Họ và tên]` – MSSV: `[MSSV2]`
+  - Sinh viên 2: `Phạm Xuân Bắc` – MSSV: `2310280`
   - Sinh viên 3: `[Họ và tên]` – MSSV: `[MSSV3]`
   - Sinh viên 4: `[Họ và tên]` – MSSV: `[MSSV4]`
 
