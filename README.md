@@ -72,19 +72,40 @@ python -m nlp.app.run_parser \
 
 ### 3.2 Phần II, III & IV: Truy xuất, Hỏi đáp LLM/RAG, Hội thoại cục bộ và Đánh giá
 ```bash
-# 1. Chạy truy xuất thông tin độc lập -> nlp/app/output/retrieval.txt
+# 1. Chạy truy xuất thông tin độc lập (trên data/sample_queries.txt) -> nlp/app/output/retrieval.txt
 python -m nlp.app.run_retrieval
 
-# 2. Chạy toàn bộ pipeline Course Assistant (Offline Mock LLM mặc định)
+# 2. Tạo / cập nhật bộ dữ liệu kiểm thử có nhãn
+#    -> xuất ra nlp/app/input/test_labeled.jsonl (114 câu test độc lập)
+#    -> và nlp/app/output/samples_gold_labeled.jsonl (8.638 câu đã gán lại nhãn)
+python -m nlp.app.build_gold_labels
+
+# 3. Chạy đánh giá tầng Retrieval với bộ Test độc lập (114 câu) hoặc bộ Full (8.638 câu)
+python -m nlp.app.run_retrieval \
+  --labeled-jsonl nlp/app/input/test_labeled.jsonl \
+  --output nlp/app/output/retrieval_test.txt \
+  --evaluation-output nlp/app/output/retrieval_test_eval.json
+
+python -m nlp.app.run_retrieval \
+  --labeled-jsonl nlp/app/output/samples_gold_labeled.jsonl \
+  --output nlp/app/output/retrieval_gold.txt \
+  --evaluation-output nlp/app/output/retrieval_gold_eval.json
+
+# 4. Chạy đánh giá RAG/LLM trực tiếp trên bộ Test độc lập hoặc bộ Full
+#    -> xuất kết quả ra nlp/app/output/rag_evaluation.txt
+python -m nlp.app.rag_evaluation --samples nlp/app/input/test_labeled.jsonl
+python -m nlp.app.rag_evaluation --samples nlp/app/output/samples_gold_labeled.jsonl
+
+# 5. Chạy toàn bộ pipeline Course Assistant (Offline Mock LLM mặc định)
 #    Đọc nlp/app/input/dialogues.txt và xuất dialogue.txt, answer.txt, evaluation.txt
 #    ra cả nlp/app/output/ và ../output/
 python -m nlp.app.run_assistant --data-dir data
 
-# 3. Hỏi 1 câu đơn lẻ trên CLI (kèm xuất JSON nếu cần)
+# 6. Hỏi 1 câu đơn lẻ trên CLI (kèm xuất JSON nếu cần)
 python -m nlp.app.run_assistant --data-dir data --question "Chương 6 nói về gì?"
 python -m nlp.app.run_assistant --data-dir data --question "Phần II của bài tập lớn là gì?" --json
 
-# 4. Chạy chế độ hội thoại tương tác nhiều lượt trên terminal (gõ 'reset' để xóa ngữ cảnh, 'exit' để thoát)
+# 7. Chạy chế độ hội thoại tương tác nhiều lượt trên terminal (gõ 'reset' để xóa ngữ cảnh, 'exit' để thoát)
 python -m nlp.app.run_assistant --data-dir data --interactive
 ```
 

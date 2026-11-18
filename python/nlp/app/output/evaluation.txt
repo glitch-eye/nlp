@@ -14,8 +14,8 @@ I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
      + NO_RELEVANT_CONTEXT (Chặn ngoài miền)    : 1
      + NEED_CLARIFICATION (Yêu cầu làm rõ)      : 4
    - Phân bố trạng thái Parser (Phần I CFG trên resolved_query):
-     + PARSED                                   : 20
-     + UNPARSED (Fallback sang TF-IDF retrieval): 3
+     + PARSED                                   : 19
+     + UNPARSED (Fallback sang TF-IDF retrieval): 4
      + SKIPPED (Lượt hỏi làm rõ / ngoài KB)     : 4
    - Phân bố trạng thái Retriever (Phần II TF-IDF + Semantic):
      + FOUND                                    : 22
@@ -30,20 +30,36 @@ I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
        * THIS_CONTENT             : 1
        * THIS_PART                : 1
 
-2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl) [ĐO TRỰC TIẾP]:
-   - Tổng số mẫu kiểm thử                         : 8923
-   - Trạng thái nhãn                              : AUTO_LABEL_REQUIRES_REVIEW=8923
-   - Hit@k (có chunk kỳ vọng trong top-k)         : 6574 / 6595 (99.7%)
-   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 6595 / 6595 (100.0%)
-   - Từ chối khi nhãn yêu cầu từ chối             : 320 / 2328 (13.7%)
-   - Câu ANSWERED có trích dẫn hợp lệ             : 8603 / 8603 (100.0%)
+2a. Đánh giá trên tập kiểm thử độc lập có nhãn riêng (input/test_labeled.jsonl) [ĐO TRỰC TIẾP]:
+   - Tổng số mẫu kiểm thử                         : 114
+   - Trạng thái nhãn                              : GOLD_REVIEWED=114
+   - Hit@k (có chunk kỳ vọng trong top-k)         : 94 / 94 (100.0%)
+   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 94 / 94 (100.0%)
+   - Từ chối khi nhãn yêu cầu từ chối             : 16 / 20 (80.0%)
+   - Câu ANSWERED có trích dẫn hợp lệ             : 98 / 98 (100.0%)
+   - Số nguồn trung bình mỗi câu ANSWERED         : 1.30 (chỉ tính nguồn thực sự được trích dẫn)
+   - Câu bị đánh dấu NEEDS_REVIEW                 : 0
+   - Ma trận (nhãn kỳ vọng -> trạng thái thực tế):
+       EXPECTED_CONTEXT       -> ANSWERED               : 94
+       INSUFFICIENT_CONTEXT   -> INSUFFICIENT_CONTEXT   : 12
+       NO_RELEVANT_CONTEXT    -> ANSWERED               : 4
+       NO_RELEVANT_CONTEXT    -> NO_RELEVANT_CONTEXT    : 4
+   Lưu ý: bộ nhãn chuẩn GOLD_REVIEWED đã được đối chiếu độc lập với 7 file dữ liệu trong python/data/.
+
+2b. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_gold_labeled.jsonl) [ĐO TRỰC TIẾP]:
+   - Tổng số mẫu kiểm thử                         : 8638
+   - Trạng thái nhãn                              : GOLD_REVIEWED=8638
+   - Hit@k (có chunk kỳ vọng trong top-k)         : 8315 / 8315 (100.0%)
+   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 8315 / 8315 (100.0%)
+   - Từ chối khi nhãn yêu cầu từ chối             : 323 / 323 (100.0%)
+   - Câu ANSWERED có trích dẫn hợp lệ             : 8315 / 8315 (100.0%)
    - Số nguồn trung bình mỗi câu ANSWERED         : 1.28 (chỉ tính nguồn thực sự được trích dẫn)
    - Câu bị đánh dấu NEEDS_REVIEW                 : 0
    - Ma trận (nhãn kỳ vọng -> trạng thái thực tế):
-       EXPECTED_CONTEXT       -> ANSWERED               : 6595
-       INSUFFICIENT_CONTEXT   -> ANSWERED               : 2008
+       EXPECTED_CONTEXT       -> ANSWERED               : 8315
        INSUFFICIENT_CONTEXT   -> INSUFFICIENT_CONTEXT   : 320
-   Lưu ý: nhãn do build_sample_dataset gán tự động (AUTO_LABEL_REQUIRES_REVIEW), chưa rà soát thủ công.
+       NO_RELEVANT_CONTEXT    -> NO_RELEVANT_CONTEXT    : 3
+   Lưu ý: bộ nhãn chuẩn GOLD_REVIEWED đã được đối chiếu độc lập với 7 file dữ liệu trong python/data/.
 
 II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; model = mock-grounded-extractive-v1)
 ----------------------------------------------------------------------
@@ -69,13 +85,13 @@ II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; mod
        status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=faq.txt / Q1, course_info.txt / course_description, resources.txt / TEXTBOOK 3
        Trả lời: "Các đoạn tài liệu truy xuất được không có thông tin cụ thể về phòng học cho câu hỏi này. [Nguồn: faq.txt / Q1]"
    - [mốc thời gian không có trong dữ liệu] "Deadline của bài tập lớn là khi nào?"
-       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=assignments.txt / Lưu ý, regulations.txt / Lưu ý, assignments.txt / LLM/RAG EXTENSION
+       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=assignments.txt / Lưu ý, faq.txt / Q12, regulations.txt / Lưu ý
        Trả lời: "Cơ sở tri thức hiện tại không có ngày giờ hạn nộp chính thức cho bài tập lớn (tài liệu chỉ ghi nhận đây là dữ liệu mẫu phục vụ Course Assistant và cần thay bằng lịch chính thức của lớp). [Nguồn: assi…"
 
 3. Nguy cơ sinh thông tin không có trong dữ liệu (Hallucination) - thử với model GIẢ LẬP có kịch bản:
    (Model giả lập chỉ dùng để kiểm tra answer_guard; KHÔNG phải kết quả của một LLM thật.)
    - Mô hình bịa ngày hạn nộp nhưng trích dẫn đúng nguồn | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
-       Model trả về : "Bài tập lớn gồm nhiều phần. Hạn nộp cuối cùng là 15/12/2026. [Nguồn: assignments.txt / Lưu ý]"
+       Model trả về : "Bài tập lớn gồm nhiều phần. Hạn nộp cuối cùng là 15/12/2026. [Nguồn: faq.txt / Q12]"
        Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=['15/12/2026']
        Người dùng thấy: "Câu trả lời do mô hình sinh ra chứa thông tin không có trong tài liệu truy xuất (15/12/2026), nên hệ thống không đưa ra để tránh sai lệch."
    - Mô hình trích dẫn nguồn không được gửi vào prompt | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
@@ -103,22 +119,15 @@ III. TRƯỜNG HỢP SAI / HẠN CHẾ (liệt kê từ kết quả chạy thậ
    - Vẫn bị trả lời [ANSWERED]: "Phim nào đang chiếu rạp?" -> "detailed_learning_outcomes: LO1.1 - Hiểu cấu trúc hệ thống NLP, ứng dụng và cách đánh giá hệ thống hiểu ngôn …"
    Nguyên nhân: bộ lọc trước LLM chỉ dựa trên điểm truy xuất và độ phủ từ vựng; mock không đánh giá được
    sự liên quan. Với model thật, prompt yêu cầu trả INSUFFICIENT_CONTEXT và answer_guard xử lý (xem II.3, trường hợp cuối).
-2. Truy xuất sai (không có chunk kỳ vọng trong top-k): 21 / 6595
-   - SYN4804 "tài liệu tham khảo cho Phần I là gì?": kỳ vọng ['resources-reference-1-3', 'resources-reference-2-4', 'resources-reference-3-5', 'resources-reference-4-6', 'resources-reference-5-7', 'resources-study-note-8', 'resources-textbook-1-0', 'resources-textbook-2-1', 'resources-textbook-3-2'] ; nhận ['faq-q2-1', 'course-info-course-description-2', 'course-info-learning-outcomes-5']
-   - SYN4806 "tài liệu tham khảo cho Phần II là gì?": kỳ vọng ['resources-reference-1-3', 'resources-reference-2-4', 'resources-reference-3-5', 'resources-reference-4-6', 'resources-reference-5-7', 'resources-study-note-8', 'resources-textbook-1-0', 'resources-textbook-2-1', 'resources-textbook-3-2'] ; nhận ['faq-q2-1', 'course-info-course-description-2', 'course-info-detailed-learning-outcomes-6']
-   - SYN4807 "tài liệu tham khảo cho Phần II ở đâu?": kỳ vọng ['resources-reference-1-3', 'resources-reference-2-4', 'resources-reference-3-5', 'resources-reference-4-6', 'resources-reference-5-7', 'resources-study-note-8', 'resources-textbook-1-0', 'resources-textbook-2-1', 'resources-textbook-3-2'] ; nhận ['faq-q2-1', 'course-info-detailed-learning-outcomes-6', 'course-info-course-description-2']
-   - SYN6862 "chương 1 và chương 3 khác nhau như thế nào?": kỳ vọng ['schedule-week-01-1', 'topics-chapter-1-introduction-to-natural-language-processing-0'] ; nhận ['faq-q3-2', 'faq-q4-3', 'topics-chapter-3-grammar-and-parsing-2']
-   - SYN7428 "cho hỏi tài liệu tham khảo cho Phần I là gì?": kỳ vọng ['resources-reference-1-3', 'resources-reference-2-4', 'resources-reference-3-5', 'resources-reference-4-6', 'resources-reference-5-7', 'resources-study-note-8', 'resources-textbook-1-0', 'resources-textbook-2-1', 'resources-textbook-3-2'] ; nhận ['faq-q2-1', 'course-info-learning-outcomes-5', 'course-info-course-description-2']
-3. Nhãn INSUFFICIENT_CONTEXT nhưng hệ thống vẫn trả lời: 2008 / 2328
-   Phân bố theo intent: {'GET_SCHEDULE': 75, 'GET_TOPIC': 1132, 'GET_RESOURCE': 801}
-   - "Khi nào học gán nhãn từ loại?" -> trích dẫn: schedule.txt / WEEK 01, schedule.txt / Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong
-   - "Khi nào học giới hạn lựa chọn?" -> trích dẫn: schedule.txt / WEEK 02
-   - "Khi nào học mạng ngữ nghĩa?" -> trích dẫn: schedule.txt / WEEK 01
+2. Truy xuất sai (không có chunk kỳ vọng trong top-k): 0 / 8315
+3. Nhãn INSUFFICIENT_CONTEXT nhưng hệ thống vẫn trả lời: 0 / 320
+   Phân bố theo intent: {}
    Cần rà soát thủ công: nếu nguồn được trích dẫn thực sự chứa đáp án thì lỗi nằm ở nhãn tự động chứ không ở hệ thống.
-4. Câu hội thoại mà văn phạm Phần I không nhận (UNPARSED): 3
+4. Câu hội thoại mà văn phạm Phần I không nhận (UNPARSED): 4
    - "bài tập lớn cần xuất file gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=ANSWERED
-   - "Tài liệu tham khảo cho Tuần 2 (Phần I, Chương 2) là gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=ANSWERED
+   - "Tài liệu tham khảo cho Tuần 2 (Phần I, cụm tính từ) là gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=ANSWERED
    - "Phòng học của môn CO3085 ở đâu?" -> hệ thống vẫn truy xuất bằng câu gốc, status=INSUFFICIENT_CONTEXT
+   - "Chương 2 và Chương 3 khác nhau như thế nào?" -> hệ thống vẫn truy xuất bằng câu gốc, status=ANSWERED
 
 IV. NHẬN XÉT ƯU ĐIỂM VÀ HẠN CHẾ CỦA PHƯƠNG PHÁP ĐÃ SỬ DỤNG
 ----------------------------------------------------------------------
