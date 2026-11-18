@@ -96,13 +96,13 @@ def _single_frame_from_tree(tree, query, aliases=()):
             elif label == "EXAM_REF":
                 entities.append("MIDTERM" if "midterm" in value.casefold() or "giữa kỳ" in value.casefold() else "FINAL")
             elif label == "WEEK_REF":
-                for match in re.finditer(r"\\d+", value):
+                for match in re.finditer(r"\d+", value):
                     entities.append("WEEK_{:02d}".format(int(match.group(0))))
             elif label == "CHAPTER_REF":
-                for match in re.finditer(r"\\d+", value):
+                for match in re.finditer(r"\d+", value):
                     entities.append("CH{:02d}".format(int(match.group(0))))
             elif label == "LO_REF":
-                for match in re.finditer(r"\\d+\\.\\d+", value):
+                for match in re.finditer(r"\d+\.\d+", value):
                     entities.append("LO" + match.group(0))
             elif label in ("ASSIGNMENT_REF", "DEADLINE_REF"):
                 if intent in ("GET_ASSIGNMENT", "GET_DEADLINE", "GET_RULE"):
@@ -121,14 +121,14 @@ def _single_frame_from_tree(tree, query, aliases=()):
 
     normalized_query = _normalize(query)
     if intent == "GET_RULE" and re.search(
-        r"\\b(?:btl|bai tap lon|do an|project)\\b", normalized_query
+        r"\b(?:btl|bai tap lon|do an|project)\b", normalized_query
     ):
         entities.append("BTL01")
 
     # Preserve all numbered references in a single clause, not just the first.
     for pattern, formatter in (
-        (r"\\b(?:tuan|week)\\s+(?:thu\\s+)?0?(\\d{1,2})\\b", lambda n: "WEEK_{:02d}".format(int(n))),
-        (r"\\b(?:chuong|chapter)\\s+0?(\\d{1,2})\\b", lambda n: "CH{:02d}".format(int(n))),
+        (r"\b(?:tuan|week)\s+(?:thu\s+)?0?(\d{1,2})\b", lambda n: "WEEK_{:02d}".format(int(n))),
+        (r"\b(?:chuong|chapter)\s+0?(\d{1,2})\b", lambda n: "CH{:02d}".format(int(n))),
     ):
         for match in re.finditer(pattern, normalized_query):
             entities.append(formatter(match.group(1)))
