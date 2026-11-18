@@ -459,6 +459,27 @@ python -m nlp.app.label_audit \
   --reviewed-output nlp/app/output/samples_reviewed.jsonl
 ```
 
+### 9.4 Chạy lại pipeline gán nhãn theo dữ liệu nguồn
+
+Khi thay đổi dữ liệu trong `python/data/`, chạy:
+
+```bash
+python -m nlp.app.run_source_label_pipeline
+```
+
+Nếu đồng thời thay đổi grammar hoặc cần sinh lại toàn bộ sample:
+
+```bash
+python -m nlp.app.run_source_label_pipeline --rebuild-samples
+```
+
+Script này tạo lại hàng đợi audit, tự gán nhãn từ chunk hiện có, rồi xuất:
+
+- `nlp/app/output/label_audit_queue.jsonl`
+- `nlp/app/output/samples_reviewed.jsonl`
+
+Các dòng reviewed có `label_provenance = "data_source_review"` để phân biệt với nhãn con người.
+
 Chạy evaluation trên tập đã duyệt:
 
 ```bash
