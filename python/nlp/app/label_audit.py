@@ -24,6 +24,10 @@ def _risk(row):
         reasons.append("parse_not_successful")
     if row.get("intent") in (None, "", "UNKNOWN"):
         reasons.append("unknown_or_missing_intent")
+    if row.get("intent") == "MULTI_INTENT" and (
+        not isinstance(row.get("clauses"), list) or len(row.get("clauses")) < 2
+    ):
+        reasons.append("multi_intent_without_valid_clauses")
     if row.get("expected_answerability") == "EXPECTED_CONTEXT" and not row.get("expected_chunk_ids"):
         reasons.append("answerable_without_expected_chunks")
     if row.get("intent") not in (None, "UNKNOWN") and not row.get("entities"):
@@ -37,8 +41,13 @@ def _group_key(row):
     entities = tuple(sorted(set(row.get("entities") or [])))
     chunk_count = len(row.get("expected_chunk_ids") or [])
     chunk_bucket = "0" if chunk_count == 0 else "1" if chunk_count == 1 else "2-5" if chunk_count <= 5 else "6+"
+    clause_intents = tuple(sorted(
+        item.get("intent", "UNKNOWN") for item in (row.get("clauses") or [])
+        if isinstance(item, dict)
+    ))
+    intent_group = clause_intents if row.get("intent") == "MULTI_INTENT" else row.get("intent", "UNKNOWN")
     return (
-        row.get("intent", "UNKNOWN"),
+        intent_group,
         row.get("expected_answerability", "REVIEW"),
         _tree_shape(row.get("parse_tree")),
         entities,
@@ -106,6 +115,7 @@ def build_audit_queue(rows, per_stratum=2, max_samples=300):
                 "parse_status": row.get("parse_status"),
                 "intent": row.get("intent"),
                 "entities": row.get("entities", []),
+                "clauses": row.get("clauses", []),
                 "expected_chunk_ids": row.get("expected_chunk_ids", []),
                 "expected_answerability": row.get("expected_answerability"),
                 "label_status": row.get("label_status", "UNSPECIFIED"),
@@ -117,6 +127,7 @@ def build_audit_queue(rows, per_stratum=2, max_samples=300):
                 "correct_parse_status": None,
                 "correct_parse_tree": None,
                 "correct_intent": None,
+                "correct_clauses": None,
                 "correct_entities": None,
                 "correct_expected_chunk_ids": None,
                 "correct_answerability": None,
@@ -161,6 +172,16 @@ def apply_reviewed_labels(rows, queue):
 
         gold = dict(source_by_id[sample_id])
         gold["intent"] = review["correct_intent"]
+        if review["correct_intent"] == "MULTI_INTENT":
+            clauses = review.get("correct_clauses")
+            if not isinstance(clauses, list) or len(clauses) < 2:
+                raise ValueError("Reviewed multi-intent sample {} needs at least two correct_clauses".format(sample_id))
+            if any(not isinstance(clause, dict) or not clause.get("intent")
+                   or not isinstance(clause.get("entities", []), list) for clause in clauses):
+                raise ValueError("Each correct clause needs an intent and an entities list for {}".format(sample_id))
+            gold["clauses"] = clauses
+        else:
+            gold.pop("clauses", None)
         gold["entities"] = review["correct_entities"]
         gold["expected_chunk_ids"] = review["correct_expected_chunk_ids"]
         gold["expected_answerability"] = answerability
