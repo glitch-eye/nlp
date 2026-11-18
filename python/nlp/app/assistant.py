@@ -2,7 +2,6 @@ from collections import Counter
 import json
 import math
 import os
-from pathlib import Path
 import re
 import sys
 import types
@@ -475,94 +474,6 @@ def _default_guard_check(question, resolved_query, semantic, retrieval_result):
     return {"status": "OK", "answer": None}
 
 
-def _build_fallback_kb_from_traces():
-    """Construct an in-memory KnowledgeBase from output/retrieval.txt if NLP_Course_Assistant_Sample_Data is outside the workspace."""
-    chunks = {}
-    app_dir = Path(__file__).resolve().parent
-    retrieval_trace = app_dir / "output" / "retrieval.txt"
-    if retrieval_trace.exists():
-        lines = retrieval_trace.read_text(encoding="utf-8", errors="replace").splitlines()
-        idx = 0
-        while idx < len(lines):
-            match = re.match(r"^\d+\.\s+(\S+)\s+\|\s+score=[0-9.]+\s+\|\s+(.+?)\s+/\s+(.+)$", lines[idx])
-            if match and idx + 3 < len(lines):
-                cid, src, sec = match.group(1), match.group(2), match.group(3)
-                ent_line = lines[idx + 1].strip()
-                ents = [
-                    e.strip()
-                    for e in ent_line.replace("entity_ids:", "").split(",")
-                    if e.strip() and e.strip() != "(none)"
-                ]
-                txt = lines[idx + 3].strip()
-                chunks[cid] = {
-                    "chunk_id": cid,
-                    "source": src,
-                    "section": sec,
-                    "entity_ids": ents,
-                    "text": txt,
-                    "kind": src.replace(".txt", ""),
-                }
-                idx += 4
-            else:
-                idx += 1
-
-    extra = {
-        "schedule-week-06-6": ("schedule.txt", "WEEK 06", ["CH05", "WEEK_06", "SYNTACTIC_PROCESSING", "CFG", "VERB_PHRASES"], "WEEK 06 part: Syntactic Processing chapter: Chapter 5 topics: - grammars for natural language - auxiliary verbs and verb phrases - movement phenomena in language - handling questions in context-free grammars - relative clauses"),
-        "topics-chapter-5-grammar-for-natural-language-4": ("topics.txt", "CHAPTER 5: GRAMMAR FOR NATURAL LANGUAGE", ["CH05", "SYNTACTIC_PROCESSING", "CFG", "VERB_PHRASES"], "CHAPTER 5: GRAMMAR FOR NATURAL LANGUAGE chapter_id: CH05 part: Syntactic Processing keywords: natural language grammar, auxiliary verbs, movement, wh-questions, relative clauses summary: The chapter develops comprehensive grammars for natural language phenomena including auxiliary verbs, verb phrases, movement phenomena, yes/no and wh-questions, and relative clauses. subtopics: 5.1 Auxiliary verbs and verb phrases 5.2 Movement phenomena in language 5.3 Handling questions in context-free grammars 5.4 Relative clauses 5.5 The hold mechanism in ATNs"),
-        "resources-textbook-1-0": ("resources.txt", "TEXTBOOK 1", ["NLP", "NATURAL_LANGUAGE_PROCESSING"], "TEXTBOOK 1 title: Natural Language Understanding author: James Allen publisher: Benjamin/Cummings year: 1995 usage: main course textbook covering Part I (Syntactic Processing), Part II (Semantic Interpretation), and Part III (Context and World Knowledge)"),
-        "faq-q13-12": ("faq.txt", "Q13", ["BTL01", "PART_I", "PART_II", "PART_III"], "Q13: question: Bài tập lớn gồm những phần nào? answer: Bài tập lớn gồm Phần I (Grammar & Parser), Phần II (Semantic Interpretation & QA hoặc LLM/RAG), Phần III (Local Discourse Context) và Phần IV (Evaluation)."),
-    }
-    for cid, (src, sec, ents, txt) in extra.items():
-        if cid not in chunks:
-            chunks[cid] = {"chunk_id": cid, "source": src, "section": sec, "entity_ids": list(ents), "text": txt, "kind": src.replace(".txt", "")}
-
-    aliases = [
-        ("Môn NLP", "NLP", "Xử lý Ngôn ngữ Tự nhiên"),
-        ("Xử lý Ngôn ngữ Tự nhiên", "NLP", "Xử lý Ngôn ngữ Tự nhiên"),
-        ("CO3085", "CO3085", "Xử lý Ngôn ngữ Tự nhiên"),
-        ("bài tập lớn", "BTL01", "Bài tập lớn Course Assistant"),
-        ("Phần I", "PART_I", "Phần I"),
-        ("Phần II", "PART_II", "Phần II"),
-        ("Phần III", "PART_III", "Phần III"),
-        ("Phần IV", "PART_IV", "Phần IV"),
-        ("CFG", "CFG", "context-free grammar"),
-        ("Parsing", "PARSING", "phân tích cú pháp"),
-        ("parsing", "PARSING", "phân tích cú pháp"),
-        ("PCFG", "PCFG", "probabilistic context-free grammar"),
-        ("văn phạm phụ thuộc", "DEPENDENCY_GRAMMAR", "văn phạm phụ thuộc"),
-        ("nét và văn phạm gia tố", "FEATURES", "nét và văn phạm gia tố"),
-        ("gán nhãn từ loại", "POS_TAGGING", "gán nhãn từ loại"),
-        ("dạng luận lý", "LOGICAL_FORM", "dạng luận lý"),
-        ("vai trò chủ đề", "THEMATIC_ROLES", "vai trò chủ đề"),
-        ("giới hạn lựa chọn", "SELECTIONAL_RESTRICTION", "giới hạn lựa chọn"),
-        ("mạng ngữ nghĩa", "SEMANTIC_NETWORK", "mạng ngữ nghĩa"),
-        ("văn phạm ngữ nghĩa", "SEMANTIC_GRAMMAR", "văn phạm ngữ nghĩa"),
-        ("biểu diễn tri thức", "KNOWLEDGE_REPRESENTATION", "biểu diễn tri thức"),
-        ("hỏi đáp", "QUESTION_ANSWERING", "hỏi đáp"),
-        ("tham chiếu", "REFERENCE", "tham chiếu"),
-        ("đồng tham chiếu", "ANAPHORA", "đồng tham chiếu"),
-        ("statistical NLP", "STATISTICAL_NLP", "statistical NLP"),
-        ("Python NLP", "PYTHON_NLP", "Python NLP"),
-        ("machine translation", "MACHINE_TRANSLATION", "machine translation"),
-        ("LLM/RAG", "LLM_RAG", "LLM/RAG"),
-        ("sử dụng AI", "AI_USAGE", "AI usage"),
-        ("midterm", "MIDTERM", "kiểm tra giữa kỳ"),
-        ("final", "FINAL", "thi cuối kỳ"),
-    ]
-    for ch_idx in range(1, 13):
-        aliases.append(("Chương {}".format(ch_idx), "CH{:02d}".format(ch_idx), "Chương {}".format(ch_idx)))
-    for wk_idx in range(1, 16):
-        aliases.append(("Tuần {}".format(wk_idx), "WEEK_{:02d}".format(wk_idx), "Tuần {}".format(wk_idx)))
-    aliases.sort(key=lambda item: len(item[0]), reverse=True)
-
-    kb_stub = types.SimpleNamespace(
-        data_dir=app_dir,
-        aliases=aliases,
-        documents=[chunks[cid] for cid in sorted(chunks)],
-    )
-    return kb_stub
-
-
 class CourseAssistant:
     """Single-turn and multi-turn RAG Course Assistant orchestrator."""
 
@@ -579,10 +490,9 @@ class CourseAssistant:
         if knowledge_base is not None:
             self.kb = knowledge_base
         else:
-            try:
-                self.kb = KnowledgeBase(data_dir or default_data_dir())
-            except (FileNotFoundError, OSError):
-                self.kb = _build_fallback_kb_from_traces()
+            # Always load the complete repository dataset. Never silently replace it
+            # with partial chunks reconstructed from a previous retrieval trace.
+            self.kb = KnowledgeBase(data_dir or default_data_dir())
         self.parser = parser or CourseParser(grammar_path=grammar_path)
         self.retriever = retriever or Retriever(
             self.kb.documents,

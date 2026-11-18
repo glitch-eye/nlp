@@ -109,7 +109,9 @@ def frame_from_tree(tree, query, aliases=()):
             if match:
                 entities.append("LO" + match.group(0))
         elif label in ("ASSIGNMENT_REF", "DEADLINE_REF"):
-            if intent in ("GET_ASSIGNMENT", "GET_DEADLINE"):
+            # Assignment references also provide context for policy questions
+            # such as whether AI tools may be used in the assignment.
+            if intent in ("GET_ASSIGNMENT", "GET_DEADLINE", "GET_RULE"):
                 entities.append("BTL01")
         elif label in ("RULE_OBJECT", "RULE_REF"):
             entities.append("LLM_RAG" if "llm" in value.casefold() else "AI_USAGE")
@@ -123,9 +125,17 @@ def frame_from_tree(tree, query, aliases=()):
         else:
             entities.extend(_find_alias_entities(value, aliases))
 
+    # Rule questions may mention the assignment as context. Some legacy rule
+    # productions consume the whole phrase without an ASSIGNMENT_REF node, so
+    # retain this domain entity from the normalized utterance as a fallback.
+    normalized_query = _normalize(query)
+    if intent == "GET_RULE" and re.search(
+        r"\\b(?:btl|bai tap lon|do an|project)\\b", normalized_query
+    ):
+        entities.append("BTL01")
+
     # Structure-aware extraction covers numbered sections even when the grammar
     # represents the number as a terminal rather than a named semantic node.
-    normalized_query = _normalize(query)
     for pattern, formatter in (
         (r"\b(?:tuan|week)\s+(?:thu\s+)?0?(\d{1,2})\b", lambda n: "WEEK_{:02d}".format(int(n))),
         (r"\b(?:chuong|chapter)\s+0?(\d{1,2})\b", lambda n: "CH{:02d}".format(int(n))),
