@@ -701,4 +701,33 @@ python -m unittest discover -s test -p "test_answer_evaluation.py" -v
 python -m unittest discover -s test -p "test_evaluation*.py" -v
 python -m unittest discover -s test -v
 ```
+## 14. Batched Multi-intent Retrieval (experimental)
 
+Multi-intent questions are handled as one user turn instead of recursively
+calling the single-intent assistant once per clause.
+
+The experimental path performs:
+1. Split and parse each validated clause independently with Grammar v5.
+2. Build one semantic frame per clause.
+3. Batch-transform all clause queries against the same fitted TF-IDF index.
+4. Build a shared candidate pool, deduplicate chunks, and select a global
+   evidence pack using clause coverage plus relevance.
+5. Build one prompt containing the original multi-intent question and shared
+   evidence, then call the configured LLM client once for the turn.
+
+The method `Retriever.retrieve_multi(question, clauses, clause_frames)` exposes
+this path. Its result includes `intent_coverage`, `chunk_support`, candidate/
+selected counts, and per-clause candidate IDs. The evidence budget is adaptive:
+at least the number of clauses, otherwise the retriever's `top_k`; it is not
+three chunks per intent.
+
+This is experimental, not yet a claim that retrieval quality is better. Compare
+with the legacy per-clause path using Recall@K, MRR, multi-intent coverage,
+chunks/query, duplicate rate, API calls/query and latency. Single-intent
+retrieval remains unchanged.
+
+Run the focused test from `python/`:
+
+```bash
+python -m unittest discover -s test -p "test_multi_intent_retrieval.py" -v
+```
