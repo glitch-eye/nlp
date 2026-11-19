@@ -88,8 +88,8 @@ class LLMClient:
                 return self._fallback("OPENAI_API_KEY not set", prompt, question, chunks, semantic)
             try:
                 text = self._call_api(prompt)
-            except (urllib.error.URLError, socket.timeout, TimeoutError, OSError,
-                    KeyError, IndexError, ValueError) as exc:
+            except Exception as exc:
+                # Record only the exception class; exception messages may contain request details.
                 return self._fallback(type(exc).__name__, prompt, question, chunks, semantic)
             self.model_name = self._requested_model
             return text
