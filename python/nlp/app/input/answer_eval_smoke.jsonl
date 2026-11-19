@@ -1,0 +1,5 @@
+{"sample_id":"SMOKE-001","query":"CO3085 có mấy tín chỉ?","expected_answerability":"REVIEW","label_status":"UNREVIEWED","label_provenance":"smoke_test","expected_chunk_ids":[]}
+{"sample_id":"SMOKE-002","query":"Chương 6 nói về gì?","expected_answerability":"REVIEW","label_status":"UNREVIEWED","label_provenance":"smoke_test","expected_chunk_ids":[]}
+{"sample_id":"SMOKE-003","query":"Tuần 5 học những nội dung gì?","expected_answerability":"REVIEW","label_status":"UNREVIEWED","label_provenance":"smoke_test","expected_chunk_ids":[]}
+{"sample_id":"SMOKE-004","query":"Chương 4 nói về gì và Tuần 5 học gì?","expected_answerability":"REVIEW","label_status":"UNREVIEWED","label_provenance":"smoke_test","expected_chunk_ids":[]}
+{"sample_id":"SMOKE-005","query":"Thời tiết TP.HCM hôm nay thế nào?","expected_answerability":"REVIEW","label_status":"UNREVIEWED","label_provenance":"smoke_test","expected_chunk_ids":[]}

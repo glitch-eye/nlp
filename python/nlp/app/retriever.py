@@ -131,65 +131,184 @@ class Retriever:
             scores.append(intent_prior + 0.8 * entity_score)
         return scores
 
+    def retrieve_multi(self, question, clauses, clause_frames, top_k=None):
+        """Retrieve evidence for all intents in one batched, coverage-aware pass.
+
+        Each clause is scored against the same fitted chunk index. Candidate chunks
+        are globally deduplicated, then selected to maximize intent coverage while
+        retaining relevance. No model/API call is made here.
+        """
+        if len(clauses) != len(clause_frames):
+            raise ValueError("clauses and clause_frames must have equal length")
+        if not clauses:
+            return {
+                "query": question, "chunks": [], "scores": [],
+                "retrieval_status": "NO_RELEVANT_CONTEXT",
+                "intent": "MULTI_INTENT", "clauses": [],
+                "intent_coverage": 0.0, "score_details": [],
+            }
+
+        expanded_queries = [
+            self.expand_query(clause, semantic=frame)
+            for clause, frame in zip(clauses, clause_frames)
+        ]
+        query_matrix = self.vectorizer.transform(expanded_queries)
+        lexical_matrix = cosine_similarity(query_matrix, self.matrix)
+
+        # Build one candidate pool from a batched query-vs-all-chunks score matrix.
+        candidates = {}
+        per_clause = []
+        pool_size = min(len(self.documents), max(8, self.top_k * 4))
+        for clause_index, frame in enumerate(clause_frames):
+            lexical_scores = lexical_matrix[clause_index]
+            semantic_scores = self._semantic_scores(frame)
+            if frame and frame.get("intent") not in (None, "UNKNOWN", "MULTI_INTENT"):
+                combined = [
+                    self.lexical_weight * float(lexical)
+                    + self.semantic_weight * float(semantic)
+                    for lexical, semantic in zip(lexical_scores, semantic_scores)
+                ]
+            else:
+                combined = [float(value) for value in lexical_scores]
+
+            ranked = sorted(
+                range(len(self.documents)),
+                key=lambda index: (-float(combined[index]), index),
+            )
+            accepted = []
+            query_entities = set(frame.get("entity_ids", [])) if frame else set()
+            for index in ranked:
+                entity_match = query_entities.intersection(
+                    self.chunk_frames[index]["entity_ids"]
+                )
+                if (combined[index] < self.min_score or
+                    (lexical_scores[index] < self.min_lexical_score and not entity_match)):
+                    continue
+                accepted.append(index)
+                entry = candidates.setdefault(index, {
+                    "chunk": self.documents[index],
+                    "scores_by_clause": {},
+                    "details_by_clause": {},
+                })
+                entry["scores_by_clause"][clause_index] = float(combined[index])
+                entry["details_by_clause"][clause_index] = {
+                    "lexical": float(lexical_scores[index]),
+                    "semantic": float(semantic_scores[index]),
+                    "combined": float(combined[index]),
+                }
+                if len(accepted) >= pool_size:
+                    break
+            per_clause.append({
+                "query": clauses[clause_index],
+                "intent": (frame or {}).get("intent"),
+                "entity_ids": list((frame or {}).get("entity_ids", [])),
+                "candidate_chunk_ids": [
+                    self.documents[index]["chunk_id"] for index in accepted
+                ],
+                "retrieval_status": "FOUND" if accepted else "NO_RELEVANT_CONTEXT",
+            })
+
+        # Greedy maximum-coverage selection with relevance as a tie-breaker.
+        limit = self.top_k if top_k is None else top_k
+        limit = max(int(limit), len(clauses))
+        selected = []
+        selected_indices = set()
+        covered = set()
+        while candidates and len(selected) < limit:
+            best_index = None
+            best_objective = None
+            for index, candidate in candidates.items():
+                if index in selected_indices:
+                    continue
+                support = set(candidate["scores_by_clause"])
+                newly_covered = support - covered
+                best_score = max(candidate["scores_by_clause"].values())
+                objective = (
+                    len(newly_covered) / float(len(clauses)) * 0.55
+                    + best_score * 0.45
+                )
+                tie_break = (objective, best_score, -index)
+                if best_objective is None or tie_break > best_objective:
+                    best_objective = tie_break
+                    best_index = index
+            if best_index is None:
+                break
+            selected_indices.add(best_index)
+            candidate = candidates[best_index]
+            support = set(candidate["scores_by_clause"])
+            covered.update(support)
+            selected.append((best_index, candidate))
+
+            # Once all clauses are covered, fill remaining slots only with
+            # useful additional evidence; do not force exactly 3 chunks/intent.
+            if len(covered) == len(clauses) and len(selected) >= min(limit, len(clauses)):
+                remaining = [
+                    item for item in candidates
+                    if item not in selected_indices
+                ]
+                if not remaining:
+                    break
+
+        chunks = [item[1]["chunk"] for item in selected]
+        scores = [
+            max(item[1]["scores_by_clause"].values()) for item in selected
+        ]
+        details = []
+        support_rows = []
+        for _, candidate in selected:
+            support_indices = sorted(candidate["scores_by_clause"])
+            support_rows.append({
+                "chunk_id": candidate["chunk"]["chunk_id"],
+                "clause_indices": support_indices,
+                "intents": [
+                    (clause_frames[i] or {}).get("intent") for i in support_indices
+                ],
+            })
+            details.append({
+                "combined": max(candidate["scores_by_clause"].values()),
+                "per_clause": candidate["details_by_clause"],
+            })
+
+        covered_clause_indices = set(
+            index for item in selected
+            for index in item[1]["scores_by_clause"]
+        )
+        return {
+            "query": question,
+            "chunks": chunks,
+            "scores": scores,
+            "retrieval_status": "FOUND" if chunks else "NO_RELEVANT_CONTEXT",
+            "parse_status": "PARSED" if all(
+                (frame or {}).get("parse_status") == "PARSED"
+                for frame in clause_frames
+            ) else "PARTIAL",
+            "intent": "MULTI_INTENT",
+            "intents": [(frame or {}).get("intent") for frame in clause_frames],
+            "clauses": per_clause,
+            "entity_ids": list(dict.fromkeys(
+                entity_id for frame in clause_frames
+                for entity_id in (frame or {}).get("entity_ids", [])
+            )),
+            "expanded_query": " AND ".join(expanded_queries),
+            "score_details": details,
+            "chunk_support": support_rows,
+            "intent_coverage": len(covered_clause_indices) / float(len(clauses)),
+            "covered_clause_indices": sorted(covered_clause_indices),
+            "candidate_chunk_count": len(candidates),
+            "selected_chunk_count": len(chunks),
+        }
+
     def retrieve(self, question, semantic=None, top_k=None):
         clauses = split_intent_clauses(question, self.parser)
         if len(clauses) > 1 and semantic is None:
-            child_results = [self.retrieve(clause, top_k=top_k) for clause in clauses]
-            ranked = []
-            seen = set()
-            for clause_index, result in enumerate(child_results):
-                for chunk, score, detail in zip(
-                    result.get("chunks", []), result.get("scores", []),
-                    result.get("score_details", []),
-                ):
-                    cid = chunk.get("chunk_id")
-                    if cid in seen:
-                        continue
-                    seen.add(cid)
-                    ranked.append((float(score), clause_index, chunk, detail))
-            ranked.sort(key=lambda item: (-item[0], item[1]))
-            limit = self.top_k if top_k is None else top_k
-            # Reserve one evidence slot per clause before filling remaining
-            # slots globally, so a high-scoring clause cannot erase another.
-            selected = []
-            selected_keys = set()
-            for clause_index in range(len(child_results)):
-                candidate = next(
-                    (item for item in ranked
-                     if item[1] == clause_index and item[2].get("chunk_id") not in selected_keys),
-                    None,
-                )
-                if candidate is not None and len(selected) < max(limit, len(child_results)):
-                    selected.append(candidate)
-                    selected_keys.add(candidate[2].get("chunk_id"))
-            for item in ranked:
-                if len(selected) >= max(limit, len(child_results)):
-                    break
-                cid = item[2].get("chunk_id")
-                if cid not in selected_keys:
-                    selected.append(item)
-                    selected_keys.add(cid)
-            return {
-                "query": question,
-                "chunks": [item[2] for item in selected],
-                "scores": [item[0] for item in selected],
-                "retrieval_status": "FOUND" if selected else "NO_RELEVANT_CONTEXT",
-                "parse_status": "PARSED",
-                "intent": "MULTI_INTENT",
-                "intents": [item.get("intent") for item in child_results],
-                "clauses": [
-                    {"query": clause, "intent": item.get("intent"),
-                     "entity_ids": item.get("entity_ids", []),
-                     "retrieval_status": item.get("retrieval_status")}
-                    for clause, item in zip(clauses, child_results)
-                ],
-                "entity_ids": list(dict.fromkeys(
-                    eid for item in child_results for eid in item.get("entity_ids", [])
-                )),
-                "expanded_query": " AND ".join(item.get("expanded_query", clause)
-                                                for item, clause in zip(child_results, clauses)),
-                "score_details": [item[3] for item in selected],
-            }
+            frames = [
+                query_frame(clause, self.parser, self.aliases)
+                if self.parser else None
+                for clause in clauses
+            ]
+            if all(frame is not None for frame in frames):
+                return self.retrieve_multi(question, clauses, frames, top_k=top_k)
+
         parsed_frame = query_frame(question, self.parser, self.aliases) if self.parser else None
         frame = semantic or parsed_frame
         query = self.expand_query(question, semantic=semantic)
