@@ -85,7 +85,7 @@ Lệnh tạo dữ liệu mặc định sinh:
 - `nlp/app/input/test_labeled.jsonl`: 114 câu hỏi được tuyển chọn riêng làm tập kiểm thử.
 - `nlp/app/output/samples_gold_labeled.jsonl`: các mẫu synthetic từ `samples_labeled.jsonl` được gán lại expected entities, chunks và answerability.
 
-**Lưu ý về nhãn:** script hiện tự động tạo nhãn bằng quy tắc/parser/knowledge base và gán trường `label_status="GOLD_REVIEWED"`. Giá trị này không chứng minh rằng con người đã review từng dòng. Trước khi báo cáo đây là *human-reviewed gold set*, cần kiểm tra nhãn độc lập; đặc biệt không xem tập synthetic 8.638 câu là test set độc lập.
+**Lưu ý về nhãn:** script hiện tự động tạo nhãn bằng quy tắc/parser/knowledge base và gán trường `label_status="GOLD_REVIEWED"`. Giá trị này không chứng minh rằng con người đã review từng dòng. Trước khi báo cáo đây là *human-reviewed gold set*, cần kiểm tra nhãn độc lập; đặc biệt không xem tập synthetic là test set độc lập.
 
 Đánh giá retrieval trên tập 114 câu:
 
