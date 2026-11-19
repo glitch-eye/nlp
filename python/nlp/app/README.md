@@ -267,7 +267,7 @@ Khi query có intent hợp lệ, điểm tổng hợp kết hợp lexical và se
 
 ```bash
 python -m nlp.app.run_retrieval \
-  --labeled-jsonl nlp/app/output/samples_labeled.jsonl
+  --labeled-jsonl nlp/app/output/samples_reviewed.jsonl
 ```
 
 Mặc định ghi:
@@ -411,7 +411,7 @@ python -m nlp.app.build_sample_dataset
 Mặc định đọc grammar `nlp/app/output/grammar.txt` và course data directory; ghi:
 
 - `nlp/app/output/samples.txt`: mỗi câu một dòng.
-- `nlp/app/output/samples_labeled.jsonl`: một JSON object mỗi dòng.
+- `nlp/app/output/samples_reviewed.jsonl`: một JSON object mỗi dòng.
 
 Tùy chỉnh:
 
@@ -419,7 +419,7 @@ Tùy chỉnh:
 python -m nlp.app.build_sample_dataset \
   --grammar nlp/app/output/grammar.txt \
   --data-dir python/data \
-  --output-jsonl nlp/app/output/samples_labeled.jsonl \
+  --output-jsonl nlp/app/output/samples_reviewed.jsonl \
   --output-text nlp/app/output/samples.txt \
   --max-sentences 10000
 ```
@@ -450,7 +450,7 @@ Tạo một hàng đợi audit có chọn lọc, phân tầng theo intent, answe
 
 ```bash
 python -m nlp.app.label_audit \
-  --input nlp/app/output/samples_labeled.jsonl \
+  --input nlp/app/output/samples_reviewed.jsonl \
   --output nlp/app/output/label_audit_queue.jsonl \
   --per-stratum 2 \
   --max-samples 300
@@ -462,7 +462,7 @@ Sau khi review, xuất riêng tập gold chỉ gồm hàng đã duyệt:
 
 ```bash
 python -m nlp.app.label_audit \
-  --input nlp/app/output/samples_labeled.jsonl \
+  --input nlp/app/output/samples_reviewed.jsonl \
   --review-queue nlp/app/output/label_audit_queue.jsonl \
   --apply-reviewed \
   --reviewed-output nlp/app/output/samples_reviewed.jsonl
@@ -510,7 +510,7 @@ Lấy 2 mẫu mỗi tầng là bước audit ban đầu, không phải chứng n
 python -m nlp.app.evaluation
 ```
 
-Mặc định đọc `nlp/app/output/samples_labeled.jsonl` và ghi vào `nlp/app/output/`:
+Mặc định đọc `nlp/app/output/samples_reviewed.jsonl` và ghi vào `nlp/app/output/`:
 
 - `evaluation.txt`: báo cáo dễ đọc.
 - `evaluation_report.json`: metrics chi tiết, confusion counts, per-sample failures, dataset SHA-256, runtime và cấu hình.
@@ -519,7 +519,7 @@ Chạy đầy đủ với data directory chỉ định:
 
 ```bash
 python -m nlp.app.evaluation \
-  --samples nlp/app/output/samples_labeled.jsonl \
+  --samples nlp/app/output/samples_reviewed.jsonl \
   --data-dir python/data \
   --top-k 3 \
   --min-score 0.08
@@ -622,7 +622,7 @@ Tất cả lệnh bên dưới chạy từ thư mục `python/`:
 | Chạy một câu hỏi | `python -m nlp.app.run_assistant --question "Chương 4 nói về gì?"` |
 | Chạy hội thoại | `python -m nlp.app.run_assistant --interactive` |
 | Chạy HTTP API | `python -m nlp.app.api` |
-| Retrieval độc lập | `python -m nlp.app.run_retrieval --labeled-jsonl nlp/app/output/samples_labeled.jsonl` |
+| Retrieval độc lập | `python -m nlp.app.run_retrieval --labeled-jsonl nlp/app/output/samples_reviewed.jsonl` |
 | Evaluation tổng thể | `python -m nlp.app.evaluation` |
 | RAG evaluation riêng | `python -m nlp.app.rag_evaluation` |
 | Test evaluation | `python -m unittest discover -s test -p "test_evaluation*.py" -v` |
@@ -653,7 +653,7 @@ python -m nlp.app.unified_evaluation --provider mock --max-samples 5
 ```
 
 Mặc định:
-- NLP dataset: `nlp/app/output/samples_labeled.jsonl`
+- NLP dataset: `nlp/app/output/samples_reviewed.jsonl`
 - Answer smoke dataset: `nlp/app/input/answer_eval_smoke.jsonl`
 - Báo cáo: `nlp/app/output/unified_evaluation/unified_evaluation.json` và `.md`
 
