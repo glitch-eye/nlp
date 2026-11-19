@@ -662,9 +662,13 @@ class CourseAssistant:
                     frame.get("parse_status") == "PARSED" for frame in clause_frames
                 ) else "PARTIAL",
             }
+            calls_before = getattr(self.llm_client, "generation_count", 0)
             retrieval = self.retriever.retrieve_multi(
                 question, clauses, clause_frames
             )
+            for frame, clause_result in zip(clause_frames, retrieval.get("clauses", [])):
+                frame["retrieval_status"] = clause_result.get("retrieval_status")
+            semantic["chunk_support"] = retrieval.get("chunk_support", [])
             chunks = retrieval.get("chunks") or []
             scores = retrieval.get("scores") or []
             guard_result = _default_guard_check(question, question, semantic, retrieval)
@@ -764,7 +768,7 @@ class CourseAssistant:
                     dialogue_state.to_dict() if isinstance(dialogue_state, DialogueState)
                     else DialogueState.from_dict(dialogue_state).to_dict()
                 ),
-                "model_call_count": getattr(self.llm_client, "generation_count", None),
+                "model_call_count": max(0, getattr(self.llm_client, "generation_count", calls_before) - calls_before),
             }
 
         use_dialogue = dialogue_state is not None
