@@ -643,6 +643,9 @@ Quy tắc đánh giá:
 
 Đầu ra: `nlp/app/output/answer_evaluation/answer_evaluation.md` và `answer_evaluation.json`.
 
+Telemetry ghi lại từng lần gọi model: provider, model được yêu cầu/thực tế, API success hay fallback, loại lỗi và generation latency. Với câu multi-intent, evaluator gom toàn bộ call của từng clause và phân loại `real_api`, `mock`, `fallback`, `mixed`. Chỉ khi tất cả call đều được xác nhận gọi API thành công thì Judge mới được chạy; câu trả lời có bất kỳ clause mock/fallback nào sẽ bị bỏ qua. Báo cáo tách generation latency khỏi pipeline latency. Không lưu prompt, completion, API key hoặc request headers trong telemetry.
+
+
 ## 11. Cài đặt và kiểm thử
 
 Từ thư mục `python/`:
@@ -656,6 +659,7 @@ Chạy test evaluation được thêm cho module aggregate:
 
 ```bash
 python -m unittest discover -s test -p "test_evaluation*.py" -v
+python -m unittest discover -s test -p "test_answer_evaluation.py" -v
 ```
 
 Có thể chạy toàn bộ unittest suite:
