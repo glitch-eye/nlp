@@ -95,7 +95,7 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     json_path = output_dir / "unified_evaluation.json"
     md_path = output_dir / "unified_evaluation.md"
-    json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     markdown = [
         "# Unified Course Assistant Evaluation",
         "",
@@ -114,7 +114,7 @@ def main():
         "",
     ]
     markdown.extend("- " + item for item in report["interpretation"])
-    md_path.write_text("\\n".join(markdown) + "\\n", encoding="utf-8")
+    md_path.write_text("\n".join(markdown) + "\n", encoding="utf-8")
     print("Unified evaluation complete")
     print("JSON: {}".format(json_path))
     print("Markdown: {}".format(md_path))
