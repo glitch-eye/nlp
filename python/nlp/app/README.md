@@ -668,9 +668,9 @@ export OPENAI_API_KEY="your-api-key"
 export OPENAI_BASE_URL="https://api.openai.com/v1"
 export LLM_MODEL="gpt-4o-mini"
 
-python -m nlp.app.unified_evaluation \\
-  --provider openai \\
-  --require-real-model \\
+python -m nlp.app.unified_evaluation \
+  --provider openai \
+  --require-real-model \
   --max-samples 5
 ```
 
@@ -679,9 +679,9 @@ python -m nlp.app.unified_evaluation \\
 Có thể bật judge riêng (cần API key và model ID):
 
 ```bash
-python -m nlp.app.unified_evaluation \\
-  --provider openai --require-real-model \\
-  --judge --judge-model "judge-model-id" \\
+python -m nlp.app.unified_evaluation \
+  --provider openai --require-real-model \
+  --judge --judge-model "judge-model-id" \
   --max-samples 5
 ```
 
