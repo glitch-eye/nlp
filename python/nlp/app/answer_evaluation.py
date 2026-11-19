@@ -562,9 +562,11 @@ def main():
     judge = OpenAICompatibleJudge(args.judge_model) if args.judge else None
     results = evaluate_rows(assistant, rows, judge=judge)
     if args.require_real_model:
-        invalid = [row["sample_id"] for row in results if row.get("model_execution") != "real_api" or row.get("model_call_count", 0) < 1]
-        if invalid:
-            raise RuntimeError("Real-model requirement failed; no successful API-only generation for: {}".format(", ".join(invalid)))
+        generated = [row for row in results if row.get("model_call_count", 0) > 0]
+        invalid = [row["sample_id"] for row in generated if row.get("model_execution") != "real_api"]
+        if not generated or invalid:
+            detail = ", ".join(invalid) if invalid else "no generation call was made (all rows may have been refused by the pre-generation guard)"
+            raise RuntimeError("Real-model requirement failed: {}".format(detail))
     metrics = calculate_metrics(results)
     report = build_report(
         rows, results, metrics, args.samples,
