@@ -511,7 +511,110 @@ Theo lý thuyết **Chương 7 (Discourse Situation)** và **Chương 12 (Discou
 
 ---
 
+## 10.5. Xử lý câu hỏi nhiều intent – Grammar v5
+
+Grammar v5 nhận diện câu hỏi ghép khi có thể phân hoạch chúng thành các clause độc lập đều được CFG hiện tại chấp nhận. Splitter không chia máy móc tại mọi từ “và”: các cụm thuật ngữ hoặc cấu trúc so sánh vẫn có thể được giữ nguyên thành một intent nếu grammar nhận diện đó là một cấu trúc duy nhất.
+
+Luồng xử lý:
+
+1. Splitter đề xuất các clause và kiểm tra từng clause bằng CFG.
+2. Nếu chỉ có một clause hợp lệ, hệ thống giữ nguyên pipeline single-intent.
+3. Nếu có nhiều clause độc lập, mỗi clause được parse và tạo Semantic Frame riêng.
+4. Retriever và answer-generation pipeline chạy riêng cho từng clause.
+5. Assistant hợp nhất câu trả lời, chunks, sources và entities thành kết quả chung.
+
+**Lưu ý kiến trúc:** hiện tại đây là xử lý *per-clause*. Một câu hỏi có N intent có thể tạo N lần gọi `LLMClient.generate()` nếu các clause vượt qua pre-generation Answer Guard. Đây không phải thiết kế gom tất cả intent vào một prompt và gọi LLM đúng một lần. Guard có thể chặn một clause trước khi gọi model, vì vậy số lần gọi thực tế có thể nhỏ hơn số clause.
+
+Hợp đồng kết quả single-intent vẫn giữ các trường legacy `intent`, `entities`, `entity_ids`, `parse_status`. Kết quả multi-intent bổ sung `intent: MULTI_INTENT`, `intents` và `clauses`. Chi tiết: [GRAMMAR_V5_MULTI_INTENT.md](GRAMMAR_V5_MULTI_INTENT.md).
+
+## 10.6. Telemetry cho LLM generation
+
+`LLMClient` lưu metadata cho từng lần gọi `generate()` trong `call_history`:
+
+| Field | Ý nghĩa |
+|---|---|
+| `provider` | Provider được cấu hình |
+| `requested_model` | Model được yêu cầu |
+| `model_name` | Model thực tế hoặc tên mock/fallback |
+| `attempted_api` | Có thực sự bắt đầu thử gọi API hay không |
+| `used_api` | API trả về generation thành công |
+| `fallback` | Lần gọi chuyển sang Mock |
+| `error` | Loại lỗi, không chứa nội dung request |
+| `elapsed_seconds` | Thời gian của lần gọi generation |
+
+`generation_count` đếm số lần gọi `generate()`; `last_call` trả metadata của lần gần nhất. Telemetry không lưu prompt, câu hỏi, retrieved context hoặc API key. Một câu bị Answer Guard chặn trước bước generation sẽ không tạo telemetry record.
+
+Đối với đánh giá model thật, chỉ `used_api = true` mới được tính là API generation thành công. Chỉ chọn provider `openai` không đủ để chứng minh API đã được sử dụng, vì request có thể thất bại và fallback về Mock.
+
 ## 11. Mô tả cách đánh giá
+
+
+
+### 11.1 Parser, Semantic, Retrieval và deterministic end-to-end
+
+Chạy từ thư mục `python/`:
+
+~~~bash
+python -m nlp.app.evaluation
+python -m nlp.app.evaluation --samples nlp/app/output/samples_reviewed.jsonl --max-samples 100
+~~~
+
+Evaluator đo parse status/tree, intent/entity, retrieval Hit@k, answerability/refusal, citation và Answer Guard. Retrieval aggregate dùng query-only, không đưa gold intent/entity vào retriever. Mặc định pipeline deterministic dùng Mock để có thể tái lập.
+
+### 11.2 Đánh giá câu trả lời được sinh ra
+
+`answer_evaluation.py` chạy dữ liệu JSONL qua CourseAssistant và lưu provenance của các lần generation:
+
+~~~bash
+# Offline/mock evaluation
+python -m nlp.app.answer_evaluation --provider mock
+
+# Gọi API thật (có thể fallback nếu request lỗi)
+export OPENAI_API_KEY="YOUR_API_KEY"
+python -m nlp.app.answer_evaluation --provider openai --model gpt-4o-mini --max-samples 20
+
+# Bắt buộc tất cả hàng được đánh giá phải có API generation thành công, không fallback
+python -m nlp.app.answer_evaluation --provider openai --require-real-model --max-samples 20
+~~~
+
+Mặc định input là `nlp/app/input/answer_eval_smoke.jsonl`; có thể thay bằng `--samples PATH`. Output nằm trong `nlp/app/output/answer_evaluation/`.
+
+Các field quan trọng gồm `model_execution` (`real_api`, `mock`, `fallback`, `mixed` hoặc `unknown`), `model_call_count`, `model_calls`, `model_fallback`, `model_error`, `generation_elapsed_seconds` và `elapsed_seconds`.
+
+Với câu hỏi multi-intent, evaluation lấy các record mới phát sinh trong `call_history` trong suốt một lần `assistant.answer()`. Do mỗi clause chạy riêng, một hàng đánh giá có thể có nhiều generation calls và trạng thái `mixed` nếu có cả API thành công lẫn fallback.
+
+### 11.3 Unified evaluation
+
+`unified_evaluation.py` chạy parser/semantic/retrieval evaluation và answer-generation evaluation trong cùng một report:
+
+~~~bash
+python -m nlp.app.unified_evaluation --provider mock --max-samples 10
+
+# Chỉ dùng khi muốn xác minh generation bằng API thật
+python -m nlp.app.unified_evaluation \
+  --provider openai \
+  --require-real-model \
+  --max-samples 5
+~~~
+
+Tùy chọn chính: `--nlp-samples`, `--answer-samples`, `--data-dir`, `--grammar`, `--provider`, `--model`, `--judge`, `--judge-model`, `--max-samples`, `--require-real-model`, `--output-dir`.
+
+Mặc định NLP samples là `nlp/app/output/samples_reviewed.jsonl`, answer samples là `nlp/app/input/answer_eval_smoke.jsonl`. Output được ghi tại `nlp/app/output/unified_evaluation/unified_evaluation.json` và `unified_evaluation.md`.
+
+`--require-real-model` yêu cầu mỗi hàng được đánh giá phải có ít nhất một generation call và tất cả các call trong hàng đó phải là API thành công, không fallback. Hàng bị pre-generation guard chặn nên không có generation call sẽ làm chế độ này thất bại có chủ đích; điều đó không đồng nghĩa telemetry bị mất.
+
+### 11.4 Model-as-judge và cách đọc metric
+
+Có thể bật judge riêng bằng `--judge --judge-model MODEL_ID`. Judge dùng API riêng; nên chọn model khác model sinh câu trả lời nếu mục tiêu là giảm thiên lệch tự đánh giá. Judge score là đánh giá phụ trợ, không phải ground truth. Correctness/completeness chỉ được chấm khi có reference answer/points phù hợp và đã được kiểm chứng; output mock/fallback/mixed không được dùng để chấm chất lượng model thật.
+
+### 11.5 Nguyên tắc báo cáo
+
+- Chỉ dùng nhãn đã review độc lập cho headline metrics; phân biệt human-review với auto labels.
+- Grammar-generated samples hữu ích cho regression/coverage, nhưng không chứng minh độ chính xác trên câu hỏi tự nhiên ngoài đời.
+- Report rõ provider, model ID, số API calls thành công, fallback, số mẫu, dataset và cấu hình.
+- Không gộp kết quả Mock với kết quả model thật.
+- Multi-intent evaluation phải báo cáo số clause và số generation calls; không diễn giải per-clause calls như một lần gọi LLM duy nhất.
+- Citation hợp lệ chứng minh citation trỏ tới context đã gửi, không tự nó chứng minh entailment ngữ nghĩa đầy đủ.
 
 ---
 
@@ -527,3 +630,8 @@ Theo lý thuyết **Chương 7 (Discourse Situation)** và **Chương 12 (Discou
    * Hậu kiểm tra `unsupported_facts` phát hiện chính xác 100% các hành vi bịa đặt con số, ngày tháng, giờ giấc, email, URL và trích dẫn nguồn sai. Tuy nhiên, nếu một mô hình ngôn ngữ giữ nguyên các con số trong nguồn nhưng đảo ngược ý nghĩa mệnh đề bằng chữ (ví dụ đổi *"bắt buộc"* thành *"không bắt buộc"*), bộ lọc biểu thức chính quy chưa thể tự phát hiện mà cần tới mô hình Natural Language Inference (NLI).
 5. **Giới hạn của quản lý ngữ cảnh hội thoại cục bộ 1 bước (`DialogueState`):**
    * Mô-đun `dialogue.py` được thiết kế tối ưu cho các tham chiếu cục bộ liền kề (1-step anaphora & ellipsis resolution) theo đúng yêu cầu Phần III của đề bài. Hệ thống chưa hỗ trợ xếp chồng nhiều chủ đề hội thoại (dialogue stack) hoặc quay lại tham chiếu một thực thể đã nhắc tới cách đó 3–4 lượt hội thoại trước.
+
+
+6. **Giới hạn của Grammar v5 multi-intent:** splitter phụ thuộc vào CFG hiện có và chỉ tách khi tìm được các clause độc lập đều parse hợp lệ. Câu ghép khẩu ngữ, thiếu dấu câu hoặc có cấu trúc vượt grammar có thể vẫn bị xử lý như single-intent hoặc UNPARSED. Mỗi clause được retrieval/generation riêng; số lần gọi LLM có thể tăng theo số clause và không phải một request duy nhất cho toàn câu.
+
+7. **Giới hạn của real-model evaluation:** `--require-real-model` chỉ xác minh các generation calls đã diễn ra và thành công. Nếu Answer Guard chặn câu hỏi trước generation, không có API call để xác minh và hàng đó không thỏa chế độ real-model bắt buộc. Đây là hành vi guard, không phải lỗi telemetry. Model-as-judge cũng là tín hiệu tham khảo, không thay thế human-reviewed reference.
