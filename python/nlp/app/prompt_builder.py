@@ -49,7 +49,7 @@ def build_prompt(question, semantic, chunks):
             ]
         if semantic.get("chunk_support"):
             semantic_hint["chunk_support"] = semantic["chunk_support"]
-        hint = "GỢI Ý NGỮ NGHĨA (chỉ để định hướng, KHÔNG phải bằng chứng): {}\\n".format(
+        hint = "GỢI Ý NGỮ NGHĨA (chỉ để định hướng, KHÔNG phải bằng chứng): {}\n".format(
             json.dumps(semantic_hint, ensure_ascii=False)
         )
 
