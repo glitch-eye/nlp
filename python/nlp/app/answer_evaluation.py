@@ -152,13 +152,17 @@ class OpenAICompatibleJudge:
             for chunk in chunks
         ]
         reference_is_reviewed = row.get("reference_status") == "HUMAN_REVIEWED"
+        answerability_is_reviewed = (
+            row.get("label_status") == "REVIEWED"
+            and row.get("label_provenance") == "human_review"
+        )
         citation_check = result.get("citation_check") or {}
         raw_generated_answer = citation_check.get("raw_answer") or result.get("answer", "")
         payload = {
             "question": row["query"],
             "reference_answer": row.get("reference_answer") if reference_is_reviewed else None,
             "reference_points": row.get("reference_points") if reference_is_reviewed else None,
-            "expected_answerability": row.get("expected_answerability"),
+            "expected_answerability": row.get("expected_answerability") if answerability_is_reviewed else None,
             "retrieved_context": context,
             "generated_answer": raw_generated_answer,
             "guarded_user_visible_answer": result.get("answer", ""),
