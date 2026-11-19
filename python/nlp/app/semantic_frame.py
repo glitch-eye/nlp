@@ -82,6 +82,12 @@ def _single_frame_from_tree(tree, query, aliases=()):
         None,
     )
     intent = TREE_INTENT_TO_INTENT.get(root_question.label, "UNKNOWN") if root_question else "UNKNOWN"
+
+    # A topic question containing the comparison tail is a distinct intent.
+    # Keep the extracted chapter/topic entity IDs unchanged.
+    if root_question and root_question.label == "Q_TOPIC" and _all_nodes(tree, "TOPIC_COMPARE_TAIL"):
+        intent = "COMPARE_TOPIC"
+
     entities = []
     labels = (
         "COURSE_REF", "EXAM_REF", "WEEK_REF", "CHAPTER_REF", "TOPIC_REF",
