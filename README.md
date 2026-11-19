@@ -74,7 +74,10 @@ python -m nlp.app.run_parser \
 # Chạy retrieval trên data/sample_queries.txt
 python -m nlp.app.run_retrieval
 
-# Tạo/cập nhật hai bộ dữ liệu nhãn
+# Sinh tập synthetic samples_labeled.jsonl (đầu vào cho bước kế tiếp)
+python -m nlp.app.build_sample_dataset
+
+# Tạo/cập nhật tập nhãn cho retrieval/RAG evaluation
 python -m nlp.app.build_gold_labels
 ~~~
 
