@@ -1,0 +1,810 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-11-19T11:19:09.436033+00:00",
+  "mode": "real_api_required",
+  "nlp_pipeline": {
+    "schema_version": "1.0",
+    "generated_at": "2026-11-19T11:19:03.405307+00:00",
+    "runtime": {
+      "python": "3.13.3",
+      "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O"
+    },
+    "dataset": {
+      "path": "/Users/phamxuanbac/Downloads/project/nlp/sample-code-v1.0/python/nlp/app/output/samples_reviewed.jsonl",
+      "sha256": "03e3a4f9a629dbc04761de93b60666f06655f05e27b4b7990d534787815a5034",
+      "sample_count": 5,
+      "label_status_counts": {
+        "REVIEWED": 5
+      },
+      "answerability_counts": {
+        "EXPECTED_CONTEXT": 5
+      }
+    },
+    "config": {
+      "top_k": 3,
+      "min_score": 0.08,
+      "retrieval_uses_gold_entities": false,
+      "llm_provider": "mock",
+      "knowledge_base_mode": "full_dataset",
+      "knowledge_base_document_count": 76,
+      "knowledge_base_entity_count": null,
+      "stages": {
+        "parser": true,
+        "semantic": true,
+        "retrieval": true,
+        "end_to_end": true
+      }
+    },
+    "metrics": {
+      "parser": {
+        "evaluated": 5,
+        "correct": 5,
+        "accuracy": 1.0,
+        "confusion": [
+          {
+            "expected": "PARSED",
+            "actual": "PARSED",
+            "count": 5
+          }
+        ],
+        "tree_exact_match_count": 5,
+        "tree_exact_match_evaluated": 5,
+        "tree_exact_match_rate": 1.0,
+        "failures": []
+      },
+      "semantic": {
+        "intent_evaluated": 5,
+        "intent_correct": 5,
+        "intent_accuracy": 1.0,
+        "intent_match_definition": "exact set match across all clause intents",
+        "entity_true_positive": 2,
+        "entity_false_positive": 0,
+        "entity_false_negative": 0,
+        "entity_precision_micro": 1.0,
+        "entity_recall_micro": 1.0,
+        "entity_f1_micro": 1.0,
+        "failures": []
+      },
+      "retrieval": {
+        "summary": {
+          "sample_count": 5,
+          "top_k": 3,
+          "min_score": 0.08,
+          "query_mode": "original_query_only",
+          "expected_context_count": 5,
+          "hit_at_k_count": 4,
+          "hit_at_k": 0.8,
+          "no_relevant_context_count": 0,
+          "unknown_rejected_count": 0,
+          "unknown_rejection_rate": null,
+          "insufficient_context_count": 0,
+          "insufficient_context_retrieved_count": 0,
+          "by_intent": {
+            "GET_TOPIC": {
+              "sample_count": 3,
+              "expected_context_count": 3,
+              "hit_at_k_count": 2,
+              "unknown_bypassed_count": 0,
+              "insufficient_context_count": 0,
+              "insufficient_context_retrieved_count": 0
+            },
+            "GET_RESOURCE": {
+              "sample_count": 1,
+              "expected_context_count": 1,
+              "hit_at_k_count": 1,
+              "unknown_bypassed_count": 0,
+              "insufficient_context_count": 0,
+              "insufficient_context_retrieved_count": 0
+            },
+            "GET_ASSIGNMENT": {
+              "sample_count": 1,
+              "expected_context_count": 1,
+              "hit_at_k_count": 1,
+              "unknown_bypassed_count": 0,
+              "insufficient_context_count": 0,
+              "insufficient_context_retrieved_count": 0
+            }
+          }
+        },
+        "cases": [
+          {
+            "sample_id": "SYN2345",
+            "query": "cho hỏi Chương nào học về cụm tính từ?",
+            "intent": "GET_TOPIC",
+            "entities": [],
+            "expected_answerability": "EXPECTED_CONTEXT",
+            "expected_chunk_ids": [
+              "topics-chapter-1-introduction-to-natural-language-processing-0",
+              "topics-chapter-2-linguistic-background-english-syntax-1",
+              "topics-chapter-3-grammar-and-parsing-2",
+              "topics-chapter-4-features-and-augmented-grammar-3",
+              "topics-chapter-5-grammar-for-natural-language-4",
+              "topics-chapter-6-ambiguity-resolution-statistical-methods-5",
+              "topics-chapter-7-semantics-and-logical-form-6",
+              "topics-chapter-8-linking-syntax-and-semantics-7",
+              "topics-chapter-9-ambiguity-resolution-8",
+              "topics-chapter-10-other-strategies-for-semantic-interpretation-9",
+              "topics-chapter-11-knowledge-representation-and-reasoning-10",
+              "topics-chapter-12-discourse-context-and-reference-11"
+            ],
+            "retrieval_status": "FOUND",
+            "hit_at_k": true,
+            "retrieved": [
+              {
+                "chunk_id": "topics-chapter-1-introduction-to-natural-language-processing-0",
+                "score": 0.25,
+                "source": "topics.txt",
+                "section": "CHAPTER 1: INTRODUCTION TO NATURAL LANGUAGE PROCESSING"
+              },
+              {
+                "chunk_id": "topics-chapter-2-linguistic-background-english-syntax-1",
+                "score": 0.25,
+                "source": "topics.txt",
+                "section": "CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX"
+              },
+              {
+                "chunk_id": "topics-chapter-3-grammar-and-parsing-2",
+                "score": 0.25,
+                "source": "topics.txt",
+                "section": "CHAPTER 3: GRAMMAR AND PARSING"
+              }
+            ]
+          },
+          {
+            "sample_id": "SYN0877",
+            "query": "Parsing được giới thiệu ở tuần học nào?",
+            "intent": "GET_TOPIC",
+            "entities": [],
+            "expected_answerability": "EXPECTED_CONTEXT",
+            "expected_chunk_ids": [
+              "topics-chapter-1-introduction-to-natural-language-processing-0",
+              "topics-chapter-2-linguistic-background-english-syntax-1",
+              "topics-chapter-3-grammar-and-parsing-2",
+              "topics-chapter-4-features-and-augmented-grammar-3",
+              "topics-chapter-5-grammar-for-natural-language-4",
+              "topics-chapter-6-ambiguity-resolution-statistical-methods-5",
+              "topics-chapter-7-semantics-and-logical-form-6",
+              "topics-chapter-8-linking-syntax-and-semantics-7",
+              "topics-chapter-9-ambiguity-resolution-8",
+              "topics-chapter-10-other-strategies-for-semantic-interpretation-9",
+              "topics-chapter-11-knowledge-representation-and-reasoning-10",
+              "topics-chapter-12-discourse-context-and-reference-11"
+            ],
+            "retrieval_status": "FOUND",
+            "hit_at_k": true,
+            "retrieved": [
+              {
+                "chunk_id": "topics-chapter-3-grammar-and-parsing-2",
+                "score": 0.290427,
+                "source": "topics.txt",
+                "section": "CHAPTER 3: GRAMMAR AND PARSING"
+              },
+              {
+                "chunk_id": "topics-chapter-10-other-strategies-for-semantic-interpretation-9",
+                "score": 0.283912,
+                "source": "topics.txt",
+                "section": "CHAPTER 10: OTHER STRATEGIES FOR SEMANTIC INTERPRETATION"
+              },
+              {
+                "chunk_id": "topics-chapter-4-features-and-augmented-grammar-3",
+                "score": 0.278954,
+                "source": "topics.txt",
+                "section": "CHAPTER 4: FEATURES AND AUGMENTED GRAMMAR"
+              }
+            ]
+          },
+          {
+            "sample_id": "SYN7466",
+            "query": "tài liệu của phần đó là gì?",
+            "intent": "GET_RESOURCE",
+            "entities": [],
+            "expected_answerability": "EXPECTED_CONTEXT",
+            "expected_chunk_ids": [
+              "resources-textbook-1-0",
+              "resources-textbook-2-1",
+              "resources-textbook-3-2",
+              "resources-reference-1-3",
+              "resources-reference-2-4",
+              "resources-reference-3-5",
+              "resources-reference-4-6",
+              "resources-reference-5-7",
+              "resources-study-note-8"
+            ],
+            "retrieval_status": "FOUND",
+            "hit_at_k": true,
+            "retrieved": [
+              {
+                "chunk_id": "resources-textbook-3-2",
+                "score": 0.279689,
+                "source": "resources.txt",
+                "section": "TEXTBOOK 3"
+              },
+              {
+                "chunk_id": "resources-textbook-1-0",
+                "score": 0.25,
+                "source": "resources.txt",
+                "section": "TEXTBOOK 1"
+              },
+              {
+                "chunk_id": "resources-textbook-2-1",
+                "score": 0.25,
+                "source": "resources.txt",
+                "section": "TEXTBOOK 2"
+              }
+            ]
+          },
+          {
+            "sample_id": "SYN4485",
+            "query": "cho hỏi Sinh viên cần hoàn thành những bài tập nào?",
+            "intent": "GET_ASSIGNMENT",
+            "entities": [],
+            "expected_answerability": "EXPECTED_CONTEXT",
+            "expected_chunk_ids": [
+              "assignments-luu-y-0",
+              "assignments-part-i-grammar-and-parser-1",
+              "assignments-part-ii-semantic-interpretation-and-qa-2",
+              "assignments-part-iii-local-discourse-context-3",
+              "assignments-part-iv-evaluation-4",
+              "assignments-llm-rag-extension-5"
+            ],
+            "retrieval_status": "FOUND",
+            "hit_at_k": true,
+            "retrieved": [
+              {
+                "chunk_id": "assignments-luu-y-0",
+                "score": 0.34778,
+                "source": "assignments.txt",
+                "section": "Lưu ý"
+              },
+              {
+                "chunk_id": "assignments-part-i-grammar-and-parser-1",
+                "score": 0.307369,
+                "source": "assignments.txt",
+                "section": "PART I - Grammar and Parser"
+              },
+              {
+                "chunk_id": "assignments-llm-rag-extension-5",
+                "score": 0.2951,
+                "source": "assignments.txt",
+                "section": "LLM/RAG EXTENSION"
+              }
+            ]
+          },
+          {
+            "sample_id": "SYN4212",
+            "query": "chương 7 có đề cập đến PCFG không?",
+            "intent": "GET_TOPIC",
+            "entities": [
+              "CH07",
+              "PCFG"
+            ],
+            "expected_answerability": "EXPECTED_CONTEXT",
+            "expected_chunk_ids": [
+              "topics-chapter-7-semantics-and-logical-form-6"
+            ],
+            "retrieval_status": "FOUND",
+            "hit_at_k": false,
+            "retrieved": [
+              {
+                "chunk_id": "topics-chapter-3-grammar-and-parsing-2",
+                "score": 0.32632,
+                "source": "topics.txt",
+                "section": "CHAPTER 3: GRAMMAR AND PARSING"
+              },
+              {
+                "chunk_id": "faq-q4-3",
+                "score": 0.308719,
+                "source": "faq.txt",
+                "section": "Q4"
+              },
+              {
+                "chunk_id": "topics-chapter-6-ambiguity-resolution-statistical-methods-5",
+                "score": 0.303003,
+                "source": "topics.txt",
+                "section": "CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS"
+              }
+            ]
+          }
+        ]
+      },
+      "end_to_end": {
+        "sample_count": 5,
+        "answerable_count": 5,
+        "retrieval_hit_count": 4,
+        "retrieval_hit_rate": 0.8,
+        "answered_count": 5,
+        "answered_on_answerable_count": 5,
+        "refusal_correct_count": 0,
+        "should_refuse_count": 0,
+        "refusal_accuracy": null,
+        "answered_with_valid_citation_count": 5,
+        "citation_validity_rate": 1.0,
+        "needs_review_count": 0,
+        "over_answered_count": 0,
+        "status_confusion": [
+          {
+            "expected": "EXPECTED_CONTEXT",
+            "actual": "ANSWERED",
+            "count": 5
+          }
+        ],
+        "failures": [
+          {
+            "sample_id": "SYN4212",
+            "query": "chương 7 có đề cập đến PCFG không?",
+            "expected": "EXPECTED_CONTEXT",
+            "actual_status": "ANSWERED",
+            "expected_chunks": [
+              "topics-chapter-7-semantics-and-logical-form-6"
+            ],
+            "retrieved_chunks": [
+              "topics-chapter-3-grammar-and-parsing-2",
+              "topics-chapter-6-ambiguity-resolution-statistical-methods-5",
+              "faq-q4-3"
+            ]
+          }
+        ]
+      }
+    },
+    "rag_evidence": [
+      "2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl) [ĐO TRỰC TIẾP]:",
+      "   - Tổng số mẫu kiểm thử                         : 5",
+      "   - Trạng thái nhãn                              : REVIEWED=5",
+      "   - Hit@k (có chunk kỳ vọng trong top-k)         : 4 / 5 (80.0%)",
+      "   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 5 / 5 (100.0%)",
+      "   - Từ chối khi nhãn yêu cầu từ chối             : 0 / 0 (n/a)",
+      "   - Câu ANSWERED có trích dẫn hợp lệ             : 5 / 5 (100.0%)",
+      "   - Số nguồn trung bình mỗi câu ANSWERED         : 1.20 (chỉ tính nguồn thực sự được trích dẫn)",
+      "   - Câu bị đánh dấu NEEDS_REVIEW                 : 0",
+      "   - Ma trận (nhãn kỳ vọng -> trạng thái thực tế):",
+      "       EXPECTED_CONTEXT       -> ANSWERED               : 5",
+      "   Lưu ý: nhãn do build_sample_dataset gán tự động (AUTO_LABEL_REQUIRES_REVIEW), chưa rà soát thủ công.",
+      "",
+      "II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; model = mock-grounded-extractive-v1)",
+      "----------------------------------------------------------------------",
+      "1. Câu trả lời đúng và có căn cứ (Grounded Answer):",
+      "   - Câu hỏi   : \"Môn NLP có bao nhiêu tín chỉ?\"",
+      "   - Truy xuất : faq-q1-0, course-info-course-description-2, course-info-course-id-co3085-1",
+      "   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q1, course_info.txt / course_description",
+      "   - Trả lời   : \"Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ. [Nguồn: faq.txt / Q1] Ngoài ra: course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phầ…\"",
+      "   - Câu hỏi   : \"Chương 4 nói về gì?\"",
+      "   - Truy xuất : faq-q5-4, faq-q7-6, faq-q8-7",
+      "   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q5",
+      "   - Trả lời   : \"Chương 4. [Nguồn: faq.txt / Q5]\"",
+      "   - Câu hỏi   : \"Tuần 5 học những nội dung gì?\"",
+      "   - Truy xuất : faq-q10-9, schedule-week-06-6, faq-q11-10",
+      "   - Trạng thái: ANSWERED   Nguồn được trích dẫn: schedule.txt / WEEK 06",
+      "   - Trả lời   : \"WEEK 06 học Chapter 5 với các nội dung: - auxiliary verbs and verb phrases - movement phenomena - handling questions in CFG - relative clauses. [Nguồn: schedule.txt / WEEK 06]\"",
+      "",
+      "2. Câu hỏi không có thông tin trong Knowledge Base / ngoài phạm vi:",
+      "   - [câu ngoài miền (mẫu của văn phạm)] \"Hôm nay ở TP.HCM có mưa không?\"",
+      "       status=NO_RELEVANT_CONTEXT, retrieval_status=NO_RELEVANT_CONTEXT, sources=(không có)",
+      "       Trả lời: \"Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085 để trả lời câu hỏi: 'Hôm nay ở TP.HCM có mưa không?'.\"",
+      "   - [thuộc tính không có trong dữ liệu] \"Phòng học của môn CO3085 ở đâu?\"",
+      "       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=faq.txt / Q1, course_info.txt / course_description, resources.txt / TEXTBOOK 3",
+      "       Trả lời: \"Các đoạn tài liệu truy xuất được không có thông tin cụ thể về phòng học cho câu hỏi này. [Nguồn: faq.txt / Q1]\"",
+      "   - [mốc thời gian không có trong dữ liệu] \"Deadline của bài tập lớn là khi nào?\"",
+      "       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=assignments.txt / Lưu ý, regulations.txt / Lưu ý, assignments.txt / LLM/RAG EXTENSION",
+      "       Trả lời: \"Cơ sở tri thức hiện tại không có ngày giờ hạn nộp chính thức cho bài tập lớn (tài liệu chỉ ghi nhận đây là dữ liệu mẫu phục vụ Course Assistant và cần thay bằng lịch chính thức của lớp). [Nguồn: assi…\"",
+      "",
+      "3. Nguy cơ sinh thông tin không có trong dữ liệu (Hallucination) - thử với model GIẢ LẬP có kịch bản:",
+      "   (Model giả lập chỉ dùng để kiểm tra answer_guard; KHÔNG phải kết quả của một LLM thật.)",
+      "   - Mô hình bịa ngày hạn nộp nhưng trích dẫn đúng nguồn | Câu hỏi: \"Bài tập lớn có những yêu cầu gì?\"",
+      "       Model trả về : \"Bài tập lớn gồm nhiều phần. Hạn nộp cuối cùng là 15/12/2026. [Nguồn: assignments.txt / Lưu ý]\"",
+      "       Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=['15/12/2026']",
+      "       Người dùng thấy: \"Câu trả lời do mô hình sinh ra chứa thông tin không có trong tài liệu truy xuất (15/12/2026), nên hệ thống không đưa ra để tránh sai lệch.\"",
+      "   - Mô hình trích dẫn nguồn không được gửi vào prompt | Câu hỏi: \"Bài tập lớn có những yêu cầu gì?\"",
+      "       Model trả về : \"Bài tập lớn gồm nhiều phần. [Nguồn: assignments.txt / MỤC 9]\"",
+      "       Guard        : status=NEEDS_REVIEW, trích dẫn sai=['[Nguồn: assignments.txt / MỤC 9]'], thông tin không có trong nguồn=[]",
+      "       Người dùng thấy: \"Bài tập lớn gồm nhiều phần.\"",
+      "   - Mô hình trả lời không trích dẫn nguồn | Câu hỏi: \"Bài tập lớn có những yêu cầu gì?\"",
+      "       Model trả về : \"Bài tập lớn gồm nhiều phần.\"",
+      "       Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=[]",
+      "       Người dùng thấy: \"Bài tập lớn gồm nhiều phần.\"",
+      "   - Mô hình tuân thủ prompt, trả INSUFFICIENT_CONTEXT | Câu hỏi: \"Python 3.12 có gì mới?\"",
+      "       Model trả về : \"INSUFFICIENT_CONTEXT\"",
+      "       Guard        : status=INSUFFICIENT_CONTEXT, trích dẫn sai=[], thông tin không có trong nguồn=[]",
+      "       Người dùng thấy: \"Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.\"",
+      "",
+      "III. TRƯỜNG HỢP SAI / HẠN CHẾ (liệt kê từ kết quả chạy thật)",
+      "----------------------------------------------------------------------",
+      "1. Câu ngoài miền diễn đạt lại (không nằm trong mẫu của văn phạm): từ chối đúng 3 / 10",
+      "   - Vẫn bị trả lời [ANSWERED]: \"Thời tiết hôm nay thế nào?\" -> \"Lưu ý: Các quy định chi tiết về deadline, format nộp bài và chính sách lớp học trong file này là dữ liệu MẪU …\"",
+      "   - Vẫn bị trả lời [ANSWERED]: \"Cho tôi công thức nấu phở\" -> \"external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập. [Nguồn: regulation…\"",
+      "   - Vẫn bị trả lời [ANSWERED]: \"Bạn có thể viết giúp tôi một bài thơ không?\" -> \"Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi. …\"",
+      "   - Vẫn bị trả lời [ANSWERED]: \"Python 3.12 có gì mới?\" -> \"REFERENCE 2 — 'Natural Language Processing with Python' (Tác giả: Steven Bird; Ewan Klein; Edward Loper), côn…\"",
+      "   - Vẫn bị trả lời [ANSWERED]: \"Làm sao để nấu cơm cho ngon?\" -> \"assignment_sharing: Không được sao chép hoặc chia sẻ bài làm giữa các nhóm. [Nguồn: regulations.txt / assignm…\"",
+      "   - Vẫn bị trả lời [ANSWERED]: \"Ai là tổng thống Mỹ hiện nay?\" -> \"AI_usage: Sinh viên phải khai báo việc sử dụng AI trong báo cáo, nghiên cứu và quá trình thực hiện theo quy đ…\"",
+      "   - Vẫn bị trả lời [ANSWERED]: \"Phim nào đang chiếu rạp?\" -> \"detailed_learning_outcomes: LO1.1 - Hiểu cấu trúc hệ thống NLP, ứng dụng và cách đánh giá hệ thống hiểu ngôn …\"",
+      "   Nguyên nhân: bộ lọc trước LLM chỉ dựa trên điểm truy xuất và độ phủ từ vựng; mock không đánh giá được",
+      "   sự liên quan. Với model thật, prompt yêu cầu trả INSUFFICIENT_CONTEXT và answer_guard xử lý (xem II.3, trường hợp cuối).",
+      "2. Truy xuất sai (không có chunk kỳ vọng trong top-k): 1 / 5",
+      "   - SYN4212 \"chương 7 có đề cập đến PCFG không?\": kỳ vọng ['topics-chapter-7-semantics-and-logical-form-6'] ; nhận ['topics-chapter-3-grammar-and-parsing-2', 'topics-chapter-6-ambiguity-resolution-statistical-methods-5', 'faq-q4-3']",
+      "3. Nhãn INSUFFICIENT_CONTEXT nhưng hệ thống vẫn trả lời: 0 / 0",
+      "   Phân bố theo intent: {}",
+      "   Cần rà soát thủ công: nếu nguồn được trích dẫn thực sự chứa đáp án thì lỗi nằm ở nhãn tự động chứ không ở hệ thống.",
+      "4. Câu hội thoại mà văn phạm Phần I không nhận (UNPARSED): 0"
+    ],
+    "interpretation_notes": [
+      "Metrics measure the supplied dataset; they are not proof of production quality.",
+      "AUTO_LABEL_REQUIRES_REVIEW labels must be manually audited before academic claims.",
+      "Retrieval evaluation uses the original query without gold intent/entity hints.",
+      "End-to-end evaluation uses the offline mock when launched by this CLI; it is not a real-LLM quality score."
+    ]
+  },
+  "answer_generation": {
+    "schema_version": "1.0",
+    "generated_at": "2026-11-19T11:19:09.435976+00:00",
+    "dataset": {
+      "path": "/Users/phamxuanbac/Downloads/project/nlp/sample-code-v1.0/python/nlp/app/input/answer_eval_smoke.jsonl",
+      "sample_count": 5,
+      "label_status_counts": {
+        "UNREVIEWED": 5
+      },
+      "provenance_counts": {
+        "smoke_test": 5
+      },
+      "reference_answer_count": 0,
+      "human_reviewed_reference_count": 0,
+      "reference_points_count": 0
+    },
+    "models": {
+      "generator": "gemini-3.5-flash-lite",
+      "judge": null
+    },
+    "knowledge_base": {
+      "mode": "full_dataset",
+      "document_count": 76
+    },
+    "metrics": {
+      "sample_count": 5,
+      "labelled_count": 0,
+      "review_label_count": 5,
+      "human_reviewed_label_count": 0,
+      "unverified_label_count": 5,
+      "human_reviewed_reference_count": 0,
+      "answerable_count": 0,
+      "expected_refusal_count": 0,
+      "answered_count": 3,
+      "refused_count": 2,
+      "needs_review_count": 0,
+      "answer_rate_on_answerable": null,
+      "correct_refusal_rate": null,
+      "over_answered_count": 0,
+      "retrieval_hit_at_k": null,
+      "retrieval_micro_precision": null,
+      "retrieval_micro_recall": null,
+      "citation_validity_rate": 1.0,
+      "citation_checked_count": 3,
+      "judge_score_means": {
+        "correctness": {
+          "mean": null,
+          "n": 0
+        },
+        "faithfulness": {
+          "mean": null,
+          "n": 0
+        },
+        "relevancy": {
+          "mean": null,
+          "n": 0
+        },
+        "completeness": {
+          "mean": null,
+          "n": 0
+        }
+      },
+      "judge_hallucination_rate": null,
+      "judge_evaluated_count": 0,
+      "judge_error_count": 0,
+      "judge_skipped_count": 0,
+      "fallback_count": 0,
+      "mock_answer_count": 0,
+      "real_model_answer_count": 5,
+      "mixed_model_answer_count": 0,
+      "model_generation_call_count": 5,
+      "successful_api_call_count": 5,
+      "mean_generation_latency_seconds": 1.1904628000000002,
+      "mean_pipeline_latency_seconds": 1.19512,
+      "status_confusion": []
+    },
+    "results": [
+      {
+        "sample_id": "SMOKE-001",
+        "query": "CO3085 có mấy tín chỉ?",
+        "expected_answerability": "REVIEW",
+        "label_status": "UNREVIEWED",
+        "label_provenance": "smoke_test",
+        "expected_chunk_ids": [],
+        "retrieved_chunk_ids": [
+          "faq-q1-0",
+          "course-info-course-id-co3085-1",
+          "course-info-course-description-2"
+        ],
+        "parse_status": "PARSED",
+        "retrieval_status": "FOUND",
+        "actual_status": "ANSWERED",
+        "answer": "Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ [Nguồn: faq.txt / Q1].",
+        "raw_generated_answer": "Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ [Nguồn: faq.txt / Q1].",
+        "sources": [
+          {
+            "source": "faq.txt",
+            "section": "Q1"
+          }
+        ],
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ [Nguồn: faq.txt / Q1].",
+          "sources": [
+            {
+              "source": "faq.txt",
+              "section": "Q1"
+            }
+          ],
+          "valid_citations": [
+            [
+              "faq.txt",
+              "Q1"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "model_name": "gemini-3.5-flash-lite",
+        "model_execution": "real_api",
+        "model_call_count": 1,
+        "model_calls": [
+          {
+            "provider": "openai",
+            "requested_model": "gemini-3.5-flash-lite",
+            "model_name": "gemini-3.5-flash-lite",
+            "used_api": true,
+            "fallback": false,
+            "error": null,
+            "elapsed_seconds": 1.313144
+          }
+        ],
+        "model_fallback": false,
+        "model_error": null,
+        "generation_elapsed_seconds": 1.313144,
+        "elapsed_seconds": 1.3157,
+        "reference_status": "UNVERIFIED",
+        "judge": null,
+        "judge_error": null
+      },
+      {
+        "sample_id": "SMOKE-002",
+        "query": "Chương 6 nói về gì?",
+        "expected_answerability": "REVIEW",
+        "label_status": "UNREVIEWED",
+        "label_provenance": "smoke_test",
+        "expected_chunk_ids": [],
+        "retrieved_chunk_ids": [
+          "faq-q4-3",
+          "faq-q7-6",
+          "faq-q8-7"
+        ],
+        "parse_status": "PARSED",
+        "retrieval_status": "FOUND",
+        "actual_status": "ANSWERED",
+        "answer": "Chương 6 nói về các phương pháp thống kê [Nguồn: faq.txt / Q4].",
+        "raw_generated_answer": "Chương 6 nói về các phương pháp thống kê [Nguồn: faq.txt / Q4].",
+        "sources": [
+          {
+            "source": "faq.txt",
+            "section": "Q4"
+          }
+        ],
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "Chương 6 nói về các phương pháp thống kê [Nguồn: faq.txt / Q4].",
+          "sources": [
+            {
+              "source": "faq.txt",
+              "section": "Q4"
+            }
+          ],
+          "valid_citations": [
+            [
+              "faq.txt",
+              "Q4"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "model_name": "gemini-3.5-flash-lite",
+        "model_execution": "real_api",
+        "model_call_count": 1,
+        "model_calls": [
+          {
+            "provider": "openai",
+            "requested_model": "gemini-3.5-flash-lite",
+            "model_name": "gemini-3.5-flash-lite",
+            "used_api": true,
+            "fallback": false,
+            "error": null,
+            "elapsed_seconds": 1.157616
+          }
+        ],
+        "model_fallback": false,
+        "model_error": null,
+        "generation_elapsed_seconds": 1.157616,
+        "elapsed_seconds": 1.1631,
+        "reference_status": "UNVERIFIED",
+        "judge": null,
+        "judge_error": null
+      },
+      {
+        "sample_id": "SMOKE-003",
+        "query": "Tuần 5 học những nội dung gì?",
+        "expected_answerability": "REVIEW",
+        "label_status": "UNREVIEWED",
+        "label_provenance": "smoke_test",
+        "expected_chunk_ids": [],
+        "retrieved_chunk_ids": [
+          "faq-q10-9",
+          "schedule-week-06-6",
+          "faq-q11-10"
+        ],
+        "parse_status": "PARSED",
+        "retrieval_status": "FOUND",
+        "actual_status": "INSUFFICIENT_CONTEXT",
+        "answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
+        "raw_generated_answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
+        "sources": [],
+        "citation_check": {
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
+          "sources": [],
+          "valid_citations": [],
+          "invalid_citations": []
+        },
+        "model_name": "gemini-3.5-flash-lite",
+        "model_execution": "real_api",
+        "model_call_count": 1,
+        "model_calls": [
+          {
+            "provider": "openai",
+            "requested_model": "gemini-3.5-flash-lite",
+            "model_name": "gemini-3.5-flash-lite",
+            "used_api": true,
+            "fallback": false,
+            "error": null,
+            "elapsed_seconds": 1.033889
+          }
+        ],
+        "model_fallback": false,
+        "model_error": null,
+        "generation_elapsed_seconds": 1.033889,
+        "elapsed_seconds": 1.0394,
+        "reference_status": "UNVERIFIED",
+        "judge": null,
+        "judge_error": null
+      },
+      {
+        "sample_id": "SMOKE-004",
+        "query": "Chương 4 nói về gì và Tuần 5 học gì?",
+        "expected_answerability": "REVIEW",
+        "label_status": "UNREVIEWED",
+        "label_provenance": "smoke_test",
+        "expected_chunk_ids": [],
+        "retrieved_chunk_ids": [
+          "faq-q5-4",
+          "schedule-week-06-6",
+          "faq-q7-6"
+        ],
+        "parse_status": "PARSED",
+        "retrieval_status": "FOUND",
+        "actual_status": "ANSWERED",
+        "answer": "- Chương 4 nói về Features và Augmented Grammar [Nguồn: faq.txt / Q5].\n- Ý Tuần 5 học gì: Context không hỗ trợ cung cấp thông tin về nội dung học của Tuần 5.",
+        "raw_generated_answer": "- Chương 4 nói về Features và Augmented Grammar [Nguồn: faq.txt / Q5].\n- Ý Tuần 5 học gì: Context không hỗ trợ cung cấp thông tin về nội dung học của Tuần 5.",
+        "sources": [
+          {
+            "source": "faq.txt",
+            "section": "Q5"
+          }
+        ],
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "- Chương 4 nói về Features và Augmented Grammar [Nguồn: faq.txt / Q5].\n- Ý Tuần 5 học gì: Context không hỗ trợ cung cấp thông tin về nội dung học của Tuần 5.",
+          "sources": [
+            {
+              "source": "faq.txt",
+              "section": "Q5"
+            }
+          ],
+          "valid_citations": [
+            [
+              "faq.txt",
+              "Q5"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "model_name": "gemini-3.5-flash-lite",
+        "model_execution": "real_api",
+        "model_call_count": 1,
+        "model_calls": [
+          {
+            "provider": "openai",
+            "requested_model": "gemini-3.5-flash-lite",
+            "model_name": "gemini-3.5-flash-lite",
+            "used_api": true,
+            "fallback": false,
+            "error": null,
+            "elapsed_seconds": 1.313176
+          }
+        ],
+        "model_fallback": false,
+        "model_error": null,
+        "generation_elapsed_seconds": 1.313176,
+        "elapsed_seconds": 1.32,
+        "reference_status": "UNVERIFIED",
+        "judge": null,
+        "judge_error": null
+      },
+      {
+        "sample_id": "SMOKE-005",
+        "query": "Thời tiết TP.HCM hôm nay thế nào?",
+        "expected_answerability": "REVIEW",
+        "label_status": "UNREVIEWED",
+        "label_provenance": "smoke_test",
+        "expected_chunk_ids": [],
+        "retrieved_chunk_ids": [
+          "regulations-luu-y-0",
+          "faq-q15-14",
+          "faq-q14-13"
+        ],
+        "parse_status": "UNPARSED",
+        "retrieval_status": "FOUND",
+        "actual_status": "INSUFFICIENT_CONTEXT",
+        "answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
+        "raw_generated_answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
+        "sources": [],
+        "citation_check": {
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
+          "sources": [],
+          "valid_citations": [],
+          "invalid_citations": []
+        },
+        "model_name": "gemini-3.5-flash-lite",
+        "model_execution": "real_api",
+        "model_call_count": 1,
+        "model_calls": [
+          {
+            "provider": "openai",
+            "requested_model": "gemini-3.5-flash-lite",
+            "model_name": "gemini-3.5-flash-lite",
+            "used_api": true,
+            "fallback": false,
+            "error": null,
+            "elapsed_seconds": 1.134489
+          }
+        ],
+        "model_fallback": false,
+        "model_error": null,
+        "generation_elapsed_seconds": 1.134489,
+        "elapsed_seconds": 1.1374,
+        "reference_status": "UNVERIFIED",
+        "judge": null,
+        "judge_error": null
+      }
+    ],
+    "limitations": [
+      "A trace-fallback Knowledge Base is not equivalent to the full course dataset; do not report its retrieval scores as representative.",
+      "Citation validity only checks whether a source label was among the chunks sent to the model; it does not prove semantic support.",
+      "The answer guard's number/date checks do not detect every unsupported natural-language claim.",
+      "LLM-as-judge is a secondary signal, not ground truth; calibrate it against human-reviewed examples.",
+      "Correctness/completeness are scored against references only when reference_status is HUMAN_REVIEWED; unverified reference text is withheld from the judge.",
+      "Auto-labelled and data-source-reviewed rows are not equivalent to independently human-reviewed answer gold.",
+      "A fallback answer is not an output from the requested real model and must be excluded from real-model quality claims."
+    ]
+  },
+  "interpretation": [
+    "Parser, semantic and retrieval metrics are evaluated separately from generated-answer quality.",
+    "Only REVIEWED rows with label_provenance=human_review enter answerability/retrieval headline metrics.",
+    "Smoke rows are unreviewed diagnostics and must not be presented as gold evaluation.",
+    "LLM-as-judge is diagnostic only and is skipped for mock, fallback or mixed-model outputs.",
+    "A real-model run is verified only when successful API call telemetry is recorded and no fallback is present on generated rows."
+  ]
+}
