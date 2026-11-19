@@ -8,9 +8,9 @@
 * **Khoa:** Khoa Khoa học và Kỹ thuật Máy tính – Trường Đại học Bách khoa – ĐHQG TP.HCM
 * **Danh sách thành viên:**
   - Sinh viên 1: `Nguyễn Văn Bảo` – MSSV: `2433037`
-  - Sinh viên 2: `[Họ và tên]` – MSSV: `[MSSV2]`
-  - Sinh viên 3: `[Họ và tên]` – MSSV: `[MSSV3]`
-  - Sinh viên 4: `[Họ và tên]` – MSSV: `[MSSV4]`
+  - Sinh viên 2: `Phạm Xuân Bắc` – MSSV: `2310280`
+  - Sinh viên 3: `[Bổ sung họ tên]` – MSSV: `[Bổ sung MSSV]`
+  - Sinh viên 4: `[Bổ sung họ tên]` – MSSV: `[Bổ sung MSSV]`
 
 ---
 
@@ -31,10 +31,8 @@ pip install -e .
 ### 2.3 Cài đặt và chạy qua Docker
 ```bash
 # Build Docker image từ thư mục gốc của repository
-docker build -t nlp-course-assistant python/
-
-# Chạy container với mount thư mục input và output
-docker run --rm -v "$(pwd)/output:/nlp/output" -v "$(pwd)/input:/nlp/input" nlp-course-assistant
+# Dockerfile hiện vẫn giữ entrypoint hcommon.cli mẫu, chưa chạy Course Assistant.
+# Dùng cài đặt pip ở mục 2.2 để chạy ứng dụng; chỉ bật Docker sau khi Dockerfile được sửa/test.
 ```
 
 ---
@@ -68,8 +66,10 @@ python -m nlp.app.run_assistant --data-dir data --interactive
 python -m nlp.app.api --host 127.0.0.1 --port 8000
 
 # 7. Chạy bộ kiểm thử tự động (46 test cases)
-python -m pytest
+python -m unittest discover -s test -v
 ```
+
+Có thể chạy bằng `pytest` nếu đã cài thêm, nhưng `pytest` không nằm trong `requirements.txt` hiện tại. Không nên ghi cố định số lượng test trong README vì số test thay đổi theo nhánh.
 
 ---
 
@@ -463,7 +463,7 @@ Hàm `build_prompt(question, chunks, semantic=None, dialogue_state=None)` đóng
 4. **Câu hỏi đã giải tham chiếu (`resolved_query`):** Đặt ở cuối prompt để mô hình tập trung trả lời.
 
 ### 10.3 Cơ chế Answer Guard 3 lớp chống Hallucination (`answer_guard.py`, `assistant.py`)
-Để giải quyết triệt để nguy cơ sinh ảo (*hallucination*) của LLM, hệ thống áp dụng 3 lớp kiểm duyệt độc lập:
+Để giảm nguy cơ sinh ảo (*hallucination*) của LLM, hệ thống áp dụng 3 lớp kiểm duyệt độc lập:
 * **Lớp 1 – Tiền kiểm tra trước khi gọi LLM (`check_context`):**
   1. Nếu `retrieval_status != "FOUND"` hoặc danh sách `chunks` rỗng $\rightarrow$ trả về ngay `NO_RELEVANT_CONTEXT`.
   2. Nếu văn phạm Phần I phân loại câu hỏi vào `intent == "UNKNOWN"` $\rightarrow$ trả về ngay `NO_RELEVANT_CONTEXT`.
@@ -513,17 +513,103 @@ Theo lý thuyết **Chương 7 (Discourse Situation)** và **Chương 12 (Discou
 
 ## 11. Mô tả cách đánh giá
 
+Việc đánh giá được chia thành các tầng để tránh nhầm lẫn giữa chất lượng parser, retrieval, hành vi RAG/Answer Guard và chất lượng câu trả lời do LLM sinh ra.
+
+### 11.1. Tạo dữ liệu có nhãn
+
+Chạy từ thư mục `python/`:
+
+~~~bash
+# Sinh tập câu từ grammar và nhãn tự động
+python -m nlp.app.utils
+python -m nlp.app.build_sample_dataset
+
+# Tạo tập nhãn phục vụ retrieval/RAG evaluation
+python -m nlp.app.build_gold_labels
+~~~
+
+`build_gold_labels.py` hiện tạo:
+- `nlp/app/input/test_labeled.jsonl`: 114 câu được tuyển chọn theo nhóm benchmark, paraphrase, câu thiếu dữ liệu và câu ngoài miền.
+- `nlp/app/output/samples_gold_labeled.jsonl`: các câu synthetic từ `samples_labeled.jsonl` được tính lại expected entities, chunk IDs và answerability.
+
+**Cảnh báo về nhãn:** script gán `label_status="GOLD_REVIEWED"` bằng quy tắc/parser/knowledge base; nhãn này không đồng nghĩa con người đã rà soát độc lập từng mẫu. Cần audit hoặc human-review trước khi gọi chúng là gold labels trong báo cáo học thuật. Tập synthetic không phải test set độc lập. Tập 114 câu được tuyển chọn riêng nhưng cũng cần xác minh nhãn/reference trước khi dùng làm gold standard chính thức.
+
+### 11.2. Retrieval evaluation
+
+~~~bash
+# Tập 114 câu được tuyển chọn
+python -m nlp.app.run_retrieval \
+  --labeled-jsonl nlp/app/input/test_labeled.jsonl \
+  --output nlp/app/output/retrieval_test.txt \
+  --evaluation-output nlp/app/output/retrieval_test_eval.json
+
+# Tập synthetic đã gán lại nhãn
+python -m nlp.app.run_retrieval \
+  --labeled-jsonl nlp/app/output/samples_gold_labeled.jsonl \
+  --output nlp/app/output/retrieval_synthetic.txt \
+  --evaluation-output nlp/app/output/retrieval_synthetic_eval.json
+~~~
+
+Mặc định retrieval sử dụng phân tích của pipeline trên query. Tùy chọn `--use-gold-entities` đưa intent/entity từ nhãn vào retriever và vì vậy là chế độ oracle/upper-bound; không được gộp kết quả đó với query-only evaluation.
+
+Các metric retrieval gồm Hit@k và các thống kê theo answerability. Hit@k cần được đọc cùng định nghĩa expected chunk IDs: một query có thể có nhiều chunk hợp lệ, và nhãn thiếu/chưa đầy đủ có thể làm metric thấp giả tạo.
+
+### 11.3. RAG / Answer Guard evaluation
+
+~~~bash
+# Mock/offline trên tập 114 câu
+python -m nlp.app.rag_evaluation \
+  --samples nlp/app/input/test_labeled.jsonl \
+  --output-dir nlp/app/output/rag_test
+
+# Mock/offline trên tập synthetic
+python -m nlp.app.rag_evaluation \
+  --samples nlp/app/output/samples_gold_labeled.jsonl \
+  --output-dir nlp/app/output/rag_synthetic
+~~~
+
+Mỗi lần chạy sinh `rag_evaluation.txt` trong thư mục output được chọn. Nên dùng output directory khác nhau để tránh ghi đè báo cáo. Script đo hành vi trên các mẫu đã gán nhãn và có các probe với scripted model để kiểm tra Answer Guard; scripted model là test double, không phải LLM thật.
+
+Khi chạy provider thật, đặt `OPENAI_API_KEY`, dùng `--provider openai --max-samples N` và kiểm tra model/fallback marker trong report. Chọn provider `openai` không bảo đảm API request thành công.
+
+### 11.4. Course Assistant end-to-end
+
+~~~bash
+python -m nlp.app.run_assistant --data-dir data
+~~~
+
+Runner đọc `nlp/app/input/dialogues.txt` mặc định và tạo các trace/output trong `nlp/app/output/`; một số file được mirror sang `output/` ở repository root. Báo cáo dialogue là regression theo kịch bản đã định nghĩa, không phải phép đo tổng quát trên phân phối câu hỏi thực tế.
+
+### 11.5. Model thật và telemetry
+
+Trong nhánh có hỗ trợ answer-generation evaluation/telemetry, nên phân biệt rõ:
+- API generation thành công;
+- API được thử nhưng lỗi và fallback về Mock;
+- provider API được chọn nhưng thiếu API key;
+- không có generation call vì Answer Guard chặn trước khi gọi model.
+
+Không kết luận model thật đã sinh câu trả lời chỉ dựa vào `--provider openai` hoặc biến môi trường. Kiểm tra telemetry/output provenance. Một câu hỏi multi-intent có thể tạo nhiều generation calls do từng clause chạy riêng; không mô tả đó là một lần gọi LLM duy nhất.
+
+### 11.6. Nguyên tắc báo cáo
+
+- Ghi rõ dataset, số lượng mẫu, cách lấy mẫu, phiên bản code, cấu hình retriever, provider/model và số lần fallback.
+- Báo cáo riêng query-only và oracle/upper-bound retrieval.
+- Phân biệt tập synthetic, tập tuyển chọn độc lập và tập human-reviewed.
+- Không gộp kết quả Mock, scripted test double và model thật thành một metric.
+- Không dùng các tuyên bố tuyệt đối như “100% chống hallucination” nếu chưa có đánh giá độc lập, đủ lớn và có confidence interval.
+- Công bố cả lỗi phân loại, false positive/false negative và các trường hợp guard chặn nhầm nếu có.
+
 ---
 
 ## 12. Các hạn chế của hệ thống
 
 1. **Tính cứng nhắc của văn phạm CFG biên soạn thủ công:**
-   * Văn phạm phi ngữ cảnh ở Phần I đảm bảo độ chính xác cú pháp và ngữ nghĩa 100% cho các mẫu câu đã định nghĩa, nhưng nếu người dùng sử dụng câu khẩu ngữ rút gọn, đảo trật tự từ tự do, viết tắt hoặc sai dấu tiếng Việt (ngoài danh sách alias), Earley Parser sẽ trả về `()` (`UNPARSED`).
+   * Văn phạm phi ngữ cảnh ở Phần I được thiết kế để nhận diện các mẫu câu đã định nghĩa, nhưng nếu người dùng sử dụng câu khẩu ngữ rút gọn, đảo trật tự từ tự do, viết tắt hoặc sai dấu tiếng Việt (ngoài danh sách alias), Earley Parser sẽ trả về `()` (`UNPARSED`).
 2. **Giới hạn biểu diễn từ vựng của TF-IDF:**
    * Tầng truy xuất dựa trên TF-IDF kết hợp từ điển đồng nghĩa tĩnh (`data/entities.txt`). Nếu người dùng diễn đạt bằng các cụm từ đồng nghĩa hoặc cách mô tả khái niệm hoàn toàn mới chưa có trong `entities.txt` (không chia sẻ từ vựng bề mặt với tài liệu), điểm `LexicalScore` sẽ thấp. Có thể khắc phục trong tương lai bằng cách kết hợp thêm Dense Embedding (Semantic Search đa ngôn ngữ).
 3. **Sự khác biệt giữa `MockLLMClient` (Offline) và LLM thực thụ (Online):**
    * `MockLLMClient` đảm bảo hệ thống chạy độc lập, cực nhanh và tái lập 100% kết quả mà không cần API key, nhưng câu trả lời có tính chất trích xuất nguyên đoạn (*extractive*) nên đôi khi dài hơn mức cần thiết và không tự suy luận để từ chối các câu ngoài miền có trùng từ vựng ngẫu nhiên như khi chạy với `OpenAICompatibleLLMClient`.
 4. **Phạm vi của bộ kiểm tra thực thể trong `answer_guard.py`:**
-   * Hậu kiểm tra `unsupported_facts` phát hiện chính xác 100% các hành vi bịa đặt con số, ngày tháng, giờ giấc, email, URL và trích dẫn nguồn sai. Tuy nhiên, nếu một mô hình ngôn ngữ giữ nguyên các con số trong nguồn nhưng đảo ngược ý nghĩa mệnh đề bằng chữ (ví dụ đổi *"bắt buộc"* thành *"không bắt buộc"*), bộ lọc biểu thức chính quy chưa thể tự phát hiện mà cần tới mô hình Natural Language Inference (NLI).
+   * Hậu kiểm tra `unsupported_facts` kiểm tra các con số, ngày tháng, giờ giấc, email, URL và trích dẫn nguồn theo luật; đây không phải bộ phát hiện hallucination hoàn chỉnh và có thể có false positive/false negative. Tuy nhiên, nếu một mô hình ngôn ngữ giữ nguyên các con số trong nguồn nhưng đảo ngược ý nghĩa mệnh đề bằng chữ (ví dụ đổi *"bắt buộc"* thành *"không bắt buộc"*), bộ lọc biểu thức chính quy chưa thể tự phát hiện mà cần tới mô hình Natural Language Inference (NLI).
 5. **Giới hạn của quản lý ngữ cảnh hội thoại cục bộ 1 bước (`DialogueState`):**
    * Mô-đun `dialogue.py` được thiết kế tối ưu cho các tham chiếu cục bộ liền kề (1-step anaphora & ellipsis resolution) theo đúng yêu cầu Phần III của đề bài. Hệ thống chưa hỗ trợ xếp chồng nhiều chủ đề hội thoại (dialogue stack) hoặc quay lại tham chiếu một thực thể đã nhắc tới cách đó 3–4 lượt hội thoại trước.
