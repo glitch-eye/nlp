@@ -19,7 +19,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Run parser/semantic/retrieval evaluation and generated-answer evaluation"
     )
-    parser.add_argument("--nlp-samples", default=str(APP_DIR / "output" / "samples_labeled.jsonl"))
+    parser.add_argument("--nlp-samples", default=str(APP_DIR / "output" / "samples_reviewed.jsonl"))
     parser.add_argument("--answer-samples", default=str(APP_DIR / "input" / "answer_eval_smoke.jsonl"))
     parser.add_argument("--data-dir")
     parser.add_argument("--grammar")
