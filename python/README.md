@@ -8,9 +8,9 @@
 * **Khoa:** Khoa Khoa học và Kỹ thuật Máy tính – Trường Đại học Bách khoa – ĐHQG TP.HCM
 * **Danh sách thành viên:**
   - Sinh viên 1: `Nguyễn Văn Bảo` – MSSV: `2433037`
-  - Sinh viên 2: `Phạm Xuân Bắc` – MSSV: `2310280`
-  - Sinh viên 3: `[Bổ sung họ tên]` – MSSV: `[Bổ sung MSSV]`
-  - Sinh viên 4: `[Bổ sung họ tên]` – MSSV: `[Bổ sung MSSV]`
+  - Sinh viên 2: `[Họ và tên]` – MSSV: `[MSSV2]`
+  - Sinh viên 3: `[Họ và tên]` – MSSV: `[MSSV3]`
+  - Sinh viên 4: `[Họ và tên]` – MSSV: `[MSSV4]`
 
 ---
 
@@ -19,7 +19,7 @@
 ### 2.1 Yêu cầu hệ thống
 * **Python:** `>= 3.8` (khuyến nghị Python `3.10+`, đã kiểm thử ổn định trên Python `3.12`)
 * **Hệ điều hành:** Windows / Linux / macOS
-* **Docker:** Phục vụ đóng gói môi trường chuẩn và chấm bài tự động
+* **Docker:** tùy chọn; Dockerfile hiện tại chưa cấu hình entrypoint cho Course Assistant
 
 ### 2.2 Cài đặt trực tiếp bằng `pip`
 ```bash
@@ -28,12 +28,8 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-### 2.3 Cài đặt và chạy qua Docker
-```bash
-# Build Docker image từ thư mục gốc của repository
-# Dockerfile hiện vẫn giữ entrypoint hcommon.cli mẫu, chưa chạy Course Assistant.
-# Dùng cài đặt pip ở mục 2.2 để chạy ứng dụng; chỉ bật Docker sau khi Dockerfile được sửa/test.
-```
+### 2.3 Docker (chưa sẵn sàng cho Course Assistant)
+Dockerfile hiện tại vẫn dùng entrypoint mẫu `hcommon.cli` và chưa khởi chạy package `nlp.app`. Vì vậy không dùng lệnh `docker build/run` trong trạng thái hiện tại để chạy Course Assistant. Hãy cài đặt bằng pip ở mục 2.2; chỉ bổ sung hướng dẫn Docker sau khi Dockerfile được cập nhật và kiểm thử end-to-end.
 
 ---
 
@@ -429,7 +425,7 @@ Nhóm lựa chọn **Lựa chọn 2: Mở rộng bằng LLM/RAG** đồng thời
 ### 10.1 Mô hình sử dụng và Cấu hình (`llm_client.py`)
 Hệ thống định nghĩa giao diện trừu tượng `LLMClient` với 2 cài đặt cụ thể:
 1. **`MockLLMClient` (`model_name = "mock-grounded-extractive-v1"` – Mặc định Offline):**
-   * Hoạt động hoàn toàn offline, không cần kết nối mạng hay API key, đảm bảo tính tái lập 100% khi chấm bài tự động trong Docker.
+   * Hoạt động hoàn toàn offline, không cần kết nối mạng hay API key, hỗ trợ tái lập kết quả khi dữ liệu và cấu hình không thay đổi.
    * Cơ chế: Phân tích câu hỏi và các chunk trong prompt, chọn lọc các câu/mục chứa thông tin khớp trực tiếp với câu hỏi và đính kèm nguyên văn nhãn trích dẫn `[Nguồn: <source> / <section>]`.
 2. **`OpenAICompatibleLLMClient` (Chế độ gọi LLM thật qua HTTP API):**
    * Kết nối tới mọi endpoint tương thích chuẩn OpenAI Chat Completions (`/v1/chat/completions`), mặc định dùng model `gpt-4o-mini` với `temperature = 0.0` để tối đa hóa tính nhất quán.
