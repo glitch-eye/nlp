@@ -419,6 +419,8 @@ Khi nhận câu hỏi `question`, `Retriever.retrieve()` thực hiện quy trìn
 
 ## 10. Mô tả lựa chọn LLM/RAG
 
+Tài liệu module chi tiết, gồm label audit, multi-intent, API và answer-generation telemetry: [python/nlp/app/README.md](nlp/app/README.md).
+
 Nhóm lựa chọn **Lựa chọn 2: Mở rộng bằng LLM/RAG** đồng thời hoàn thiện đầy đủ **Xử lý ngữ cảnh hội thoại cục bộ**. Đúng theo yêu cầu của đề bài, phần mở rộng LLM/RAG **không thay thế** các thành phần NLP cốt lõi mà sử dụng trực tiếp kết quả của Grammar, Earley Parser và Semantic Frame từ Phần I.
 
 ### 10.1 Mô hình sử dụng và Cấu hình (`llm_client.py`)
@@ -457,7 +459,7 @@ Hàm `build_prompt(question, chunks, semantic=None, dialogue_state=None)` đóng
      ```
 4. **Câu hỏi đã giải tham chiếu (`resolved_query`):** Đặt ở cuối prompt để mô hình tập trung trả lời.
 
-### 10.3 Cơ chế Answer Guard 3 lớp chống Hallucination (`answer_guard.py`, `assistant.py`)
+### 10.3 Cơ chế Answer Guard 3 lớp kiểm tra grounding (`answer_guard.py`, `assistant.py`)
 Để giảm nguy cơ sinh ảo (*hallucination*) của LLM, hệ thống áp dụng 3 lớp kiểm duyệt độc lập:
 * **Lớp 1 – Tiền kiểm tra trước khi gọi LLM (`check_context`):**
   1. Nếu `retrieval_status != "FOUND"` hoặc danh sách `chunks` rỗng $\rightarrow$ trả về ngay `NO_RELEVANT_CONTEXT`.
@@ -616,7 +618,7 @@ Có thể bật judge riêng bằng `--judge --judge-model MODEL_ID`. Judge dùn
 ## 12. Các hạn chế của hệ thống
 
 1. **Tính cứng nhắc của văn phạm CFG biên soạn thủ công:**
-   * Văn phạm phi ngữ cảnh ở Phần I đảm bảo độ chính xác cú pháp và ngữ nghĩa 100% cho các mẫu câu đã định nghĩa, nhưng nếu người dùng sử dụng câu khẩu ngữ rút gọn, đảo trật tự từ tự do, viết tắt hoặc sai dấu tiếng Việt (ngoài danh sách alias), Earley Parser sẽ trả về `()` (`UNPARSED`).
+   * Văn phạm phi ngữ cảnh ở Phần I được thiết kế để nhận diện các mẫu câu đã định nghĩa, nhưng nếu người dùng sử dụng câu khẩu ngữ rút gọn, đảo trật tự từ tự do, viết tắt hoặc sai dấu tiếng Việt (ngoài danh sách alias), Earley Parser sẽ trả về `()` (`UNPARSED`).
 2. **Giới hạn biểu diễn từ vựng của TF-IDF:**
    * Tầng truy xuất dựa trên TF-IDF kết hợp từ điển đồng nghĩa tĩnh (`data/entities.txt`). Nếu người dùng diễn đạt bằng các cụm từ đồng nghĩa hoặc cách mô tả khái niệm hoàn toàn mới chưa có trong `entities.txt` (không chia sẻ từ vựng bề mặt với tài liệu), điểm `LexicalScore` sẽ thấp. Có thể khắc phục trong tương lai bằng cách kết hợp thêm Dense Embedding (Semantic Search đa ngôn ngữ).
 3. **Sự khác biệt giữa `MockLLMClient` (Offline) và LLM thực thụ (Online):**
