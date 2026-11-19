@@ -47,6 +47,41 @@ class DatasetTests(unittest.TestCase):
         self.assertIn('"reference_points": null', prompt)
 
 
+class JudgeIsolationTests(unittest.TestCase):
+    def test_mock_answer_is_not_sent_to_judge(self):
+        class MockClient:
+            model_name = "mock-grounded-extractive-v1"
+            last_error = None
+
+        class Assistant:
+            llm_client = MockClient()
+
+            def answer(self, query):
+                return {
+                    "answer": "mock answer",
+                    "status": "ANSWERED",
+                    "retrieved_chunk_ids": [],
+                    "chunks": [],
+                }
+
+        class Judge:
+            called = False
+
+            def evaluate(self, row, output):
+                self.called = True
+                raise AssertionError("must not judge a mock answer")
+
+        judge = Judge()
+        result = ev.evaluate_rows(
+            Assistant(),
+            [{"sample_id": "x", "query": "question", "expected_answerability": "REVIEW"}],
+            judge=judge,
+        )[0]
+        self.assertFalse(judge.called)
+        self.assertIsNone(result["judge"])
+        self.assertTrue(result["judge_error"].startswith("SKIPPED:"))
+
+
 class MetricsTests(unittest.TestCase):
     def test_only_human_reviewed_labels_enter_headline_metrics(self):
         results = [
