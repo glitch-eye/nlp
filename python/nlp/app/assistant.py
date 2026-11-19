@@ -728,6 +728,28 @@ class CourseAssistant:
                     sources = []
 
             retrieved_chunk_ids = [chunk.get("chunk_id", "") for chunk in chunks]
+            state = (
+                dialogue_state
+                if isinstance(dialogue_state, DialogueState)
+                else DialogueState.from_dict(dialogue_state)
+            )
+            state_before = state.to_dict()
+            if dialogue_state is not None and (
+                status == "ANSWERED" or (status == "INSUFFICIENT_CONTEXT" and chunks)
+            ):
+                source_labels = [
+                    "{} / {}".format(source["source"], source["section"])
+                    for source in sources
+                ]
+                state.update(
+                    question=question,
+                    intent=clause_frames[-1].get("intent") if clause_frames else None,
+                    entities=combined_entities,
+                    answer_entities=all_entity_ids,
+                    sources=source_labels,
+                    ambiguous_candidates=DialogueManager.detect_multiple_entities_in_question(question),
+                )
+            state_after = state.to_dict()
             return {
                 "question": question,
                 "resolved_query": question,
@@ -760,14 +782,8 @@ class CourseAssistant:
                 "chunk_support": retrieval.get("chunk_support", []),
                 "candidate_chunk_count": retrieval.get("candidate_chunk_count", 0),
                 "resolution": {"status": "MULTI_INTENT", "clauses": clauses},
-                "dialogue_state_before": (
-                    dialogue_state.to_dict() if isinstance(dialogue_state, DialogueState)
-                    else DialogueState.from_dict(dialogue_state).to_dict()
-                ),
-                "dialogue_state_after": (
-                    dialogue_state.to_dict() if isinstance(dialogue_state, DialogueState)
-                    else DialogueState.from_dict(dialogue_state).to_dict()
-                ),
+                "dialogue_state_before": state_before,
+                "dialogue_state_after": state_after,
                 "model_call_count": max(0, getattr(self.llm_client, "generation_count", calls_before) - calls_before),
             }
 
