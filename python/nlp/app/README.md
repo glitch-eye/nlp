@@ -320,7 +320,7 @@ Một số tùy chọn:
 
 `DialogueState` lưu câu hỏi gần nhất, intent, entities, answer entities và sources. `DialogueManager` dùng các giá trị này để giải tham chiếu như “chương này”, “tuần này”, “phần này”, “nó”, “chương sau” trước khi truy xuất.
 
-Đây là xử lý ngữ cảnh hội thoại cục bộ theo các pattern đã định nghĩa; không phải bộ giải quyết đồng tham chiếu tổng quát cho mọi diễn đạt. Multi-intent/multi-clause tổng quát chưa nằm trong phạm vi hiện tại.
+Đây là xử lý ngữ cảnh hội thoại cục bộ theo các pattern đã định nghĩa; không phải bộ giải quyết đồng tham chiếu tổng quát cho mọi diễn đạt. Grammar v5 bổ sung xử lý multi-intent: câu hỏi được tách khi từng clause độc lập đều được CFG xác nhận, sau đó mỗi clause có semantic frame, retrieval và answer-generation riêng trước khi kết quả được hợp nhất. Vì vậy một câu nhiều intent có thể tạo nhiều LLM calls; hệ thống hiện không gom toàn bộ intent vào một prompt duy nhất.
 
 ### 7.3 LLM và prompt
 
@@ -588,6 +588,50 @@ Các cảnh báo bắt buộc khi phân tích kết quả:
 3. Grammar-generated samples đo tính nhất quán nội bộ, không chứng minh độ bao phủ hoặc độ tự nhiên với người dùng thật.
 4. Mock LLM không đo chất lượng sinh ngôn ngữ của model thật.
 5. Scripted hallucination probes kiểm tra guard theo các kịch bản cố định, không phải phép đo tần suất hallucination ngoài thực tế.
+
+### 10.5 Answer-generation evaluation và LLM telemetry
+
+Ngoài evaluator parser/retrieval ở trên, package có hai evaluator bổ sung:
+
+- `answer_evaluation.py`: chạy từng query qua CourseAssistant, ghi câu trả lời, retrieved chunks, citation/guard outcome, model provenance và latency.
+- `unified_evaluation.py`: chạy NLP evaluation và answer-generation evaluation, sau đó xuất một báo cáo JSON + Markdown.
+
+Chạy từ thư mục `python/`:
+
+~~~bash
+# Answer evaluation offline
+python -m nlp.app.answer_evaluation --provider mock
+
+# Answer evaluation với API tương thích OpenAI
+export OPENAI_API_KEY="YOUR_API_KEY"
+python -m nlp.app.answer_evaluation --provider openai --model gpt-4o-mini --max-samples 20
+
+# Chỉ chấp nhận các hàng có API generation thành công, không fallback
+python -m nlp.app.answer_evaluation --provider openai --require-real-model --max-samples 20
+
+# Unified evaluation offline
+python -m nlp.app.unified_evaluation --provider mock --max-samples 10
+
+# Unified evaluation yêu cầu model thật
+python -m nlp.app.unified_evaluation --provider openai --require-real-model --max-samples 5
+~~~
+
+CLI answer evaluation nhận các option `--samples`, `--data-dir`, `--grammar`, `--provider`, `--model`, `--max-samples`, `--judge`, `--judge-model`, `--require-real-model`, `--output-dir`. Unified evaluation nhận thêm `--nlp-samples`, `--answer-samples` và các option tương ứng để điều khiển cả hai nhánh.
+
+Mặc định answer dataset là `nlp/app/input/answer_eval_smoke.jsonl`; unified evaluation dùng `nlp/app/output/samples_reviewed.jsonl` cho NLP và `nlp/app/input/answer_eval_smoke.jsonl` cho answer generation. Output unified được ghi tại `nlp/app/output/unified_evaluation/unified_evaluation.json` và `unified_evaluation.md`.
+
+`LLMClient.call_history` lưu metadata theo từng lần `generate()`: provider, requested/actual model, `attempted_api`, `used_api`, fallback, loại lỗi và elapsed time. `generation_count` là tổng số generation calls, `last_call` là record mới nhất. Prompt, câu hỏi, context và API key không được ghi vào telemetry.
+
+Phân biệt các trường hợp:
+
+- `used_api=true`: API trả về generation thành công.
+- `attempted_api=true, used_api=false, fallback=true`: đã thử gọi API nhưng request lỗi và chuyển sang Mock.
+- `attempted_api=false, fallback=true`: chọn provider API nhưng thiếu API key, nên fallback trước khi gửi request.
+- Không có record mới: assistant không gọi `generate()`, ví dụ pre-generation Answer Guard đã chặn câu hỏi.
+
+Với multi-intent, telemetry ghi từng lần gọi riêng. Một query có thể tạo nhiều records, bao gồm trạng thái `real_api`, `fallback` hoặc `mixed` trong evaluation. `--require-real-model` yêu cầu mỗi row phải có ít nhất một generation call và mọi call của row đều thành công qua API; row bị guard chặn trước generation không thỏa điều kiện này. Điều này giúp phân biệt guard behavior với việc thiếu telemetry.
+
+Nếu bật `--judge`, cung cấp `--judge-model` riêng. Judge là tín hiệu chẩn đoán, không phải gold label; các output mock/fallback/mixed bị skip và reference chưa được human-review không được coi là ground truth.
 
 ## 11. Cài đặt và kiểm thử
 
