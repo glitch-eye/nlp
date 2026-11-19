@@ -335,6 +335,13 @@ def calculate_metrics(results):
             "n": len(values),
         }
     hallucination_checked = [j for j in judged if j.get("hallucination") is not None]
+    generation_latencies = [
+        float(r["generation_elapsed_seconds"]) for r in results
+        if r.get("generation_elapsed_seconds") is not None
+    ]
+    pipeline_latencies = [
+        float(r["elapsed_seconds"]) for r in results if r.get("elapsed_seconds") is not None
+    ]
     return {
         "sample_count": len(results),
         "labelled_count": len(labelled),
@@ -367,10 +374,26 @@ def calculate_metrics(results):
         "judge_error_count": sum(bool(r.get("judge_error")) and not r["judge_error"].startswith("SKIPPED:") for r in results),
         "judge_skipped_count": sum(bool(r.get("judge_error")) and r["judge_error"].startswith("SKIPPED:") for r in results),
         "fallback_count": sum(r["model_fallback"] for r in results),
-        "mock_answer_count": sum("mock" in str(r.get("model_name", "")).lower() for r in results),
-        "real_model_answer_count": sum(
-            not r["model_fallback"] and "mock" not in str(r.get("model_name", "")).lower()
+        "mock_answer_count": sum(
+            r.get("model_execution") == "mock" or "mock" in str(r.get("model_name", "")).lower()
             for r in results
+        ),
+        "real_model_answer_count": sum(
+            r.get("model_execution") == "real_api"
+            if r.get("model_execution") is not None
+            else (not r["model_fallback"] and "mock" not in str(r.get("model_name", "")).lower())
+            for r in results
+        ),
+        "mixed_model_answer_count": sum(r.get("model_execution") == "mixed" for r in results),
+        "model_generation_call_count": sum(int(r.get("model_call_count") or 0) for r in results),
+        "successful_api_call_count": sum(
+            bool(call.get("used_api")) for r in results for call in (r.get("model_calls") or [])
+        ),
+        "mean_generation_latency_seconds": (
+            sum(generation_latencies) / len(generation_latencies) if generation_latencies else None
+        ),
+        "mean_pipeline_latency_seconds": (
+            sum(pipeline_latencies) / len(pipeline_latencies) if pipeline_latencies else None
         ),
         "status_confusion": _status_confusion(labelled),
     }
@@ -456,6 +479,10 @@ def render_markdown(report):
         "| Real-model answer rows | {} |".format(m["real_model_answer_count"]),
         "| Mock answer rows | {} |".format(m["mock_answer_count"]),
         "| Model fallback rows | {} |".format(m["fallback_count"]),
+        "| Mixed real/mock rows | {} |".format(m.get("mixed_model_answer_count", 0)),
+        "| Generation calls / successful API calls | {} / {} |".format(m.get("model_generation_call_count", 0), m.get("successful_api_call_count", 0)),
+        "| Mean generation latency (s) | {} |".format(_score(m.get("mean_generation_latency_seconds"))),
+        "| Mean pipeline latency (s) | {} |".format(_score(m.get("mean_pipeline_latency_seconds"))),
         "",
         "## Model-as-judge (diagnostic only)",
         "",
