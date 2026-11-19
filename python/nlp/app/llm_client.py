@@ -1,8 +1,8 @@
 """LLM adapter (Member 2).
 
 Single place that knows how to talk to a model, so no other module depends on a
-particular SDK/endpoint.  ``assistant.create_llm_client()`` instantiates
-``LLMClient()`` with no arguments, so everything is configured via environment:
+particular SDK/endpoint.  ``assistant.create_llm_client()`` forwards the selected provider/model to
+``LLMClient``; unset values are read from the environment:
 
     LLM_PROVIDER     mock (default) | openai | api | auto   (auto = real only if a key is set)
     LLM_MODEL        model id, default gpt-4o-mini
