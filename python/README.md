@@ -231,7 +231,7 @@ Chi tiết từng nhóm luật trong văn phạm:
 
 ### 6.1 Cơ sở lý thuyết: Chart Parsing và Giải thuật Earley
 * Trong bài giảng Chương 3 (*Grammar and Parsing*), các giải thuật phân tích cú pháp quay lui đơn thuần (*Simple Top-Down / Bottom-Up Parser*) gặp nhược điểm lớn là phải phân tích đi phân tích lại cùng một cụm từ con khi một nhánh giả thuyết thất bại.
-* **Chart Parsing** khắc phục triệt để nhược điểm này bằng cách sử dụng cấu trúc bảng **Chart** lưu các cung hoạt động (*active arcs / dotted rules*) và các thành phần đã hoàn tất (*completed constituents*).
+* **Chart Parsing** giảm nhược điểm này bằng cách sử dụng cấu trúc bảng **Chart** lưu các cung hoạt động (*active arcs / dotted rules*) và các thành phần đã hoàn tất (*completed constituents*).
 * Hệ thống cài đặt **Earley Chart Parser** (`CourseParser` trong `nlp/app/parser.py`), hoạt động trực tiếp trên mức ký tự/cụm từ của câu đã chuẩn hóa mà không đòi hỏi phải chuyển văn phạm về dạng chuẩn Chomsky (CNF).
 
 ### 6.2 Cấu trúc dữ liệu và Giải thuật chi tiết trong `parser.py`
@@ -315,7 +315,7 @@ KIND_TO_INTENTS = {
                     "GET_DEADLINE", "GET_RESOURCE", "GET_RULE", "GET_LO"},
 }
 ```
-Việc biểu diễn cả câu hỏi lẫn tài liệu trong cùng một không gian `SemanticFrame` (`intents` + `entity_ids`) cho phép hệ thống thực hiện đối sánh ngữ nghĩa chính xác ở tầng Retriever.
+Việc biểu diễn cả câu hỏi lẫn tài liệu trong cùng một không gian `SemanticFrame` (`intents` + `entity_ids`) hỗ trợ Retriever đối sánh theo intent và entity; chất lượng vẫn phụ thuộc vào parser, alias và dữ liệu.
 
 ---
 
@@ -604,7 +604,7 @@ Không kết luận model thật đã sinh câu trả lời chỉ dựa vào `--
 2. **Giới hạn biểu diễn từ vựng của TF-IDF:**
    * Tầng truy xuất dựa trên TF-IDF kết hợp từ điển đồng nghĩa tĩnh (`data/entities.txt`). Nếu người dùng diễn đạt bằng các cụm từ đồng nghĩa hoặc cách mô tả khái niệm hoàn toàn mới chưa có trong `entities.txt` (không chia sẻ từ vựng bề mặt với tài liệu), điểm `LexicalScore` sẽ thấp. Có thể khắc phục trong tương lai bằng cách kết hợp thêm Dense Embedding (Semantic Search đa ngôn ngữ).
 3. **Sự khác biệt giữa `MockLLMClient` (Offline) và LLM thực thụ (Online):**
-   * `MockLLMClient` đảm bảo hệ thống chạy độc lập, cực nhanh và tái lập 100% kết quả mà không cần API key, nhưng câu trả lời có tính chất trích xuất nguyên đoạn (*extractive*) nên đôi khi dài hơn mức cần thiết và không tự suy luận để từ chối các câu ngoài miền có trùng từ vựng ngẫu nhiên như khi chạy với `OpenAICompatibleLLMClient`.
+   * `MockLLMClient` cho phép hệ thống chạy offline, không cần API key và hỗ trợ tái lập kết quả trong cùng cấu hình, nhưng câu trả lời có tính chất trích xuất nguyên đoạn (*extractive*) nên đôi khi dài hơn mức cần thiết và không tự suy luận để từ chối các câu ngoài miền có trùng từ vựng ngẫu nhiên như khi chạy với `OpenAICompatibleLLMClient`.
 4. **Phạm vi của bộ kiểm tra thực thể trong `answer_guard.py`:**
    * Hậu kiểm tra `unsupported_facts` kiểm tra các con số, ngày tháng, giờ giấc, email, URL và trích dẫn nguồn theo luật; đây không phải bộ phát hiện hallucination hoàn chỉnh và có thể có false positive/false negative. Tuy nhiên, nếu một mô hình ngôn ngữ giữ nguyên các con số trong nguồn nhưng đảo ngược ý nghĩa mệnh đề bằng chữ (ví dụ đổi *"bắt buộc"* thành *"không bắt buộc"*), bộ lọc biểu thức chính quy chưa thể tự phát hiện mà cần tới mô hình Natural Language Inference (NLI).
 5. **Giới hạn của quản lý ngữ cảnh hội thoại cục bộ 1 bước (`DialogueState`):**
