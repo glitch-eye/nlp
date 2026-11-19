@@ -1,0 +1,128 @@
+======================================================================
+PHẦN IV: BÁO CÁO ĐÁNH GIÁ HỆ THỐNG COURSE ASSISTANT (NHÁNH LLM/RAG & HỘI THOẠI)
+======================================================================
+Mô hình LLM / Adapter sử dụng : gemini-3.5-flash-lite
+
+I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
+----------------------------------------------------------------------
+1. Đánh giá trên tập kịch bản hội thoại & hỏi đáp end-to-end (input/dialogues.txt):
+   - Tổng số lượt kiểm thử (Total turns)       : 27
+   - Số lượt xử lý đúng theo kỳ vọng            : 27/27 (100.0%)
+   - Phân bố trạng thái đầu ra (Answer Status):
+     + ANSWERED (Trả lời có căn cứ & trích dẫn) : 9
+     + INSUFFICIENT_CONTEXT (Chặn thiếu dữ liệu): 13
+     + NO_RELEVANT_CONTEXT (Chặn ngoài miền)    : 1
+     + NEED_CLARIFICATION (Yêu cầu làm rõ)      : 4
+   - Phân bố trạng thái Parser (Phần I CFG trên resolved_query):
+     + PARSED                                   : 18
+     + UNPARSED (Fallback sang TF-IDF retrieval): 3
+     + SKIPPED (Lượt hỏi làm rõ / ngoài KB)     : 6
+   - Phân bố trạng thái Retriever (Phần II TF-IDF + Semantic):
+     + FOUND                                    : 20
+     + NO_RELEVANT_CONTEXT                      : 3
+     + SKIPPED                                  : 4
+   - Giải tham chiếu ngữ cảnh cục bộ (Phần III):
+     + Tổng số lượt có tham chiếu               : 13/13 (Độ chính xác giải tham chiếu: 100.0%)
+       * NEXT_CHAPTER             : 4
+       * PRONOUN_IT               : 2
+       * RESOURCE_OF_THIS_PART    : 3
+       * THIS_CHAPTER             : 2
+       * THIS_CONTENT             : 1
+       * THIS_PART                : 1
+
+2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl) [ĐO TRỰC TIẾP]:
+   - Tổng số mẫu kiểm thử                         : 50
+   - Trạng thái nhãn                              : AUTO_LABEL_REQUIRES_REVIEW=50
+   - Hit@k (có chunk kỳ vọng trong top-k)         : 21 / 21 (100.0%)
+   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 13 / 21 (61.9%)
+   - Từ chối khi nhãn yêu cầu từ chối             : 14 / 29 (48.3%)
+   - Câu ANSWERED có trích dẫn hợp lệ             : 27 / 27 (100.0%)
+   - Số nguồn trung bình mỗi câu ANSWERED         : 1.30 (chỉ tính nguồn thực sự được trích dẫn)
+   - Câu bị đánh dấu NEEDS_REVIEW                 : 1
+   - Ma trận (nhãn kỳ vọng -> trạng thái thực tế):
+       EXPECTED_CONTEXT       -> ANSWERED               : 13
+       EXPECTED_CONTEXT       -> INSUFFICIENT_CONTEXT   : 8
+       INSUFFICIENT_CONTEXT   -> ANSWERED               : 14
+       INSUFFICIENT_CONTEXT   -> INSUFFICIENT_CONTEXT   : 14
+       INSUFFICIENT_CONTEXT   -> NEEDS_REVIEW           : 1
+   Lưu ý: nhãn do build_sample_dataset gán tự động (AUTO_LABEL_REQUIRES_REVIEW), chưa rà soát thủ công.
+
+II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; model = gemini-3.5-flash-lite)
+----------------------------------------------------------------------
+1. Câu trả lời đúng và có căn cứ (Grounded Answer):
+   - Câu hỏi   : "Môn NLP có bao nhiêu tín chỉ?"
+   - Truy xuất : faq-q1-0, course-info-course-description-2, course-info-course-id-co3085-1
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q1
+   - Trả lời   : "Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ [Nguồn: faq.txt / Q1]."
+   - Câu hỏi   : "Chương 4 nói về gì?"
+   - Truy xuất : faq-q5-4, faq-q7-6, faq-q8-7
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q5
+   - Trả lời   : "Chương 4 học về Features và Augmented Grammar [Nguồn: faq.txt / Q5]."
+   - Câu hỏi   : "Tuần 5 học những nội dung gì?"
+   - Truy xuất : faq-q10-9, schedule-week-06-6, faq-q11-10
+   - Trạng thái: INSUFFICIENT_CONTEXT   Nguồn được trích dẫn: (không có)
+   - Trả lời   : "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán."
+
+2. Câu hỏi không có thông tin trong Knowledge Base / ngoài phạm vi:
+   - [câu ngoài miền (mẫu của văn phạm)] "Hôm nay ở TP.HCM có mưa không?"
+       status=NO_RELEVANT_CONTEXT, retrieval_status=NO_RELEVANT_CONTEXT, sources=(không có)
+       Trả lời: "Xin lỗi, tôi không tìm thấy thông tin liên quan trong cơ sở tri thức môn học CO3085 để trả lời câu hỏi: 'Hôm nay ở TP.HCM có mưa không?'."
+   - [thuộc tính không có trong dữ liệu] "Phòng học của môn CO3085 ở đâu?"
+       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=faq.txt / Q1, course_info.txt / course_description, resources.txt / TEXTBOOK 3
+       Trả lời: "Các đoạn tài liệu truy xuất được không có thông tin cụ thể về phòng học cho câu hỏi này. [Nguồn: faq.txt / Q1]"
+   - [mốc thời gian không có trong dữ liệu] "Deadline của bài tập lớn là khi nào?"
+       status=INSUFFICIENT_CONTEXT, retrieval_status=FOUND, sources=assignments.txt / Lưu ý, regulations.txt / Lưu ý, assignments.txt / LLM/RAG EXTENSION
+       Trả lời: "Cơ sở tri thức hiện tại không có ngày giờ hạn nộp chính thức cho bài tập lớn (tài liệu chỉ ghi nhận đây là dữ liệu mẫu phục vụ Course Assistant và cần thay bằng lịch chính thức của lớp). [Nguồn: assi…"
+
+3. Nguy cơ sinh thông tin không có trong dữ liệu (Hallucination) - thử với model GIẢ LẬP có kịch bản:
+   (Model giả lập chỉ dùng để kiểm tra answer_guard; KHÔNG phải kết quả của một LLM thật.)
+   - Mô hình bịa ngày hạn nộp nhưng trích dẫn đúng nguồn | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần. Hạn nộp cuối cùng là 15/12/2026. [Nguồn: assignments.txt / Lưu ý]"
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=['15/12/2026']
+       Người dùng thấy: "Câu trả lời do mô hình sinh ra chứa thông tin không có trong tài liệu truy xuất (15/12/2026), nên hệ thống không đưa ra để tránh sai lệch."
+   - Mô hình trích dẫn nguồn không được gửi vào prompt | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần. [Nguồn: assignments.txt / MỤC 9]"
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=['[Nguồn: assignments.txt / MỤC 9]'], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Bài tập lớn gồm nhiều phần."
+   - Mô hình trả lời không trích dẫn nguồn | Câu hỏi: "Bài tập lớn có những yêu cầu gì?"
+       Model trả về : "Bài tập lớn gồm nhiều phần."
+       Guard        : status=NEEDS_REVIEW, trích dẫn sai=[], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Bài tập lớn gồm nhiều phần."
+   - Mô hình tuân thủ prompt, trả INSUFFICIENT_CONTEXT | Câu hỏi: "Python 3.12 có gì mới?"
+       Model trả về : "INSUFFICIENT_CONTEXT"
+       Guard        : status=INSUFFICIENT_CONTEXT, trích dẫn sai=[], thông tin không có trong nguồn=[]
+       Người dùng thấy: "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán."
+
+III. TRƯỜNG HỢP SAI / HẠN CHẾ (liệt kê từ kết quả chạy thật)
+----------------------------------------------------------------------
+1. Câu ngoài miền diễn đạt lại (không nằm trong mẫu của văn phạm): từ chối đúng 10 / 10
+2. Truy xuất sai (không có chunk kỳ vọng trong top-k): 0 / 21
+3. Nhãn INSUFFICIENT_CONTEXT nhưng hệ thống vẫn trả lời: 14 / 29
+   Phân bố theo intent: {'GET_RULE': 4, 'GET_RESOURCE': 1, 'GET_LO': 1, 'GET_TOPIC': 3, 'GET_SCHEDULE': 5}
+   - "cho hỏi Nếu sử dụng công cụ AI thì sinh viên cần lưu ý điều gì?" -> trích dẫn: regulations.txt / AI_usage, regulations.txt / LLM_RAG
+   - "xin hỏi Tài liệu nào liên quan đến knowledge representation?" -> trích dẫn: course_info.txt / detailed_learning_outcomes
+   - "cho biết Sinh viên cần đạt được năng lực gì theo L.O.2.5?" -> trích dẫn: faq.txt / Q10
+   Cần rà soát thủ công: nếu nguồn được trích dẫn thực sự chứa đáp án thì lỗi nằm ở nhãn tự động chứ không ở hệ thống.
+4. Câu hội thoại mà văn phạm Phần I không nhận (UNPARSED): 3
+   - "bài tập lớn cần xuất file gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=INSUFFICIENT_CONTEXT
+   - "Tài liệu tham khảo cho Tuần 2 (tham chiếu, Phần I) là gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=INSUFFICIENT_CONTEXT
+   - "Phòng học của môn CO3085 ở đâu?" -> hệ thống vẫn truy xuất bằng câu gốc, status=INSUFFICIENT_CONTEXT
+
+IV. NHẬN XÉT ƯU ĐIỂM VÀ HẠN CHẾ CỦA PHƯƠNG PHÁP ĐÃ SỬ DỤNG
+----------------------------------------------------------------------
+1. Ưu điểm:
+   - Minh bạch, giải thích được từng bước (Explainable NLP Pipeline): Giữ nguyên vai trò của CFG Parser Phần I,
+     kết hợp tường minh giữa điểm từ vựng TF-IDF (0.75) và điểm ngữ nghĩa Intent/Entity (0.25).
+   - Kiểm soát chặt chẽ nguồn trích dẫn và chống Hallucination: Mọi câu trả lời `ANSWERED` đều đính kèm
+     `[Nguồn: file / section]`; các câu ngoài miền, thiếu dữ liệu hoặc mơ hồ tham chiếu đều được phân loại rõ
+     (`NO_RELEVANT_CONTEXT`, `INSUFFICIENT_CONTEXT`, `NEED_CLARIFICATION`).
+   - Xử lý hiệu quả ngữ cảnh hội thoại cục bộ (Phần III): Giải tham chiếu chính xác cho "nó", "chương này",
+     "phần này", "nội dung này", "tài liệu của phần này", "còn chương sau?" trước khi đưa vào Retriever.
+   - Chạy độc lập (Offline Reproducibility): Có `MockLLMClient` chạy offline không cần API key và adapter
+     `OpenAICompatibleLLMClient` khi kết nối model thật.
+2. Hạn chế:
+   - Văn phạm CFG cần cập nhật thủ công nếu mở rộng sang các cấu trúc câu khẩu ngữ phức tạp mới.
+   - TF-IDF dựa trên khớp từ vựng và danh sách đồng nghĩa (`entities.txt`), chưa tự bắt được các cách diễn đạt
+     ẩn dụ nếu không có từ khóa hoặc thực thể chung.
+   - Quản lý hội thoại cục bộ hiện thiết kế cho tham chiếu 1 bước liền kề (local discourse context), chưa
+     hỗ trợ suy luận đa bước xuyên qua nhiều chủ đề đan xen phức tạp.

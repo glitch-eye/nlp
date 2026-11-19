@@ -1,0 +1,2463 @@
+{
+  "summary": {
+    "created_at": "2026-11-19T12:53:20",
+    "base_url": "http://127.0.0.1:8000",
+    "total_run": 20,
+    "http_success_rate": 1.0,
+    "mean_latency_ms": 4.8085,
+    "intent_accuracy": 0.5,
+    "entity_exact_set_accuracy": 0.9,
+    "precision_at_k_mean": null,
+    "recall_at_k_mean": null,
+    "mrr_mean": null,
+    "note": "Retrieval scores only include tests with expected_chunk_ids manually annotated. Dialogue/answer correctness still requires human review."
+  },
+  "results": [
+    {
+      "id": "R01",
+      "type": "retrieval",
+      "question": "Chương 3 nói về gì?",
+      "http_status": 200,
+      "latency_ms": 18.02,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": "GET_TOPIC",
+      "intent_match": true,
+      "expected_entities": [
+        "CH03"
+      ],
+      "actual_entities": [
+        "CH03"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q3-2",
+        "faq-q4-3",
+        "faq-q7-6"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Chương 3 nói về gì?",
+        "chunks": [
+          {
+            "chunk_id": "faq-q3-2",
+            "text": "Q3:\nquestion: Chương nào học về CFG?\nanswer: CFG được trình bày trong Chương 3, Grammar and Parsing.",
+            "source": "faq.txt",
+            "section": "Q3",
+            "entity_ids": [
+              "CH03",
+              "CFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q4-3",
+            "text": "Q4:\nquestion: Chương nào học về PCFG?\nanswer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong\nChương 6 về các phương pháp thống kê.",
+            "source": "faq.txt",
+            "section": "Q4",
+            "entity_ids": [
+              "CH03",
+              "CH06",
+              "PCFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q7-6",
+            "text": "Q7:\nquestion: Chương nào học về knowledge representation?\nanswer: Chương 11.",
+            "source": "faq.txt",
+            "section": "Q7",
+            "entity_ids": [
+              "KNOWLEDGE_REPRESENTATION",
+              "CH11"
+            ],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.5570685251570902,
+          0.5072618086049414,
+          0.20179145673209553
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "PARSED",
+        "intent": "GET_TOPIC",
+        "entity_ids": [
+          "CH03"
+        ],
+        "expanded_query": "Chương 3 nói về gì? Chương 3 entityidch03",
+        "score_details": [
+          {
+            "lexical": 0.45942470020945353,
+            "semantic": 0.8500000000000001,
+            "combined": 0.5570685251570902
+          },
+          {
+            "lexical": 0.3930157448065885,
+            "semantic": 0.8500000000000001,
+            "combined": 0.5072618086049414
+          },
+          {
+            "lexical": 0.25238860897612736,
+            "semantic": 0.05,
+            "combined": 0.20179145673209553
+          }
+        ]
+      },
+      "notes": "Verify the exact relevant chunk(s) in the knowledge base."
+    },
+    {
+      "id": "R02",
+      "type": "retrieval",
+      "question": "Chương 6 nói về gì?",
+      "http_status": 200,
+      "latency_ms": 3.32,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": "GET_TOPIC",
+      "intent_match": true,
+      "expected_entities": [
+        "CH06"
+      ],
+      "actual_entities": [
+        "CH06"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q4-3",
+        "faq-q7-6",
+        "faq-q8-7"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Chương 6 nói về gì?",
+        "chunks": [
+          {
+            "chunk_id": "faq-q4-3",
+            "text": "Q4:\nquestion: Chương nào học về PCFG?\nanswer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong\nChương 6 về các phương pháp thống kê.",
+            "source": "faq.txt",
+            "section": "Q4",
+            "entity_ids": [
+              "CH03",
+              "CH06",
+              "PCFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q7-6",
+            "text": "Q7:\nquestion: Chương nào học về knowledge representation?\nanswer: Chương 11.",
+            "source": "faq.txt",
+            "section": "Q7",
+            "entity_ids": [
+              "KNOWLEDGE_REPRESENTATION",
+              "CH11"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q8-7",
+            "text": "Q8:\nquestion: Chương nào học về local discourse context?\nanswer: Chương 12.",
+            "source": "faq.txt",
+            "section": "Q8",
+            "entity_ids": [
+              "LOCAL_DISCOURSE_CONTEXT",
+              "PART_III",
+              "CH12"
+            ],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.5259560989559203,
+          0.18971323991839703,
+          0.17922694946469234
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "PARSED",
+        "intent": "GET_TOPIC",
+        "entity_ids": [
+          "CH06"
+        ],
+        "expanded_query": "Chương 6 nói về gì? Chương 6 entityidch06",
+        "score_details": [
+          {
+            "lexical": 0.4179414652745604,
+            "semantic": 0.8500000000000001,
+            "combined": 0.5259560989559203
+          },
+          {
+            "lexical": 0.23628431989119603,
+            "semantic": 0.05,
+            "combined": 0.18971323991839703
+          },
+          {
+            "lexical": 0.22230259928625642,
+            "semantic": 0.05,
+            "combined": 0.17922694946469234
+          }
+        ]
+      },
+      "notes": "Previously observed answer associates Chapter 6 with statistical methods; verify target chunk."
+    },
+    {
+      "id": "R03",
+      "type": "retrieval",
+      "question": "PCFG là gì?",
+      "http_status": 200,
+      "latency_ms": 3.6,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": null,
+      "intent_match": false,
+      "expected_entities": [],
+      "actual_entities": [
+        "PCFG"
+      ],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "schedule-week-03-3",
+        "topics-chapter-3-grammar-and-parsing-2",
+        "schedule-week-07-7"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "PCFG là gì?",
+        "chunks": [
+          {
+            "chunk_id": "schedule-week-03-3",
+            "text": "WEEK 03\npart: Syntactic Processing\nchapter: Chapter 3\ntopics:\n- context-free grammar\n- grammar and sentence structure\n- top-down parsing\n- bottom-up chart parsing\n- top-down chart parsing\n- probabilistic context-free grammar\n- dependency grammar\n- Stanford dependencies",
+            "source": "schedule.txt",
+            "section": "WEEK 03",
+            "entity_ids": [
+              "PCFG",
+              "SYNTACTIC_PROCESSING",
+              "CFG",
+              "DEPENDENCY_GRAMMAR"
+            ],
+            "kind": "schedule"
+          },
+          {
+            "chunk_id": "topics-chapter-3-grammar-and-parsing-2",
+            "text": "CHAPTER 3: GRAMMAR AND PARSING\nchapter_id: CH03\npart: Syntactic Processing\nkeywords: CFG, parsing, PCFG, dependency grammar\nsummary:\nThe chapter introduces context-free grammar, sentence structure and\nparsing methods. It also introduces probabilistic CFG and dependency\ngrammar.\n\nsubtopics:\n3.1 Context-Free Grammars\n3.1.1 Grammar and sentence structure\n3.1.2 What marks a good grammar\n3.1.3 Top-down parser\n3.1.4 Bottom-up chart parser\n3.1.5 Top-down chart parser\n3.2 Probabilistic Context-Free Grammars\n3.3 Dependency Grammar and Parsing\n3.4 Stanford Dependencies",
+            "source": "topics.txt",
+            "section": "CHAPTER 3: GRAMMAR AND PARSING",
+            "entity_ids": [
+              "SYNTACTIC_PROCESSING",
+              "CFG",
+              "DEPENDENCY_GRAMMAR",
+              "PCFG"
+            ],
+            "kind": "topics"
+          },
+          {
+            "chunk_id": "schedule-week-07-7",
+            "text": "WEEK 07\npart: Syntactic Processing\nchapter: Chapter 6\ntopics:\n- basic probability theory\n- estimating probabilities\n- part-of-speech tagging\n- lexical probabilities\n- probabilistic context-free grammar",
+            "source": "schedule.txt",
+            "section": "WEEK 07",
+            "entity_ids": [
+              "PCFG",
+              "SYNTACTIC_PROCESSING",
+              "CFG"
+            ],
+            "kind": "schedule"
+          }
+        ],
+        "scores": [
+          0.339979509350581,
+          0.33334475997911883,
+          0.3206507653933968
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "UNPARSED",
+        "intent": null,
+        "entity_ids": [
+          "PCFG"
+        ],
+        "expanded_query": "PCFG là gì? probabilistic context-free grammar entityidpcfg",
+        "score_details": [
+          {
+            "lexical": 0.339979509350581,
+            "semantic": 0.0,
+            "combined": 0.339979509350581
+          },
+          {
+            "lexical": 0.33334475997911883,
+            "semantic": 0.0,
+            "combined": 0.33334475997911883
+          },
+          {
+            "lexical": 0.3206507653933968,
+            "semantic": 0.0,
+            "combined": 0.3206507653933968
+          }
+        ]
+      },
+      "notes": "Annotate chunk(s) defining PCFG."
+    },
+    {
+      "id": "R04",
+      "type": "retrieval",
+      "question": "Các phương pháp thống kê được học ở chương nào?",
+      "http_status": 200,
+      "latency_ms": 3.72,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": null,
+      "intent_match": false,
+      "expected_entities": [],
+      "actual_entities": [],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q4-3",
+        "faq-q3-2",
+        "faq-q7-6"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Các phương pháp thống kê được học ở chương nào?",
+        "chunks": [
+          {
+            "chunk_id": "faq-q4-3",
+            "text": "Q4:\nquestion: Chương nào học về PCFG?\nanswer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong\nChương 6 về các phương pháp thống kê.",
+            "source": "faq.txt",
+            "section": "Q4",
+            "entity_ids": [
+              "CH03",
+              "CH06",
+              "PCFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q3-2",
+            "text": "Q3:\nquestion: Chương nào học về CFG?\nanswer: CFG được trình bày trong Chương 3, Grammar and Parsing.",
+            "source": "faq.txt",
+            "section": "Q3",
+            "entity_ids": [
+              "CH03",
+              "CFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q7-6",
+            "text": "Q7:\nquestion: Chương nào học về knowledge representation?\nanswer: Chương 11.",
+            "source": "faq.txt",
+            "section": "Q7",
+            "entity_ids": [
+              "KNOWLEDGE_REPRESENTATION",
+              "CH11"
+            ],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.4630511228889062,
+          0.24184408509748095,
+          0.2172025661863692
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "UNPARSED",
+        "intent": null,
+        "entity_ids": [],
+        "expanded_query": "Các phương pháp thống kê được học ở chương nào?",
+        "score_details": [
+          {
+            "lexical": 0.4630511228889062,
+            "semantic": 0.0,
+            "combined": 0.4630511228889062
+          },
+          {
+            "lexical": 0.24184408509748095,
+            "semantic": 0.0,
+            "combined": 0.24184408509748095
+          },
+          {
+            "lexical": 0.2172025661863692,
+            "semantic": 0.0,
+            "combined": 0.2172025661863692
+          }
+        ]
+      },
+      "notes": "Verify chapter references in the KB."
+    },
+    {
+      "id": "R05",
+      "type": "retrieval",
+      "question": "Nội dung môn học liên quan đến xác suất là gì?",
+      "http_status": 200,
+      "latency_ms": 3.24,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": null,
+      "intent_match": false,
+      "expected_entities": [],
+      "actual_entities": [],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q10-9",
+        "faq-q11-10",
+        "faq-q9-8"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Nội dung môn học liên quan đến xác suất là gì?",
+        "chunks": [
+          {
+            "chunk_id": "faq-q10-9",
+            "text": "Q10:\nquestion: L.O.2.5 liên quan đến nội dung gì?\nanswer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập\nnhằng từ ở mức câu.",
+            "source": "faq.txt",
+            "section": "Q10",
+            "entity_ids": [],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q11-10",
+            "text": "Q11:\nquestion: L.O.3.3 liên quan đến nội dung gì?\nanswer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên\ncơ sở tri thức và thống kê.",
+            "source": "faq.txt",
+            "section": "Q11",
+            "entity_ids": [],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q9-8",
+            "text": "Q9:\nquestion: L.O.4.2 liên quan đến nội dung gì?\nanswer: L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.",
+            "source": "faq.txt",
+            "section": "Q9",
+            "entity_ids": [
+              "LOCAL_DISCOURSE_CONTEXT",
+              "REFERENCE"
+            ],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.5286709013074797,
+          0.40644075333119295,
+          0.4054526324401266
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "UNPARSED",
+        "intent": null,
+        "entity_ids": [],
+        "expanded_query": "Nội dung môn học liên quan đến xác suất là gì?",
+        "score_details": [
+          {
+            "lexical": 0.5286709013074797,
+            "semantic": 0.0,
+            "combined": 0.5286709013074797
+          },
+          {
+            "lexical": 0.40644075333119295,
+            "semantic": 0.0,
+            "combined": 0.40644075333119295
+          },
+          {
+            "lexical": 0.4054526324401266,
+            "semantic": 0.0,
+            "combined": 0.4054526324401266
+          }
+        ]
+      },
+      "notes": "Broad semantic query; manually annotate relevant chunks."
+    },
+    {
+      "id": "R06",
+      "type": "retrieval",
+      "question": "Tuần 2 học những nội dung gì?",
+      "http_status": 200,
+      "latency_ms": 3.21,
+      "expected_intent": "GET_SCHEDULE",
+      "actual_intent": "GET_SCHEDULE",
+      "intent_match": true,
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "actual_entities": [
+        "WEEK_02"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q9-8",
+        "faq-q10-9",
+        "faq-q11-10"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Tuần 2 học những nội dung gì?",
+        "chunks": [
+          {
+            "chunk_id": "faq-q9-8",
+            "text": "Q9:\nquestion: L.O.4.2 liên quan đến nội dung gì?\nanswer: L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.",
+            "source": "faq.txt",
+            "section": "Q9",
+            "entity_ids": [
+              "LOCAL_DISCOURSE_CONTEXT",
+              "REFERENCE"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q10-9",
+            "text": "Q10:\nquestion: L.O.2.5 liên quan đến nội dung gì?\nanswer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập\nnhằng từ ở mức câu.",
+            "source": "faq.txt",
+            "section": "Q10",
+            "entity_ids": [],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q11-10",
+            "text": "Q11:\nquestion: L.O.3.3 liên quan đến nội dung gì?\nanswer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên\ncơ sở tri thức và thống kê.",
+            "source": "faq.txt",
+            "section": "Q11",
+            "entity_ids": [],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.173597158706132,
+          0.1714986863454518,
+          0.14094887751876067
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "PARSED",
+        "intent": "GET_SCHEDULE",
+        "entity_ids": [
+          "WEEK_02"
+        ],
+        "expanded_query": "Tuần 2 học những nội dung gì? entityidweek02",
+        "score_details": [
+          {
+            "lexical": 0.21479621160817597,
+            "semantic": 0.05,
+            "combined": 0.173597158706132
+          },
+          {
+            "lexical": 0.2119982484606024,
+            "semantic": 0.05,
+            "combined": 0.1714986863454518
+          },
+          {
+            "lexical": 0.1712651700250142,
+            "semantic": 0.05,
+            "combined": 0.14094887751876067
+          }
+        ]
+      },
+      "notes": "Prior run extracted WEEK_02 but returned apparently irrelevant chunks; investigate and annotate."
+    },
+    {
+      "id": "R07",
+      "type": "retrieval",
+      "question": "Tuần 3 có những chủ đề nào?",
+      "http_status": 200,
+      "latency_ms": 3.34,
+      "expected_intent": "GET_SCHEDULE",
+      "actual_intent": "GET_SCHEDULE",
+      "intent_match": true,
+      "expected_entities": [
+        "WEEK_03"
+      ],
+      "actual_entities": [
+        "WEEK_03"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q2-1",
+        "faq-q12-11",
+        "faq-q15-14"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Tuần 3 có những chủ đề nào?",
+        "chunks": [
+          {
+            "chunk_id": "faq-q2-1",
+            "text": "Q2:\nquestion: NLP có những phần chính nào?\nanswer: Môn học gồm ba phần chính: Xử lý cú pháp; Diễn dịch ngữ nghĩa;\nvà Ngữ cảnh và tri thức thế giới.",
+            "source": "faq.txt",
+            "section": "Q2",
+            "entity_ids": [
+              "PART_III",
+              "CONTEXT_AND_WORLD_KNOWLEDGE",
+              "PART_II",
+              "SEMANTIC_INTERPRETATION",
+              "PART_I",
+              "SYNTACTIC_PROCESSING",
+              "NLP"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q12-11",
+            "text": "Q12:\nquestion: Bài tập lớn có thể sử dụng LLM hoặc RAG không?\nanswer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng\nLLM/RAG không thay thế các yêu cầu NLP cốt lõi.",
+            "source": "faq.txt",
+            "section": "Q12",
+            "entity_ids": [
+              "NLP"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q15-14",
+            "text": "Q15:\nquestion: Final kéo dài bao lâu?\nanswer: Theo đề cương, final có thời lượng 90 phút.",
+            "source": "faq.txt",
+            "section": "Q15",
+            "entity_ids": [],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.15185091908186088,
+          0.12982819325667083,
+          0.11800449857486328
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "PARSED",
+        "intent": "GET_SCHEDULE",
+        "entity_ids": [
+          "WEEK_03"
+        ],
+        "expanded_query": "Tuần 3 có những chủ đề nào? entityidweek03",
+        "score_details": [
+          {
+            "lexical": 0.18580122544248118,
+            "semantic": 0.05,
+            "combined": 0.15185091908186088
+          },
+          {
+            "lexical": 0.15643759100889443,
+            "semantic": 0.05,
+            "combined": 0.12982819325667083
+          },
+          {
+            "lexical": 0.14067266476648438,
+            "semantic": 0.05,
+            "combined": 0.11800449857486328
+          }
+        ]
+      },
+      "notes": "Verify schedule content and expected chunks."
+    },
+    {
+      "id": "R08",
+      "type": "retrieval",
+      "question": "Tuần 4 học về nội dung gì?",
+      "http_status": 200,
+      "latency_ms": 3.14,
+      "expected_intent": "GET_SCHEDULE",
+      "actual_intent": null,
+      "intent_match": false,
+      "expected_entities": [
+        "WEEK_04"
+      ],
+      "actual_entities": [],
+      "entity_match": false,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q9-8",
+        "faq-q11-10",
+        "faq-q10-9"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Tuần 4 học về nội dung gì?",
+        "chunks": [
+          {
+            "chunk_id": "faq-q9-8",
+            "text": "Q9:\nquestion: L.O.4.2 liên quan đến nội dung gì?\nanswer: L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.",
+            "source": "faq.txt",
+            "section": "Q9",
+            "entity_ids": [
+              "LOCAL_DISCOURSE_CONTEXT",
+              "REFERENCE"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q11-10",
+            "text": "Q11:\nquestion: L.O.3.3 liên quan đến nội dung gì?\nanswer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên\ncơ sở tri thức và thống kê.",
+            "source": "faq.txt",
+            "section": "Q11",
+            "entity_ids": [],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q10-9",
+            "text": "Q10:\nquestion: L.O.2.5 liên quan đến nội dung gì?\nanswer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập\nnhằng từ ở mức câu.",
+            "source": "faq.txt",
+            "section": "Q10",
+            "entity_ids": [],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.23182878657109585,
+          0.18163481040491503,
+          0.17883298149077254
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "UNPARSED",
+        "intent": null,
+        "entity_ids": [],
+        "expanded_query": "Tuần 4 học về nội dung gì? entityidweek04",
+        "score_details": [
+          {
+            "lexical": 0.23182878657109585,
+            "semantic": 0.0,
+            "combined": 0.23182878657109585
+          },
+          {
+            "lexical": 0.18163481040491503,
+            "semantic": 0.0,
+            "combined": 0.18163481040491503
+          },
+          {
+            "lexical": 0.17883298149077254,
+            "semantic": 0.0,
+            "combined": 0.17883298149077254
+          }
+        ]
+      },
+      "notes": "Verify schedule content and expected chunks."
+    },
+    {
+      "id": "R09",
+      "type": "retrieval",
+      "question": "Các tuần học có nội dung nào liên quan đến mô hình thống kê?",
+      "http_status": 200,
+      "latency_ms": 3.74,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": null,
+      "intent_match": false,
+      "expected_entities": [],
+      "actual_entities": [],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q11-10",
+        "faq-q9-8",
+        "faq-q10-9"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Các tuần học có nội dung nào liên quan đến mô hình thống kê?",
+        "chunks": [
+          {
+            "chunk_id": "faq-q11-10",
+            "text": "Q11:\nquestion: L.O.3.3 liên quan đến nội dung gì?\nanswer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên\ncơ sở tri thức và thống kê.",
+            "source": "faq.txt",
+            "section": "Q11",
+            "entity_ids": [],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q9-8",
+            "text": "Q9:\nquestion: L.O.4.2 liên quan đến nội dung gì?\nanswer: L.O.4.2 liên quan đến ngữ cảnh diễn ngôn cục bộ và sự tham chiếu.",
+            "source": "faq.txt",
+            "section": "Q9",
+            "entity_ids": [
+              "LOCAL_DISCOURSE_CONTEXT",
+              "REFERENCE"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q10-9",
+            "text": "Q10:\nquestion: L.O.2.5 liên quan đến nội dung gì?\nanswer: L.O.2.5 liên quan đến lý thuyết xác suất và việc giải quyết nhập\nnhằng từ ở mức câu.",
+            "source": "faq.txt",
+            "section": "Q10",
+            "entity_ids": [],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.4205949149862041,
+          0.32284896045643807,
+          0.31864348827037664
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "UNPARSED",
+        "intent": null,
+        "entity_ids": [],
+        "expanded_query": "Các tuần học có nội dung nào liên quan đến mô hình thống kê?",
+        "score_details": [
+          {
+            "lexical": 0.4205949149862041,
+            "semantic": 0.0,
+            "combined": 0.4205949149862041
+          },
+          {
+            "lexical": 0.32284896045643807,
+            "semantic": 0.0,
+            "combined": 0.32284896045643807
+          },
+          {
+            "lexical": 0.31864348827037664,
+            "semantic": 0.0,
+            "combined": 0.31864348827037664
+          }
+        ]
+      },
+      "notes": "Broad query; annotate all relevant chunk IDs."
+    },
+    {
+      "id": "R10",
+      "type": "retrieval",
+      "question": "Tóm tắt những chủ đề chính của môn học.",
+      "http_status": 200,
+      "latency_ms": 3.95,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": null,
+      "intent_match": false,
+      "expected_entities": [],
+      "actual_entities": [],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q2-1",
+        "schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0",
+        "assignments-luu-y-0"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "",
+      "raw_response": {
+        "query": "Tóm tắt những chủ đề chính của môn học.",
+        "chunks": [
+          {
+            "chunk_id": "faq-q2-1",
+            "text": "Q2:\nquestion: NLP có những phần chính nào?\nanswer: Môn học gồm ba phần chính: Xử lý cú pháp; Diễn dịch ngữ nghĩa;\nvà Ngữ cảnh và tri thức thế giới.",
+            "source": "faq.txt",
+            "section": "Q2",
+            "entity_ids": [
+              "PART_III",
+              "CONTEXT_AND_WORLD_KNOWLEDGE",
+              "PART_II",
+              "SEMANTIC_INTERPRETATION",
+              "PART_I",
+              "SYNTACTIC_PROCESSING",
+              "NLP"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "schedule-luu-y-day-la-ke-hoach-mau-duoc-xay-dung-tu-cau-truc-12-chuong-trong-0",
+            "text": "Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong\nđề cương CO3085. Nó phục vụ bài tập Course Assistant và không thay thế\nlịch học hành chính chính thức.",
+            "source": "schedule.txt",
+            "section": "Lưu ý: Đây là kế hoạch mẫu được xây dựng từ cấu trúc 12 chương trong",
+            "entity_ids": [
+              "CO3085"
+            ],
+            "kind": "schedule"
+          },
+          {
+            "chunk_id": "assignments-luu-y-0",
+            "text": "Lưu ý:\nCác mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course\nAssistant. Đây không phải lịch nộp chính thức của học phần.\n\nassignment_id: BTL01\ntitle: Intelligent Course Assistant\nteam_size: 3-4 students\ndomain: Course information and learning support\ngoal:\nXây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một\nmôn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic\ninterpretation và question answering.",
+            "source": "assignments.txt",
+            "section": "Lưu ý",
+            "entity_ids": [
+              "BTL01",
+              "SEMANTIC_INTERPRETATION",
+              "QUESTION_ANSWERING",
+              "NLP"
+            ],
+            "kind": "assignments"
+          }
+        ],
+        "scores": [
+          0.28169629946910135,
+          0.1962328627236142,
+          0.18642942413370706
+        ],
+        "retrieval_status": "FOUND",
+        "parse_status": "UNPARSED",
+        "intent": null,
+        "entity_ids": [],
+        "expanded_query": "Tóm tắt những chủ đề chính của môn học.",
+        "score_details": [
+          {
+            "lexical": 0.28169629946910135,
+            "semantic": 0.0,
+            "combined": 0.28169629946910135
+          },
+          {
+            "lexical": 0.1962328627236142,
+            "semantic": 0.0,
+            "combined": 0.1962328627236142
+          },
+          {
+            "lexical": 0.18642942413370706,
+            "semantic": 0.0,
+            "combined": 0.18642942413370706
+          }
+        ]
+      },
+      "notes": "Broad summary query; manually judge relevance."
+    },
+    {
+      "id": "A01",
+      "type": "answer",
+      "question": "Chương 3 nói về gì?",
+      "http_status": 200,
+      "latency_ms": 5.61,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": "GET_TOPIC",
+      "intent_match": true,
+      "expected_entities": [
+        "CH03"
+      ],
+      "actual_entities": [
+        "CH03"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q3-2",
+        "faq-q4-3",
+        "faq-q7-6"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]",
+      "raw_response": {
+        "question": "Chương 3 nói về gì?",
+        "resolved_query": "Chương 3 nói về gì?",
+        "answer": "CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]",
+        "sources": [
+          {
+            "source": "faq.txt",
+            "section": "Q3"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "faq-q3-2",
+          "faq-q4-3",
+          "faq-q7-6"
+        ],
+        "parse_status": "PARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]",
+          "sources": [
+            {
+              "source": "faq.txt",
+              "section": "Q3"
+            }
+          ],
+          "valid_citations": [
+            [
+              "faq.txt",
+              "Q3"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": "GET_TOPIC",
+        "entities": {
+          "chapter": "CH03"
+        },
+        "entity_ids": [
+          "CH03"
+        ],
+        "chunks": [
+          {
+            "chunk_id": "faq-q3-2",
+            "text": "Q3:\nquestion: Chương nào học về CFG?\nanswer: CFG được trình bày trong Chương 3, Grammar and Parsing.",
+            "source": "faq.txt",
+            "section": "Q3",
+            "entity_ids": [
+              "CH03",
+              "CFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q4-3",
+            "text": "Q4:\nquestion: Chương nào học về PCFG?\nanswer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong\nChương 6 về các phương pháp thống kê.",
+            "source": "faq.txt",
+            "section": "Q4",
+            "entity_ids": [
+              "CH03",
+              "CH06",
+              "PCFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q7-6",
+            "text": "Q7:\nquestion: Chương nào học về knowledge representation?\nanswer: Chương 11.",
+            "source": "faq.txt",
+            "section": "Q7",
+            "entity_ids": [
+              "KNOWLEDGE_REPRESENTATION",
+              "CH11"
+            ],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.500845781654219,
+          0.45916595437077234,
+          0.17090504592518418
+        ],
+        "resolution": {
+          "original_query": "Chương 3 nói về gì?",
+          "resolved_query": "Chương 3 nói về gì?",
+          "has_reference": false,
+          "reference_type": null,
+          "reference_expression": null,
+          "resolved_entities": {},
+          "resolved_intent": null,
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": null,
+          "last_intent": null,
+          "last_entities": {},
+          "last_answer_entities": [],
+          "last_sources": []
+        },
+        "dialogue_state_after": {
+          "last_question": "Chương 3 nói về gì?",
+          "last_intent": "GET_TOPIC",
+          "last_entities": {
+            "chapter": "CH03"
+          },
+          "last_answer_entities": [
+            "CH03",
+            "CFG",
+            "CH06",
+            "PCFG",
+            "KNOWLEDGE_REPRESENTATION",
+            "CH11"
+          ],
+          "last_sources": [
+            "faq.txt / Q3"
+          ]
+        }
+      },
+      "notes": "Judge answer accuracy and citation grounding."
+    },
+    {
+      "id": "A02",
+      "type": "answer",
+      "question": "Giải thích thêm về nội dung đó.",
+      "http_status": 200,
+      "latency_ms": 7.02,
+      "expected_intent": null,
+      "actual_intent": "GET_TOPIC",
+      "intent_match": null,
+      "expected_entities": [],
+      "actual_entities": [
+        "CH03"
+      ],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q3-2",
+        "faq-q4-3",
+        "faq-q7-6"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]",
+      "raw_response": {
+        "question": "Giải thích thêm về nội dung đó.",
+        "resolved_query": "Giải thích thêm về Chương 3.",
+        "answer": "CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]",
+        "sources": [
+          {
+            "source": "faq.txt",
+            "section": "Q3"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "faq-q3-2",
+          "faq-q4-3",
+          "faq-q7-6"
+        ],
+        "parse_status": "UNPARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]",
+          "sources": [
+            {
+              "source": "faq.txt",
+              "section": "Q3"
+            }
+          ],
+          "valid_citations": [
+            [
+              "faq.txt",
+              "Q3"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": "GET_TOPIC",
+        "entities": {
+          "chapter": "CH03"
+        },
+        "entity_ids": [
+          "CH03"
+        ],
+        "chunks": [
+          {
+            "chunk_id": "faq-q3-2",
+            "text": "Q3:\nquestion: Chương nào học về CFG?\nanswer: CFG được trình bày trong Chương 3, Grammar and Parsing.",
+            "source": "faq.txt",
+            "section": "Q3",
+            "entity_ids": [
+              "CH03",
+              "CFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q4-3",
+            "text": "Q4:\nquestion: Chương nào học về PCFG?\nanswer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong\nChương 6 về các phương pháp thống kê.",
+            "source": "faq.txt",
+            "section": "Q4",
+            "entity_ids": [
+              "CH03",
+              "CH06",
+              "PCFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q7-6",
+            "text": "Q7:\nquestion: Chương nào học về knowledge representation?\nanswer: Chương 11.",
+            "source": "faq.txt",
+            "section": "Q7",
+            "entity_ids": [
+              "KNOWLEDGE_REPRESENTATION",
+              "CH11"
+            ],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.4782773291166043,
+          0.439859728172749,
+          0.15850688722776224
+        ],
+        "resolution": {
+          "original_query": "Giải thích thêm về nội dung đó.",
+          "resolved_query": "Giải thích thêm về Chương 3.",
+          "has_reference": true,
+          "reference_type": "THIS_CONTENT",
+          "reference_expression": "nội dung đó",
+          "resolved_entities": {
+            "chapter": "CH03"
+          },
+          "resolved_intent": "GET_TOPIC",
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "Chương 3 nói về gì?",
+          "last_intent": "GET_TOPIC",
+          "last_entities": {
+            "chapter": "CH03"
+          },
+          "last_answer_entities": [
+            "CH03",
+            "CFG",
+            "CH06",
+            "PCFG",
+            "KNOWLEDGE_REPRESENTATION",
+            "CH11"
+          ],
+          "last_sources": [
+            "faq.txt / Q3"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "Giải thích thêm về nội dung đó.",
+          "last_intent": "GET_TOPIC",
+          "last_entities": {
+            "chapter": "CH03"
+          },
+          "last_answer_entities": [
+            "CH03",
+            "CFG",
+            "CH06",
+            "PCFG",
+            "KNOWLEDGE_REPRESENTATION",
+            "CH11"
+          ],
+          "last_sources": [
+            "faq.txt / Q3"
+          ]
+        }
+      },
+      "notes": "Follow-up in same dialogue chain as A01; check referent resolution."
+    },
+    {
+      "id": "A03",
+      "type": "answer",
+      "question": "Chương 6 nói về gì?",
+      "http_status": 200,
+      "latency_ms": 3.39,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": "GET_TOPIC",
+      "intent_match": true,
+      "expected_entities": [
+        "CH06"
+      ],
+      "actual_entities": [
+        "CH06"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q4-3",
+        "faq-q7-6",
+        "faq-q8-7"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]",
+      "raw_response": {
+        "question": "Chương 6 nói về gì?",
+        "resolved_query": "Chương 6 nói về gì?",
+        "answer": "PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]",
+        "sources": [
+          {
+            "source": "faq.txt",
+            "section": "Q4"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "faq-q4-3",
+          "faq-q7-6",
+          "faq-q8-7"
+        ],
+        "parse_status": "PARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]",
+          "sources": [
+            {
+              "source": "faq.txt",
+              "section": "Q4"
+            }
+          ],
+          "valid_citations": [
+            [
+              "faq.txt",
+              "Q4"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": "GET_TOPIC",
+        "entities": {
+          "chapter": "CH06"
+        },
+        "entity_ids": [
+          "CH06"
+        ],
+        "chunks": [
+          {
+            "chunk_id": "faq-q4-3",
+            "text": "Q4:\nquestion: Chương nào học về PCFG?\nanswer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong\nChương 6 về các phương pháp thống kê.",
+            "source": "faq.txt",
+            "section": "Q4",
+            "entity_ids": [
+              "CH03",
+              "CH06",
+              "PCFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q7-6",
+            "text": "Q7:\nquestion: Chương nào học về knowledge representation?\nanswer: Chương 11.",
+            "source": "faq.txt",
+            "section": "Q7",
+            "entity_ids": [
+              "KNOWLEDGE_REPRESENTATION",
+              "CH11"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q8-7",
+            "text": "Q8:\nquestion: Chương nào học về local discourse context?\nanswer: Chương 12.",
+            "source": "faq.txt",
+            "section": "Q8",
+            "entity_ids": [
+              "LOCAL_DISCOURSE_CONTEXT",
+              "PART_III",
+              "CH12"
+            ],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.47980544944049763,
+          0.16362184736866536,
+          0.15467947045519106
+        ],
+        "resolution": {
+          "original_query": "Chương 6 nói về gì?",
+          "resolved_query": "Chương 6 nói về gì?",
+          "has_reference": false,
+          "reference_type": null,
+          "reference_expression": null,
+          "resolved_entities": {},
+          "resolved_intent": null,
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "Giải thích thêm về nội dung đó.",
+          "last_intent": "GET_TOPIC",
+          "last_entities": {
+            "chapter": "CH03"
+          },
+          "last_answer_entities": [
+            "CH03",
+            "CFG",
+            "CH06",
+            "PCFG",
+            "KNOWLEDGE_REPRESENTATION",
+            "CH11"
+          ],
+          "last_sources": [
+            "faq.txt / Q3"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "Chương 6 nói về gì?",
+          "last_intent": "GET_TOPIC",
+          "last_entities": {
+            "chapter": "CH06"
+          },
+          "last_answer_entities": [
+            "CH06",
+            "CH03",
+            "PCFG",
+            "KNOWLEDGE_REPRESENTATION",
+            "CH11",
+            "LOCAL_DISCOURSE_CONTEXT",
+            "PART_III",
+            "CH12"
+          ],
+          "last_sources": [
+            "faq.txt / Q4"
+          ]
+        }
+      },
+      "notes": "Topic switch; should not keep answering Chapter 3."
+    },
+    {
+      "id": "A04",
+      "type": "answer",
+      "question": "Chương đó có liên quan đến Chương 3 không?",
+      "http_status": 200,
+      "latency_ms": 4.67,
+      "expected_intent": null,
+      "actual_intent": "GET_TOPIC",
+      "intent_match": null,
+      "expected_entities": [
+        "CH06",
+        "CH03"
+      ],
+      "actual_entities": [
+        "CH03",
+        "CH06"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "faq-q4-3",
+        "faq-q3-2",
+        "faq-q11-10"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]",
+      "raw_response": {
+        "question": "Chương đó có liên quan đến Chương 3 không?",
+        "resolved_query": "Chương 6 có liên quan đến Chương 3 không?",
+        "answer": "PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]",
+        "sources": [
+          {
+            "source": "faq.txt",
+            "section": "Q4"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "faq-q4-3",
+          "faq-q3-2",
+          "faq-q11-10"
+        ],
+        "parse_status": "UNPARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]",
+          "sources": [
+            {
+              "source": "faq.txt",
+              "section": "Q4"
+            }
+          ],
+          "valid_citations": [
+            [
+              "faq.txt",
+              "Q4"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": "GET_TOPIC",
+        "entities": {
+          "chapter": "CH06"
+        },
+        "entity_ids": [
+          "CH03",
+          "CH06"
+        ],
+        "chunks": [
+          {
+            "chunk_id": "faq-q4-3",
+            "text": "Q4:\nquestion: Chương nào học về PCFG?\nanswer: PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong\nChương 6 về các phương pháp thống kê.",
+            "source": "faq.txt",
+            "section": "Q4",
+            "entity_ids": [
+              "CH03",
+              "CH06",
+              "PCFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q3-2",
+            "text": "Q3:\nquestion: Chương nào học về CFG?\nanswer: CFG được trình bày trong Chương 3, Grammar and Parsing.",
+            "source": "faq.txt",
+            "section": "Q3",
+            "entity_ids": [
+              "CH03",
+              "CFG"
+            ],
+            "kind": "faq"
+          },
+          {
+            "chunk_id": "faq-q11-10",
+            "text": "Q11:\nquestion: L.O.3.3 liên quan đến nội dung gì?\nanswer: L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên\ncơ sở tri thức và thống kê.",
+            "source": "faq.txt",
+            "section": "Q11",
+            "entity_ids": [],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.5102013588390091,
+          0.3430922823742945,
+          0.23343986257936214
+        ],
+        "resolution": {
+          "original_query": "Chương đó có liên quan đến Chương 3 không?",
+          "resolved_query": "Chương 6 có liên quan đến Chương 3 không?",
+          "has_reference": true,
+          "reference_type": "THIS_CHAPTER",
+          "reference_expression": "Chương đó",
+          "resolved_entities": {
+            "chapter": "CH06"
+          },
+          "resolved_intent": "GET_TOPIC",
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "Chương 6 nói về gì?",
+          "last_intent": "GET_TOPIC",
+          "last_entities": {
+            "chapter": "CH06"
+          },
+          "last_answer_entities": [
+            "CH06",
+            "CH03",
+            "PCFG",
+            "KNOWLEDGE_REPRESENTATION",
+            "CH11",
+            "LOCAL_DISCOURSE_CONTEXT",
+            "PART_III",
+            "CH12"
+          ],
+          "last_sources": [
+            "faq.txt / Q4"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "Chương đó có liên quan đến Chương 3 không?",
+          "last_intent": "GET_TOPIC",
+          "last_entities": {
+            "chapter": "CH06"
+          },
+          "last_answer_entities": [
+            "CH03",
+            "CH06",
+            "PCFG",
+            "CFG"
+          ],
+          "last_sources": [
+            "faq.txt / Q4"
+          ]
+        }
+      },
+      "notes": "Follow-up referring to Chapter 6 from A03; verify comparison is grounded."
+    },
+    {
+      "id": "A05",
+      "type": "answer",
+      "question": "Tuần 2 học gì?",
+      "http_status": 200,
+      "latency_ms": 4.68,
+      "expected_intent": "GET_SCHEDULE",
+      "actual_intent": "GET_SCHEDULE",
+      "intent_match": true,
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "actual_entities": [
+        "WEEK_02"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "schedule-week-02-2",
+        "schedule-week-12-12",
+        "regulations-academic-integrity-2"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "WEEK 02 học Chapter 2 với các nội dung: - words - simple noun phrases - verb phrases - simple sentences - adjective phrases - adverbial phrases. [Nguồn: schedule.txt / WEEK 02] Bên cạnh đó: WEEK 12 học Chapter 10 với các nội dung: - grammatical relations - semantic grammars - template matching - semantically driven parsing milestone: BTL checkpoint 2 - semantic interpretation and QA. [Nguồn: schedule.txt / WEEK 12]",
+      "raw_response": {
+        "question": "Tuần 2 học gì?",
+        "resolved_query": "Tuần 2 học gì?",
+        "answer": "WEEK 02 học Chapter 2 với các nội dung: - words - simple noun phrases - verb phrases - simple sentences - adjective phrases - adverbial phrases. [Nguồn: schedule.txt / WEEK 02] Bên cạnh đó: WEEK 12 học Chapter 10 với các nội dung: - grammatical relations - semantic grammars - template matching - semantically driven parsing milestone: BTL checkpoint 2 - semantic interpretation and QA. [Nguồn: schedule.txt / WEEK 12]",
+        "sources": [
+          {
+            "source": "schedule.txt",
+            "section": "WEEK 02"
+          },
+          {
+            "source": "schedule.txt",
+            "section": "WEEK 12"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "schedule-week-02-2",
+          "schedule-week-12-12",
+          "regulations-academic-integrity-2"
+        ],
+        "parse_status": "PARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "WEEK 02 học Chapter 2 với các nội dung: - words - simple noun phrases - verb phrases - simple sentences - adjective phrases - adverbial phrases. [Nguồn: schedule.txt / WEEK 02] Bên cạnh đó: WEEK 12 học Chapter 10 với các nội dung: - grammatical relations - semantic grammars - template matching - semantically driven parsing milestone: BTL checkpoint 2 - semantic interpretation and QA. [Nguồn: schedule.txt / WEEK 12]",
+          "sources": [
+            {
+              "source": "schedule.txt",
+              "section": "WEEK 02"
+            },
+            {
+              "source": "schedule.txt",
+              "section": "WEEK 12"
+            }
+          ],
+          "valid_citations": [
+            [
+              "schedule.txt",
+              "WEEK 02"
+            ],
+            [
+              "schedule.txt",
+              "WEEK 12"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": "GET_SCHEDULE",
+        "entities": {
+          "week": "WEEK_02"
+        },
+        "entity_ids": [
+          "WEEK_02"
+        ],
+        "chunks": [
+          {
+            "chunk_id": "schedule-week-02-2",
+            "text": "WEEK 02\npart: Syntactic Processing\nchapter: Chapter 2\ntopics:\n- words\n- simple noun phrases\n- verb phrases\n- simple sentences\n- adjective phrases\n- adverbial phrases",
+            "source": "schedule.txt",
+            "section": "WEEK 02",
+            "entity_ids": [
+              "SYNTACTIC_PROCESSING"
+            ],
+            "kind": "schedule"
+          },
+          {
+            "chunk_id": "schedule-week-12-12",
+            "text": "WEEK 12\npart: Semantic Interpretation\nchapter: Chapter 10\ntopics:\n- grammatical relations\n- semantic grammars\n- template matching\n- semantically driven parsing\nmilestone: BTL checkpoint 2 - semantic interpretation and QA",
+            "source": "schedule.txt",
+            "section": "WEEK 12",
+            "entity_ids": [
+              "PART_II",
+              "SEMANTIC_INTERPRETATION"
+            ],
+            "kind": "schedule"
+          },
+          {
+            "chunk_id": "regulations-academic-integrity-2",
+            "text": "academic_integrity:\nSinh viên phải tuân thủ nguyên tắc liêm chính học thuật và code of ethics.",
+            "source": "regulations.txt",
+            "section": "academic_integrity",
+            "entity_ids": [],
+            "kind": "regulations"
+          }
+        ],
+        "scores": [
+          0.14131121803790886,
+          0.13012632822229203,
+          0.12601986764003126
+        ],
+        "resolution": {
+          "original_query": "Tuần 2 học gì?",
+          "resolved_query": "Tuần 2 học gì?",
+          "has_reference": false,
+          "reference_type": null,
+          "reference_expression": null,
+          "resolved_entities": {},
+          "resolved_intent": null,
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "Chương đó có liên quan đến Chương 3 không?",
+          "last_intent": "GET_TOPIC",
+          "last_entities": {
+            "chapter": "CH06"
+          },
+          "last_answer_entities": [
+            "CH03",
+            "CH06",
+            "PCFG",
+            "CFG"
+          ],
+          "last_sources": [
+            "faq.txt / Q4"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "Tuần 2 học gì?",
+          "last_intent": "GET_SCHEDULE",
+          "last_entities": {
+            "week": "WEEK_02"
+          },
+          "last_answer_entities": [
+            "WEEK_02",
+            "SYNTACTIC_PROCESSING",
+            "PART_II",
+            "SEMANTIC_INTERPRETATION"
+          ],
+          "last_sources": [
+            "schedule.txt / WEEK 02",
+            "schedule.txt / WEEK 12"
+          ]
+        }
+      },
+      "notes": "Answer should be grounded in week 2 schedule."
+    },
+    {
+      "id": "A06",
+      "type": "answer",
+      "question": "Nội dung đó có ví dụ không?",
+      "http_status": 200,
+      "latency_ms": 5.35,
+      "expected_intent": null,
+      "actual_intent": "GET_SCHEDULE",
+      "intent_match": null,
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "actual_entities": [
+        "WEEK_02"
+      ],
+      "entity_match": true,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "regulations-out-of-scope-8",
+        "schedule-week-02-2",
+        "faq-q13-12"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "WEEK 02 học Chapter 2 với các nội dung: - words - simple noun phrases - verb phrases - simple sentences - adjective phrases - adverbial phrases. [Nguồn: schedule.txt / WEEK 02]",
+      "raw_response": {
+        "question": "Nội dung đó có ví dụ không?",
+        "resolved_query": "Tuần 2 có ví dụ không?",
+        "answer": "WEEK 02 học Chapter 2 với các nội dung: - words - simple noun phrases - verb phrases - simple sentences - adjective phrases - adverbial phrases. [Nguồn: schedule.txt / WEEK 02]",
+        "sources": [
+          {
+            "source": "schedule.txt",
+            "section": "WEEK 02"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "regulations-out-of-scope-8",
+          "schedule-week-02-2",
+          "faq-q13-12"
+        ],
+        "parse_status": "UNPARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "WEEK 02 học Chapter 2 với các nội dung: - words - simple noun phrases - verb phrases - simple sentences - adjective phrases - adverbial phrases. [Nguồn: schedule.txt / WEEK 02]",
+          "sources": [
+            {
+              "source": "schedule.txt",
+              "section": "WEEK 02"
+            }
+          ],
+          "valid_citations": [
+            [
+              "schedule.txt",
+              "WEEK 02"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": "GET_SCHEDULE",
+        "entities": {
+          "week": "WEEK_02"
+        },
+        "entity_ids": [
+          "WEEK_02"
+        ],
+        "chunks": [
+          {
+            "chunk_id": "regulations-out-of-scope-8",
+            "text": "OUT_OF_SCOPE:\nHệ thống Course Assistant chỉ chịu trách nhiệm trong phạm vi dữ liệu\nmôn học. Với câu hỏi ngoài phạm vi hoặc không có dữ liệu, hệ thống phải\nthông báo rằng không tìm thấy thông tin thay vì tự tạo thông tin.",
+            "source": "regulations.txt",
+            "section": "OUT_OF_SCOPE",
+            "entity_ids": [],
+            "kind": "regulations"
+          },
+          {
+            "chunk_id": "schedule-week-02-2",
+            "text": "WEEK 02\npart: Syntactic Processing\nchapter: Chapter 2\ntopics:\n- words\n- simple noun phrases\n- verb phrases\n- simple sentences\n- adjective phrases\n- adverbial phrases",
+            "source": "schedule.txt",
+            "section": "WEEK 02",
+            "entity_ids": [
+              "SYNTACTIC_PROCESSING"
+            ],
+            "kind": "schedule"
+          },
+          {
+            "chunk_id": "faq-q13-12",
+            "text": "Q13:\nquestion: Nếu hệ thống không tìm thấy câu trả lời thì phải làm gì?\nanswer: Hệ thống nên thông báo rằng không tìm thấy thông tin trong\nknowledge base thay vì tự tạo thông tin.",
+            "source": "faq.txt",
+            "section": "Q13",
+            "entity_ids": [],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.2268774622658461,
+          0.1286001102530379,
+          0.12056231926628805
+        ],
+        "resolution": {
+          "original_query": "Nội dung đó có ví dụ không?",
+          "resolved_query": "Tuần 2 có ví dụ không?",
+          "has_reference": true,
+          "reference_type": "THIS_CONTENT",
+          "reference_expression": "Nội dung đó",
+          "resolved_entities": {
+            "week": "WEEK_02"
+          },
+          "resolved_intent": "GET_SCHEDULE",
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "Tuần 2 học gì?",
+          "last_intent": "GET_SCHEDULE",
+          "last_entities": {
+            "week": "WEEK_02"
+          },
+          "last_answer_entities": [
+            "WEEK_02",
+            "SYNTACTIC_PROCESSING",
+            "PART_II",
+            "SEMANTIC_INTERPRETATION"
+          ],
+          "last_sources": [
+            "schedule.txt / WEEK 02",
+            "schedule.txt / WEEK 12"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "Nội dung đó có ví dụ không?",
+          "last_intent": "GET_SCHEDULE",
+          "last_entities": {
+            "week": "WEEK_02"
+          },
+          "last_answer_entities": [
+            "WEEK_02",
+            "SYNTACTIC_PROCESSING"
+          ],
+          "last_sources": [
+            "schedule.txt / WEEK 02"
+          ]
+        }
+      },
+      "notes": "Follow-up to A05; verify context retention and evidence."
+    },
+    {
+      "id": "A07",
+      "type": "answer",
+      "question": "PCFG là gì?",
+      "http_status": 200,
+      "latency_ms": 3.97,
+      "expected_intent": "GET_TOPIC",
+      "actual_intent": null,
+      "intent_match": false,
+      "expected_entities": [],
+      "actual_entities": [
+        "PCFG"
+      ],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "schedule-week-03-3",
+        "topics-chapter-3-grammar-and-parsing-2",
+        "schedule-week-07-7"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "WEEK 03 học Chapter 3 với các nội dung: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies. [Nguồn: schedule.txt / WEEK 03]",
+      "raw_response": {
+        "question": "PCFG là gì?",
+        "resolved_query": "PCFG là gì?",
+        "answer": "WEEK 03 học Chapter 3 với các nội dung: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies. [Nguồn: schedule.txt / WEEK 03]",
+        "sources": [
+          {
+            "source": "schedule.txt",
+            "section": "WEEK 03"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "schedule-week-03-3",
+          "topics-chapter-3-grammar-and-parsing-2",
+          "schedule-week-07-7"
+        ],
+        "parse_status": "UNPARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "WEEK 03 học Chapter 3 với các nội dung: - context-free grammar - grammar and sentence structure - top-down parsing - bottom-up chart parsing - top-down chart parsing - probabilistic context-free grammar - dependency grammar - Stanford dependencies. [Nguồn: schedule.txt / WEEK 03]",
+          "sources": [
+            {
+              "source": "schedule.txt",
+              "section": "WEEK 03"
+            }
+          ],
+          "valid_citations": [
+            [
+              "schedule.txt",
+              "WEEK 03"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": null,
+        "entities": {
+          "topic": "PCFG"
+        },
+        "entity_ids": [
+          "PCFG"
+        ],
+        "chunks": [
+          {
+            "chunk_id": "schedule-week-03-3",
+            "text": "WEEK 03\npart: Syntactic Processing\nchapter: Chapter 3\ntopics:\n- context-free grammar\n- grammar and sentence structure\n- top-down parsing\n- bottom-up chart parsing\n- top-down chart parsing\n- probabilistic context-free grammar\n- dependency grammar\n- Stanford dependencies",
+            "source": "schedule.txt",
+            "section": "WEEK 03",
+            "entity_ids": [
+              "PCFG",
+              "SYNTACTIC_PROCESSING",
+              "CFG",
+              "DEPENDENCY_GRAMMAR"
+            ],
+            "kind": "schedule"
+          },
+          {
+            "chunk_id": "topics-chapter-3-grammar-and-parsing-2",
+            "text": "CHAPTER 3: GRAMMAR AND PARSING\nchapter_id: CH03\npart: Syntactic Processing\nkeywords: CFG, parsing, PCFG, dependency grammar\nsummary:\nThe chapter introduces context-free grammar, sentence structure and\nparsing methods. It also introduces probabilistic CFG and dependency\ngrammar.\n\nsubtopics:\n3.1 Context-Free Grammars\n3.1.1 Grammar and sentence structure\n3.1.2 What marks a good grammar\n3.1.3 Top-down parser\n3.1.4 Bottom-up chart parser\n3.1.5 Top-down chart parser\n3.2 Probabilistic Context-Free Grammars\n3.3 Dependency Grammar and Parsing\n3.4 Stanford Dependencies",
+            "source": "topics.txt",
+            "section": "CHAPTER 3: GRAMMAR AND PARSING",
+            "entity_ids": [
+              "SYNTACTIC_PROCESSING",
+              "CFG",
+              "DEPENDENCY_GRAMMAR",
+              "PCFG"
+            ],
+            "kind": "topics"
+          },
+          {
+            "chunk_id": "schedule-week-07-7",
+            "text": "WEEK 07\npart: Syntactic Processing\nchapter: Chapter 6\ntopics:\n- basic probability theory\n- estimating probabilities\n- part-of-speech tagging\n- lexical probabilities\n- probabilistic context-free grammar",
+            "source": "schedule.txt",
+            "section": "WEEK 07",
+            "entity_ids": [
+              "PCFG",
+              "SYNTACTIC_PROCESSING",
+              "CFG"
+            ],
+            "kind": "schedule"
+          }
+        ],
+        "scores": [
+          0.339979509350581,
+          0.33334475997911883,
+          0.3206507653933968
+        ],
+        "resolution": {
+          "original_query": "PCFG là gì?",
+          "resolved_query": "PCFG là gì?",
+          "has_reference": false,
+          "reference_type": null,
+          "reference_expression": null,
+          "resolved_entities": {},
+          "resolved_intent": null,
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "Nội dung đó có ví dụ không?",
+          "last_intent": "GET_SCHEDULE",
+          "last_entities": {
+            "week": "WEEK_02"
+          },
+          "last_answer_entities": [
+            "WEEK_02",
+            "SYNTACTIC_PROCESSING"
+          ],
+          "last_sources": [
+            "schedule.txt / WEEK 02"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "PCFG là gì?",
+          "last_intent": "GET_SCHEDULE",
+          "last_entities": {
+            "topic": "PCFG"
+          },
+          "last_answer_entities": [
+            "PCFG",
+            "SYNTACTIC_PROCESSING",
+            "CFG",
+            "DEPENDENCY_GRAMMAR"
+          ],
+          "last_sources": [
+            "schedule.txt / WEEK 03"
+          ]
+        }
+      },
+      "notes": "Check grounded definition and citations."
+    },
+    {
+      "id": "A08",
+      "type": "answer",
+      "question": "Cho ví dụ dễ hiểu hơn.",
+      "http_status": 200,
+      "latency_ms": 4.25,
+      "expected_intent": null,
+      "actual_intent": null,
+      "intent_match": null,
+      "expected_entities": [],
+      "actual_entities": [],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "regulations-out-of-scope-8",
+        "resources-study-note-8",
+        "regulations-attendance-1"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "OUT_OF_SCOPE: Hệ thống Course Assistant chỉ chịu trách nhiệm trong phạm vi dữ liệu môn học. Với câu hỏi ngoài phạm vi hoặc không có dữ liệu, hệ thống phải thông báo rằng không tìm thấy thông tin thay vì tự tạo thông tin. [Nguồn: regulations.txt / OUT_OF_SCOPE]",
+      "raw_response": {
+        "question": "Cho ví dụ dễ hiểu hơn.",
+        "resolved_query": "Cho ví dụ dễ hiểu hơn.",
+        "answer": "OUT_OF_SCOPE: Hệ thống Course Assistant chỉ chịu trách nhiệm trong phạm vi dữ liệu môn học. Với câu hỏi ngoài phạm vi hoặc không có dữ liệu, hệ thống phải thông báo rằng không tìm thấy thông tin thay vì tự tạo thông tin. [Nguồn: regulations.txt / OUT_OF_SCOPE]",
+        "sources": [
+          {
+            "source": "regulations.txt",
+            "section": "OUT_OF_SCOPE"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "regulations-out-of-scope-8",
+          "resources-study-note-8",
+          "regulations-attendance-1"
+        ],
+        "parse_status": "UNPARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "OUT_OF_SCOPE: Hệ thống Course Assistant chỉ chịu trách nhiệm trong phạm vi dữ liệu môn học. Với câu hỏi ngoài phạm vi hoặc không có dữ liệu, hệ thống phải thông báo rằng không tìm thấy thông tin thay vì tự tạo thông tin. [Nguồn: regulations.txt / OUT_OF_SCOPE]",
+          "sources": [
+            {
+              "source": "regulations.txt",
+              "section": "OUT_OF_SCOPE"
+            }
+          ],
+          "valid_citations": [
+            [
+              "regulations.txt",
+              "OUT_OF_SCOPE"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": null,
+        "entities": {},
+        "entity_ids": [],
+        "chunks": [
+          {
+            "chunk_id": "regulations-out-of-scope-8",
+            "text": "OUT_OF_SCOPE:\nHệ thống Course Assistant chỉ chịu trách nhiệm trong phạm vi dữ liệu\nmôn học. Với câu hỏi ngoài phạm vi hoặc không có dữ liệu, hệ thống phải\nthông báo rằng không tìm thấy thông tin thay vì tự tạo thông tin.",
+            "source": "regulations.txt",
+            "section": "OUT_OF_SCOPE",
+            "entity_ids": [],
+            "kind": "regulations"
+          },
+          {
+            "chunk_id": "resources-study-note-8",
+            "text": "study_note:\nSinh viên nên xem thêm các giáo trình văn phạm tiếng Anh và tiếng Việt\nở bậc đại học để hiểu sâu hơn về cú pháp và có thể vận dụng vào xây dựng\nhệ thống hiểu ngôn ngữ tự nhiên.",
+            "source": "resources.txt",
+            "section": "study_note",
+            "entity_ids": [],
+            "kind": "resources"
+          },
+          {
+            "chunk_id": "regulations-attendance-1",
+            "text": "attendance:\nSinh viên được khuyến khích tham dự đầy đủ các buổi học và thực hiện\ncác bài tập được giao.",
+            "source": "regulations.txt",
+            "section": "attendance",
+            "entity_ids": [],
+            "kind": "regulations"
+          }
+        ],
+        "scores": [
+          0.23649810540240093,
+          0.2359909833121015,
+          0.13136198405887395
+        ],
+        "resolution": {
+          "original_query": "Cho ví dụ dễ hiểu hơn.",
+          "resolved_query": "Cho ví dụ dễ hiểu hơn.",
+          "has_reference": false,
+          "reference_type": null,
+          "reference_expression": null,
+          "resolved_entities": {},
+          "resolved_intent": null,
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "PCFG là gì?",
+          "last_intent": "GET_SCHEDULE",
+          "last_entities": {
+            "topic": "PCFG"
+          },
+          "last_answer_entities": [
+            "PCFG",
+            "SYNTACTIC_PROCESSING",
+            "CFG",
+            "DEPENDENCY_GRAMMAR"
+          ],
+          "last_sources": [
+            "schedule.txt / WEEK 03"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "Cho ví dụ dễ hiểu hơn.",
+          "last_intent": "GET_SCHEDULE",
+          "last_entities": {
+            "topic": "PCFG"
+          },
+          "last_answer_entities": [],
+          "last_sources": [
+            "regulations.txt / OUT_OF_SCOPE"
+          ]
+        }
+      },
+      "notes": "Follow-up to A07; check contextual resolution and hallucination."
+    },
+    {
+      "id": "A09",
+      "type": "answer",
+      "question": "Lịch thi cuối kỳ vào ngày nào?",
+      "http_status": 200,
+      "latency_ms": 3.51,
+      "expected_intent": null,
+      "actual_intent": "GET_COURSE_INFO",
+      "intent_match": null,
+      "expected_entities": [],
+      "actual_entities": [],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "course-info-course-information-0",
+        "course-info-course-id-co3085-1",
+        "course-info-course-description-2"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "COURSE INFORMATION ================== [Nguồn: course_info.txt / COURSE INFORMATION]",
+      "raw_response": {
+        "question": "Lịch thi cuối kỳ vào ngày nào?",
+        "resolved_query": "Lịch thi cuối kỳ vào ngày nào?",
+        "answer": "COURSE INFORMATION ================== [Nguồn: course_info.txt / COURSE INFORMATION]",
+        "sources": [
+          {
+            "source": "course_info.txt",
+            "section": "COURSE INFORMATION"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "course-info-course-information-0",
+          "course-info-course-id-co3085-1",
+          "course-info-course-description-2"
+        ],
+        "parse_status": "UNPARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "COURSE INFORMATION ================== [Nguồn: course_info.txt / COURSE INFORMATION]",
+          "sources": [
+            {
+              "source": "course_info.txt",
+              "section": "COURSE INFORMATION"
+            }
+          ],
+          "valid_citations": [
+            [
+              "course_info.txt",
+              "COURSE INFORMATION"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": "GET_COURSE_INFO",
+        "entities": {},
+        "entity_ids": [],
+        "chunks": [
+          {
+            "chunk_id": "course-info-course-information-0",
+            "text": "COURSE INFORMATION\n==================",
+            "source": "course_info.txt",
+            "section": "COURSE INFORMATION",
+            "entity_ids": [],
+            "kind": "course_info"
+          },
+          {
+            "chunk_id": "course-info-course-id-co3085-1",
+            "text": "course_id: CO3085\ncourse_name: Xử lý Ngôn ngữ Tự nhiên\ncourse_name_en: Natural Language Processing\nsemester: HK261\ncredits: 3\nects: 6\ncourse_type: Specialty / Graduation knowledge block\ndepartment: Khoa Khoa học và Kỹ thuật Máy tính\nformat: 2 lecture periods per week, 15 weeks\ntotal_course_hours: 150\nlecture_hours: 30\nmajor_assignment_hours: 45\nself_study_hours: 60",
+            "source": "course_info.txt",
+            "section": "course_id: CO3085",
+            "entity_ids": [
+              "NATURAL_LANGUAGE_PROCESSING",
+              "CO3085",
+              "NLP"
+            ],
+            "kind": "course_info"
+          },
+          {
+            "chunk_id": "course-info-course-description-2",
+            "text": "course_description:\nMôn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của\nxử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phần chính:\n(1) Xử lý cú pháp, (2) Diễn dịch ngữ nghĩa, và (3) Ngữ cảnh và tri thức\nthế giới.",
+            "source": "course_info.txt",
+            "section": "course_description",
+            "entity_ids": [
+              "PART_III",
+              "CONTEXT_AND_WORLD_KNOWLEDGE",
+              "CO3085",
+              "NLP",
+              "NATURAL_LANGUAGE_PROCESSING",
+              "PART_II",
+              "SEMANTIC_INTERPRETATION",
+              "PART_I",
+              "SYNTACTIC_PROCESSING"
+            ],
+            "kind": "course_info"
+          }
+        ],
+        "scores": [
+          0.5689265474158339,
+          0.36854121080093294,
+          0.3085905725139701
+        ],
+        "resolution": {
+          "original_query": "Lịch thi cuối kỳ vào ngày nào?",
+          "resolved_query": "Lịch thi cuối kỳ vào ngày nào?",
+          "has_reference": false,
+          "reference_type": null,
+          "reference_expression": null,
+          "resolved_entities": {},
+          "resolved_intent": null,
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "Cho ví dụ dễ hiểu hơn.",
+          "last_intent": "GET_SCHEDULE",
+          "last_entities": {
+            "topic": "PCFG"
+          },
+          "last_answer_entities": [],
+          "last_sources": [
+            "regulations.txt / OUT_OF_SCOPE"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "Lịch thi cuối kỳ vào ngày nào?",
+          "last_intent": "GET_COURSE_INFO",
+          "last_entities": {
+            "topic": "PCFG"
+          },
+          "last_answer_entities": [
+            "NATURAL_LANGUAGE_PROCESSING",
+            "CO3085",
+            "NLP",
+            "PART_III",
+            "CONTEXT_AND_WORLD_KNOWLEDGE",
+            "PART_II",
+            "SEMANTIC_INTERPRETATION",
+            "PART_I",
+            "SYNTACTIC_PROCESSING"
+          ],
+          "last_sources": [
+            "course_info.txt / COURSE INFORMATION"
+          ]
+        }
+      },
+      "notes": "Negative test: should state unavailable if not in KB; manually confirm KB lacks this."
+    },
+    {
+      "id": "A10",
+      "type": "answer",
+      "question": "Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.",
+      "http_status": 200,
+      "latency_ms": 4.44,
+      "expected_intent": null,
+      "actual_intent": "GET_RESOURCE",
+      "intent_match": null,
+      "expected_entities": [],
+      "actual_entities": [
+        "NLP"
+      ],
+      "entity_match": null,
+      "expected_chunk_ids": [],
+      "actual_chunk_ids": [
+        "assignments-luu-y-0",
+        "course-info-muc-tieu-3",
+        "faq-q12-11"
+      ],
+      "precision_at_k": null,
+      "recall_at_k": null,
+      "mrr": null,
+      "answer": "Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering. [Nguồn: assignments.txt / Lưu ý]",
+      "raw_response": {
+        "question": "Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.",
+        "resolved_query": "Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.",
+        "answer": "Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering. [Nguồn: assignments.txt / Lưu ý]",
+        "sources": [
+          {
+            "source": "assignments.txt",
+            "section": "Lưu ý"
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "assignments-luu-y-0",
+          "course-info-muc-tieu-3",
+          "faq-q12-11"
+        ],
+        "parse_status": "UNPARSED",
+        "retrieval_status": "FOUND",
+        "status": "ANSWERED",
+        "citation_check": {
+          "status": "ANSWERED",
+          "answer": "Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering. [Nguồn: assignments.txt / Lưu ý]",
+          "sources": [
+            {
+              "source": "assignments.txt",
+              "section": "Lưu ý"
+            }
+          ],
+          "valid_citations": [
+            [
+              "assignments.txt",
+              "Lưu ý"
+            ]
+          ],
+          "invalid_citations": []
+        },
+        "intent": "GET_RESOURCE",
+        "entities": {},
+        "entity_ids": [
+          "NLP"
+        ],
+        "chunks": [
+          {
+            "chunk_id": "assignments-luu-y-0",
+            "text": "Lưu ý:\nCác mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course\nAssistant. Đây không phải lịch nộp chính thức của học phần.\n\nassignment_id: BTL01\ntitle: Intelligent Course Assistant\nteam_size: 3-4 students\ndomain: Course information and learning support\ngoal:\nXây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một\nmôn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic\ninterpretation và question answering.",
+            "source": "assignments.txt",
+            "section": "Lưu ý",
+            "entity_ids": [
+              "BTL01",
+              "SEMANTIC_INTERPRETATION",
+              "QUESTION_ANSWERING",
+              "NLP"
+            ],
+            "kind": "assignments"
+          },
+          {
+            "chunk_id": "course-info-muc-tieu-3",
+            "text": "Mục tiêu:\nSinh viên có khả năng phân tích các vấn đề NLP và xây dựng các chương\ntrình/hệ thống cơ bản có khả năng hiểu ngôn ngữ tự nhiên trong một miền\nứng dụng cụ thể.",
+            "source": "course_info.txt",
+            "section": "Mục tiêu",
+            "entity_ids": [
+              "NLP"
+            ],
+            "kind": "course_info"
+          },
+          {
+            "chunk_id": "faq-q12-11",
+            "text": "Q12:\nquestion: Bài tập lớn có thể sử dụng LLM hoặc RAG không?\nanswer: Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng\nLLM/RAG không thay thế các yêu cầu NLP cốt lõi.",
+            "source": "faq.txt",
+            "section": "Q12",
+            "entity_ids": [
+              "NLP"
+            ],
+            "kind": "faq"
+          }
+        ],
+        "scores": [
+          0.3624139911880532,
+          0.3594948180493638,
+          0.35772439297070563
+        ],
+        "resolution": {
+          "original_query": "Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.",
+          "resolved_query": "Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.",
+          "has_reference": false,
+          "reference_type": null,
+          "reference_expression": null,
+          "resolved_entities": {},
+          "resolved_intent": null,
+          "status": "OK",
+          "clarification_message": null
+        },
+        "dialogue_state_before": {
+          "last_question": "Lịch thi cuối kỳ vào ngày nào?",
+          "last_intent": "GET_COURSE_INFO",
+          "last_entities": {
+            "topic": "PCFG"
+          },
+          "last_answer_entities": [
+            "NATURAL_LANGUAGE_PROCESSING",
+            "CO3085",
+            "NLP",
+            "PART_III",
+            "CONTEXT_AND_WORLD_KNOWLEDGE",
+            "PART_II",
+            "SEMANTIC_INTERPRETATION",
+            "PART_I",
+            "SYNTACTIC_PROCESSING"
+          ],
+          "last_sources": [
+            "course_info.txt / COURSE INFORMATION"
+          ]
+        },
+        "dialogue_state_after": {
+          "last_question": "Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.",
+          "last_intent": "GET_RESOURCE",
+          "last_entities": {
+            "topic": "PCFG"
+          },
+          "last_answer_entities": [
+            "NLP",
+            "BTL01",
+            "SEMANTIC_INTERPRETATION",
+            "QUESTION_ANSWERING"
+          ],
+          "last_sources": [
+            "assignments.txt / Lưu ý"
+          ]
+        }
+      },
+      "notes": "Manual reset test. Better run /reset before this case; test both reset success and unsupported-topic fallback."
+    }
+  ]
+}

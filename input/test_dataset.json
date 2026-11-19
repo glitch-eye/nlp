@@ -1,0 +1,227 @@
+{
+  "version": "1.0",
+  "description": "Starter benchmark for retrieval and answer dialogue testing. Ground-truth chunk IDs intentionally left empty for manual annotation.",
+  "tests": [
+    {
+      "id": "R01",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Chương 3 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH03"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Verify the exact relevant chunk(s) in the knowledge base."
+    },
+    {
+      "id": "R02",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Chương 6 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH06"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Previously observed answer associates Chapter 6 with statistical methods; verify target chunk."
+    },
+    {
+      "id": "R03",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "PCFG là gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Annotate chunk(s) defining PCFG."
+    },
+    {
+      "id": "R04",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Các phương pháp thống kê được học ở chương nào?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Verify chapter references in the KB."
+    },
+    {
+      "id": "R05",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Nội dung môn học liên quan đến xác suất là gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Broad semantic query; manually annotate relevant chunks."
+    },
+    {
+      "id": "R06",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tuần 2 học những nội dung gì?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Prior run extracted WEEK_02 but returned apparently irrelevant chunks; investigate and annotate."
+    },
+    {
+      "id": "R07",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tuần 3 có những chủ đề nào?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_03"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Verify schedule content and expected chunks."
+    },
+    {
+      "id": "R08",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tuần 4 học về nội dung gì?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_04"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Verify schedule content and expected chunks."
+    },
+    {
+      "id": "R09",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Các tuần học có nội dung nào liên quan đến mô hình thống kê?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Broad query; annotate all relevant chunk IDs."
+    },
+    {
+      "id": "R10",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tóm tắt những chủ đề chính của môn học.",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Broad summary query; manually judge relevance."
+    },
+    {
+      "id": "A01",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương 3 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH03"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Judge answer accuracy and citation grounding."
+    },
+    {
+      "id": "A02",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Giải thích thêm về nội dung đó.",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Follow-up in same dialogue chain as A01; check referent resolution."
+    },
+    {
+      "id": "A03",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương 6 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH06"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Topic switch; should not keep answering Chapter 3."
+    },
+    {
+      "id": "A04",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương đó có liên quan đến Chương 3 không?",
+      "expected_intent": null,
+      "expected_entities": [
+        "CH06",
+        "CH03"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Follow-up referring to Chapter 6 from A03; verify comparison is grounded."
+    },
+    {
+      "id": "A05",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Tuần 2 học gì?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Answer should be grounded in week 2 schedule."
+    },
+    {
+      "id": "A06",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Nội dung đó có ví dụ không?",
+      "expected_intent": null,
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Follow-up to A05; verify context retention and evidence."
+    },
+    {
+      "id": "A07",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "PCFG là gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Check grounded definition and citations."
+    },
+    {
+      "id": "A08",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Cho ví dụ dễ hiểu hơn.",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Follow-up to A07; check contextual resolution and hallucination."
+    },
+    {
+      "id": "A09",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Lịch thi cuối kỳ vào ngày nào?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Negative test: should state unavailable if not in KB; manually confirm KB lacks this."
+    },
+    {
+      "id": "A10",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Manual reset test. Better run /reset before this case; test both reset success and unsupported-topic fallback."
+    }
+  ]
+}
