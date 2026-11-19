@@ -153,6 +153,33 @@ class MetricsTests(unittest.TestCase):
         }]
         self.assertEqual(ev.calculate_metrics(results)["fallback_count"], 1)
 
+    def test_mixed_model_and_latency_metrics_are_reported(self):
+        results = [{
+            "expected_answerability": "REVIEW",
+            "label_status": "AUTO",
+            "label_provenance": "auto",
+            "expected_chunk_ids": [],
+            "retrieved_chunk_ids": [],
+            "actual_status": "ANSWERED",
+            "citation_check": {},
+            "judge": None,
+            "model_fallback": True,
+            "model_execution": "mixed",
+            "model_call_count": 2,
+            "model_calls": [
+                {"used_api": True},
+                {"used_api": False},
+            ],
+            "generation_elapsed_seconds": 0.5,
+            "elapsed_seconds": 0.8,
+        }]
+        metrics = ev.calculate_metrics(results)
+        self.assertEqual(metrics["mixed_model_answer_count"], 1)
+        self.assertEqual(metrics["model_generation_call_count"], 2)
+        self.assertEqual(metrics["successful_api_call_count"], 1)
+        self.assertEqual(metrics["mean_generation_latency_seconds"], 0.5)
+        self.assertEqual(metrics["mean_pipeline_latency_seconds"], 0.8)
+
 
 
 class LLMClientTelemetryTests(unittest.TestCase):
