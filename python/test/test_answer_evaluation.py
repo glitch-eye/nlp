@@ -33,6 +33,23 @@ class DatasetTests(unittest.TestCase):
                 '"completeness":3},"hallucination":false}'
             )
 
+    def test_judge_sees_raw_answer_blocked_by_guard(self):
+        prompt = ev.OpenAICompatibleJudge.build_prompt(
+            {
+                "query": "Khi nào deadline?",
+                "expected_answerability": "EXPECTED_CONTEXT",
+            },
+            {
+                "answer": "Câu trả lời bị giữ lại vì thiếu bằng chứng.",
+                "status": "NEEDS_REVIEW",
+                "citation_check": {"raw_answer": "Deadline là 15/12/2026."},
+                "chunks": [],
+            },
+        )
+        self.assertIn("Deadline là 15/12/2026.", prompt)
+        self.assertIn("Câu trả lời bị giữ lại vì thiếu bằng chứng.", prompt)
+
+
     def test_unverified_reference_is_not_sent_to_judge(self):
         prompt = ev.OpenAICompatibleJudge.build_prompt(
             {
