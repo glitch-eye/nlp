@@ -270,15 +270,15 @@ def calculate_metrics(results):
     refused = [r for r in results if r["actual_status"] in REFUSAL_STATUSES]
     needs_review = [r for r in results if r["actual_status"] == "NEEDS_REVIEW"]
 
-    expected_ids = set()
-    retrieved_ids = set()
+    expected_total = 0
+    retrieved_total = 0
     true_positive = 0
     hit = 0
     for row in expected_answerable:
         expected = set(row["expected_chunk_ids"])
         retrieved = set(row["retrieved_chunk_ids"])
-        expected_ids.update(expected)
-        retrieved_ids.update(retrieved)
+        expected_total += len(expected)
+        retrieved_total += len(retrieved)
         true_positive += len(expected & retrieved)
         hit += int(bool(expected & retrieved))
 
@@ -322,8 +322,8 @@ def calculate_metrics(results):
         ),
         "over_answered_count": sum(r["actual_status"] == "ANSWERED" for r in expected_refusal),
         "retrieval_hit_at_k": _ratio(hit, len(expected_answerable)),
-        "retrieval_micro_precision": _ratio(true_positive, len(retrieved_ids)),
-        "retrieval_micro_recall": _ratio(true_positive, len(expected_ids)),
+        "retrieval_micro_precision": _ratio(true_positive, retrieved_total),
+        "retrieval_micro_recall": _ratio(true_positive, expected_total),
         "citation_validity_rate": _ratio(citation_ok, citation_checked),
         "citation_checked_count": citation_checked,
         "judge_score_means": score_means,
@@ -333,6 +333,11 @@ def calculate_metrics(results):
         "judge_evaluated_count": len(judged),
         "judge_error_count": sum(bool(r.get("judge_error")) for r in results),
         "fallback_count": sum(r["model_fallback"] for r in results),
+        "mock_answer_count": sum("mock" in str(r.get("model_name", "")).lower() for r in results),
+        "real_model_answer_count": sum(
+            not r["model_fallback"] and "mock" not in str(r.get("model_name", "")).lower()
+            for r in results
+        ),
         "status_confusion": _status_confusion(labelled),
     }
 
@@ -405,6 +410,8 @@ def render_markdown(report):
         "| Retrieval micro precision / recall | {} / {} |".format(_fmt(m["retrieval_micro_precision"]), _fmt(m["retrieval_micro_recall"])),
         "| Citation validity (checked ANSWERED only) | {} |".format(_fmt(m["citation_validity_rate"])),
         "| NEEDS_REVIEW | {} |".format(m["needs_review_count"]),
+        "| Real-model answer rows | {} |".format(m["real_model_answer_count"]),
+        "| Mock answer rows | {} |".format(m["mock_answer_count"]),
         "| Model fallback rows | {} |".format(m["fallback_count"]),
         "",
         "## Model-as-judge (diagnostic only)",
