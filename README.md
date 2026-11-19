@@ -1,134 +1,209 @@
-# Hướng dẫn Cài đặt và Chạy Chương trình – Course Assistant (CO3085)
+# Course Assistant NLP — CO3085
 
-Tài liệu này hướng dẫn nhanh cách cài đặt môi trường và chạy toàn bộ các thành phần của hệ thống **Trợ lý hỗ trợ học tập thông minh (Course Assistant)**.
+Hệ thống trợ lý hỗ trợ học tập cho môn **Xử lý Ngôn ngữ Tự nhiên (CO3085)**. Repository hiện thực pipeline CFG/Earley Parser, Semantic Frame, Hybrid Retrieval, RAG/LLM, Answer Guard và quản lý hội thoại cục bộ.
 
-> Tài liệu mô tả chi tiết hệ thống theo mục nằm tại: [python/README.md](python/README.md).
+- Hướng dẫn cài đặt và chạy nhanh: tài liệu này.
+- Kiến trúc, cơ sở lý thuyết và mô tả module: [python/README.md](python/README.md).
 
----
+## 1. Cấu trúc repository
 
-## 1. Cấu trúc thư mục
-
-```text
+~~~text
 nlp/
-├── README.md                  # Hướng dẫn cài đặt và chạy chương trình (file này)
+├── README.md
 └── python/
-    ├── README.md              # Tài liệu đầy đủ 12 mục & cơ sở lý thuyết
-    ├── Dockerfile             # Cấu hình đóng gói Docker
-    ├── requirements.txt       # Các thư viện Python cần thiết
-    ├── setup.py               # Cấu hình cài đặt package
-    ├── data/                  # Knowledge Base môn học CO3085
-    ├── nlp/app/               # Mã nguồn chính của hệ thống
-    │   ├── input/             # Dữ liệu đầu vào kiểm thử
-    │   └── output/            # Kết quả đầu ra cục bộ
-    └── test/                  # Bộ kiểm thử tự động pytest
-```
+    ├── README.md
+    ├── Dockerfile             # Hiện chưa cấu hình để chạy Course Assistant
+    ├── requirements.txt
+    ├── setup.py
+    ├── data/                  # Course knowledge base + entities.txt
+    ├── nlp/app/
+    │   ├── input/             # Dialogue và query inputs
+    │   └── output/            # Generated samples, traces và reports
+    └── test/                  # unittest suite
+~~~
 
----
+## 2. Yêu cầu và cài đặt
 
-## 2. Hướng dẫn cài đặt
+- Python 3.8+ (khuyến nghị Python 3.10 hoặc 3.12).
+- Windows, macOS hoặc Linux.
+- API key chỉ cần khi muốn gọi model thật qua OpenAI-compatible API.
 
-### 2.1 Yêu cầu môi trường
-* **Python:** `>= 3.8` (khuyến nghị Python `3.10+` / `3.12`)
-* **Hệ điều hành:** Windows / Linux / macOS
-* **Docker:** (Tùy chọn) phục vụ đóng gói và chấm bài tự động
+Từ thư mục repository:
 
-### 2.2 Cài đặt trực tiếp bằng `pip`
-Mở terminal tại thư mục gốc `nlp/` và chạy:
-
-```bash
+~~~bash
 cd python
-pip install -r requirements.txt
-pip install -e .
-```
+python -m venv .venv
 
-### 2.3 Cài đặt và chạy bằng Docker
-Từ thư mục gốc `nlp/`:
+# macOS / Linux
+source .venv/bin/activate
 
-```bash
-# Build Docker image
-docker build -t nlp-course-assistant python/
+# Windows PowerShell
+# .venv\Scripts\Activate.ps1
 
-# Chạy container và mount thư mục input/output
-docker run --rm -v "$(pwd)/output:/nlp/output" -v "$(pwd)/input:/nlp/input" nlp-course-assistant
-```
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install -e .
+~~~
 
----
+Knowledge base mặc định nằm tại `python/data/`. Có thể truyền đường dẫn khác bằng `--data-dir`.
 
-## 3. Hướng dẫn chạy chương trình
+### Docker
 
-Tất cả các lệnh dưới đây được thực thi từ thư mục `python/` (`cd python`):
+**Chưa sử dụng các lệnh Docker bên dưới như một cách chạy Course Assistant.** Dockerfile hiện tại vẫn dùng entrypoint mẫu `hcommon.cli`, không khởi chạy `nlp.app`; các volume `input/output` trước đây trong README cũng không khớp với đường dẫn dữ liệu của ứng dụng. Cần cập nhật và kiểm thử Dockerfile riêng trước khi công bố Docker là phương thức cài đặt được hỗ trợ.
 
-### 3.1 Phần I: Văn phạm, Sinh câu và Phân tích cú pháp
-```bash
-# 1. Sinh câu mẫu hợp lệ từ văn phạm (tối đa 10.000 câu) -> nlp/app/output/samples.txt
+## 3. Hướng dẫn chạy
+
+Tất cả lệnh trong phần này được chạy từ thư mục `python/`.
+
+### 3.1 Grammar, sinh câu và Parser
+
+~~~bash
+# Sinh tối đa 10.000 câu từ grammar
 python -m nlp.app.utils
 
-# 2. Phân tích cú pháp tập câu đầu vào -> nlp/app/output/parse-results.txt
+# Parse tập câu đầu vào
 python -m nlp.app.run_parser \
   --input nlp/app/input/sentences.txt \
   --output nlp/app/output/parse-results.txt \
   --grammar nlp/app/output/grammar.txt
-```
+~~~
 
-### 3.2 Phần II, III & IV: Truy xuất, Hỏi đáp LLM/RAG, Hội thoại cục bộ và Đánh giá
-```bash
-# 1. Chạy truy xuất thông tin độc lập (trên data/sample_queries.txt) -> nlp/app/output/retrieval.txt
+### 3.2 Retrieval và tạo tập dữ liệu đánh giá
+
+~~~bash
+# Chạy retrieval trên data/sample_queries.txt
 python -m nlp.app.run_retrieval
 
-# 2. Tạo / cập nhật bộ dữ liệu kiểm thử có nhãn
-#    -> xuất ra nlp/app/input/test_labeled.jsonl (114 câu test độc lập)
-#    -> và nlp/app/output/samples_gold_labeled.jsonl (8.638 câu đã gán lại nhãn)
+# Tạo/cập nhật hai bộ dữ liệu nhãn
 python -m nlp.app.build_gold_labels
+~~~
 
-# 3. Chạy đánh giá tầng Retrieval với bộ Test độc lập (114 câu) hoặc bộ Full (8.638 câu)
+Lệnh tạo dữ liệu mặc định sinh:
+- `nlp/app/input/test_labeled.jsonl`: 114 câu hỏi được tuyển chọn riêng làm tập kiểm thử.
+- `nlp/app/output/samples_gold_labeled.jsonl`: các mẫu synthetic từ `samples_labeled.jsonl` được gán lại expected entities, chunks và answerability.
+
+**Lưu ý về nhãn:** script hiện tự động tạo nhãn bằng quy tắc/parser/knowledge base và gán trường `label_status="GOLD_REVIEWED"`. Giá trị này không chứng minh rằng con người đã review từng dòng. Trước khi báo cáo đây là *human-reviewed gold set*, cần kiểm tra nhãn độc lập; đặc biệt không xem tập synthetic 8.638 câu là test set độc lập.
+
+Đánh giá retrieval trên tập 114 câu:
+
+~~~bash
 python -m nlp.app.run_retrieval \
   --labeled-jsonl nlp/app/input/test_labeled.jsonl \
   --output nlp/app/output/retrieval_test.txt \
   --evaluation-output nlp/app/output/retrieval_test_eval.json
+~~~
 
+Đánh giá retrieval trên tập synthetic được gán lại nhãn:
+
+~~~bash
 python -m nlp.app.run_retrieval \
   --labeled-jsonl nlp/app/output/samples_gold_labeled.jsonl \
-  --output nlp/app/output/retrieval_gold.txt \
-  --evaluation-output nlp/app/output/retrieval_gold_eval.json
+  --output nlp/app/output/retrieval_synthetic.txt \
+  --evaluation-output nlp/app/output/retrieval_synthetic_eval.json
+~~~
 
-# 4. Chạy đánh giá RAG/LLM trực tiếp trên bộ Test độc lập hoặc bộ Full
-#    -> xuất kết quả ra nlp/app/output/rag_evaluation.txt
-python -m nlp.app.rag_evaluation --samples nlp/app/input/test_labeled.jsonl
-python -m nlp.app.rag_evaluation --samples nlp/app/output/samples_gold_labeled.jsonl
+Mặc định retriever dùng intent/entity do pipeline phân tích câu hỏi tạo ra. Tùy chọn `--use-gold-entities` đưa intent/entity nhãn vào retrieval như một chế độ oracle/upper-bound; không dùng kết quả này thay cho kết quả retrieval query-only.
 
-# 5. Chạy toàn bộ pipeline Course Assistant (Offline Mock LLM mặc định)
-#    Đọc nlp/app/input/dialogues.txt và xuất dialogue.txt, answer.txt, evaluation.txt
-#    ra cả nlp/app/output/ và ../output/
+### 3.3 RAG evaluation
+
+~~~bash
+# Mock/offline trên tập 114 câu
+python -m nlp.app.rag_evaluation \
+  --samples nlp/app/input/test_labeled.jsonl \
+  --output-dir nlp/app/output/rag_test
+
+# Mock/offline trên tập synthetic
+python -m nlp.app.rag_evaluation \
+  --samples nlp/app/output/samples_gold_labeled.jsonl \
+  --output-dir nlp/app/output/rag_synthetic
+~~~
+
+Mỗi lệnh tạo `rag_evaluation.txt` trong thư mục output tương ứng. Dùng thư mục riêng để tránh lần chạy sau ghi đè báo cáo trước. Với model thật, đặt `OPENAI_API_KEY` và thêm `--provider openai --max-samples N`; kiểm tra model/provenance trong report vì API failure có thể fallback về Mock.
+
+### 3.4 Course Assistant và hội thoại
+
+~~~bash
+# Chạy dialogue script mặc định, Mock LLM offline
 python -m nlp.app.run_assistant --data-dir data
 
-# 6. Hỏi 1 câu đơn lẻ trên CLI (kèm xuất JSON nếu cần)
-python -m nlp.app.run_assistant --data-dir data --question "Chương 6 nói về gì?"
-python -m nlp.app.run_assistant --data-dir data --question "Phần II của bài tập lớn là gì?" --json
+# Một câu hỏi
+python -m nlp.app.run_assistant --data-dir data \
+  --question "Chương 6 nói về gì?" --json
 
-# 7. Chạy chế độ hội thoại tương tác nhiều lượt trên terminal (gõ 'reset' để xóa ngữ cảnh, 'exit' để thoát)
+# Hội thoại tương tác; dùng reset để xóa context, exit để thoát
 python -m nlp.app.run_assistant --data-dir data --interactive
-```
+~~~
 
-### 3.3 Chạy với LLM thật qua API tương thích OpenAI (Tùy chọn)
-```bash
-export OPENAI_API_KEY="sk-..."
+Các output chính gồm `dialogue.txt`, `answer.txt`, `evaluation.txt` và `rag_evaluation.txt` trong `nlp/app/output/`. Runner cũng mirror một số output sang thư mục `output/` ở repository root.
+
+### 3.5 Dùng OpenAI-compatible API
+
+~~~bash
+export OPENAI_API_KEY="YOUR_API_KEY"
 export LLM_MODEL="gpt-4o-mini"
 export OPENAI_BASE_URL="https://api.openai.com/v1"
 
 python -m nlp.app.run_assistant --data-dir data --provider openai
-```
-*(Nếu không đặt `OPENAI_API_KEY` hoặc mất kết nối mạng, hệ thống tự động fallback về `MockLLMClient` để đảm bảo chạy offline 100%).*
+~~~
 
-### 3.4 Khởi động HTTP API Service
-```bash
+Không commit API key. Nếu thiếu key hoặc request lỗi, `LLMClient` có thể fallback sang Mock. Vì vậy, chọn `--provider openai` không tự chứng minh câu trả lời được sinh bởi model thật; cần kiểm tra model name/fallback marker trong output.
+
+### 3.6 Chạy với Ollama (tùy chọn)
+
+Cài Ollama và tải model, ví dụ:
+
+~~~bash
+ollama pull qwen2.5:7b
+ollama serve
+~~~
+
+Mở terminal khác, từ thư mục `python/`:
+
+~~~bash
+export OPENAI_API_KEY="ollama"
+export OPENAI_BASE_URL="http://localhost:11434/v1"
+export LLM_MODEL="qwen2.5:7b"
+export LLM_TIMEOUT="120"
+
+python -m nlp.app.run_assistant --data-dir data --provider openai
+~~~
+
+Nếu Course Assistant và Ollama chạy trên hai máy hoặc trong hai môi trường mạng khác nhau, thay `localhost` bằng địa chỉ host mà máy chạy Assistant có thể truy cập được. Không dùng một IP cố định trong tài liệu vì địa chỉ phụ thuộc môi trường.
+
+Để chạy RAG evaluation bằng Ollama:
+
+~~~bash
+python -m nlp.app.rag_evaluation \
+  --samples nlp/app/input/test_labeled.jsonl \
+  --provider openai \
+  --model qwen2.5:7b \
+  --max-samples 20 \
+  --output-dir nlp/app/output/rag_ollama
+~~~
+
+### 3.7 HTTP API
+
+~~~bash
 python -m nlp.app.api --host 127.0.0.1 --port 8000
-```
-* `GET http://127.0.0.1:8000/health`: Kiểm tra trạng thái server.
-* `POST http://127.0.0.1:8000/retrieve`: Truy xuất top-k chunk với body `{"query": "Tuần 2 học những nội dung gì?"}`.
-* `POST http://127.0.0.1:8000/answer`: Hỏi đáp có lưu ngữ cảnh hội thoại với body `{"question": "Chương 6 nói về gì?"}`.
-* `POST http://127.0.0.1:8000/reset`: Xóa ngữ cảnh hội thoại hiện tại.
+~~~
 
-### 3.5 Chạy bộ kiểm thử tự động (`pytest`)
-```bash
-python -m pytest
-```
+- `GET /health`: health check.
+- `POST /retrieve`: truy xuất chunks, ví dụ body `{"query":"Tuần 2 học những nội dung gì?"}`.
+- `POST /answer`: hỏi đáp, ví dụ body `{"question":"Chương 6 nói về gì?"}`.
+- `POST /reset`: reset dialogue state.
+
+### 3.8 Kiểm thử tự động
+
+Các test hiện dùng `unittest`:
+
+~~~bash
+python -m unittest discover -s test -v
+~~~
+
+Có thể dùng `pytest` nếu đã cài riêng, nhưng `pytest` không nằm trong `requirements.txt` hiện tại.
+
+## 4. Tài liệu liên quan
+
+- [Tài liệu kỹ thuật đầy đủ](python/README.md) — kiến trúc, Grammar, Parser, Semantic Frame, Retrieval, RAG, hội thoại và đánh giá.
+- [Source code ứng dụng](python/nlp/app/).
+- [Test suite](python/test/).
