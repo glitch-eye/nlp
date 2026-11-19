@@ -513,7 +513,86 @@ Theo lý thuyết **Chương 7 (Discourse Situation)** và **Chương 12 (Discou
 
 ## 11. Mô tả cách đánh giá
 
+### 11.1. Đánh giá NLP/Retrieval và đánh giá câu trả lời LLM là hai việc khác nhau
+
+- `evaluation.py`: đánh giá parser, intent/entity và retrieval; mặc định dùng MockLLM để không phát sinh chi phí API.
+- `rag_evaluation.py`: tạo bằng chứng chạy pipeline và kiểm tra Answer Guard bằng các kịch bản scripted. Scripted model chỉ là test double, không phải LLM thật.
+- `answer_evaluation.py`: chạy Course Assistant với provider/model được cấu hình, lưu câu trả lời thực tế và đánh giá answer generation riêng.
+
+### 11.2. Chuẩn bị dữ liệu
+
+Mỗi dòng JSONL trong bộ answer evaluation cần có ít nhất:
+
+```json
+{
+  "sample_id": "ANS001",
+  "query": "Chương 3 trình bày nội dung gì?",
+  "expected_answerability": "EXPECTED_CONTEXT",
+  "expected_chunk_ids": ["topics-chapter-3-grammar-and-parsing-2"],
+  "label_status": "REVIEWED",
+  "label_provenance": "human_review",
+  "reference_answer": "Đáp án được đối chiếu với tài liệu môn học.",
+  "reference_points": ["Điểm nội dung bắt buộc phải có"],
+  "reference_status": "HUMAN_REVIEWED"
+}
+```
+
+- `expected_answerability` và `expected_chunk_ids` chỉ được dùng làm nhãn chuẩn khi đã kiểm tra độc lập.
+- Chỉ `label_status=REVIEWED` cùng `label_provenance=human_review` được tính vào headline metrics.
+- `reference_answer`/`reference_points` chỉ được gửi cho Judge khi `reference_status=HUMAN_REVIEWED`.
+- `GOLD_REVIEWED`, `AUTO_LABEL_REQUIRES_REVIEW` hoặc `data_source_review` không tự động đồng nghĩa với human-reviewed gold.
+- Không dùng câu trả lời do chính generator tạo ra làm reference answer.
+
+### 11.3. Chạy đánh giá
+
+Từ thư mục `python/`:
+
+```bash
+# Offline / mock: kiểm tra pipeline và định dạng báo cáo, không đánh giá chất lượng LLM thật
+python -m nlp.app.answer_evaluation \
+  --samples nlp/app/input/test_labeled.jsonl \
+  --provider mock
+
+# Model thật: đặt API key trong environment, không ghi key vào source hoặc JSONL
+export OPENAI_API_KEY="..."
+export OPENAI_BASE_URL="https://api.openai.com/v1"
+python -m nlp.app.answer_evaluation \
+  --samples nlp/app/input/answer_eval.jsonl \
+  --provider openai \
+  --model gpt-4o-mini \
+  --max-samples 30
+
+# Bật một Judge riêng (khuyến nghị dùng model/provider khác generator)
+export EVAL_JUDGE_MODEL="gpt-4o"
+python -m nlp.app.answer_evaluation \
+  --samples nlp/app/input/answer_eval.jsonl \
+  --provider openai \
+  --model gpt-4o-mini \
+  --judge \
+  --judge-model "$EVAL_JUDGE_MODEL" \
+  --max-samples 30
+```
+
+Đầu ra nằm trong `nlp/app/output/answer_evaluation/`:
+- `answer_evaluation.md`: báo cáo đọc nhanh và kết quả từng câu.
+- `answer_evaluation.json`: dữ liệu chi tiết, trạng thái model/fallback, thời gian chạy, Judge scores và provenance.
+
+### 11.4. Diễn giải chỉ số và giới hạn
+
+| Nhóm | Chỉ số | Ý nghĩa |
+|---|---|---|
+| Answerability | Answer rate on answerable | Tỷ lệ câu có đủ context được trả lời |
+| Refusal | Correct refusal rate | Tỷ lệ câu cần từ chối được từ chối |
+| Safety | Over-answered | Số câu cần từ chối nhưng hệ thống vẫn trả lời |
+| Retrieval | Hit@k, micro precision/recall | Mức độ lấy đúng chunks đã được người đánh giá xác nhận |
+| Citation | Citation validity | Citation có khớp nguồn đã gửi vào prompt không |
+| Generation | Correctness, faithfulness, relevancy, completeness (1–5) | Judge chấm câu trả lời theo context và reference đã kiểm duyệt |
+| Hallucination | Judge-flagged rate | Tỷ lệ câu có khẳng định không được context hỗ trợ theo Judge |
+
+**Cảnh báo:** citation hợp lệ không chứng minh nội dung câu trả lời được citation hỗ trợ về mặt ngữ nghĩa. Answer Guard hiện chưa phát hiện mọi kiểu diễn đạt sai nghĩa. LLM-as-judge chỉ là tín hiệu chẩn đoán, cần hiệu chuẩn bằng mẫu do con người chấm. Các dòng auto-label hoặc data-source-review không được dùng làm gold để công bố headline metrics. Nếu Knowledge Base rơi về trace fallback thay vì dữ liệu môn học đầy đủ, retrieval scores không đại diện cho hệ thống hoàn chỉnh. Mỗi lần chạy model thật nên giới hạn số mẫu để kiểm soát chi phí và ghi nhận model ID thực tế; các dòng fallback phải được tách khỏi kết quả LLM thật.
+
 ---
+
 
 ## 12. Các hạn chế của hệ thống
 
