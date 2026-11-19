@@ -267,7 +267,7 @@ Khi query có intent hợp lệ, điểm tổng hợp kết hợp lexical và se
 
 ```bash
 python -m nlp.app.run_retrieval \
-  --labeled-jsonl nlp/app/output/samples_reviewed.jsonl
+  --labeled-jsonl nlp/app/output/samples_labeled.jsonl
 ```
 
 Mặc định ghi:
@@ -411,7 +411,7 @@ python -m nlp.app.build_sample_dataset
 Mặc định đọc grammar `nlp/app/output/grammar.txt` và course data directory; ghi:
 
 - `nlp/app/output/samples.txt`: mỗi câu một dòng.
-- `nlp/app/output/samples_reviewed.jsonl`: một JSON object mỗi dòng.
+- `nlp/app/output/samples_labeled.jsonl`: một JSON object mỗi dòng.
 
 Tùy chỉnh:
 
@@ -419,7 +419,7 @@ Tùy chỉnh:
 python -m nlp.app.build_sample_dataset \
   --grammar nlp/app/output/grammar.txt \
   --data-dir python/data \
-  --output-jsonl nlp/app/output/samples_reviewed.jsonl \
+  --output-jsonl nlp/app/output/samples_labeled.jsonl \
   --output-text nlp/app/output/samples.txt \
   --max-sentences 10000
 ```
@@ -450,7 +450,7 @@ Tạo một hàng đợi audit có chọn lọc, phân tầng theo intent, answe
 
 ```bash
 python -m nlp.app.label_audit \
-  --input nlp/app/output/samples_reviewed.jsonl \
+  --input nlp/app/output/samples_labeled.jsonl \
   --output nlp/app/output/label_audit_queue.jsonl \
   --per-stratum 2 \
   --max-samples 300
@@ -462,7 +462,7 @@ Sau khi review, xuất riêng tập gold chỉ gồm hàng đã duyệt:
 
 ```bash
 python -m nlp.app.label_audit \
-  --input nlp/app/output/samples_reviewed.jsonl \
+  --input nlp/app/output/samples_labeled.jsonl \
   --review-queue nlp/app/output/label_audit_queue.jsonl \
   --apply-reviewed \
   --reviewed-output nlp/app/output/samples_reviewed.jsonl
@@ -510,7 +510,7 @@ Lấy 2 mẫu mỗi tầng là bước audit ban đầu, không phải chứng n
 python -m nlp.app.evaluation
 ```
 
-Mặc định đọc `nlp/app/output/samples_reviewed.jsonl` và ghi vào `nlp/app/output/`:
+Mặc định đọc `nlp/app/output/samples_labeled.jsonl` và ghi vào `nlp/app/output/`:
 
 - `evaluation.txt`: báo cáo dễ đọc.
 - `evaluation_report.json`: metrics chi tiết, confusion counts, per-sample failures, dataset SHA-256, runtime và cấu hình.
@@ -519,7 +519,7 @@ Chạy đầy đủ với data directory chỉ định:
 
 ```bash
 python -m nlp.app.evaluation \
-  --samples nlp/app/output/samples_reviewed.jsonl \
+  --samples nlp/app/output/samples_labeled.jsonl \
   --data-dir python/data \
   --top-k 3 \
   --min-score 0.08
@@ -622,7 +622,7 @@ Tất cả lệnh bên dưới chạy từ thư mục `python/`:
 | Chạy một câu hỏi | `python -m nlp.app.run_assistant --question "Chương 4 nói về gì?"` |
 | Chạy hội thoại | `python -m nlp.app.run_assistant --interactive` |
 | Chạy HTTP API | `python -m nlp.app.api` |
-| Retrieval độc lập | `python -m nlp.app.run_retrieval --labeled-jsonl nlp/app/output/samples_reviewed.jsonl` |
+| Retrieval độc lập | `python -m nlp.app.run_retrieval --labeled-jsonl nlp/app/output/samples_labeled.jsonl` |
 | Evaluation tổng thể | `python -m nlp.app.evaluation` |
 | RAG evaluation riêng | `python -m nlp.app.rag_evaluation` |
 | Test evaluation | `python -m unittest discover -s test -p "test_evaluation*.py" -v` |
@@ -630,105 +630,3 @@ Tất cả lệnh bên dưới chạy từ thư mục `python/`:
 ---
 
 **Phạm vi thiết kế:** pipeline single-intent và multi-intent. Multi-intent chỉ được kích hoạt khi các clause được xác thực độc lập; nếu không, hệ thống giữ nguyên luồng single-intent. Khi code, grammar, CLI hoặc schema thay đổi, cập nhật README này để giữ tài liệu package đồng bộ với implementation.
-
-
-## 13. Unified evaluation: NLP pipeline + generated answers
-
-Nhánh evaluation thống nhất giữ hai nhóm phép đo độc lập nhưng xuất chung một báo cáo:
-
-- **NLP pipeline:** parser/CFG, multi-intent semantic frame, intent/entity, retrieval và deterministic RAG/guard. Lệnh này dùng MockLLM cho phần end-to-end tái lập, không phát sinh chi phí API.
-- **Generated answers:** chạy `CourseAssistant.answer()` với LLM client đã chọn; ghi answer, retrieved chunks, citation/guard status, model calls, model identity, latency, API success và fallback.
-- **LLM-as-a-judge:** tùy chọn, chỉ chấm output có generator provenance là `real_api`; judge không phải ground truth. Reference answer chỉ được dùng nếu `reference_status=HUMAN_REVIEWED`.
-
-### 13.1 Cài đặt và chạy smoke evaluation
-
-Từ thư mục `python/`:
-
-```bash
-python -m pip install -r requirements.txt
-python -m pip install -e .
-
-# Offline: kiểm tra pipeline, không đo chất lượng model thật
-python -m nlp.app.unified_evaluation --provider mock --max-samples 5
-```
-
-Mặc định:
-- NLP dataset: `nlp/app/output/samples_reviewed.jsonl`
-- Answer smoke dataset: `nlp/app/input/answer_eval_smoke.jsonl`
-- Báo cáo: `nlp/app/output/unified_evaluation/unified_evaluation.json` và `.md`
-
-Smoke rows có nhãn `REVIEW`/unreviewed, chỉ xác nhận luồng chạy và lưu provenance; không được tính là gold accuracy.
-
-### 13.2 Chạy bắt buộc model thật
-
-Dùng API tương thích OpenAI. Không ghi API key vào file:
-
-```bash
-export OPENAI_API_KEY="your-api-key"
-export OPENAI_BASE_URL="https://api.openai.com/v1"
-export LLM_MODEL="gpt-4o-mini"
-
-python -m nlp.app.unified_evaluation \
-  --provider openai \
-  --require-real-model \
-  --max-samples 5
-```
-
-`--require-real-model` sẽ dừng nếu không có ít nhất một generation call thành công qua API hoặc có generation row bị mock/fallback. Những câu bị Answer Guard từ chối trước khi gọi model vẫn được ghi nhận; chúng không bị nhầm thành câu trả lời do model tạo. Với multi-intent, mọi lần gọi model cho các clause được ghi trong call history; nếu có clause fallback thì row được phân loại mixed/fallback và không được tính là real-only.
-
-Có thể bật judge riêng (cần API key và model ID):
-
-```bash
-python -m nlp.app.unified_evaluation \
-  --provider openai --require-real-model \
-  --judge --judge-model "judge-model-id" \
-  --max-samples 5
-```
-
-### 13.3 Các metric và nguyên tắc báo cáo
-
-- Intent multi-intent: exact set match trên toàn bộ intent của các clause; entity: micro precision/recall/F1.
-- Retrieval: Hit@k và precision/recall trên expected chunk IDs đã được review.
-- Answerability/refusal: chỉ dùng hàng `label_status=REVIEWED` và `label_provenance=human_review` cho headline metrics.
-- Citation validity: kiểm tra citation có thuộc context được gửi; không đồng nghĩa đã chứng minh semantic entailment.
-- Provenance: số generation call, successful API call, real/mock/mixed/fallback, model ID và latency.
-- Judge: correctness, faithfulness, relevancy, completeness và hallucination flag; chỉ là tín hiệu chẩn đoán.
-
-### 13.4 Test
-
-```bash
-python -m unittest discover -s test -p "test_answer_evaluation.py" -v
-python -m unittest discover -s test -p "test_evaluation*.py" -v
-python -m unittest discover -s test -v
-```
-## 14. Batched Multi-intent Retrieval (experimental)
-
-Multi-intent questions are handled as one user turn instead of recursively
-calling the single-intent assistant once per clause.
-
-The experimental path performs:
-1. Split and parse each validated clause independently with Grammar v5.
-2. Build one semantic frame per clause.
-3. Batch-transform all clause queries against the same fitted TF-IDF index.
-4. Build a shared candidate pool, deduplicate chunks, and select a global
-   evidence pack using clause coverage plus relevance.
-5. Build one prompt containing the original multi-intent question and shared
-   evidence, then call the configured LLM client once for the turn.
-
-The method `Retriever.retrieve_multi(question, clauses, clause_frames)` exposes
-this path. Its result includes `intent_coverage`, `chunk_support`, candidate/
-selected counts, and per-clause candidate IDs. The evidence budget is adaptive:
-at least the number of clauses, otherwise the retriever's `top_k`; it is not
-three chunks per intent.
-
-This is experimental, not yet a claim that retrieval quality is better. Compare
-with the legacy per-clause path using Recall@K, MRR, multi-intent coverage,
-chunks/query, duplicate rate, API calls/query and latency. Single-intent
-retrieval remains unchanged.
-
-Run the focused test from `python/`:
-
-```bash
-python -m unittest discover -s test -p "test_multi_intent_retrieval.py" -v
-python -m unittest discover -s test -p "test_multi_intent_assistant.py" -v
-```

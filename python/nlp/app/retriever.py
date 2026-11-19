@@ -19,12 +19,62 @@ def _entity_token(entity_id):
     return "entityid" + re.sub(r"[^a-z0-9]", "", str(entity_id).casefold())
 
 
+
+def _infer_schedule_week(document):
+    """Infer a WEEK_XX entity from an explicit schedule heading/section."""
+    if document.get("kind") != "schedule":
+        return None
+    candidates = [str(document.get("section", "")), str(document.get("text", ""))[:160]]
+    for candidate in candidates:
+        match = re.search(r"\b(?:week|tuần)\s+(?:thứ\s+)?0?(\d{1,2})\b",
+                         candidate, re.IGNORECASE)
+        if match:
+            return "WEEK_{:02d}".format(int(match.group(1)))
+    return None
+
+
+
+def _infer_schedule_chapter(document):
+    """Infer a CHXX entity from chapter metadata in schedule chunks."""
+    if document.get("kind") != "schedule":
+        return None
+    candidates = [str(document.get("section", "")), str(document.get("text", ""))[:240]]
+    for candidate in candidates:
+        match = re.search(r"\bchapter\s+0?(\d{1,2})\b", candidate, re.IGNORECASE)
+        if match:
+            return "CH{:02d}".format(int(match.group(1)))
+    return None
+
+
+
+def _comparison_entity_count(query):
+    """Count explicit chapter/week references in a comparison-style query."""
+    comparison = re.search(
+        r"\b(compare|comparison|compared|different|difference|differences|similar|contrast|khác nhau|so sánh|giống nhau)\b",
+        query, re.IGNORECASE,
+    )
+    if not comparison:
+        return 0
+    refs = re.findall(r"\b(?:chapter|chương|week|tuần)\s+(?:thứ\s+)?0?\d{1,2}\b",
+                      query, re.IGNORECASE)
+    return len(refs)
+
+
 class Retriever:
     """Fit a TF-IDF index once and return ranked source-aware chunks."""
 
     def __init__(self, documents, aliases=None, top_k=3, min_score=0.08,
                  parser=None, lexical_weight=0.75, min_lexical_score=0.0):
         self.documents = list(documents)
+        # Schedule chunks may mention the week in their heading/section without
+        # storing it as an entity. Add that ID before frames/index are built.
+        for document in self.documents:
+            entity_ids = document.setdefault("entity_ids", [])
+            week_id = _infer_schedule_week(document)
+            chapter_id = _infer_schedule_chapter(document)
+            for inferred_id in (week_id, chapter_id):
+                if inferred_id and inferred_id not in entity_ids:
+                    entity_ids.append(inferred_id)
         self.aliases = aliases or []
         self.top_k = top_k
         # Initial threshold for inspection; calibrate against sample_queries.txt.
@@ -301,14 +351,66 @@ class Retriever:
     def retrieve(self, question, semantic=None, top_k=None):
         clauses = split_intent_clauses(question, self.parser)
         if len(clauses) > 1 and semantic is None:
-            frames = [
-                query_frame(clause, self.parser, self.aliases)
-                if self.parser else None
-                for clause in clauses
-            ]
-            if all(frame is not None for frame in frames):
-                return self.retrieve_multi(question, clauses, frames, top_k=top_k)
-
+            child_results = [self.retrieve(clause, top_k=top_k) for clause in clauses]
+            ranked = []
+            seen = set()
+            for clause_index, result in enumerate(child_results):
+                for chunk, score, detail in zip(
+                    result.get("chunks", []), result.get("scores", []),
+                    result.get("score_details", []),
+                ):
+                    cid = chunk.get("chunk_id")
+                    if cid in seen:
+                        continue
+                    seen.add(cid)
+                    ranked.append((float(score), clause_index, chunk, detail))
+            ranked.sort(key=lambda item: (-item[0], item[1]))
+            limit = self.top_k if top_k is None else top_k
+            # Multi-intent questions need evidence for every clause. Allow up to
+            # two chunks per clause (capped at six) while preserving top_k as the
+            # default budget for ordinary single-intent queries.
+            retrieval_budget = max(limit, min(6, 2 * len(child_results)))
+            # Reserve one evidence slot per clause before filling remaining
+            # slots globally, so a high-scoring clause cannot erase another.
+            selected = []
+            selected_keys = set()
+            for clause_index in range(len(child_results)):
+                candidate = next(
+                    (item for item in ranked
+                     if item[1] == clause_index and item[2].get("chunk_id") not in selected_keys),
+                    None,
+                )
+                if candidate is not None and len(selected) < retrieval_budget:
+                    selected.append(candidate)
+                    selected_keys.add(candidate[2].get("chunk_id"))
+            for item in ranked:
+                if len(selected) >= retrieval_budget:
+                    break
+                cid = item[2].get("chunk_id")
+                if cid not in selected_keys:
+                    selected.append(item)
+                    selected_keys.add(cid)
+            return {
+                "query": question,
+                "chunks": [item[2] for item in selected],
+                "scores": [item[0] for item in selected],
+                "retrieval_status": "FOUND" if selected else "NO_RELEVANT_CONTEXT",
+                "parse_status": "PARSED",
+                "intent": "MULTI_INTENT",
+                "intents": [item.get("intent") for item in child_results],
+                "clauses": [
+                    {"query": clause, "intent": item.get("intent"),
+                     "entity_ids": item.get("entity_ids", []),
+                     "retrieval_status": item.get("retrieval_status")}
+                    for clause, item in zip(clauses, child_results)
+                ],
+                "entity_ids": list(dict.fromkeys(
+                    eid for item in child_results for eid in item.get("entity_ids", [])
+                )),
+                "expanded_query": " AND ".join(item.get("expanded_query", clause)
+                                                for item, clause in zip(child_results, clauses)),
+                "score_details": [item[3] for item in selected],
+            }
         parsed_frame = query_frame(question, self.parser, self.aliases) if self.parser else None
         frame = semantic or parsed_frame
         query = self.expand_query(question, semantic=semantic)
@@ -333,15 +435,25 @@ class Retriever:
             scores = [float(score) for score in lexical_scores]
         ranked = sorted(enumerate(scores), key=lambda item: (-float(item[1]), item[0]))
         limit = self.top_k if top_k is None else top_k
+        comparison_refs = _comparison_entity_count(question)
+        if comparison_refs >= 2:
+            # Comparisons require evidence for both referenced entities. Keep the
+            # default small, but expand the context budget for explicit compares.
+            limit = max(limit, min(6, 2 * comparison_refs))
         if frame and frame.get("intent") == "UNKNOWN":
             selected = []
         else:
-            selected = [(index, float(score)) for index, score in ranked[:limit]
-                        if score >= self.min_score and
-                        (lexical_scores[index] >= self.min_lexical_score or
-                         query_entities.intersection(self.chunk_frames[index]["entity_ids"]))]
+            # Filter before top_k: irrelevant chunks should not crowd out a
+            # matching entity chunk at the ranking cutoff.
+            eligible = [(index, float(score)) for index, score in ranked
+                       if score >= self.min_score and
+                       (lexical_scores[index] >= self.min_lexical_score or
+                        query_entities.intersection(self.chunk_frames[index]["entity_ids"]))]
+            selected = eligible[:limit]
         details = [{"lexical": float(lexical_scores[index]),
-                    "semantic": float(semantic_scores[index]), "combined": score}
+                    "semantic": float(semantic_scores[index]), "combined": score,
+                    "entity_match": bool(query_entities.intersection(
+                        self.chunk_frames[index]["entity_ids"]))}
                    for index, score in selected]
         parse_status = ((frame or {}).get("parse_status") or
                         ("PARSER_UNAVAILABLE" if self.parser is None else

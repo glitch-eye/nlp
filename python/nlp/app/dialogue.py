@@ -204,7 +204,10 @@ class DialogueState:
         if entities:
             self.last_entities = dict(entities)
         self.last_answer_entities = list(dict.fromkeys(answer_entities or []))
-        self.last_sources = list(dict.fromkeys(sources or []))
+        self.last_sources = []
+        for source in sources or []:
+            if source not in self.last_sources:
+                self.last_sources.append(source)
         self._ambiguous_candidates = dict(ambiguous_candidates or {})
 
 

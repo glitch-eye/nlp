@@ -631,161 +631,79 @@ class CourseAssistant:
         """Run end-to-end pipeline; safely fan out independent intents and join results."""
         clauses = split_intent_clauses(question, self.parser)
         if len(clauses) > 1:
-            # Parse each clause independently, retrieve evidence globally, and
-            # generate one answer for the complete user turn.
-            clause_frames = []
-            for clause in clauses:
-                clause_tree = self.parser.parse(clause) if self.parser else None
-                frame = self._build_semantic_frame(
-                    clause, clause_tree, {"resolved_entities": {}, "resolved_intent": None}
-                )
-                clause_frames.append(frame)
-
-            all_entity_ids = list(dict.fromkeys(
-                entity_id for frame in clause_frames
-                for entity_id in frame.get("entity_ids", [])
-            ))
+            # Reuse the unchanged single-intent pipeline for each clause.
+            # Update dialogue state once at the parent turn, not child-by-child.
+            child_results = [self.answer(clause, dialogue_state=None) for clause in clauses]
+            successful = [item for item in child_results if item.get("status") == "ANSWERED"]
+            all_chunks, all_sources, all_ids, all_entities = [], [], [], []
+            all_scores = []
+            seen_chunk_ids = set()
+            for item in child_results:
+                for chunk, score in zip(item.get("chunks", []), item.get("scores", [])):
+                    chunk_id = chunk.get("chunk_id")
+                    if chunk_id not in seen_chunk_ids:
+                        seen_chunk_ids.add(chunk_id)
+                        all_chunks.append(chunk)
+                        all_scores.append(score)
+                for source in item.get("sources", []):
+                    if source not in all_sources:
+                        all_sources.append(source)
+                for entity_id in item.get("entity_ids", []):
+                    if entity_id not in all_entities:
+                        all_entities.append(entity_id)
+                for chunk_id in item.get("retrieved_chunk_ids", []):
+                    if chunk_id not in all_ids:
+                        all_ids.append(chunk_id)
+            combined_answer = " ".join(
+                item.get("answer", "").strip() for item in child_results if item.get("answer")
+            )
+            combined_status = "ANSWERED" if successful else (
+                "INSUFFICIENT_CONTEXT" if any(item.get("status") == "INSUFFICIENT_CONTEXT" for item in child_results)
+                else "NO_RELEVANT_CONTEXT"
+            )
             combined_entities = {}
-            for frame in clause_frames:
-                combined_entities.update(frame.get("entities") or {})
-            for entity_id in all_entity_ids:
+            for entity_id in all_entities:
                 category = entity_category(entity_id)
                 if category and category not in combined_entities:
                     combined_entities[category] = entity_id
-
-            semantic = {
-                "intent": "MULTI_INTENT",
-                "clauses": clause_frames,
-                "entities": combined_entities,
-                "entity_ids": all_entity_ids,
-                "parse_status": "PARSED" if all(
-                    frame.get("parse_status") == "PARSED" for frame in clause_frames
-                ) else "PARTIAL",
-            }
-            calls_before = getattr(self.llm_client, "generation_count", 0)
-            retrieval = self.retriever.retrieve_multi(
-                question, clauses, clause_frames
+            state_before = (
+                dialogue_state.to_dict() if isinstance(dialogue_state, DialogueState)
+                else DialogueState.from_dict(dialogue_state).to_dict()
             )
-            for frame, clause_result in zip(clause_frames, retrieval.get("clauses", [])):
-                frame["retrieval_status"] = clause_result.get("retrieval_status")
-            semantic["chunk_support"] = retrieval.get("chunk_support", [])
-            chunks = retrieval.get("chunks") or []
-            scores = retrieval.get("scores") or []
-            guard_result = _default_guard_check(question, question, semantic, retrieval)
-            if self._teammate_answer_guard is not None:
-                guard_fn = getattr(self._teammate_answer_guard, "check_context", None) or getattr(
-                    self._teammate_answer_guard, "guard_answer", None
-                )
-                if callable(guard_fn):
-                    try:
-                        custom_guard = guard_fn(question, retrieval, semantic)
-                        if isinstance(custom_guard, dict) and custom_guard.get("status") in (
-                            "NO_RELEVANT_CONTEXT", "INSUFFICIENT_CONTEXT"
-                        ):
-                            guard_result = custom_guard
-                    except Exception:
-                        pass
-
-            citation_check = None
-            if guard_result["status"] in ("NO_RELEVANT_CONTEXT", "INSUFFICIENT_CONTEXT"):
-                answer_text = guard_result["answer"]
-                status = guard_result["status"]
-                sources = []
-                if status == "NO_RELEVANT_CONTEXT":
-                    chunks, scores = [], []
-            else:
-                prompt = _default_build_prompt(question, question, semantic, chunks)
-                if self._teammate_prompt_builder is not None:
-                    build_fn = getattr(self._teammate_prompt_builder, "build_prompt", None)
-                    if callable(build_fn):
-                        try:
-                            prompt = build_fn(question, semantic, chunks)
-                        except Exception:
-                            pass
-                try:
-                    answer_text = self.llm_client.generate(
-                        prompt, question=question, chunks=chunks, semantic=semantic
-                    )
-                except TypeError:
-                    answer_text = self.llm_client.generate(prompt)
-                status = "ANSWERED"
-                post_check = getattr(self._teammate_answer_guard, "check_answer", None)
-                if callable(post_check):
-                    citation_check = post_check(answer_text, chunks)
-                    answer_text, status = citation_check["answer"], citation_check["status"]
-
-                sources = []
-                for chunk in chunks:
-                    source = {
-                        "source": chunk.get("source", ""),
-                        "section": chunk.get("section", ""),
-                    }
-                    if source not in sources:
-                        sources.append(source)
-                if citation_check and status == "ANSWERED":
-                    sources = citation_check.get("sources", sources)
-                elif citation_check and status != "ANSWERED":
-                    sources = []
-
-            retrieved_chunk_ids = [chunk.get("chunk_id", "") for chunk in chunks]
-            state = (
-                dialogue_state
-                if isinstance(dialogue_state, DialogueState)
-                else DialogueState.from_dict(dialogue_state)
-            )
-            state_before = state.to_dict()
-            if dialogue_state is not None and (
-                status == "ANSWERED" or (status == "INSUFFICIENT_CONTEXT" and chunks)
-            ):
-                source_labels = [
-                    "{} / {}".format(source["source"], source["section"])
-                    for source in sources
-                ]
-                state.update(
-                    question=question,
-                    intent=clause_frames[-1].get("intent") if clause_frames else None,
-                    entities=combined_entities,
-                    answer_entities=all_entity_ids,
-                    sources=source_labels,
-                    ambiguous_candidates=DialogueManager.detect_multiple_entities_in_question(question),
-                )
-            state_after = state.to_dict()
-            return {
-                "question": question,
-                "resolved_query": question,
-                "answer": answer_text,
-                "sources": sources,
-                "retrieved_chunk_ids": retrieved_chunk_ids,
-                "parse_status": semantic["parse_status"],
-                "retrieval_status": retrieval.get("retrieval_status", "NO_RELEVANT_CONTEXT"),
-                "status": status,
-                "citation_check": citation_check,
+            combined = {
+                "question": question, "resolved_query": question,
+                "answer": combined_answer, "sources": all_sources,
+                "retrieved_chunk_ids": all_ids, "parse_status": "PARSED",
+                "retrieval_status": "FOUND" if all_chunks else "NO_RELEVANT_CONTEXT",
+                "status": combined_status,
+                "citation_check": {"status": "MULTI_INTENT", "clauses": [item.get("citation_check") for item in child_results]},
                 "intent": "MULTI_INTENT",
-                "intents": [frame.get("intent") for frame in clause_frames],
+                "intents": [item.get("intent") for item in child_results],
                 "clauses": [
-                    {
-                        "query": clause,
-                        "intent": frame.get("intent"),
-                        "entity_ids": frame.get("entity_ids", []),
-                        "retrieval_status": per_clause.get("retrieval_status"),
-                        "candidate_chunk_ids": per_clause.get("candidate_chunk_ids", []),
-                    }
-                    for clause, frame, per_clause in zip(
-                        clauses, clause_frames, retrieval.get("clauses", [])
-                    )
+                    {"query": clause, "intent": item.get("intent"),
+                     "entity_ids": item.get("entity_ids", []),
+                     "status": item.get("status"), "answer": item.get("answer"),
+                     "sources": item.get("sources", [])}
+                    for clause, item in zip(clauses, child_results)
                 ],
-                "entities": combined_entities,
-                "entity_ids": all_entity_ids,
-                "chunks": chunks,
-                "scores": scores,
-                "intent_coverage": retrieval.get("intent_coverage", 0.0),
-                "chunk_support": retrieval.get("chunk_support", []),
-                "candidate_chunk_count": retrieval.get("candidate_chunk_count", 0),
+                "entities": combined_entities, "entity_ids": all_entities,
+                "chunks": all_chunks, "scores": all_scores,
                 "resolution": {"status": "MULTI_INTENT", "clauses": clauses},
                 "dialogue_state_before": state_before,
-                "dialogue_state_after": state_after,
-                "model_call_count": max(0, getattr(self.llm_client, "generation_count", calls_before) - calls_before),
+                "dialogue_state_after": state_before,
             }
+            if dialogue_state is not None:
+                state = dialogue_state if isinstance(dialogue_state, DialogueState) else DialogueState.from_dict(dialogue_state)
+                # Use the final clause as the dialogue continuation anchor;
+                # the API response still exposes MULTI_INTENT and every clause.
+                continuation_intent = child_results[-1].get("intent") if child_results else None
+                state.update(
+                    question=question, intent=continuation_intent, entities=combined_entities,
+                    answer_entities=all_entities, sources=all_sources,
+                    ambiguous_candidates=DialogueManager.detect_multiple_entities_in_question(question),
+                )
+                combined["dialogue_state_after"] = state.to_dict()
+            return combined
 
         use_dialogue = dialogue_state is not None
         state = (
