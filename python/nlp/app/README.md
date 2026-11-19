@@ -84,6 +84,11 @@ nlp/
     ├── api.py
     ├── assistant.py
     ├── build_sample_dataset.py
+    ├── label_audit.py
+    ├── run_source_label_pipeline.py
+    ├── multi_intent.py
+    ├── answer_evaluation.py
+    ├── unified_evaluation.py
     ├── course_grammar.py
     ├── dialogue.py
     ├── evaluation.py
@@ -130,6 +135,11 @@ Một số file JSON/trace khác có thể xuất hiện trong `output/` tùy c�
 | `api.py` | HTTP API cho retrieval, answer và reset dialogue |
 | `run_retrieval.py` | Chạy thử và đánh giá retrieval độc lập |
 | `build_sample_dataset.py` | Sinh dataset JSONL có parse/semantic labels và expected chunk IDs |
+| `label_audit.py` | Tạo hàng đợi review phân tầng và export các nhãn đã được reviewer xác nhận |
+| `run_source_label_pipeline.py` | Chạy lại quy trình tạo samples, auto-label và label-audit theo course data |
+| `multi_intent.py` | Tách câu hỏi ghép thành các clause được CFG xác nhận |
+| `answer_evaluation.py` | Đánh giá answer generation, provenance, latency và guard outcome |
+| `unified_evaluation.py` | Kết hợp NLP evaluation và answer-generation evaluation thành một report |
 | `evaluation.py` | Đánh giá Parser, Semantic (single/multi-intent), Retrieval, End-to-End và RAG evidence |
 | `rag_evaluation.py` | Đánh giá RAG chuyên sâu độc lập, gồm grounded/no-info examples và scripted Answer Guard probes |
 
@@ -399,6 +409,18 @@ curl -X POST http://127.0.0.1:8000/reset \
 ```
 
 Endpoint `/answer` chấp nhận `question` (hoặc `query`) và có thể nhận `dialogue_state`/ `reset`. Endpoint `/retrieve` chấp nhận `query` (hoặc `question`); có thể bật `use_dialogue` hoặc gửi `dialogue_state`.
+
+API server không có cờ CLI riêng `--provider`/`--model`; nó dùng factory mặc định của `CourseAssistant`. Vì vậy mặc định là Mock. Muốn `POST /answer` dùng OpenAI-compatible API, đặt biến môi trường trước khi khởi động server:
+
+~~~bash
+export LLM_PROVIDER="openai"
+export OPENAI_API_KEY="YOUR_API_KEY"
+export LLM_MODEL="gpt-4o-mini"
+export OPENAI_BASE_URL="https://api.openai.com/v1"
+python -m nlp.app.api --host 127.0.0.1 --port 8000
+~~~
+
+Với Ollama, đặt `LLM_PROVIDER="api"`, `OPENAI_BASE_URL="http://localhost:11434/v1"`, `OPENAI_API_KEY="ollama"` và `LLM_MODEL` theo model đã tải. Nếu API server chạy ở máy khác với Ollama, thay `localhost` bằng hostname/IP mà server có thể truy cập.
 
 ## 9. Sinh dataset có nhãn cho evaluation
 
