@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-19T11:19:09.436033+00:00",
+  "generated_at": "2026-11-19T14:13:00.310403+00:00",
   "mode": "real_api_required",
   "nlp_pipeline": {
     "schema_version": "1.0",
-    "generated_at": "2026-11-19T11:19:03.405307+00:00",
+    "generated_at": "2026-11-19T14:12:17.001066+00:00",
     "runtime": {
       "python": "3.13.3",
       "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O"
     },
     "dataset": {
       "path": "/Users/phamxuanbac/Downloads/project/nlp/sample-code-v1.0/python/nlp/app/output/samples_reviewed.jsonl",
-      "sha256": "03e3a4f9a629dbc04761de93b60666f06655f05e27b4b7990d534787815a5034",
+      "sha256": "6b0c4dd6a2dc4ba8fb32f26aa12cfd88260d0656f56e8f7454c2150e120d6119",
       "sample_count": 5,
       "label_status_counts": {
         "REVIEWED": 5
@@ -131,6 +131,12 @@
             "hit_at_k": true,
             "retrieved": [
               {
+                "chunk_id": "faq-q7-6",
+                "score": 0.253191,
+                "source": "faq.txt",
+                "section": "Q7"
+              },
+              {
                 "chunk_id": "topics-chapter-1-introduction-to-natural-language-processing-0",
                 "score": 0.25,
                 "source": "topics.txt",
@@ -141,12 +147,6 @@
                 "score": 0.25,
                 "source": "topics.txt",
                 "section": "CHAPTER 2: LINGUISTIC BACKGROUND - ENGLISH SYNTAX"
-              },
-              {
-                "chunk_id": "topics-chapter-3-grammar-and-parsing-2",
-                "score": 0.25,
-                "source": "topics.txt",
-                "section": "CHAPTER 3: GRAMMAR AND PARSING"
               }
             ]
           },
@@ -287,19 +287,19 @@
             "retrieved": [
               {
                 "chunk_id": "topics-chapter-3-grammar-and-parsing-2",
-                "score": 0.32632,
+                "score": 0.317174,
                 "source": "topics.txt",
                 "section": "CHAPTER 3: GRAMMAR AND PARSING"
               },
               {
                 "chunk_id": "faq-q4-3",
-                "score": 0.308719,
+                "score": 0.30293,
                 "source": "faq.txt",
                 "section": "Q4"
               },
               {
                 "chunk_id": "topics-chapter-6-ambiguity-resolution-statistical-methods-5",
-                "score": 0.303003,
+                "score": 0.295066,
                 "source": "topics.txt",
                 "section": "CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS"
               }
@@ -368,13 +368,13 @@
       "   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q1, course_info.txt / course_description",
       "   - Trả lời   : \"Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ. [Nguồn: faq.txt / Q1] Ngoài ra: course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phầ…\"",
       "   - Câu hỏi   : \"Chương 4 nói về gì?\"",
-      "   - Truy xuất : faq-q5-4, faq-q7-6, faq-q8-7",
-      "   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q5",
-      "   - Trả lời   : \"Chương 4. [Nguồn: faq.txt / Q5]\"",
+      "   - Truy xuất : faq-q5-4, schedule-week-05-5, schedule-week-04-4",
+      "   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q5, schedule.txt / WEEK 05",
+      "   - Trả lời   : \"Chương 4. [Nguồn: faq.txt / Q5] Ngoài ra: WEEK 05 học Chapter 4 với các nội dung: - augmented transition networks - generalized feature systems - unification grammar. [Nguồn: schedule.txt / WEEK 05]\"",
       "   - Câu hỏi   : \"Tuần 5 học những nội dung gì?\"",
-      "   - Truy xuất : faq-q10-9, schedule-week-06-6, faq-q11-10",
-      "   - Trạng thái: ANSWERED   Nguồn được trích dẫn: schedule.txt / WEEK 06",
-      "   - Trả lời   : \"WEEK 06 học Chapter 5 với các nội dung: - auxiliary verbs and verb phrases - movement phenomena - handling questions in CFG - relative clauses. [Nguồn: schedule.txt / WEEK 06]\"",
+      "   - Truy xuất : schedule-week-05-5, faq-q10-9, faq-q11-10",
+      "   - Trạng thái: ANSWERED   Nguồn được trích dẫn: schedule.txt / WEEK 05",
+      "   - Trả lời   : \"WEEK 05 học Chapter 4 với các nội dung: - augmented transition networks - generalized feature systems - unification grammar. [Nguồn: schedule.txt / WEEK 05]\"",
       "",
       "2. Câu hỏi không có thông tin trong Knowledge Base / ngoài phạm vi:",
       "   - [câu ngoài miền (mẫu của văn phạm)] \"Hôm nay ở TP.HCM có mưa không?\"",
@@ -434,7 +434,7 @@
   },
   "answer_generation": {
     "schema_version": "1.0",
-    "generated_at": "2026-11-19T11:19:09.435976+00:00",
+    "generated_at": "2026-11-19T14:13:00.310218+00:00",
     "dataset": {
       "path": "/Users/phamxuanbac/Downloads/project/nlp/sample-code-v1.0/python/nlp/app/input/answer_eval_smoke.jsonl",
       "sample_count": 5,
@@ -465,8 +465,8 @@
       "human_reviewed_reference_count": 0,
       "answerable_count": 0,
       "expected_refusal_count": 0,
-      "answered_count": 3,
-      "refused_count": 2,
+      "answered_count": 4,
+      "refused_count": 1,
       "needs_review_count": 0,
       "answer_rate_on_answerable": null,
       "correct_refusal_rate": null,
@@ -502,10 +502,10 @@
       "mock_answer_count": 0,
       "real_model_answer_count": 5,
       "mixed_model_answer_count": 0,
-      "model_generation_call_count": 5,
-      "successful_api_call_count": 5,
-      "mean_generation_latency_seconds": 1.1904628000000002,
-      "mean_pipeline_latency_seconds": 1.19512,
+      "model_generation_call_count": 6,
+      "successful_api_call_count": 6,
+      "mean_generation_latency_seconds": 8.6449698,
+      "mean_pipeline_latency_seconds": 8.65146,
       "status_confusion": []
     },
     "results": [
@@ -558,15 +558,16 @@
             "requested_model": "gemini-3.5-flash-lite",
             "model_name": "gemini-3.5-flash-lite",
             "used_api": true,
+            "attempted_api": true,
             "fallback": false,
             "error": null,
-            "elapsed_seconds": 1.313144
+            "elapsed_seconds": 6.032151
           }
         ],
         "model_fallback": false,
         "model_error": null,
-        "generation_elapsed_seconds": 1.313144,
-        "elapsed_seconds": 1.3157,
+        "generation_elapsed_seconds": 6.032151,
+        "elapsed_seconds": 6.0353,
         "reference_status": "UNVERIFIED",
         "judge": null,
         "judge_error": null
@@ -580,33 +581,45 @@
         "expected_chunk_ids": [],
         "retrieved_chunk_ids": [
           "faq-q4-3",
-          "faq-q7-6",
-          "faq-q8-7"
+          "schedule-week-07-7",
+          "schedule-week-08-8"
         ],
         "parse_status": "PARSED",
         "retrieval_status": "FOUND",
         "actual_status": "ANSWERED",
-        "answer": "Chương 6 nói về các phương pháp thống kê [Nguồn: faq.txt / Q4].",
-        "raw_generated_answer": "Chương 6 nói về các phương pháp thống kê [Nguồn: faq.txt / Q4].",
+        "answer": "Chương 6 nói về các phương pháp thống kê và bao gồm các chủ đề sau:\n- basic probability theory [Nguồn: schedule.txt / WEEK 07]\n- estimating probabilities [Nguồn: schedule.txt / WEEK 07]\n- part-of-speech tagging [Nguồn: schedule.txt / WEEK 07]\n- lexical probabilities [Nguồn: schedule.txt / WEEK 07]\n- probabilistic context-free grammar [Nguồn: schedule.txt / WEEK 07]\n- best-first parsing [Nguồn: schedule.txt / WEEK 08]\n- simple context-dependent best-first parser [Nguồn: schedule.txt / WEEK 08]",
+        "raw_generated_answer": "Chương 6 nói về các phương pháp thống kê và bao gồm các chủ đề sau:\n- basic probability theory [Nguồn: schedule.txt / WEEK 07]\n- estimating probabilities [Nguồn: schedule.txt / WEEK 07]\n- part-of-speech tagging [Nguồn: schedule.txt / WEEK 07]\n- lexical probabilities [Nguồn: schedule.txt / WEEK 07]\n- probabilistic context-free grammar [Nguồn: schedule.txt / WEEK 07]\n- best-first parsing [Nguồn: schedule.txt / WEEK 08]\n- simple context-dependent best-first parser [Nguồn: schedule.txt / WEEK 08]",
         "sources": [
           {
-            "source": "faq.txt",
-            "section": "Q4"
+            "source": "schedule.txt",
+            "section": "WEEK 07"
+          },
+          {
+            "source": "schedule.txt",
+            "section": "WEEK 08"
           }
         ],
         "citation_check": {
           "status": "ANSWERED",
-          "answer": "Chương 6 nói về các phương pháp thống kê [Nguồn: faq.txt / Q4].",
+          "answer": "Chương 6 nói về các phương pháp thống kê và bao gồm các chủ đề sau:\n- basic probability theory [Nguồn: schedule.txt / WEEK 07]\n- estimating probabilities [Nguồn: schedule.txt / WEEK 07]\n- part-of-speech tagging [Nguồn: schedule.txt / WEEK 07]\n- lexical probabilities [Nguồn: schedule.txt / WEEK 07]\n- probabilistic context-free grammar [Nguồn: schedule.txt / WEEK 07]\n- best-first parsing [Nguồn: schedule.txt / WEEK 08]\n- simple context-dependent best-first parser [Nguồn: schedule.txt / WEEK 08]",
           "sources": [
             {
-              "source": "faq.txt",
-              "section": "Q4"
+              "source": "schedule.txt",
+              "section": "WEEK 07"
+            },
+            {
+              "source": "schedule.txt",
+              "section": "WEEK 08"
             }
           ],
           "valid_citations": [
             [
-              "faq.txt",
-              "Q4"
+              "schedule.txt",
+              "WEEK 07"
+            ],
+            [
+              "schedule.txt",
+              "WEEK 08"
             ]
           ],
           "invalid_citations": []
@@ -620,15 +633,16 @@
             "requested_model": "gemini-3.5-flash-lite",
             "model_name": "gemini-3.5-flash-lite",
             "used_api": true,
+            "attempted_api": true,
             "fallback": false,
             "error": null,
-            "elapsed_seconds": 1.157616
+            "elapsed_seconds": 7.909637
           }
         ],
         "model_fallback": false,
         "model_error": null,
-        "generation_elapsed_seconds": 1.157616,
-        "elapsed_seconds": 1.1631,
+        "generation_elapsed_seconds": 7.909637,
+        "elapsed_seconds": 7.9153,
         "reference_status": "UNVERIFIED",
         "judge": null,
         "judge_error": null
@@ -641,21 +655,36 @@
         "label_provenance": "smoke_test",
         "expected_chunk_ids": [],
         "retrieved_chunk_ids": [
+          "schedule-week-05-5",
           "faq-q10-9",
-          "schedule-week-06-6",
           "faq-q11-10"
         ],
         "parse_status": "PARSED",
         "retrieval_status": "FOUND",
-        "actual_status": "INSUFFICIENT_CONTEXT",
-        "answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
-        "raw_generated_answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
-        "sources": [],
+        "actual_status": "ANSWERED",
+        "answer": "Tuần 5 học các nội dung thuộc phần Xử lý cú pháp (Syntactic Processing), chương 4, bao gồm các chủ đề:\n- augmented transition networks\n- generalized feature systems\n- unification grammar\nVà hoạt động: feature-based parsing exercises [Nguồn: schedule.txt / WEEK 05].",
+        "raw_generated_answer": "Tuần 5 học các nội dung thuộc phần Xử lý cú pháp (Syntactic Processing), chương 4, bao gồm các chủ đề:\n- augmented transition networks\n- generalized feature systems\n- unification grammar\nVà hoạt động: feature-based parsing exercises [Nguồn: schedule.txt / WEEK 05].",
+        "sources": [
+          {
+            "source": "schedule.txt",
+            "section": "WEEK 05"
+          }
+        ],
         "citation_check": {
-          "status": "INSUFFICIENT_CONTEXT",
-          "answer": "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.",
-          "sources": [],
-          "valid_citations": [],
+          "status": "ANSWERED",
+          "answer": "Tuần 5 học các nội dung thuộc phần Xử lý cú pháp (Syntactic Processing), chương 4, bao gồm các chủ đề:\n- augmented transition networks\n- generalized feature systems\n- unification grammar\nVà hoạt động: feature-based parsing exercises [Nguồn: schedule.txt / WEEK 05].",
+          "sources": [
+            {
+              "source": "schedule.txt",
+              "section": "WEEK 05"
+            }
+          ],
+          "valid_citations": [
+            [
+              "schedule.txt",
+              "WEEK 05"
+            ]
+          ],
           "invalid_citations": []
         },
         "model_name": "gemini-3.5-flash-lite",
@@ -667,15 +696,16 @@
             "requested_model": "gemini-3.5-flash-lite",
             "model_name": "gemini-3.5-flash-lite",
             "used_api": true,
+            "attempted_api": true,
             "fallback": false,
             "error": null,
-            "elapsed_seconds": 1.033889
+            "elapsed_seconds": 7.121596
           }
         ],
         "model_fallback": false,
         "model_error": null,
-        "generation_elapsed_seconds": 1.033889,
-        "elapsed_seconds": 1.0394,
+        "generation_elapsed_seconds": 7.121596,
+        "elapsed_seconds": 7.128,
         "reference_status": "UNVERIFIED",
         "judge": null,
         "judge_error": null
@@ -689,55 +719,114 @@
         "expected_chunk_ids": [],
         "retrieved_chunk_ids": [
           "faq-q5-4",
+          "schedule-week-05-5",
+          "schedule-week-04-4",
           "schedule-week-06-6",
-          "faq-q7-6"
+          "regulations-academic-integrity-2"
         ],
         "parse_status": "PARSED",
         "retrieval_status": "FOUND",
         "actual_status": "ANSWERED",
-        "answer": "- Chương 4 nói về Features và Augmented Grammar [Nguồn: faq.txt / Q5].\n- Ý Tuần 5 học gì: Context không hỗ trợ cung cấp thông tin về nội dung học của Tuần 5.",
-        "raw_generated_answer": "- Chương 4 nói về Features và Augmented Grammar [Nguồn: faq.txt / Q5].\n- Ý Tuần 5 học gì: Context không hỗ trợ cung cấp thông tin về nội dung học của Tuần 5.",
+        "answer": "Chương 4 nói về các chủ đề:\n- feature systems [Nguồn: schedule.txt / WEEK 04]\n- augmented grammars [Nguồn: schedule.txt / WEEK 04]\n- feature systems for English [Nguồn: schedule.txt / WEEK 04]\n- lexicon [Nguồn: schedule.txt / WEEK 04]\n- grammar using feature systems [Nguồn: schedule.txt / WEEK 04]\n- parsing with features [Nguồn: schedule.txt / WEEK 04]\n- augmented transition networks [Nguồn: schedule.txt / WEEK 05]\n- generalized feature systems [Nguồn: schedule.txt / WEEK 05]\n- unification grammar [Nguồn: schedule.txt / WEEK 05]\nNgoài ra, chương này học về Features và Augmented Grammar [Nguồn: faq.txt / Q5]. Trong Tuần 5, nội dung học bao gồm:\n- Phần: Syntactic Processing\n- Chương: Chapter 4\n- Các chủ đề: augmented transition networks, generalized feature systems, unification grammar\n- Hoạt động: feature-based parsing exercises\n[Nguồn: schedule.txt / WEEK 05]",
+        "raw_generated_answer": "Chương 4 nói về các chủ đề:\n- feature systems [Nguồn: schedule.txt / WEEK 04]\n- augmented grammars [Nguồn: schedule.txt / WEEK 04]\n- feature systems for English [Nguồn: schedule.txt / WEEK 04]\n- lexicon [Nguồn: schedule.txt / WEEK 04]\n- grammar using feature systems [Nguồn: schedule.txt / WEEK 04]\n- parsing with features [Nguồn: schedule.txt / WEEK 04]\n- augmented transition networks [Nguồn: schedule.txt / WEEK 05]\n- generalized feature systems [Nguồn: schedule.txt / WEEK 05]\n- unification grammar [Nguồn: schedule.txt / WEEK 05]\nNgoài ra, chương này học về Features và Augmented Grammar [Nguồn: faq.txt / Q5]. Trong Tuần 5, nội dung học bao gồm:\n- Phần: Syntactic Processing\n- Chương: Chapter 4\n- Các chủ đề: augmented transition networks, generalized feature systems, unification grammar\n- Hoạt động: feature-based parsing exercises\n[Nguồn: schedule.txt / WEEK 05]",
         "sources": [
+          {
+            "source": "schedule.txt",
+            "section": "WEEK 04"
+          },
+          {
+            "source": "schedule.txt",
+            "section": "WEEK 05"
+          },
           {
             "source": "faq.txt",
             "section": "Q5"
           }
         ],
         "citation_check": {
-          "status": "ANSWERED",
-          "answer": "- Chương 4 nói về Features và Augmented Grammar [Nguồn: faq.txt / Q5].\n- Ý Tuần 5 học gì: Context không hỗ trợ cung cấp thông tin về nội dung học của Tuần 5.",
-          "sources": [
+          "status": "MULTI_INTENT",
+          "clauses": [
             {
-              "source": "faq.txt",
-              "section": "Q5"
+              "status": "ANSWERED",
+              "answer": "Chương 4 nói về các chủ đề:\n- feature systems [Nguồn: schedule.txt / WEEK 04]\n- augmented grammars [Nguồn: schedule.txt / WEEK 04]\n- feature systems for English [Nguồn: schedule.txt / WEEK 04]\n- lexicon [Nguồn: schedule.txt / WEEK 04]\n- grammar using feature systems [Nguồn: schedule.txt / WEEK 04]\n- parsing with features [Nguồn: schedule.txt / WEEK 04]\n- augmented transition networks [Nguồn: schedule.txt / WEEK 05]\n- generalized feature systems [Nguồn: schedule.txt / WEEK 05]\n- unification grammar [Nguồn: schedule.txt / WEEK 05]\nNgoài ra, chương này học về Features và Augmented Grammar [Nguồn: faq.txt / Q5].",
+              "sources": [
+                {
+                  "source": "schedule.txt",
+                  "section": "WEEK 04"
+                },
+                {
+                  "source": "schedule.txt",
+                  "section": "WEEK 05"
+                },
+                {
+                  "source": "faq.txt",
+                  "section": "Q5"
+                }
+              ],
+              "valid_citations": [
+                [
+                  "schedule.txt",
+                  "WEEK 04"
+                ],
+                [
+                  "schedule.txt",
+                  "WEEK 05"
+                ],
+                [
+                  "faq.txt",
+                  "Q5"
+                ]
+              ],
+              "invalid_citations": []
+            },
+            {
+              "status": "ANSWERED",
+              "answer": "Trong Tuần 5, nội dung học bao gồm:\n- Phần: Syntactic Processing\n- Chương: Chapter 4\n- Các chủ đề: augmented transition networks, generalized feature systems, unification grammar\n- Hoạt động: feature-based parsing exercises\n[Nguồn: schedule.txt / WEEK 05]",
+              "sources": [
+                {
+                  "source": "schedule.txt",
+                  "section": "WEEK 05"
+                }
+              ],
+              "valid_citations": [
+                [
+                  "schedule.txt",
+                  "WEEK 05"
+                ]
+              ],
+              "invalid_citations": []
             }
-          ],
-          "valid_citations": [
-            [
-              "faq.txt",
-              "Q5"
-            ]
-          ],
-          "invalid_citations": []
+          ]
         },
         "model_name": "gemini-3.5-flash-lite",
         "model_execution": "real_api",
-        "model_call_count": 1,
+        "model_call_count": 2,
         "model_calls": [
           {
             "provider": "openai",
             "requested_model": "gemini-3.5-flash-lite",
             "model_name": "gemini-3.5-flash-lite",
             "used_api": true,
+            "attempted_api": true,
             "fallback": false,
             "error": null,
-            "elapsed_seconds": 1.313176
+            "elapsed_seconds": 7.13538
+          },
+          {
+            "provider": "openai",
+            "requested_model": "gemini-3.5-flash-lite",
+            "model_name": "gemini-3.5-flash-lite",
+            "used_api": true,
+            "attempted_api": true,
+            "fallback": false,
+            "error": null,
+            "elapsed_seconds": 7.367764
           }
         ],
         "model_fallback": false,
         "model_error": null,
-        "generation_elapsed_seconds": 1.313176,
-        "elapsed_seconds": 1.32,
+        "generation_elapsed_seconds": 14.503144,
+        "elapsed_seconds": 14.5162,
         "reference_status": "UNVERIFIED",
         "judge": null,
         "judge_error": null
@@ -776,15 +865,16 @@
             "requested_model": "gemini-3.5-flash-lite",
             "model_name": "gemini-3.5-flash-lite",
             "used_api": true,
+            "attempted_api": true,
             "fallback": false,
             "error": null,
-            "elapsed_seconds": 1.134489
+            "elapsed_seconds": 7.658321
           }
         ],
         "model_fallback": false,
         "model_error": null,
-        "generation_elapsed_seconds": 1.134489,
-        "elapsed_seconds": 1.1374,
+        "generation_elapsed_seconds": 7.658321,
+        "elapsed_seconds": 7.6625,
         "reference_status": "UNVERIFIED",
         "judge": null,
         "judge_error": null
