@@ -111,3 +111,34 @@ python -m nlp.app.api --host 127.0.0.1 --port 8000
 ```bash
 python -m pytest
 ```
+
+### 3.6 Hướng dẫn chạy Local Model
+
+```bash 
+#sử dụng qwen2.5:7b cho demo này, có thể tải và sử dụng model khác, qwen có support cho tiếng việt
+#từ thư mục root, tạo 1 terminal
+
+$env:OLLAMA_HOST="0.0.0.0:11434"
+$env:OLLAMA_DEBUG="1"                   # optional
+$env:OLLAMA_DEBUG_LOG_REQUESTS="true"   # optional
+ollama serve
+
+#mở terminal thứ 2
+
+export LLM_PROVIDER="api"
+export LLM_MODEL="qwen2.5:7b"
+export OPENAI_BASE_URL="http://172.23.64.1:11434/v1"
+export OPENAI_API_KEY="ollama"
+export LLM_TIMEOUT="120"
+export PYTHONPATH="$PWD/python:$PYTHONPATH"
+
+python -m nlp.app.run_assistant --data-dir data --provider openai
+python -m nlp.app.api --host 127.0.0.1 --port 8000
+
+#mở terminal thứ 3
+
+curl -X POST http://127.0.0.1:8000/answer \
+  -H "Content-Type: application/json" \
+  -d '{"question":"Tuần 2 học những nội dung gì?"}'
+
+python3 python/run_evaluation.py --base-url http://127.0.0.1:8000 --dataset input/test_dataset.json --reset-before
