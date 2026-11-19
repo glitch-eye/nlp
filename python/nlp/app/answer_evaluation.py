@@ -152,13 +152,16 @@ class OpenAICompatibleJudge:
             for chunk in chunks
         ]
         reference_is_reviewed = row.get("reference_status") == "HUMAN_REVIEWED"
+        citation_check = result.get("citation_check") or {}
+        raw_generated_answer = citation_check.get("raw_answer") or result.get("answer", "")
         payload = {
             "question": row["query"],
             "reference_answer": row.get("reference_answer") if reference_is_reviewed else None,
             "reference_points": row.get("reference_points") if reference_is_reviewed else None,
             "expected_answerability": row.get("expected_answerability"),
             "retrieved_context": context,
-            "generated_answer": result.get("answer", ""),
+            "generated_answer": raw_generated_answer,
+            "guarded_user_visible_answer": result.get("answer", ""),
             "system_status": result.get("status"),
         }
         return (
@@ -239,6 +242,7 @@ def evaluate_rows(assistant, rows, judge=None):
             "retrieval_status": output.get("retrieval_status"),
             "actual_status": output.get("status"),
             "answer": output.get("answer", ""),
+            "raw_generated_answer": (output.get("citation_check") or {}).get("raw_answer") or output.get("answer", ""),
             "sources": output.get("sources") or [],
             "citation_check": output.get("citation_check") or {},
             "model_name": model_name,
@@ -455,7 +459,9 @@ def render_markdown(report):
         lines.append("- Expected: {}; actual: {}".format(row["expected_answerability"], row["actual_status"]))
         lines.append("- Model: {}{}".format(row["model_name"], " (FALLBACK)" if row["model_fallback"] else ""))
         lines.append("- Retrieved: {}".format(", ".join(row["retrieved_chunk_ids"]) or "(none)"))
-        lines.append("- Answer: {}".format((row["answer"] or "").replace("\n", " ")))
+        lines.append("- Guarded answer: {}".format((row["answer"] or "").replace("\n", " ")))
+        if row.get("raw_generated_answer") != row.get("answer"):
+            lines.append("- Raw generated answer (pre-guard): {}".format((row["raw_generated_answer"] or "").replace("\n", " ")))
         if row.get("judge"):
             lines.append("- Judge: {}".format(json.dumps(row["judge"], ensure_ascii=False)))
         if row.get("judge_error"):
