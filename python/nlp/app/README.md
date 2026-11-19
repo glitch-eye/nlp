@@ -589,6 +589,60 @@ Các cảnh báo bắt buộc khi phân tích kết quả:
 4. Mock LLM không đo chất lượng sinh ngôn ngữ của model thật.
 5. Scripted hallucination probes kiểm tra guard theo các kịch bản cố định, không phải phép đo tần suất hallucination ngoài thực tế.
 
+### 10.5 Đánh giá câu trả lời do LLM thật sinh ra
+
+\`evaluation.py\` và \`rag_evaluation.py\` vẫn giữ vai trò hiện tại: parser/semantic/retrieval aggregate và RAG guard evidence. Để đo riêng chất lượng câu trả lời được sinh bởi model thật, dùng \`answer_evaluation.py\`:
+
+\`\`\`bash
+# Smoke test offline; kết quả này chỉ kiểm tra wiring/format, không phải điểm LLM thật
+python -m nlp.app.answer_evaluation \\
+  --samples nlp/app/input/test_labeled.jsonl \\
+  --provider mock
+
+# Chạy generator model thật, giới hạn số câu để kiểm soát chi phí
+export OPENAI_API_KEY="..."
+python -m nlp.app.answer_evaluation \\
+  --samples nlp/app/input/answer_eval.jsonl \\
+  --provider openai \\
+  --model gpt-4o-mini \\
+  --max-samples 30
+
+# Bật Judge riêng; nên chọn model khác generator
+export EVAL_JUDGE_MODEL="gpt-4o"
+python -m nlp.app.answer_evaluation \\
+  --samples nlp/app/input/answer_eval.jsonl \\
+  --provider openai \\
+  --model gpt-4o-mini \\
+  --judge \\
+  --judge-model "$EVAL_JUDGE_MODEL" \\
+  --max-samples 30
+\`\`\`
+
+Schema JSONL tối thiểu cho answer evaluation:
+
+\`\`\`json
+{
+  "sample_id": "ANS001",
+  "query": "Chương 3 trình bày nội dung gì?",
+  "expected_answerability": "EXPECTED_CONTEXT",
+  "expected_chunk_ids": ["topics-chapter-3-grammar-and-parsing-2"],
+  "label_status": "REVIEWED",
+  "label_provenance": "human_review",
+  "reference_answer": "Đáp án đã được đối chiếu với tài liệu.",
+  "reference_points": ["Ý bắt buộc thứ nhất", "Ý bắt buộc thứ hai"],
+  "reference_status": "HUMAN_REVIEWED"
+}
+\`\`\`
+
+Quy tắc đánh giá:
+- Headline answerability/retrieval metrics chỉ dùng dòng có \`label_status=REVIEWED\` và \`label_provenance=human_review\`. Các nhãn tự động, \`GOLD_REVIEWED\` hoặc \`data_source_review\` không được tự động coi là gold.
+- Reference answer/points chỉ được gửi cho Judge khi \`reference_status=HUMAN_REVIEWED\`. Không dùng output do generator sinh ra làm đáp án chuẩn.
+- Judge chấm correctness, faithfulness, relevancy, completeness (1–5) và hallucination flag. Đây là tín hiệu phụ trợ, không phải ground truth; cần đối chiếu với người đánh giá.
+- Citation validity chỉ xác nhận citation thuộc context đã gửi, không chứng minh nội dung câu trả lời được context hỗ trợ về mặt ngữ nghĩa.
+- Report ghi model ID thực tế, fallback, latency và chế độ Knowledge Base. Nếu dùng trace-fallback KB hoặc model fallback/mock, không diễn giải đó là kết quả của LLM thật trên dữ liệu đầy đủ.
+
+Đầu ra: \`nlp/app/output/answer_evaluation/answer_evaluation.md\` và \`answer_evaluation.json\`.
+
 ## 11. Cài đặt và kiểm thử
 
 Từ thư mục `python/`:
