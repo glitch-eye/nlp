@@ -213,6 +213,19 @@ class LLMClientTelemetryTests(unittest.TestCase):
         self.assertEqual(client.last_call["error"], "OPENAI_API_KEY not set")
 
 
+    def test_api_failure_is_recorded_as_attempted_api_and_fallback(self):
+        client = LLMClient(provider="openai", model="test-model", api_key="not-a-real-key")
+        with patch.object(client, "_call_api", side_effect=TimeoutError()):
+            client.generate("private prompt")
+        call = client.last_call
+        self.assertTrue(call["attempted_api"])
+        self.assertFalse(call["used_api"])
+        self.assertTrue(call["fallback"])
+        self.assertEqual(call["error"], "TimeoutError")
+        self.assertEqual(call["model_name"], client.model_name)
+        self.assertGreaterEqual(call["elapsed_seconds"], 0)
+
+
 class MultiIntentProvenanceTests(unittest.TestCase):
     def test_mixed_model_calls_are_reported_and_not_sent_to_judge(self):
         class Client:
