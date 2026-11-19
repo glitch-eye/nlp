@@ -19,7 +19,7 @@
 ### 2.1 Yêu cầu hệ thống
 * **Python:** `>= 3.8` (khuyến nghị Python `3.10+`, đã kiểm thử ổn định trên Python `3.12`)
 * **Hệ điều hành:** Windows / Linux / macOS
-* **Docker:** Phục vụ đóng gói môi trường chuẩn và chấm bài tự động
+* **Docker:** Dockerfile hiện tại chưa cấu hình entrypoint để chạy Course Assistant; dùng cài đặt pip.
 
 ### 2.2 Cài đặt trực tiếp bằng `pip`
 ```bash
@@ -28,14 +28,9 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-### 2.3 Cài đặt và chạy qua Docker
-```bash
-# Build Docker image từ thư mục gốc của repository
-docker build -t nlp-course-assistant python/
+### 2.3 Docker (chưa sẵn sàng cho Course Assistant)
 
-# Chạy container với mount thư mục input và output
-docker run --rm -v "$(pwd)/output:/nlp/output" -v "$(pwd)/input:/nlp/input" nlp-course-assistant
-```
+Dockerfile hiện tại vẫn dùng entrypoint mẫu `hcommon.cli` (`python3 -m hcommon.cli ...`), không khởi chạy package `nlp.app`. Vì vậy chưa nên dùng lệnh `docker build/run` này như cách chạy Course Assistant. Hãy dùng cài đặt pip ở mục 2.2; chỉ bổ sung hướng dẫn Docker sau khi Dockerfile được cập nhật và kiểm thử end-to-end.
 
 ---
 
@@ -67,8 +62,8 @@ python -m nlp.app.run_assistant --data-dir data --interactive
 # 6. Khởi động HTTP API (/health, /retrieve, /answer, /reset)
 python -m nlp.app.api --host 127.0.0.1 --port 8000
 
-# 7. Chạy bộ kiểm thử tự động (46 test cases)
-python -m pytest
+# 7. Chạy bộ kiểm thử tự động (unittest)
+python -m unittest discover -s test -v
 ```
 
 ---
@@ -235,7 +230,7 @@ Chi tiết từng nhóm luật trong văn phạm:
 
 ### 6.1 Cơ sở lý thuyết: Chart Parsing và Giải thuật Earley
 * Trong bài giảng Chương 3 (*Grammar and Parsing*), các giải thuật phân tích cú pháp quay lui đơn thuần (*Simple Top-Down / Bottom-Up Parser*) gặp nhược điểm lớn là phải phân tích đi phân tích lại cùng một cụm từ con khi một nhánh giả thuyết thất bại.
-* **Chart Parsing** khắc phục triệt để nhược điểm này bằng cách sử dụng cấu trúc bảng **Chart** lưu các cung hoạt động (*active arcs / dotted rules*) và các thành phần đã hoàn tất (*completed constituents*).
+* **Chart Parsing** giảm nhược điểm này bằng cách sử dụng cấu trúc bảng **Chart** lưu các cung hoạt động (*active arcs / dotted rules*) và các thành phần đã hoàn tất (*completed constituents*).
 * Hệ thống cài đặt **Earley Chart Parser** (`CourseParser` trong `nlp/app/parser.py`), hoạt động trực tiếp trên mức ký tự/cụm từ của câu đã chuẩn hóa mà không đòi hỏi phải chuyển văn phạm về dạng chuẩn Chomsky (CNF).
 
 ### 6.2 Cấu trúc dữ liệu và Giải thuật chi tiết trong `parser.py`
@@ -429,7 +424,7 @@ Nhóm lựa chọn **Lựa chọn 2: Mở rộng bằng LLM/RAG** đồng thời
 ### 10.1 Mô hình sử dụng và Cấu hình (`llm_client.py`)
 Hệ thống định nghĩa giao diện trừu tượng `LLMClient` với 2 cài đặt cụ thể:
 1. **`MockLLMClient` (`model_name = "mock-grounded-extractive-v1"` – Mặc định Offline):**
-   * Hoạt động hoàn toàn offline, không cần kết nối mạng hay API key, đảm bảo tính tái lập 100% khi chấm bài tự động trong Docker.
+   * Hoạt động hoàn toàn offline, không cần kết nối mạng hay API key, hỗ trợ tái lập kết quả khi dữ liệu và cấu hình không thay đổi.
    * Cơ chế: Phân tích câu hỏi và các chunk trong prompt, chọn lọc các câu/mục chứa thông tin khớp trực tiếp với câu hỏi và đính kèm nguyên văn nhãn trích dẫn `[Nguồn: <source> / <section>]`.
 2. **`OpenAICompatibleLLMClient` (Chế độ gọi LLM thật qua HTTP API):**
    * Kết nối tới mọi endpoint tương thích chuẩn OpenAI Chat Completions (`/v1/chat/completions`), mặc định dùng model `gpt-4o-mini` với `temperature = 0.0` để tối đa hóa tính nhất quán.
@@ -463,7 +458,7 @@ Hàm `build_prompt(question, chunks, semantic=None, dialogue_state=None)` đóng
 4. **Câu hỏi đã giải tham chiếu (`resolved_query`):** Đặt ở cuối prompt để mô hình tập trung trả lời.
 
 ### 10.3 Cơ chế Answer Guard 3 lớp chống Hallucination (`answer_guard.py`, `assistant.py`)
-Để giải quyết triệt để nguy cơ sinh ảo (*hallucination*) của LLM, hệ thống áp dụng 3 lớp kiểm duyệt độc lập:
+Để giảm nguy cơ sinh ảo (*hallucination*) của LLM, hệ thống áp dụng 3 lớp kiểm duyệt độc lập:
 * **Lớp 1 – Tiền kiểm tra trước khi gọi LLM (`check_context`):**
   1. Nếu `retrieval_status != "FOUND"` hoặc danh sách `chunks` rỗng $\rightarrow$ trả về ngay `NO_RELEVANT_CONTEXT`.
   2. Nếu văn phạm Phần I phân loại câu hỏi vào `intent == "UNKNOWN"` $\rightarrow$ trả về ngay `NO_RELEVANT_CONTEXT`.
@@ -625,9 +620,9 @@ Có thể bật judge riêng bằng `--judge --judge-model MODEL_ID`. Judge dùn
 2. **Giới hạn biểu diễn từ vựng của TF-IDF:**
    * Tầng truy xuất dựa trên TF-IDF kết hợp từ điển đồng nghĩa tĩnh (`data/entities.txt`). Nếu người dùng diễn đạt bằng các cụm từ đồng nghĩa hoặc cách mô tả khái niệm hoàn toàn mới chưa có trong `entities.txt` (không chia sẻ từ vựng bề mặt với tài liệu), điểm `LexicalScore` sẽ thấp. Có thể khắc phục trong tương lai bằng cách kết hợp thêm Dense Embedding (Semantic Search đa ngôn ngữ).
 3. **Sự khác biệt giữa `MockLLMClient` (Offline) và LLM thực thụ (Online):**
-   * `MockLLMClient` đảm bảo hệ thống chạy độc lập, cực nhanh và tái lập 100% kết quả mà không cần API key, nhưng câu trả lời có tính chất trích xuất nguyên đoạn (*extractive*) nên đôi khi dài hơn mức cần thiết và không tự suy luận để từ chối các câu ngoài miền có trùng từ vựng ngẫu nhiên như khi chạy với `OpenAICompatibleLLMClient`.
+   * `MockLLMClient` cho phép hệ thống chạy offline, không cần API key và hỗ trợ tái lập kết quả trong cùng cấu hình, nhưng câu trả lời có tính chất trích xuất nguyên đoạn (*extractive*) nên đôi khi dài hơn mức cần thiết và không tự suy luận để từ chối các câu ngoài miền có trùng từ vựng ngẫu nhiên như khi chạy với `OpenAICompatibleLLMClient`.
 4. **Phạm vi của bộ kiểm tra thực thể trong `answer_guard.py`:**
-   * Hậu kiểm tra `unsupported_facts` phát hiện chính xác 100% các hành vi bịa đặt con số, ngày tháng, giờ giấc, email, URL và trích dẫn nguồn sai. Tuy nhiên, nếu một mô hình ngôn ngữ giữ nguyên các con số trong nguồn nhưng đảo ngược ý nghĩa mệnh đề bằng chữ (ví dụ đổi *"bắt buộc"* thành *"không bắt buộc"*), bộ lọc biểu thức chính quy chưa thể tự phát hiện mà cần tới mô hình Natural Language Inference (NLI).
+   * Hậu kiểm tra `unsupported_facts` kiểm tra con số, ngày tháng, giờ giấc, email, URL và trích dẫn nguồn bằng luật; đây không phải bộ phát hiện hallucination hoàn chỉnh và có thể có false positive/false negative. Tuy nhiên, nếu một mô hình ngôn ngữ giữ nguyên các con số trong nguồn nhưng đảo ngược ý nghĩa mệnh đề bằng chữ (ví dụ đổi *"bắt buộc"* thành *"không bắt buộc"*), bộ lọc biểu thức chính quy chưa thể tự phát hiện mà cần tới mô hình Natural Language Inference (NLI).
 5. **Giới hạn của quản lý ngữ cảnh hội thoại cục bộ 1 bước (`DialogueState`):**
    * Mô-đun `dialogue.py` được thiết kế tối ưu cho các tham chiếu cục bộ liền kề (1-step anaphora & ellipsis resolution) theo đúng yêu cầu Phần III của đề bài. Hệ thống chưa hỗ trợ xếp chồng nhiều chủ đề hội thoại (dialogue stack) hoặc quay lại tham chiếu một thực thể đã nhắc tới cách đó 3–4 lượt hội thoại trước.
 
