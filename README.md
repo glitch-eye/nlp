@@ -1,114 +1,144 @@
-# Course Assistant NLP — CO3085
+# Hướng dẫn Cài đặt và Chạy Chương trình – Course Assistant (CO3085)
 
-Trợ lý hỗ trợ học tập cho môn **Xử lý Ngôn ngữ Tự nhiên (CO3085)**. Repository triển khai pipeline từ CFG/Earley Parser và Semantic Frame đến hybrid retrieval, RAG, Answer Guard, hội thoại nhiều lượt và đánh giá.
+Tài liệu này hướng dẫn nhanh cách cài đặt môi trường và chạy toàn bộ các thành phần của hệ thống **Trợ lý hỗ trợ học tập thông minh (Course Assistant)**.
 
-> Tài liệu cài đặt, kiến trúc và hướng dẫn sử dụng đầy đủ: [python/README.md](python/README.md).  
-> Tài liệu kỹ thuật theo module: [python/nlp/app/README.md](python/nlp/app/README.md).  
-> Thiết kế multi-intent: [python/GRAMMAR_V5_MULTI_INTENT.md](python/GRAMMAR_V5_MULTI_INTENT.md).
+> Tài liệu mô tả chi tiết hệ thống theo mục nằm tại: [python/README.md](python/README.md).
 
-## Repository layout
+---
 
-~~~text
+## 1. Cấu trúc thư mục
+
+```text
 nlp/
-├── README.md
+├── README.md                  # Hướng dẫn cài đặt và chạy chương trình (file này)
 └── python/
-    ├── README.md
-    ├── GRAMMAR_V5_MULTI_INTENT.md
-    ├── requirements.txt
-    ├── setup.py
-    ├── data/                 # Course knowledge base
-    ├── nlp/app/              # Application, CLI, API and evaluators
-    │   ├── input/            # Evaluation/dialogue inputs
-    │   └── output/           # Generated local reports and traces
-    └── test/                 # unittest suite
-~~~
+    ├── README.md              # Tài liệu đầy đủ 12 mục & cơ sở lý thuyết
+    ├── Dockerfile             # Cấu hình đóng gói Docker
+    ├── requirements.txt       # Các thư viện Python cần thiết
+    ├── setup.py               # Cấu hình cài đặt package
+    ├── data/                  # Knowledge Base môn học CO3085
+    ├── nlp/app/               # Mã nguồn chính của hệ thống
+    │   ├── input/             # Dữ liệu đầu vào kiểm thử
+    │   └── output/            # Kết quả đầu ra cục bộ
+    └── test/                  # Bộ kiểm thử tự động pytest
+```
 
-## Requirements
+---
 
-- Python 3.10+ recommended (the package declares Python 3.8+ compatibility).
-- macOS, Linux or Windows.
-- Network/API key only when using a real OpenAI-compatible model.
+## 2. Hướng dẫn cài đặt
 
-## Install
+### 2.1 Yêu cầu môi trường
+* **Python:** `>= 3.8` (khuyến nghị Python `3.10+` / `3.12`)
+* **Hệ điều hành:** Windows / Linux / macOS
+* **Docker:** (Tùy chọn) phục vụ đóng gói và chấm bài tự động
 
-Run from the repository root:
+### 2.2 Cài đặt trực tiếp bằng `pip`
+Mở terminal tại thư mục gốc `nlp/` và chạy:
 
-~~~bash
+```bash
 cd python
-python -m venv .venv
-source .venv/bin/activate       # Windows: .venv\Scripts\activate
-python -m pip install -r requirements.txt
-python -m pip install -e .
-~~~
+pip install -r requirements.txt
+pip install -e .
+```
 
-The course data directory is expected at python/data/. If using an external course-data checkout, pass its path with --data-dir.
+### 2.3 Cài đặt và chạy bằng Docker
+Từ thư mục gốc `nlp/`:
 
-## Quick start
+```bash
+# Build Docker image
+docker build -t nlp-course-assistant python/
 
-All commands below run from python/.
+# Chạy container và mount thư mục input/output
+docker run --rm -v "$(pwd)/output:/nlp/output" -v "$(pwd)/input:/nlp/input" nlp-course-assistant
+```
 
-~~~bash
-# Run the assistant with the offline mock provider
-python -m nlp.app.run_assistant --question "Chương 6 nói về gì?"
+---
 
-# Interactive multi-turn dialogue
-python -m nlp.app.run_assistant --interactive
+## 3. Hướng dẫn chạy chương trình
 
-# Start the HTTP API
-python -m nlp.app.api --host 127.0.0.1 --port 8000
+Tất cả các lệnh dưới đây được thực thi từ thư mục `python/` (`cd python`):
 
-# Run the test suite
-python -m unittest discover -s test -v
-~~~
+### 3.1 Phần I: Văn phạm, Sinh câu và Phân tích cú pháp
+```bash
+# 1. Sinh câu mẫu hợp lệ từ văn phạm (tối đa 10.000 câu) -> nlp/app/output/samples.txt
+python -m nlp.app.utils
 
-## Use a real LLM
+# 2. Phân tích cú pháp tập câu đầu vào -> nlp/app/output/parse-results.txt
+python -m nlp.app.run_parser \
+  --input nlp/app/input/sentences.txt \
+  --output nlp/app/output/parse-results.txt \
+  --grammar nlp/app/output/grammar.txt
+```
 
-The default provider is the deterministic offline mock. To use an OpenAI-compatible Chat Completions endpoint:
+### 3.2 Phần II, III & IV: Truy xuất, Hỏi đáp LLM/RAG, Hội thoại cục bộ và Đánh giá
+```bash
+# 1. Chạy truy xuất thông tin độc lập -> nlp/app/output/retrieval.txt
+python -m nlp.app.run_retrieval
 
-~~~bash
-export OPENAI_API_KEY="YOUR_API_KEY"
+# 2. Chạy toàn bộ pipeline Course Assistant (Offline Mock LLM mặc định)
+#    Đọc nlp/app/input/dialogues.txt và xuất dialogue.txt, answer.txt, evaluation.txt
+#    ra cả nlp/app/output/ và ../output/
+python -m nlp.app.run_assistant --data-dir data
+
+# 3. Hỏi 1 câu đơn lẻ trên CLI (kèm xuất JSON nếu cần)
+python -m nlp.app.run_assistant --data-dir data --question "Chương 6 nói về gì?"
+python -m nlp.app.run_assistant --data-dir data --question "Phần II của bài tập lớn là gì?" --json
+
+# 4. Chạy chế độ hội thoại tương tác nhiều lượt trên terminal (gõ 'reset' để xóa ngữ cảnh, 'exit' để thoát)
+python -m nlp.app.run_assistant --data-dir data --interactive
+```
+
+### 3.3 Chạy với LLM thật qua API tương thích OpenAI (Tùy chọn)
+```bash
+export OPENAI_API_KEY="sk-..."
 export LLM_MODEL="gpt-4o-mini"
 export OPENAI_BASE_URL="https://api.openai.com/v1"
 
-python -m nlp.app.run_assistant --provider openai
-~~~
+python -m nlp.app.run_assistant --data-dir data --provider openai
+```
+*(Nếu không đặt `OPENAI_API_KEY` hoặc mất kết nối mạng, hệ thống tự động fallback về `MockLLMClient` để đảm bảo chạy offline 100%).*
 
-Never commit API keys. An API failure may trigger a clearly marked mock fallback; therefore selecting --provider openai alone does not prove that an answer came from the real model. Use the evaluation telemetry and --require-real-model when a run must verify successful real API generation.
+### 3.4 Khởi động HTTP API Service
+```bash
+python -m nlp.app.api --host 127.0.0.1 --port 8000
+```
+* `GET http://127.0.0.1:8000/health`: Kiểm tra trạng thái server.
+* `POST http://127.0.0.1:8000/retrieve`: Truy xuất top-k chunk với body `{"query": "Tuần 2 học những nội dung gì?"}`.
+* `POST http://127.0.0.1:8000/answer`: Hỏi đáp có lưu ngữ cảnh hội thoại với body `{"question": "Chương 6 nói về gì?"}`.
+* `POST http://127.0.0.1:8000/reset`: Xóa ngữ cảnh hội thoại hiện tại.
 
-## Evaluation
+### 3.5 Chạy bộ kiểm thử tự động (`pytest`)
+```bash
+python -m pytest
+```
 
-~~~bash
-# Parser / semantic / retrieval / deterministic end-to-end evaluation
-python -m nlp.app.evaluation
+### 3.6 Hướng dẫn chạy Local Model
 
-# Real answer-generation evaluation (mock by default)
-python -m nlp.app.answer_evaluation --provider mock
+```bash 
+#sử dụng qwen2.5:7b cho demo này, có thể tải và sử dụng model khác, qwen có support cho tiếng việt
+#từ thư mục root, tạo 1 terminal
 
-# Unified report; requires OPENAI_API_KEY for a verified real-model run
-python -m nlp.app.unified_evaluation --provider openai --require-real-model --max-samples 5
-~~~
+$env:OLLAMA_HOST="0.0.0.0:11434"
+$env:OLLAMA_DEBUG="1"                   # optional
+$env:OLLAMA_DEBUG_LOG_REQUESTS="true"   # optional
+ollama serve
 
-The unified evaluator writes JSON and Markdown reports under nlp/app/output/unified_evaluation/. The real-model requirement fails when a row did not make a successful generation API call (for example, when the pre-generation Answer Guard correctly stopped it) or when any generation call fell back to mock.
+#mở terminal thứ 2
 
-For evaluation datasets, distinguish human-reviewed labels from automatically generated labels. Synthetic/auto-labelled samples are useful for regression and coverage checks but must not be reported as an independent human-reviewed gold set. See the full README for dataset schemas, metrics, stratified sampling, judge settings and limitations.
+export LLM_PROVIDER="api"
+export LLM_MODEL="qwen2.5:7b"
+export OPENAI_BASE_URL="http://172.23.64.1:11434/v1"
+export OPENAI_API_KEY="ollama"
+export LLM_TIMEOUT="120"
+export PYTHONPATH="$PWD/python:$PYTHONPATH"
 
-## Multi-intent behavior
+python -m nlp.app.run_assistant --data-dir data --provider openai
+python -m nlp.app.api --host 127.0.0.1 --port 8000
 
-Grammar v5 detects compound questions only when it can partition the input into independently CFG-valid clauses. Each clause then runs through the existing semantic, retrieval and answer-generation path; the resulting answers, evidence, sources and entities are merged. This is **per-clause processing**, not a single aggregated LLM request for the entire multi-intent question. See [GRAMMAR_V5_MULTI_INTENT.md](python/GRAMMAR_V5_MULTI_INTENT.md) for examples and compatibility details.
+#mở terminal thứ 3
 
-## HTTP endpoints
+curl -X POST http://127.0.0.1:8000/answer \
+  -H "Content-Type: application/json" \
+  -d '{"question":"Tuần 2 học những nội dung gì?"}'
 
-When the API is running at http://127.0.0.1:8000:
-
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | /health | Health check |
-| POST | /retrieve | Retrieve relevant knowledge chunks |
-| POST | /answer | Answer a question and maintain dialogue state |
-| POST | /reset | Reset dialogue state |
-
-## Documentation map
-
-- [Full project guide](python/README.md) — installation, architecture, grammar, parser, semantic representation, retrieval, RAG, dialogue and evaluation.
-- [Application/module guide](python/nlp/app/README.md) — module responsibilities, data schemas, CLI/API and evaluation workflows.
-- [Grammar v5 multi-intent design](python/GRAMMAR_V5_MULTI_INTENT.md) — splitting rules, per-clause processing and output contract.
+python3 python/run_evaluation.py --base-url http://127.0.0.1:8000 --dataset input/test_dataset.json --reset-before
