@@ -3,8 +3,10 @@
 Run from python/: python -m unittest discover -s test -p "test_answer_evaluation.py" -v
 """
 import unittest
+from unittest.mock import patch
 
 from nlp.app import answer_evaluation as ev
+from nlp.app.llm_client import LLMClient
 
 
 class DatasetTests(unittest.TestCase):
@@ -150,6 +152,104 @@ class MetricsTests(unittest.TestCase):
             "model_fallback": True,
         }]
         self.assertEqual(ev.calculate_metrics(results)["fallback_count"], 1)
+
+    def test_mixed_model_and_latency_metrics_are_reported(self):
+        results = [{
+            "expected_answerability": "REVIEW",
+            "label_status": "AUTO",
+            "label_provenance": "auto",
+            "expected_chunk_ids": [],
+            "retrieved_chunk_ids": [],
+            "actual_status": "ANSWERED",
+            "citation_check": {},
+            "judge": None,
+            "model_fallback": True,
+            "model_execution": "mixed",
+            "model_call_count": 2,
+            "model_calls": [
+                {"used_api": True},
+                {"used_api": False},
+            ],
+            "generation_elapsed_seconds": 0.5,
+            "elapsed_seconds": 0.8,
+        }]
+        metrics = ev.calculate_metrics(results)
+        self.assertEqual(metrics["mixed_model_answer_count"], 1)
+        self.assertEqual(metrics["model_generation_call_count"], 2)
+        self.assertEqual(metrics["successful_api_call_count"], 1)
+        self.assertEqual(metrics["mean_generation_latency_seconds"], 0.5)
+        self.assertEqual(metrics["mean_pipeline_latency_seconds"], 0.8)
+
+
+
+class LLMClientTelemetryTests(unittest.TestCase):
+    def test_mock_call_is_recorded_without_exposing_prompt(self):
+        client = LLMClient(provider="mock")
+        client.generate("private prompt", question="private question")
+        self.assertEqual(client.generation_count, 1)
+        self.assertEqual(len(client.call_history), 1)
+        call = client.last_call
+        self.assertEqual(call["provider"], "mock")
+        self.assertFalse(call["used_api"])
+        self.assertFalse(call["fallback"])
+        self.assertNotIn("prompt", call)
+        self.assertNotIn("private", repr(call))
+
+    def test_successful_api_call_is_marked_real(self):
+        client = LLMClient(provider="openai", model="test-model", api_key="not-a-real-key")
+        with patch.object(client, "_call_api", return_value="generated"):
+            self.assertEqual(client.generate("prompt"), "generated")
+        self.assertTrue(client.last_call["used_api"])
+        self.assertFalse(client.last_call["fallback"])
+        self.assertEqual(client.last_call["model_name"], "test-model")
+
+    def test_missing_api_key_is_recorded_as_fallback(self):
+        client = LLMClient(provider="openai", model="test-model", api_key="")
+        with patch.dict("os.environ", {"OPENAI_API_KEY": ""}):
+            client._api_key = ""
+            client.generate("prompt")
+        self.assertTrue(client.last_call["fallback"])
+        self.assertFalse(client.last_call["used_api"])
+        self.assertEqual(client.last_call["error"], "OPENAI_API_KEY not set")
+
+
+class MultiIntentProvenanceTests(unittest.TestCase):
+    def test_mixed_model_calls_are_reported_and_not_sent_to_judge(self):
+        class Client:
+            model_name = "mock-fallback"
+            last_error = "TimeoutError"
+            call_history = []
+
+        class Assistant:
+            llm_client = Client()
+
+            def answer(self, query):
+                self.llm_client.call_history.extend([
+                    {"provider": "openai", "model_name": "gpt-test", "used_api": True,
+                     "fallback": False, "error": None, "elapsed_seconds": 0.4},
+                    {"provider": "openai", "model_name": "mock [FALLBACK: TimeoutError]",
+                     "used_api": False, "fallback": True, "error": "TimeoutError",
+                     "elapsed_seconds": 0.01},
+                ])
+                return {"answer": "combined", "status": "ANSWERED", "chunks": []}
+
+        class Judge:
+            called = False
+            def evaluate(self, row, output):
+                self.called = True
+                raise AssertionError("mixed API/fallback output must not be judged as real-only")
+
+        judge = Judge()
+        result = ev.evaluate_rows(
+            Assistant(), [{"sample_id": "multi", "query": "q", "expected_answerability": "REVIEW"}],
+            judge=judge,
+        )[0]
+        self.assertEqual(result["model_execution"], "mixed")
+        self.assertEqual(result["model_call_count"], 2)
+        self.assertTrue(result["model_fallback"])
+        self.assertAlmostEqual(result["generation_elapsed_seconds"], 0.41)
+        self.assertFalse(judge.called)
+        self.assertTrue(result["judge_error"].startswith("SKIPPED:"))
 
 
 if __name__ == "__main__":
