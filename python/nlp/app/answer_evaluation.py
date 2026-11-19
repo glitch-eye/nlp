@@ -28,7 +28,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 APP_DIR = Path(__file__).resolve().parent
-DEFAULT_SAMPLES = APP_DIR / "input" / "test_labeled.jsonl"
+DEFAULT_SAMPLES = APP_DIR / "output" / "samples_labeled.jsonl"
 ANSWERABLE = "EXPECTED_CONTEXT"
 REFUSAL_LABELS = {"INSUFFICIENT_CONTEXT", "NO_RELEVANT_CONTEXT"}
 REFUSAL_STATUSES = {"INSUFFICIENT_CONTEXT", "NO_RELEVANT_CONTEXT"}
