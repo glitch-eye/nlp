@@ -61,7 +61,7 @@ python -m nlp.app.run_assistant --data-dir data --interactive
 # 6. Khởi động HTTP API (/health, /retrieve, /answer, /reset)
 python -m nlp.app.api --host 127.0.0.1 --port 8000
 
-# 7. Chạy bộ kiểm thử tự động (46 test cases)
+# 7. Chạy bộ kiểm thử tự động
 python -m unittest discover -s test -v
 ```
 
