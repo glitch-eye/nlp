@@ -17,7 +17,7 @@ SYSTEM_RULES = (
     "4. Sau mỗi thông tin, trích dẫn nguồn bằng nhãn đã cho, SAO CHÉP NGUYÊN VĂN, "
     "ví dụ [Nguồn: schedule.txt / WEEK 03]. Không tự tạo nhãn nguồn mới.\n"
     "5. Với câu hỏi nhiều ý, trả lời lần lượt từng ý; nếu context không hỗ trợ một ý, "
-    "nói rõ ý đó chưa đủ dữ liệu thay vì bỏ qua hoặc suy đoán.\\n"
+    "nói rõ ý đó chưa đủ dữ liệu thay vì bỏ qua hoặc suy đoán.\n"
     "6. Trả lời ngắn gọn, bằng ngôn ngữ của câu hỏi."
 ).format(sentinel=SENTINEL)
 
@@ -43,9 +43,12 @@ def build_prompt(question, semantic, chunks):
                 {
                     "intent": clause.get("intent"),
                     "entity_ids": clause.get("entity_ids", []),
+                    "retrieval_status": clause.get("retrieval_status"),
                 }
                 for clause in semantic["clauses"]
             ]
+        if semantic.get("chunk_support"):
+            semantic_hint["chunk_support"] = semantic["chunk_support"]
         hint = "GỢI Ý NGỮ NGHĨA (chỉ để định hướng, KHÔNG phải bằng chứng): {}\\n".format(
             json.dumps(semantic_hint, ensure_ascii=False)
         )
