@@ -596,7 +596,7 @@ Các cảnh báo bắt buộc khi phân tích kết quả:
 \`\`\`bash
 # Smoke test offline; kết quả này chỉ kiểm tra wiring/format, không phải điểm LLM thật
 python -m nlp.app.answer_evaluation \\
-  --samples nlp/app/input/test_labeled.jsonl \\
+  --samples nlp/app/output/samples_labeled.jsonl \\
   --provider mock
 
 # Chạy generator model thật, giới hạn số câu để kiểm soát chi phí
