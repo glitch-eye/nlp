@@ -57,11 +57,15 @@ class DatasetTests(unittest.TestCase):
                 "reference_answer": "Đáp án chưa kiểm chứng",
                 "reference_points": ["điểm A"],
                 "reference_status": "AUTO_GENERATED",
+                "expected_answerability": "EXPECTED_CONTEXT",
+                "label_status": "GOLD_REVIEWED",
+                "label_provenance": "auto_rule",
             },
             {"answer": "Câu trả lời", "status": "ANSWERED", "chunks": []},
         )
         self.assertIn('"reference_answer": null', prompt)
         self.assertIn('"reference_points": null', prompt)
+        self.assertIn('"expected_answerability": null', prompt)
 
 
 class JudgeIsolationTests(unittest.TestCase):
