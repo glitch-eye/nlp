@@ -589,6 +589,28 @@ Các cảnh báo bắt buộc khi phân tích kết quả:
 4. Mock LLM không đo chất lượng sinh ngôn ngữ của model thật.
 5. Scripted hallucination probes kiểm tra guard theo các kịch bản cố định, không phải phép đo tần suất hallucination ngoài thực tế.
 
+### 10.5 Đánh giá câu trả lời sinh bởi LLM
+
+`answer_evaluation.py` chạy trực tiếp `CourseAssistant` và dùng chung factory `create_llm_client()`/`LLMClient` của nhánh Pleb; không tạo một adapter model thứ hai.
+
+```bash
+# Smoke test offline, không phải điểm chất lượng LLM thật
+python -m nlp.app.answer_evaluation --samples nlp/app/output/samples_labeled.jsonl --provider mock
+
+# Đánh giá model thật (giới hạn mặc định 50 câu)
+export OPENAI_API_KEY="..."
+python -m nlp.app.answer_evaluation --samples nlp/app/input/answer_eval.jsonl --provider openai --model gpt-4o-mini --max-samples 30
+
+# Judge độc lập; chỉ chấm khi generator có API call thành công và reference đã human-review
+export EVAL_JUDGE_MODEL="gpt-4o"
+python -m nlp.app.answer_evaluation --samples nlp/app/input/answer_eval.jsonl --provider openai --model gpt-4o-mini --judge --judge-model "$EVAL_JUDGE_MODEL" --max-samples 30
+```
+
+Telemetry ghi lại từng lần gọi model, bao gồm provider, model thực tế, API success/fallback, loại lỗi và generation latency. Với câu multi-intent, evaluator gom toàn bộ call của các clause; phân biệt `real_api`, `mock`, `fallback`, `mixed`. Nếu bất kỳ clause nào fallback/mock, Judge sẽ bỏ qua câu trả lời tổng hợp đó. Báo cáo tách tổng generation latency khỏi pipeline latency. Không lưu prompt, completion, API key hoặc request headers trong telemetry.
+
+Headline answerability/retrieval metrics chỉ sử dụng nhãn `REVIEWED` có `label_provenance=human_review`. Reference answer/points chỉ được gửi cho Judge khi `reference_status=HUMAN_REVIEWED`. Judge chỉ là tín hiệu chẩn đoán, không thay thế đánh giá con người.
+
+Đầu ra mặc định: `nlp/app/output/answer_evaluation/answer_evaluation.md` và `answer_evaluation.json`.
 ## 11. Cài đặt và kiểm thử
 
 Từ thư mục `python/`:
@@ -602,6 +624,7 @@ Chạy test evaluation được thêm cho module aggregate:
 
 ```bash
 python -m unittest discover -s test -p "test_evaluation*.py" -v
+python -m unittest discover -s test -p "test_answer_evaluation.py" -v
 ```
 
 Có thể chạy toàn bộ unittest suite:
