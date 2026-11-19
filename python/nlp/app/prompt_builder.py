@@ -16,7 +16,9 @@ SYSTEM_RULES = (
     "3. Nếu CONTEXT không chứa câu trả lời, chỉ trả về đúng một từ khoá: {sentinel}\n"
     "4. Sau mỗi thông tin, trích dẫn nguồn bằng nhãn đã cho, SAO CHÉP NGUYÊN VĂN, "
     "ví dụ [Nguồn: schedule.txt / WEEK 03]. Không tự tạo nhãn nguồn mới.\n"
-    "5. Trả lời ngắn gọn, bằng ngôn ngữ của câu hỏi."
+    "5. Với câu hỏi nhiều ý, trả lời lần lượt từng ý; nếu context không hỗ trợ một ý, "
+    "nói rõ ý đó chưa đủ dữ liệu thay vì bỏ qua hoặc suy đoán.\\n"
+    "6. Trả lời ngắn gọn, bằng ngôn ngữ của câu hỏi."
 ).format(sentinel=SENTINEL)
 
 
