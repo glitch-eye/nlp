@@ -32,11 +32,20 @@ def build_prompt(question, semantic, chunks):
 
     hint = ""
     if semantic and semantic.get("intent"):
-        hint = "GỢI Ý NGỮ NGHĨA (chỉ để định hướng, KHÔNG phải bằng chứng): {}\n".format(
-            json.dumps(
-                {"intent": semantic.get("intent"), "entity_ids": semantic.get("entity_ids", [])},
-                ensure_ascii=False,
-            )
+        semantic_hint = {
+            "intent": semantic.get("intent"),
+            "entity_ids": semantic.get("entity_ids", []),
+        }
+        if semantic.get("clauses"):
+            semantic_hint["clauses"] = [
+                {
+                    "intent": clause.get("intent"),
+                    "entity_ids": clause.get("entity_ids", []),
+                }
+                for clause in semantic["clauses"]
+            ]
+        hint = "GỢI Ý NGỮ NGHĨA (chỉ để định hướng, KHÔNG phải bằng chứng): {}\\n".format(
+            json.dumps(semantic_hint, ensure_ascii=False)
         )
 
     return "{rules}\n\n{hint}CÂU HỎI: {question}\n\nCONTEXT:\n{context}\n\nCÂU TRẢ LỜI CÓ CĂN CỨ:".format(
