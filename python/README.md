@@ -34,7 +34,7 @@ pip install -e .
 docker build -t nlp-course-assistant python/
 
 # Chạy container với mount thư mục input và output
-docker run --rm -v "$(pwd)/output:/nlp/output" -v "$(pwd)/input:/nlp/input" nlp-course-assistant
+docker run --rm -v "$(pwd)/output:/nlp/output" -v "$(pwd)/nlp/app/input:/nlp/input" nlp-course-assistant
 ```
 
 ---
