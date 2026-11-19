@@ -49,7 +49,7 @@ Từ thư mục gốc `nlp/`:
 docker build -t nlp-course-assistant python/
 
 # Chạy container và mount thư mục input/output
-docker run --rm -v "$(pwd)/output:/nlp/output" -v "$(pwd)/input:/nlp/input" nlp-course-assistant
+docker run --rm -v "$(pwd)/output:/nlp/output" -v "$(pwd)/python/nlp/app/input:/nlp/input" nlp-course-assistant
 ```
 
 ---
