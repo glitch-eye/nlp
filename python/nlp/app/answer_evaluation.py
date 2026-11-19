@@ -20,6 +20,7 @@ import json
 import os
 import re
 import socket
+import time
 import urllib.error
 import urllib.request
 from collections import defaultdict
@@ -150,10 +151,11 @@ class OpenAICompatibleJudge:
             }
             for chunk in chunks
         ]
+        reference_is_reviewed = row.get("reference_status") == "HUMAN_REVIEWED"
         payload = {
             "question": row["query"],
-            "reference_answer": row.get("reference_answer"),
-            "reference_points": row.get("reference_points"),
+            "reference_answer": row.get("reference_answer") if reference_is_reviewed else None,
+            "reference_points": row.get("reference_points") if reference_is_reviewed else None,
             "expected_answerability": row.get("expected_answerability"),
             "retrieved_context": context,
             "generated_answer": result.get("answer", ""),
@@ -220,7 +222,9 @@ def evaluate_rows(assistant, rows, judge=None):
     """Run the actual assistant and optionally judge each generated answer."""
     results = []
     for row in rows:
+        started = time.perf_counter()
         output = assistant.answer(row["query"])
+        elapsed_seconds = time.perf_counter() - started
         model_name = getattr(assistant.llm_client, "model_name", "unknown")
         last_error = getattr(assistant.llm_client, "last_error", None)
         record = {
@@ -240,6 +244,8 @@ def evaluate_rows(assistant, rows, judge=None):
             "model_name": model_name,
             "model_fallback": _is_fallback(model_name),
             "model_error": last_error,
+            "elapsed_seconds": round(elapsed_seconds, 4),
+            "reference_status": row.get("reference_status", "UNVERIFIED"),
             "judge": None,
             "judge_error": None,
         }
@@ -254,7 +260,10 @@ def evaluate_rows(assistant, rows, judge=None):
 
 def calculate_metrics(results):
     """Calculate deterministic metrics; REVIEW rows are excluded from headline rates."""
-    labelled = [r for r in results if r["expected_answerability"] != "REVIEW"]
+    # Only explicit human-review provenance is eligible for headline gold metrics.
+    labelled = [r for r in results if r["expected_answerability"] != "REVIEW"
+                and r.get("label_status") == "REVIEWED"
+                and r.get("label_provenance") == "human_review"]
     expected_answerable = [r for r in labelled if r["expected_answerability"] == ANSWERABLE]
     expected_refusal = [r for r in labelled if r["expected_answerability"] in REFUSAL_LABELS]
     answered = [r for r in results if r["actual_status"] == "ANSWERED"]
@@ -284,6 +293,7 @@ def calculate_metrics(results):
             citation_ok += int(bool(valid) and not invalid)
 
     judged = [r["judge"] for r in results if r.get("judge")]
+    reference_reviewed_count = sum(r.get("reference_status") == "HUMAN_REVIEWED" for r in results)
     score_means = {}
     for key in JUDGE_SCORE_KEYS:
         values = [j["scores"].get(key) for j in judged if j.get("scores", {}).get(key) is not None]
@@ -296,6 +306,9 @@ def calculate_metrics(results):
         "sample_count": len(results),
         "labelled_count": len(labelled),
         "review_label_count": len(results) - len(labelled),
+        "human_reviewed_label_count": len(labelled),
+        "unverified_label_count": len(results) - len(labelled),
+        "human_reviewed_reference_count": reference_reviewed_count,
         "answerable_count": len(expected_answerable),
         "expected_refusal_count": len(expected_refusal),
         "answered_count": len(answered),
@@ -341,6 +354,7 @@ def build_report(rows, results, metrics, dataset_path, generator_model, judge_mo
             "label_status_counts": _count(row.get("label_status", "UNSPECIFIED") for row in rows),
             "provenance_counts": _count(row.get("label_provenance", "UNSPECIFIED") for row in rows),
             "reference_answer_count": sum(bool(row.get("reference_answer")) for row in rows),
+            "human_reviewed_reference_count": sum(row.get("reference_status") == "HUMAN_REVIEWED" for row in rows),
             "reference_points_count": sum(bool(row.get("reference_points")) for row in rows),
         },
         "models": {"generator": generator_model, "judge": judge_model},
@@ -350,7 +364,7 @@ def build_report(rows, results, metrics, dataset_path, generator_model, judge_mo
             "Citation validity only checks whether a source label was among the chunks sent to the model; it does not prove semantic support.",
             "The answer guard's number/date checks do not detect every unsupported natural-language claim.",
             "LLM-as-judge is a secondary signal, not ground truth; calibrate it against human-reviewed examples.",
-            "Correctness/completeness are not scored when a human-authored reference_answer/reference_points is absent.",
+            "Correctness/completeness are scored against references only when reference_status is HUMAN_REVIEWED; unverified reference text is withheld from the judge.",
             "Auto-labelled and data-source-reviewed rows are not equivalent to independently human-reviewed answer gold.",
             "A fallback answer is not an output from the requested real model and must be excluded from real-model quality claims.",
         ],
@@ -379,9 +393,12 @@ def render_markdown(report):
         "",
         "## Deterministic metrics",
         "",
+        "> Headline answerability/retrieval rates use only rows with label_status=REVIEWED and label_provenance=human_review. Other rows are diagnostic, not gold.",
+        "",
         "| Metric | Result |",
         "|---|---:|",
-        "| Answer rate on answerable questions | {} |".format(_fmt(m["answer_rate_on_answerable"])),
+        "| Human-reviewed gold rows | {} |".format(m["human_reviewed_label_count"]),
+        "| Answer rate on answerable questions (human-reviewed only) | {} |".format(_fmt(m["answer_rate_on_answerable"])),
         "| Correct refusal rate | {} |".format(_fmt(m["correct_refusal_rate"])),
         "| Over-answered insufficient/no-context cases | {} |".format(m["over_answered_count"]),
         "| Retrieval Hit@k | {} |".format(_fmt(m["retrieval_hit_at_k"])),
@@ -400,6 +417,7 @@ def render_markdown(report):
         lines.append("| {} | {} | {} |".format(key.title(), _score(item["mean"]), item["n"]))
     lines.extend([
         "| Hallucination rate (judge-flagged) | {} |".format(_fmt(m["judge_hallucination_rate"])),
+        "| Human-reviewed references | {} |".format(m["human_reviewed_reference_count"]),
         "| Judge evaluated / errors | {} / {} |".format(m["judge_evaluated_count"], m["judge_error_count"]),
         "",
         "## Status confusion",
