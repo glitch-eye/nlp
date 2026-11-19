@@ -679,6 +679,7 @@ Tất cả lệnh bên dưới chạy từ thư mục `python/`:
 | Retrieval độc lập | `python -m nlp.app.run_retrieval --labeled-jsonl nlp/app/output/samples_labeled.jsonl` |
 | Evaluation tổng thể | `python -m nlp.app.evaluation` |
 | RAG evaluation riêng | `python -m nlp.app.rag_evaluation` |
+| Đánh giá câu trả lời LLM thật | `python -m nlp.app.answer_evaluation --provider openai --model <model-id>` |
 | Test evaluation | `python -m unittest discover -s test -p "test_evaluation*.py" -v` |
 
 ---
