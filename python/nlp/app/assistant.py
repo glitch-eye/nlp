@@ -668,6 +668,19 @@ class CourseAssistant:
             chunks = retrieval.get("chunks") or []
             scores = retrieval.get("scores") or []
             guard_result = _default_guard_check(question, question, semantic, retrieval)
+            if self._teammate_answer_guard is not None:
+                guard_fn = getattr(self._teammate_answer_guard, "check_context", None) or getattr(
+                    self._teammate_answer_guard, "guard_answer", None
+                )
+                if callable(guard_fn):
+                    try:
+                        custom_guard = guard_fn(question, retrieval, semantic)
+                        if isinstance(custom_guard, dict) and custom_guard.get("status") in (
+                            "NO_RELEVANT_CONTEXT", "INSUFFICIENT_CONTEXT"
+                        ):
+                            guard_result = custom_guard
+                    except Exception:
+                        pass
 
             citation_check = None
             if guard_result["status"] in ("NO_RELEVANT_CONTEXT", "INSUFFICIENT_CONTEXT"):
