@@ -630,3 +630,75 @@ Tất cả lệnh bên dưới chạy từ thư mục `python/`:
 ---
 
 **Phạm vi thiết kế:** pipeline single-intent và multi-intent. Multi-intent chỉ được kích hoạt khi các clause được xác thực độc lập; nếu không, hệ thống giữ nguyên luồng single-intent. Khi code, grammar, CLI hoặc schema thay đổi, cập nhật README này để giữ tài liệu package đồng bộ với implementation.
+
+
+## 13. Unified evaluation: NLP pipeline + generated answers
+
+Nhánh evaluation thống nhất giữ hai nhóm phép đo độc lập nhưng xuất chung một báo cáo:
+
+- **NLP pipeline:** parser/CFG, multi-intent semantic frame, intent/entity, retrieval và deterministic RAG/guard. Lệnh này dùng MockLLM cho phần end-to-end tái lập, không phát sinh chi phí API.
+- **Generated answers:** chạy `CourseAssistant.answer()` với LLM client đã chọn; ghi answer, retrieved chunks, citation/guard status, model calls, model identity, latency, API success và fallback.
+- **LLM-as-a-judge:** tùy chọn, chỉ chấm output có generator provenance là `real_api`; judge không phải ground truth. Reference answer chỉ được dùng nếu `reference_status=HUMAN_REVIEWED`.
+
+### 13.1 Cài đặt và chạy smoke evaluation
+
+Từ thư mục `python/`:
+
+```bash
+python -m pip install -r requirements.txt
+python -m pip install -e .
+
+# Offline: kiểm tra pipeline, không đo chất lượng model thật
+python -m nlp.app.unified_evaluation --provider mock --max-samples 5
+```
+
+Mặc định:
+- NLP dataset: `nlp/app/output/samples_labeled.jsonl`
+- Answer smoke dataset: `nlp/app/input/answer_eval_smoke.jsonl`
+- Báo cáo: `nlp/app/output/unified_evaluation/unified_evaluation.json` và `.md`
+
+Smoke rows có nhãn `REVIEW`/unreviewed, chỉ xác nhận luồng chạy và lưu provenance; không được tính là gold accuracy.
+
+### 13.2 Chạy bắt buộc model thật
+
+Dùng API tương thích OpenAI. Không ghi API key vào file:
+
+```bash
+export OPENAI_API_KEY="your-api-key"
+export OPENAI_BASE_URL="https://api.openai.com/v1"
+export LLM_MODEL="gpt-4o-mini"
+
+python -m nlp.app.unified_evaluation \\
+  --provider openai \\
+  --require-real-model \\
+  --max-samples 5
+```
+
+`--require-real-model` sẽ dừng nếu không có ít nhất một generation call thành công qua API hoặc có generation row bị mock/fallback. Những câu bị Answer Guard từ chối trước khi gọi model vẫn được ghi nhận; chúng không bị nhầm thành câu trả lời do model tạo. Với multi-intent, mọi lần gọi model cho các clause được ghi trong call history; nếu có clause fallback thì row được phân loại mixed/fallback và không được tính là real-only.
+
+Có thể bật judge riêng (cần API key và model ID):
+
+```bash
+python -m nlp.app.unified_evaluation \\
+  --provider openai --require-real-model \\
+  --judge --judge-model "judge-model-id" \\
+  --max-samples 5
+```
+
+### 13.3 Các metric và nguyên tắc báo cáo
+
+- Intent multi-intent: exact set match trên toàn bộ intent của các clause; entity: micro precision/recall/F1.
+- Retrieval: Hit@k và precision/recall trên expected chunk IDs đã được review.
+- Answerability/refusal: chỉ dùng hàng `label_status=REVIEWED` và `label_provenance=human_review` cho headline metrics.
+- Citation validity: kiểm tra citation có thuộc context được gửi; không đồng nghĩa đã chứng minh semantic entailment.
+- Provenance: số generation call, successful API call, real/mock/mixed/fallback, model ID và latency.
+- Judge: correctness, faithfulness, relevancy, completeness và hallucination flag; chỉ là tín hiệu chẩn đoán.
+
+### 13.4 Test
+
+```bash
+python -m unittest discover -s test -p "test_answer_evaluation.py" -v
+python -m unittest discover -s test -p "test_evaluation*.py" -v
+python -m unittest discover -s test -v
+```
+
