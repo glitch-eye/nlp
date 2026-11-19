@@ -349,7 +349,8 @@ def _status_confusion(rows):
     return [{"pair": key, "count": counts[key]} for key in sorted(counts)]
 
 
-def build_report(rows, results, metrics, dataset_path, generator_model, judge_model=None):
+def build_report(rows, results, metrics, dataset_path, generator_model, judge_model=None,
+                 knowledge_base_mode="unknown", knowledge_base_document_count=None):
     return {
         "schema_version": "1.0",
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -363,9 +364,14 @@ def build_report(rows, results, metrics, dataset_path, generator_model, judge_mo
             "reference_points_count": sum(bool(row.get("reference_points")) for row in rows),
         },
         "models": {"generator": generator_model, "judge": judge_model},
+        "knowledge_base": {
+            "mode": knowledge_base_mode,
+            "document_count": knowledge_base_document_count,
+        },
         "metrics": metrics,
         "results": results,
         "limitations": [
+            "A trace-fallback Knowledge Base is not equivalent to the full course dataset; do not report its retrieval scores as representative.",
             "Citation validity only checks whether a source label was among the chunks sent to the model; it does not prove semantic support.",
             "The answer guard's number/date checks do not detect every unsupported natural-language claim.",
             "LLM-as-judge is a secondary signal, not ground truth; calibrate it against human-reviewed examples.",
@@ -395,6 +401,9 @@ def render_markdown(report):
         "- Generator: {}".format(models.get("generator")),
         "- Judge: {}".format(models.get("judge") or "disabled"),
         "- Rows with reference answers: {}".format(report["dataset"]["reference_answer_count"]),
+        "- Knowledge base: {} ({} documents)".format(
+            report["knowledge_base"]["mode"], report["knowledge_base"]["document_count"]
+        ),
         "",
         "## Deterministic metrics",
         "",
@@ -486,6 +495,8 @@ def main():
         rows, results, metrics, args.samples,
         getattr(generator, "model_name", "unknown"),
         args.judge_model if judge else None,
+        "full_dataset" if hasattr(assistant.kb, "entity_file") else "trace_fallback",
+        len(getattr(assistant.kb, "documents", [])),
     )
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
