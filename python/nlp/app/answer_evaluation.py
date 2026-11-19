@@ -250,10 +250,13 @@ def evaluate_rows(assistant, rows, judge=None):
             "judge_error": None,
         }
         if judge is not None:
-            try:
-                record["judge"] = judge.evaluate(row, output)
-            except Exception as exc:
-                record["judge_error"] = str(exc)
+            if record["model_fallback"] or "mock" in str(model_name).lower():
+                record["judge_error"] = "SKIPPED: generator output is mock or fallback, not a real-model answer"
+            else:
+                try:
+                    record["judge"] = judge.evaluate(row, output)
+                except Exception as exc:
+                    record["judge_error"] = str(exc)
         results.append(record)
     return results
 
@@ -331,7 +334,8 @@ def calculate_metrics(results):
             sum(j["hallucination"] is True for j in hallucination_checked), len(hallucination_checked)
         ),
         "judge_evaluated_count": len(judged),
-        "judge_error_count": sum(bool(r.get("judge_error")) for r in results),
+        "judge_error_count": sum(bool(r.get("judge_error")) and not r["judge_error"].startswith("SKIPPED:") for r in results),
+        "judge_skipped_count": sum(bool(r.get("judge_error")) and r["judge_error"].startswith("SKIPPED:") for r in results),
         "fallback_count": sum(r["model_fallback"] for r in results),
         "mock_answer_count": sum("mock" in str(r.get("model_name", "")).lower() for r in results),
         "real_model_answer_count": sum(
@@ -434,7 +438,7 @@ def render_markdown(report):
     lines.extend([
         "| Hallucination rate (judge-flagged) | {} |".format(_fmt(m["judge_hallucination_rate"])),
         "| Human-reviewed references | {} |".format(m["human_reviewed_reference_count"]),
-        "| Judge evaluated / errors | {} / {} |".format(m["judge_evaluated_count"], m["judge_error_count"]),
+        "| Judge evaluated / errors / skipped | {} / {} / {} |".format(m["judge_evaluated_count"], m["judge_error_count"], m["judge_skipped_count"]),
         "",
         "## Status confusion",
         "",
