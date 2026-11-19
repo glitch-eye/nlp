@@ -38,17 +38,15 @@ OOD_PROBES = [
     "Tỷ giá đô la hôm nay thế nào?", "Phim nào đang chiếu rạp?",
 ]
 REFUSALS = ("NO_RELEVANT_CONTEXT", "INSUFFICIENT_CONTEXT")
-DEGRADED_WARNING = (
-    "!!! CẢNH BÁO: không tìm thấy thư mục NLP_Course_Assistant_Sample_Data nên Knowledge Base được dựng lại từ",
-    "!!! output/retrieval.txt (thiếu entities.txt và nhiều chunk). Số liệu TRUY XUẤT bên dưới KHÔNG đại diện cho",
-    "!!! hệ thống thật; hãy chạy lại với --data-dir trỏ tới dữ liệu đầy đủ trước khi đưa vào báo cáo.",
-)
 
-
+DEGRADED_WARNING = [
+    "CẢNH BÁO: Knowledge Base đang ở trạng thái degraded hoặc không dùng KnowledgeBase chuẩn.",
+    "Các kết quả retrieval/RAG trong báo cáo này có thể không đại diện cho dữ liệu môn học đầy đủ.",
+]
 def kb_is_degraded(assistant):
-    """The trace-based stand-in KB (assistant._build_fallback_kb_from_traces) is a bare
-    SimpleNamespace: unlike knowledge_base.KnowledgeBase it has no ``entity_file``."""
-    return not hasattr(getattr(assistant, "kb", None), "entity_file")
+    """Return whether the assistant is using a non-standard/incomplete KB object."""
+    from nlp.app.knowledge_base import KnowledgeBase
+    return not isinstance(getattr(assistant, "kb", None), KnowledgeBase)
 
 
 class ScriptedLLM:

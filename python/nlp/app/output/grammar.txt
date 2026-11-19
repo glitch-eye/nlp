@@ -1,5 +1,8 @@
 
-#  Course Assistant grammar v4 
+# Course Assistant grammar v5
+# Backward-compatible single-intent productions. Multi-intent coordination is
+# validated and composed by parser.parse_clauses() via multi_intent.py.
+
 
 <S> ::= <Q_COURSE_INFO>
       | <Q_SCHEDULE>
@@ -420,3 +423,105 @@
                     | "quy định về mã nguồn"
                     | "quy định về liêm chính học thuật"
                     | "quy định về đạo văn"
+
+
+# ---------------- [v5-natural] natural single-intent paraphrases ----------------
+# Curated alternatives reuse semantic nonterminals so parser and semantic labels remain stable.
+# This version expands single-intent forms only; generic multi-intent is intentionally deferred.
+
+<Q_COURSE_INFO> ::= "Môn NLP có những nội dung chính nào?"
+                   | "Nội dung chính của môn NLP gồm những gì?"
+                   | "Môn học CO3085 trang bị cho sinh viên những kiến thức gì?"
+                   | "Sinh viên sẽ học được những gì trong môn NLP?"
+                   | "Môn NLP hướng đến những mục tiêu học tập nào?"
+                   | "Đề cương môn NLP trình bày những nội dung nào?"
+                   | "Môn CO3085 có bao nhiêu tín chỉ và mục tiêu học tập là gì?"
+
+<Q_SCHEDULE> ::= "Trong" <WEEK_REF> "sinh viên sẽ học những nội dung gì?"
+                | "Ở" <WEEK_REF> "lớp sẽ tìm hiểu những chủ đề nào?"
+                | "Trong" <WEEK_REF> "môn học tập trung vào kiến thức nào?"
+                | "Nội dung nào được giảng dạy trong" <WEEK_REF> "?"
+                | "Giảng viên sẽ giới thiệu những kiến thức gì vào" <WEEK_REF> "?"
+                | "Chương trình học của" <WEEK_REF> "bao gồm những chủ đề nào?"
+                | "Lịch trình môn học được phân bổ như thế nào?"
+                | "Môn học bắt đầu và kết thúc trong khoảng bao nhiêu tuần?"
+
+<Q_TOPIC> ::= <CHAPTER_REF> "sinh viên sẽ tìm hiểu những nội dung nào?"
+             | <CHAPTER_REF> "trình bày những khái niệm cốt lõi nào?"
+             | <CHAPTER_REF> "có đề cập đến" <TOPIC_REF> "không?"
+             | <TOPIC_REF> "được đề cập trong chương nào của môn học?"
+             | <TOPIC_REF> "nằm ở phần nào trong đề cương?"
+             | "Hai" <CHAPTER_REF> "và" <CHAPTER_REF> "có điểm khác biệt gì?"
+
+<Q_ASSIGNMENT> ::= <ASSIGNMENT_REF> "yêu cầu sinh viên thực hiện những công việc gì?"
+                  | <ASSIGNMENT_REF> "cần xây dựng những thành phần nào?"
+                  | <ASSIGNMENT_REF> "có những yêu cầu chính nào?"
+                  | <ASSIGNMENT_REF> "cần chuẩn bị những sản phẩm gì để nộp?"
+                  | "Phần hỏi đáp trong" <ASSIGNMENT_REF> "có yêu cầu gì?"
+                  | "Sinh viên cần chuẩn bị những đầu ra nào cho" <ASSIGNMENT_REF> "?"
+                  | <PART_REF> "gồm những nhiệm vụ cụ thể nào?"
+                  | <PART_REF> "yêu cầu sinh viên hoàn thành những công việc gì?"
+
+<Q_DEADLINE> ::= "Thời hạn cuối cùng để nộp" <ASSIGNMENT_REF> "là khi nào?"
+                | "Sinh viên cần nộp" <ASSIGNMENT_REF> "trước thời điểm nào?"
+                | "Thông tin về hạn nộp" <ASSIGNMENT_REF> "được công bố ở đâu?"
+                | "Ngày hết hạn của" <ASSIGNMENT_REF> "là ngày nào?"
+
+<Q_RESOURCE> ::= "Bạn có thể gợi ý tài liệu để tìm hiểu" <RESOURCE_TOPIC> "không?"
+                | "Muốn học sâu hơn về" <RESOURCE_TOPIC> "thì nên đọc tài liệu nào?"
+                | "Có nguồn tham khảo nào dành cho chủ đề" <RESOURCE_TOPIC> "không?"
+                | "Sinh viên nên bắt đầu đọc tài liệu nào về" <RESOURCE_TOPIC> "?"
+                | "Những tài liệu nào hỗ trợ việc học" <RESOURCE_TOPIC> "?"
+                | "Tôi có thể tìm tài liệu của" <CHAPTER_REF> "ở đâu?"
+                | "Tài liệu phục vụ cho" <WEEK_REF> "gồm những gì?"
+                | "Có sách hoặc giáo trình nào phù hợp với môn NLP không?"
+
+<Q_RULE> ::= "Sinh viên có được phép sử dụng" <RULE_OBJECT> "khi làm" <ASSIGNMENT_REF> "không?"
+           | "Khi thực hiện" <ASSIGNMENT_REF> "cần tuân thủ quy định nào về" <RULE_OBJECT> "?"
+           | "Việc sử dụng" <RULE_OBJECT> "trong bài tập lớn được cho phép ở mức nào?"
+           | "Môn học đặt ra những yêu cầu gì đối với việc sử dụng" <RULE_OBJECT> "?"
+           | "Nếu sử dụng" <RULE_OBJECT> "thì sinh viên cần lưu ý điều gì?"
+
+<Q_LO> ::= "Sinh viên cần đạt được năng lực gì theo" <LO_REF> "?"
+          | "Yêu cầu đầu ra được mô tả trong" <LO_REF> "là gì?"
+          | "Sau môn học, sinh viên cần thể hiện điều gì theo" <LO_REF> "?"
+
+<COURSE_INFO_TAIL> ::= "môn học cung cấp những kiến thức nền tảng nào?"
+                      | "sinh viên cần nắm được những kiến thức gì?"
+                      | "những kỹ năng nào sẽ được hình thành?"
+
+<SCHEDULE_WEEK_TAIL> ::= "tuần đó tập trung vào kiến thức nào?"
+                        | "sinh viên cần chuẩn bị những nội dung gì?"
+                        | "nội dung nào là trọng tâm của buổi học?"
+                        | "những khái niệm nào sẽ được giới thiệu?"
+
+<SCHEDULE_CHAPTER_TAIL> ::= "được triển khai vào tuần học nào?"
+                          | "được đưa vào kế hoạch giảng dạy ở tuần nào?"
+
+<TOPIC_CHAPTER_TAIL> ::= "sinh viên cần nắm được những kiến thức nào?"
+                        | "những khái niệm cốt lõi được đề cập là gì?"
+                        | "chương này giúp người học hiểu vấn đề gì?"
+
+<TOPIC_WHERE_TAIL> ::= "được đề cập trong chương nào của môn học?"
+                      | "nằm ở phần nào trong đề cương?"
+                      | "được giới thiệu ở tuần học nào?"
+
+<ASSIGNMENT_TAIL> ::= "sinh viên cần đáp ứng những tiêu chí nào?"
+                     | "các bước thực hiện chính là gì?"
+                     | "kết quả cuối cùng cần thể hiện những nội dung gì?"
+
+<PART_TAIL> ::= "sinh viên cần triển khai những công việc cụ thể nào?"
+               | "phần này cần có những nội dung gì?"
+
+<DEADLINE_TAIL> ::= "được thông báo trong tài liệu nào?"
+                   | "có được ghi rõ trong đề cương không?"
+
+<RESOURCE_TAIL> ::= "có thể tải hoặc truy cập ở đâu?"
+                   | "phù hợp với sinh viên mới bắt đầu gồm những tài liệu nào?"
+                   | "nên đọc theo thứ tự nào?"
+
+<RULE_TAIL> ::= "sinh viên cần lưu ý những điểm nào?"
+               | "những hành vi nào không được phép?"
+
+<LO_TAIL> ::= "sinh viên cần vận dụng được kiến thức nào?"
+             | "năng lực này được thể hiện qua những kỹ năng gì?"

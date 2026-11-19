@@ -2,7 +2,6 @@ from collections import Counter
 import json
 import math
 import os
-from pathlib import Path
 import re
 import sys
 import types
@@ -122,6 +121,7 @@ from nlp.app.knowledge_base import KnowledgeBase, default_data_dir
 from nlp.app.parser import CourseParser
 from nlp.app.retriever import Retriever
 from nlp.app.semantic_frame import frame_from_tree
+from nlp.app.multi_intent import split_intent_clauses
 
 
 def _try_import(module_name, attr_name=None):
@@ -475,94 +475,6 @@ def _default_guard_check(question, resolved_query, semantic, retrieval_result):
     return {"status": "OK", "answer": None}
 
 
-def _build_fallback_kb_from_traces():
-    """Construct an in-memory KnowledgeBase from output/retrieval.txt if NLP_Course_Assistant_Sample_Data is outside the workspace."""
-    chunks = {}
-    app_dir = Path(__file__).resolve().parent
-    retrieval_trace = app_dir / "output" / "retrieval.txt"
-    if retrieval_trace.exists():
-        lines = retrieval_trace.read_text(encoding="utf-8", errors="replace").splitlines()
-        idx = 0
-        while idx < len(lines):
-            match = re.match(r"^\d+\.\s+(\S+)\s+\|\s+score=[0-9.]+\s+\|\s+(.+?)\s+/\s+(.+)$", lines[idx])
-            if match and idx + 3 < len(lines):
-                cid, src, sec = match.group(1), match.group(2), match.group(3)
-                ent_line = lines[idx + 1].strip()
-                ents = [
-                    e.strip()
-                    for e in ent_line.replace("entity_ids:", "").split(",")
-                    if e.strip() and e.strip() != "(none)"
-                ]
-                txt = lines[idx + 3].strip()
-                chunks[cid] = {
-                    "chunk_id": cid,
-                    "source": src,
-                    "section": sec,
-                    "entity_ids": ents,
-                    "text": txt,
-                    "kind": src.replace(".txt", ""),
-                }
-                idx += 4
-            else:
-                idx += 1
-
-    extra = {
-        "schedule-week-06-6": ("schedule.txt", "WEEK 06", ["CH05", "WEEK_06", "SYNTACTIC_PROCESSING", "CFG", "VERB_PHRASES"], "WEEK 06 part: Syntactic Processing chapter: Chapter 5 topics: - grammars for natural language - auxiliary verbs and verb phrases - movement phenomena in language - handling questions in context-free grammars - relative clauses"),
-        "topics-chapter-5-grammar-for-natural-language-4": ("topics.txt", "CHAPTER 5: GRAMMAR FOR NATURAL LANGUAGE", ["CH05", "SYNTACTIC_PROCESSING", "CFG", "VERB_PHRASES"], "CHAPTER 5: GRAMMAR FOR NATURAL LANGUAGE chapter_id: CH05 part: Syntactic Processing keywords: natural language grammar, auxiliary verbs, movement, wh-questions, relative clauses summary: The chapter develops comprehensive grammars for natural language phenomena including auxiliary verbs, verb phrases, movement phenomena, yes/no and wh-questions, and relative clauses. subtopics: 5.1 Auxiliary verbs and verb phrases 5.2 Movement phenomena in language 5.3 Handling questions in context-free grammars 5.4 Relative clauses 5.5 The hold mechanism in ATNs"),
-        "resources-textbook-1-0": ("resources.txt", "TEXTBOOK 1", ["NLP", "NATURAL_LANGUAGE_PROCESSING"], "TEXTBOOK 1 title: Natural Language Understanding author: James Allen publisher: Benjamin/Cummings year: 1995 usage: main course textbook covering Part I (Syntactic Processing), Part II (Semantic Interpretation), and Part III (Context and World Knowledge)"),
-        "faq-q13-12": ("faq.txt", "Q13", ["BTL01", "PART_I", "PART_II", "PART_III"], "Q13: question: Bài tập lớn gồm những phần nào? answer: Bài tập lớn gồm Phần I (Grammar & Parser), Phần II (Semantic Interpretation & QA hoặc LLM/RAG), Phần III (Local Discourse Context) và Phần IV (Evaluation)."),
-    }
-    for cid, (src, sec, ents, txt) in extra.items():
-        if cid not in chunks:
-            chunks[cid] = {"chunk_id": cid, "source": src, "section": sec, "entity_ids": list(ents), "text": txt, "kind": src.replace(".txt", "")}
-
-    aliases = [
-        ("Môn NLP", "NLP", "Xử lý Ngôn ngữ Tự nhiên"),
-        ("Xử lý Ngôn ngữ Tự nhiên", "NLP", "Xử lý Ngôn ngữ Tự nhiên"),
-        ("CO3085", "CO3085", "Xử lý Ngôn ngữ Tự nhiên"),
-        ("bài tập lớn", "BTL01", "Bài tập lớn Course Assistant"),
-        ("Phần I", "PART_I", "Phần I"),
-        ("Phần II", "PART_II", "Phần II"),
-        ("Phần III", "PART_III", "Phần III"),
-        ("Phần IV", "PART_IV", "Phần IV"),
-        ("CFG", "CFG", "context-free grammar"),
-        ("Parsing", "PARSING", "phân tích cú pháp"),
-        ("parsing", "PARSING", "phân tích cú pháp"),
-        ("PCFG", "PCFG", "probabilistic context-free grammar"),
-        ("văn phạm phụ thuộc", "DEPENDENCY_GRAMMAR", "văn phạm phụ thuộc"),
-        ("nét và văn phạm gia tố", "FEATURES", "nét và văn phạm gia tố"),
-        ("gán nhãn từ loại", "POS_TAGGING", "gán nhãn từ loại"),
-        ("dạng luận lý", "LOGICAL_FORM", "dạng luận lý"),
-        ("vai trò chủ đề", "THEMATIC_ROLES", "vai trò chủ đề"),
-        ("giới hạn lựa chọn", "SELECTIONAL_RESTRICTION", "giới hạn lựa chọn"),
-        ("mạng ngữ nghĩa", "SEMANTIC_NETWORK", "mạng ngữ nghĩa"),
-        ("văn phạm ngữ nghĩa", "SEMANTIC_GRAMMAR", "văn phạm ngữ nghĩa"),
-        ("biểu diễn tri thức", "KNOWLEDGE_REPRESENTATION", "biểu diễn tri thức"),
-        ("hỏi đáp", "QUESTION_ANSWERING", "hỏi đáp"),
-        ("tham chiếu", "REFERENCE", "tham chiếu"),
-        ("đồng tham chiếu", "ANAPHORA", "đồng tham chiếu"),
-        ("statistical NLP", "STATISTICAL_NLP", "statistical NLP"),
-        ("Python NLP", "PYTHON_NLP", "Python NLP"),
-        ("machine translation", "MACHINE_TRANSLATION", "machine translation"),
-        ("LLM/RAG", "LLM_RAG", "LLM/RAG"),
-        ("sử dụng AI", "AI_USAGE", "AI usage"),
-        ("midterm", "MIDTERM", "kiểm tra giữa kỳ"),
-        ("final", "FINAL", "thi cuối kỳ"),
-    ]
-    for ch_idx in range(1, 13):
-        aliases.append(("Chương {}".format(ch_idx), "CH{:02d}".format(ch_idx), "Chương {}".format(ch_idx)))
-    for wk_idx in range(1, 16):
-        aliases.append(("Tuần {}".format(wk_idx), "WEEK_{:02d}".format(wk_idx), "Tuần {}".format(wk_idx)))
-    aliases.sort(key=lambda item: len(item[0]), reverse=True)
-
-    kb_stub = types.SimpleNamespace(
-        data_dir=app_dir,
-        aliases=aliases,
-        documents=[chunks[cid] for cid in sorted(chunks)],
-    )
-    return kb_stub
-
-
 class CourseAssistant:
     """Single-turn and multi-turn RAG Course Assistant orchestrator."""
 
@@ -579,10 +491,9 @@ class CourseAssistant:
         if knowledge_base is not None:
             self.kb = knowledge_base
         else:
-            try:
-                self.kb = KnowledgeBase(data_dir or default_data_dir())
-            except (FileNotFoundError, OSError):
-                self.kb = _build_fallback_kb_from_traces()
+            # Always load the complete repository dataset. Never silently replace it
+            # with partial chunks reconstructed from a previous retrieval trace.
+            self.kb = KnowledgeBase(data_dir or default_data_dir())
         self.parser = parser or CourseParser(grammar_path=grammar_path)
         self.retriever = retriever or Retriever(
             self.kb.documents,
@@ -682,6 +593,12 @@ class CourseAssistant:
             "intent": intent,
             "entities": entities,
             "entity_ids": entity_ids,
+            "clauses": [{
+                "intent": intent,
+                "entities": dict(entities),
+                "entity_ids": list(entity_ids),
+                "parse_status": parse_status,
+            }],
             "parse_status": parse_status,
         }
 
@@ -711,7 +628,83 @@ class CourseAssistant:
         return None
 
     def answer(self, question, dialogue_state=None):
-        """Run end-to-end CourseAssistant pipeline for one question and optional DialogueState."""
+        """Run end-to-end pipeline; safely fan out independent intents and join results."""
+        clauses = split_intent_clauses(question, self.parser)
+        if len(clauses) > 1:
+            # Reuse the unchanged single-intent pipeline for each clause.
+            # Update dialogue state once at the parent turn, not child-by-child.
+            child_results = [self.answer(clause, dialogue_state=None) for clause in clauses]
+            successful = [item for item in child_results if item.get("status") == "ANSWERED"]
+            all_chunks, all_sources, all_ids, all_entities = [], [], [], []
+            all_scores = []
+            seen_chunk_ids = set()
+            for item in child_results:
+                for chunk, score in zip(item.get("chunks", []), item.get("scores", [])):
+                    chunk_id = chunk.get("chunk_id")
+                    if chunk_id not in seen_chunk_ids:
+                        seen_chunk_ids.add(chunk_id)
+                        all_chunks.append(chunk)
+                        all_scores.append(score)
+                for source in item.get("sources", []):
+                    if source not in all_sources:
+                        all_sources.append(source)
+                for entity_id in item.get("entity_ids", []):
+                    if entity_id not in all_entities:
+                        all_entities.append(entity_id)
+                for chunk_id in item.get("retrieved_chunk_ids", []):
+                    if chunk_id not in all_ids:
+                        all_ids.append(chunk_id)
+            combined_answer = " ".join(
+                item.get("answer", "").strip() for item in child_results if item.get("answer")
+            )
+            combined_status = "ANSWERED" if successful else (
+                "INSUFFICIENT_CONTEXT" if any(item.get("status") == "INSUFFICIENT_CONTEXT" for item in child_results)
+                else "NO_RELEVANT_CONTEXT"
+            )
+            combined_entities = {}
+            for entity_id in all_entities:
+                category = entity_category(entity_id)
+                if category and category not in combined_entities:
+                    combined_entities[category] = entity_id
+            state_before = (
+                dialogue_state.to_dict() if isinstance(dialogue_state, DialogueState)
+                else DialogueState.from_dict(dialogue_state).to_dict()
+            )
+            combined = {
+                "question": question, "resolved_query": question,
+                "answer": combined_answer, "sources": all_sources,
+                "retrieved_chunk_ids": all_ids, "parse_status": "PARSED",
+                "retrieval_status": "FOUND" if all_chunks else "NO_RELEVANT_CONTEXT",
+                "status": combined_status,
+                "citation_check": {"status": "MULTI_INTENT", "clauses": [item.get("citation_check") for item in child_results]},
+                "intent": "MULTI_INTENT",
+                "intents": [item.get("intent") for item in child_results],
+                "clauses": [
+                    {"query": clause, "intent": item.get("intent"),
+                     "entity_ids": item.get("entity_ids", []),
+                     "status": item.get("status"), "answer": item.get("answer"),
+                     "sources": item.get("sources", [])}
+                    for clause, item in zip(clauses, child_results)
+                ],
+                "entities": combined_entities, "entity_ids": all_entities,
+                "chunks": all_chunks, "scores": all_scores,
+                "resolution": {"status": "MULTI_INTENT", "clauses": clauses},
+                "dialogue_state_before": state_before,
+                "dialogue_state_after": state_before,
+            }
+            if dialogue_state is not None:
+                state = dialogue_state if isinstance(dialogue_state, DialogueState) else DialogueState.from_dict(dialogue_state)
+                # Use the final clause as the dialogue continuation anchor;
+                # the API response still exposes MULTI_INTENT and every clause.
+                continuation_intent = child_results[-1].get("intent") if child_results else None
+                state.update(
+                    question=question, intent=continuation_intent, entities=combined_entities,
+                    answer_entities=all_entities, sources=all_sources,
+                    ambiguous_candidates=DialogueManager.detect_multiple_entities_in_question(question),
+                )
+                combined["dialogue_state_after"] = state.to_dict()
+            return combined
+
         use_dialogue = dialogue_state is not None
         state = (
             dialogue_state

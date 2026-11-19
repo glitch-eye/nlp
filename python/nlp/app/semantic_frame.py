@@ -44,8 +44,9 @@ def _node_text(node):
     return " ".join(child.label for child in _walk(node) if not child.children).strip()
 
 
-def _first_node(root, label):
-    return next((node for node in _walk(root) if node.label == label), None)
+def _all_nodes(root, label):
+    """Return every occurrence of a semantic node, preserving surface order."""
+    return [node for node in _walk(root) if node.label == label]
 
 
 def _find_alias_entities(text, aliases):
@@ -63,7 +64,7 @@ def _find_alias_entities(text, aliases):
 def query_frame(query, parser, aliases=()):
     """Parse a query and derive its intent/entities; return None on parse failure."""
     try:
-        tree = parser.parse(query)
+        tree = parser.parse_multi(query) if hasattr(parser, "parse_multi") else parser.parse(query)
     except Exception:
         # Retrieval must remain available if the CFG is temporarily malformed.
         return None
@@ -73,8 +74,8 @@ def query_frame(query, parser, aliases=()):
     return frame_from_tree(tree, query, aliases)
 
 
-def frame_from_tree(tree, query, aliases=()):
-    """Derive a semantic frame from an already parsed query tree."""
+def _single_frame_from_tree(tree, query, aliases=()):
+    """Build the legacy single-intent frame without changing its public shape."""
     root_question = next(
         (node for node in tree.children
          if isinstance(node, ParseNode) and node.label.startswith("Q_")),
@@ -88,55 +89,94 @@ def frame_from_tree(tree, query, aliases=()):
         "RULE_REF", "RULE_OBJECT", "LO_REF", "DEADLINE_REF",
     )
     for label in labels:
-        node = _first_node(tree, label)
-        if node is None:
-            continue
-        value = _node_text(node)
-        if label == "COURSE_REF":
-            entities.append("CO3085")
-        elif label == "EXAM_REF":
-            entities.append("MIDTERM" if "midterm" in value.casefold() or "giữa kỳ" in value.casefold() else "FINAL")
-        elif label == "WEEK_REF":
-            number = re.search(r"\d+", value)
-            if number:
-                entities.append("WEEK_{:02d}".format(int(number.group(0))))
-        elif label == "CHAPTER_REF":
-            number = re.search(r"\d+", value)
-            if number:
-                entities.append("CH{:02d}".format(int(number.group(0))))
-        elif label == "LO_REF":
-            match = re.search(r"\d+\.\d+", value)
-            if match:
-                entities.append("LO" + match.group(0))
-        elif label in ("ASSIGNMENT_REF", "DEADLINE_REF"):
-            if intent in ("GET_ASSIGNMENT", "GET_DEADLINE"):
-                entities.append("BTL01")
-        elif label in ("RULE_OBJECT", "RULE_REF"):
-            entities.append("LLM_RAG" if "llm" in value.casefold() else "AI_USAGE")
-        elif label == "RESOURCE_TOPIC":
-            normalized = _normalize(value)
-            entities.append(
-                "PYTHON_NLP" if "python" in normalized else
-                "STATISTICAL_NLP" if "statistical" in normalized or "thong ke" in normalized else
-                "MACHINE_TRANSLATION"
-            )
-        else:
-            entities.extend(_find_alias_entities(value, aliases))
+        for node in _all_nodes(tree, label):
+            value = _node_text(node)
+            if label == "COURSE_REF":
+                entities.append("CO3085")
+            elif label == "EXAM_REF":
+                entities.append("MIDTERM" if "midterm" in value.casefold() or "giữa kỳ" in value.casefold() else "FINAL")
+            elif label == "WEEK_REF":
+                for match in re.finditer(r"\d+", value):
+                    entities.append("WEEK_{:02d}".format(int(match.group(0))))
+            elif label == "CHAPTER_REF":
+                for match in re.finditer(r"\d+", value):
+                    entities.append("CH{:02d}".format(int(match.group(0))))
+            elif label == "LO_REF":
+                for match in re.finditer(r"\d+\.\d+", value):
+                    entities.append("LO" + match.group(0))
+            elif label in ("ASSIGNMENT_REF", "DEADLINE_REF"):
+                if intent in ("GET_ASSIGNMENT", "GET_DEADLINE", "GET_RULE"):
+                    entities.append("BTL01")
+            elif label in ("RULE_OBJECT", "RULE_REF"):
+                entities.append("LLM_RAG" if "llm" in value.casefold() else "AI_USAGE")
+            elif label == "RESOURCE_TOPIC":
+                normalized = _normalize(value)
+                entities.append(
+                    "PYTHON_NLP" if "python" in normalized else
+                    "STATISTICAL_NLP" if "statistical" in normalized or "thong ke" in normalized else
+                    "MACHINE_TRANSLATION"
+                )
+            else:
+                entities.extend(_find_alias_entities(value, aliases))
 
-    # Structure-aware extraction covers numbered sections even when the grammar
-    # represents the number as a terminal rather than a named semantic node.
     normalized_query = _normalize(query)
+    if intent == "GET_RULE" and re.search(
+        r"\b(?:btl|bai tap lon|do an|project)\b", normalized_query
+    ):
+        entities.append("BTL01")
+
+    # Preserve all numbered references in a single clause, not just the first.
     for pattern, formatter in (
         (r"\b(?:tuan|week)\s+(?:thu\s+)?0?(\d{1,2})\b", lambda n: "WEEK_{:02d}".format(int(n))),
         (r"\b(?:chuong|chapter)\s+0?(\d{1,2})\b", lambda n: "CH{:02d}".format(int(n))),
     ):
-        match = re.search(pattern, normalized_query)
-        if match:
+        for match in re.finditer(pattern, normalized_query):
             entities.append(formatter(match.group(1)))
 
-    return {"intent": intent, "entity_ids": list(dict.fromkeys(entities)),
-            "parse_status": "PARSED"}
+    return {
+        "intent": intent,
+        "entity_ids": list(dict.fromkeys(entities)),
+        "parse_status": "PARSED",
+    }
 
+
+def frame_from_tree(tree, query, aliases=()):
+    """Return a legacy single-intent frame or a structured multi-intent frame.
+
+    The parser/tree contract remains unchanged: S is a normal single query and
+    S_MULTI is emitted only after the multi-intent splitter validates every clause.
+    """
+    if tree is None:
+        return None
+
+    if tree.label != "S_MULTI":
+        return _single_frame_from_tree(tree, query, aliases)
+
+    clause_frames = []
+    all_entities = []
+    for clause_node in tree.children:
+        if not isinstance(clause_node, ParseNode) or not clause_node.children:
+            continue
+        clause_tree = clause_node.children[0]
+        clause_query = _node_text(clause_tree)
+        clause_frame = _single_frame_from_tree(clause_tree, clause_query, aliases)
+        clause_frames.append(clause_frame)
+        for entity_id in clause_frame.get("entity_ids", []):
+            if entity_id not in all_entities:
+                all_entities.append(entity_id)
+
+    if len(clause_frames) < 2:
+        # Defensive fallback: malformed S_MULTI must not leak a multi frame.
+        if clause_frames:
+            return clause_frames[0]
+        return {"intent": "UNKNOWN", "entity_ids": [], "parse_status": "PARSED"}
+
+    return {
+        "intent": "MULTI_INTENT",
+        "clauses": clause_frames,
+        "entity_ids": all_entities,
+        "parse_status": "PARSED",
+    }
 
 def chunk_frame(document):
     """Create the indexing-time frame for a chunk after structural chunking."""

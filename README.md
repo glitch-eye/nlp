@@ -1,13 +1,27 @@
-# Attention
-Place this directory in the same folder with NLP_Course_Assistant_Sample_Data
+# Hướng dẫn Cài đặt và Chạy Chương trình – Course Assistant (CO3085)
+
+Tài liệu này hướng dẫn nhanh cách cài đặt môi trường và chạy toàn bộ các thành phần của hệ thống **Trợ lý hỗ trợ học tập thông minh (Course Assistant)**.
+
+> Tài liệu mô tả chi tiết hệ thống theo mục nằm tại: [python/README.md](python/README.md).
+
+---
+
+## 1. Cấu trúc thư mục
+
+```text
+nlp/
+├── README.md                  # Hướng dẫn cài đặt và chạy chương trình (file này)
+└── python/
+    ├── README.md              # Tài liệu đầy đủ 12 mục & cơ sở lý thuyết
+    ├── Dockerfile             # Cấu hình đóng gói Docker
+    ├── requirements.txt       # Các thư viện Python cần thiết
+    ├── setup.py               # Cấu hình cài đặt package
+    ├── data/                  # Knowledge Base môn học CO3085
+    ├── nlp/app/               # Mã nguồn chính của hệ thống
+    │   ├── input/             # Dữ liệu đầu vào kiểm thử
+    │   └── output/            # Kết quả đầu ra cục bộ
+    └── test/                  # Bộ kiểm thử tự động pytest
 ```
-<<<<<<< HEAD
-my-project/
-├── NLP_Course_Assistant_Sample_Data
-└── nlp/
-    ├── python/
-    └── ...
-=======
 
 ---
 
@@ -80,7 +94,7 @@ export OPENAI_API_KEY="sk-..."
 export LLM_MODEL="gpt-4o-mini"
 export OPENAI_BASE_URL="https://api.openai.com/v1"
 
-python -m nlp.app.run_assistant --data-dir python/data --provider openai
+python -m nlp.app.run_assistant --data-dir data --provider openai
 ```
 *(Nếu không đặt `OPENAI_API_KEY` hoặc mất kết nối mạng, hệ thống tự động fallback về `MockLLMClient` để đảm bảo chạy offline 100%).*
 
@@ -96,5 +110,4 @@ python -m nlp.app.api --host 127.0.0.1 --port 8000
 ### 3.5 Chạy bộ kiểm thử tự động (`pytest`)
 ```bash
 python -m pytest
->>>>>>> a5540bf (real model run and test)
 ```

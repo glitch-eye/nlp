@@ -1,3 +1,6 @@
+# Python compiled files
 *.pyc
-*.pyc
-*.pyc
+__pycache__/
+
+# macOS system files
+.DS_Store

@@ -73,7 +73,7 @@ def load_aliases(data_dir=None):
 
 def unparsed_frame():
     """Frame for questions the grammar did not accept. Deliberately has no intent."""
-    return {"intent": None, "entities": {}, "entity_ids": [], "parse_status": UNPARSED}
+    return {"intent": None, "entities": {}, "entity_ids": [], "clauses": [], "parse_status": UNPARSED}
 
 
 def interpret(parse_tree, question, aliases=None):
@@ -97,10 +97,26 @@ def interpret(parse_tree, question, aliases=None):
         if category and category not in entities:
             entities[category] = entity_id
 
+    clause_frames = []
+    for clause in base.get("clauses") or [base]:
+        clause_ids = list(clause.get("entity_ids") or [])
+        clause_entities = {}
+        for entity_id in clause_ids:
+            category = entity_category(entity_id)
+            if category and category not in clause_entities:
+                clause_entities[category] = entity_id
+        clause_frames.append({
+            "intent": clause.get("intent"),
+            "entities": clause_entities,
+            "entity_ids": clause_ids,
+            "parse_status": PARSED,
+        })
+
     return {
         "intent": base.get("intent"),
         "entities": entities,
         "entity_ids": entity_ids,
+        "clauses": clause_frames,
         "parse_status": PARSED,
     }
 

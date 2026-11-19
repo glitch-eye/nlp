@@ -39,9 +39,18 @@ class RetrievalService:
         state = DialogueState.from_dict(dialogue_state) if dialogue_state is not None else self.dialogue_state
         resolution = self.assistant.dialogue_manager.resolve(query, state)
         resolved_query = resolution["resolved_query"]
-        parse_tree = self.assistant.parser.parse(resolved_query) if self.assistant.parser else None
-        semantic = self.assistant._build_semantic_frame(resolved_query, parse_tree, resolution)
-        res = self.retriever.retrieve(resolved_query, semantic=semantic)
+        parsed_clauses = (
+            self.assistant.parser.parse_clauses(resolved_query)
+            if self.assistant.parser else [(resolved_query, None)]
+        )
+        if len(parsed_clauses) > 1:
+            # Let Retriever fan out each validated clause independently; do not
+            # pass a legacy single-intent frame for the entire compound query.
+            res = self.retriever.retrieve(resolved_query)
+        else:
+            parse_tree = self.assistant.parser.parse(resolved_query) if self.assistant.parser else None
+            semantic = self.assistant._build_semantic_frame(resolved_query, parse_tree, resolution)
+            res = self.retriever.retrieve(resolved_query, semantic=semantic)
         res["original_query"] = query
         res["resolved_query"] = resolved_query
         res["resolution"] = resolution
