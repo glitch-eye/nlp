@@ -730,4 +730,5 @@ Run the focused test from `python/`:
 
 ```bash
 python -m unittest discover -s test -p "test_multi_intent_retrieval.py" -v
+python -m unittest discover -s test -p "test_multi_intent_assistant.py" -v
 ```
