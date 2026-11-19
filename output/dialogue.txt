@@ -6,16 +6,16 @@
 2. State before      : {"last_question": null, "last_intent": null, "last_entities": {}, "last_answer_entities": [], "last_sources": []}
 3. Resolved query    : CO3085 có mấy tín chỉ? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_COURSE_INFO, entities=CO3085] faq-q1-0 (score=0.6352, faq.txt / Q1); course-info-course-id-co3085-1 (score=0.5045, course_info.txt / course_id: CO3085); course-info-course-description-2 (score=0.4475, course_info.txt / course_description)
-5. Answer [ANSWERED] : Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ [Nguồn: faq.txt / Q1].
-6. Sources           : faq.txt / Q1
-7. State after       : {"last_question": "CO3085 có mấy tín chỉ?", "last_intent": "GET_COURSE_INFO", "last_entities": {"course": "CO3085"}, "last_answer_entities": ["CO3085", "NLP", "NATURAL_LANGUAGE_PROCESSING", "PART_III", "CONTEXT_AND_WORLD_KNOWLEDGE", "PART_II", "SEMANTIC_INTERPRETATION", "PART_I", "SYNTACTIC_PROCESSING"], "last_sources": ["faq.txt / Q1"]}
+5. Answer [ANSWERED] : Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ. [Nguồn: faq.txt / Q1] Ngoài ra: course_id: CO3085 course_name: Xử lý Ngôn ngữ Tự nhiên course_name_en: Natural Language Processing semester: HK261 credits: 3 ects: 6 course_type: Specialty / Graduation knowledge block department: Khoa Khoa học và Kỹ thuật Máy tính format: 2 lecture periods per week, 15 weeks total_course_hours: 150 lecture_hours: 30 major_assignment_hours: 45 self_study_hours: 60 [Nguồn: course_info.txt / course_id: CO3085]
+6. Sources           : faq.txt / Q1, course_info.txt / course_id: CO3085
+7. State after       : {"last_question": "CO3085 có mấy tín chỉ?", "last_intent": "GET_COURSE_INFO", "last_entities": {"course": "CO3085"}, "last_answer_entities": ["CO3085", "NLP", "NATURAL_LANGUAGE_PROCESSING", "PART_III", "CONTEXT_AND_WORLD_KNOWLEDGE", "PART_II", "SEMANTIC_INTERPRETATION", "PART_I", "SYNTACTIC_PROCESSING"], "last_sources": ["faq.txt / Q1", "course_info.txt / course_id: CO3085"]}
 
 --- Turn 2 ---
 1. Original question : Chương 6 nói về gì?
-2. State before      : {"last_question": "CO3085 có mấy tín chỉ?", "last_intent": "GET_COURSE_INFO", "last_entities": {"course": "CO3085"}, "last_answer_entities": ["CO3085", "NLP", "NATURAL_LANGUAGE_PROCESSING", "PART_III", "CONTEXT_AND_WORLD_KNOWLEDGE", "PART_II", "SEMANTIC_INTERPRETATION", "PART_I", "SYNTACTIC_PROCESSING"], "last_sources": ["faq.txt / Q1"]}
+2. State before      : {"last_question": "CO3085 có mấy tín chỉ?", "last_intent": "GET_COURSE_INFO", "last_entities": {"course": "CO3085"}, "last_answer_entities": ["CO3085", "NLP", "NATURAL_LANGUAGE_PROCESSING", "PART_III", "CONTEXT_AND_WORLD_KNOWLEDGE", "PART_II", "SEMANTIC_INTERPRETATION", "PART_I", "SYNTACTIC_PROCESSING"], "last_sources": ["faq.txt / Q1", "course_info.txt / course_id: CO3085"]}
 3. Resolved query    : Chương 6 nói về gì? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_TOPIC, entities=CH06] faq-q4-3 (score=0.4798, faq.txt / Q4); faq-q7-6 (score=0.1636, faq.txt / Q7); faq-q8-7 (score=0.1547, faq.txt / Q8)
-5. Answer [ANSWERED] : Chương 6 nói về các phương pháp thống kê [Nguồn: faq.txt / Q4].
+5. Answer [ANSWERED] : PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]
 6. Sources           : faq.txt / Q4
 7. State after       : {"last_question": "Chương 6 nói về gì?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["faq.txt / Q4"]}
 
@@ -24,36 +24,36 @@
 2. State before      : {"last_question": "Chương 6 nói về gì?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["faq.txt / Q4"]}
 3. Resolved query    : Chương 6 có liên quan đến gán nhãn từ loại không? (has_reference=True, type=PRONOUN_IT)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_TOPIC, entities=CH06,POS_TAGGING] faq-q4-3 (score=0.3046, faq.txt / Q4); topics-chapter-6-ambiguity-resolution-statistical-methods-5 (score=0.2844, topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS); faq-q10-9 (score=0.2045, faq.txt / Q10)
-5. Answer [ANSWERED] : Có, Chương 6 có liên quan đến gán nhãn từ loại vì các chủ đề của chương này bao gồm gán nhãn từ loại [Nguồn: topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS].
-6. Sources           : topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS
-7. State after       : {"last_question": "Nó có liên quan đến gán nhãn từ loại không?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH06", "topic": "POS_TAGGING"}, "last_answer_entities": ["CH06", "POS_TAGGING", "CH03", "PCFG", "SYNTACTIC_PROCESSING", "CFG"], "last_sources": ["topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS"]}
+5. Answer [ANSWERED] : PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4] Ngoài ra: CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS — Tóm tắt: Statistical methods are introduced for resolving ambiguity at sentence level. Topics include probability theory, probability estimation, part-of-speech tagging, lexical probabilities, PCFG and best-first parsing. — Các mục chi tiết: 6.1 Basic probability theory 6.2 Estimating probabilities 6.3 Part-of-speech tagging 6.4 Lexical probabilities 6.5 Probabilistic context-free grammar 6.6 Best-first parsing 6.7 Simple context-dependent best-first parser [Nguồn: topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS]
+6. Sources           : faq.txt / Q4, topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS
+7. State after       : {"last_question": "Nó có liên quan đến gán nhãn từ loại không?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH06", "topic": "POS_TAGGING"}, "last_answer_entities": ["CH06", "POS_TAGGING", "CH03", "PCFG", "SYNTACTIC_PROCESSING", "CFG"], "last_sources": ["faq.txt / Q4", "topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS"]}
 
 --- Turn 4 ---
 1. Original question : Chương này học vào tuần nào?
-2. State before      : {"last_question": "Nó có liên quan đến gán nhãn từ loại không?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH06", "topic": "POS_TAGGING"}, "last_answer_entities": ["CH06", "POS_TAGGING", "CH03", "PCFG", "SYNTACTIC_PROCESSING", "CFG"], "last_sources": ["topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS"]}
+2. State before      : {"last_question": "Nó có liên quan đến gán nhãn từ loại không?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH06", "topic": "POS_TAGGING"}, "last_answer_entities": ["CH06", "POS_TAGGING", "CH03", "PCFG", "SYNTACTIC_PROCESSING", "CFG"], "last_sources": ["faq.txt / Q4", "topics.txt / CHAPTER 6: AMBIGUITY RESOLUTION - STATISTICAL METHODS"]}
 3. Resolved query    : Chương 6 học vào tuần nào? (has_reference=True, type=THIS_CHAPTER)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_SCHEDULE, entities=CH06] faq-q4-3 (score=0.4738, faq.txt / Q4); faq-q7-6 (score=0.1881, faq.txt / Q7); faq-q8-7 (score=0.1777, faq.txt / Q8)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Chương này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": []}
+5. Answer [ANSWERED] : PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]
+6. Sources           : faq.txt / Q4
+7. State after       : {"last_question": "Chương này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["faq.txt / Q4"]}
 
 --- Turn 5 ---
 1. Original question : Còn chương sau?
-2. State before      : {"last_question": "Chương này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": []}
+2. State before      : {"last_question": "Chương này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["faq.txt / Q4"]}
 3. Resolved query    : Chương 7 nói về gì? (has_reference=True, type=NEXT_CHAPTER)
 4. Retrieved chunks  : [parse_status=SKIPPED, retrieval_status=NO_RELEVANT_CONTEXT, intent=GET_SCHEDULE, entities=CH07] (none)
 5. Answer [INSUFFICIENT_CONTEXT] : Sau Chương 6 là Chương 7, tuy nhiên cơ sở tri thức môn học hiện chỉ có đến Chương 12 nên không có dữ liệu cho Chương 7.
 6. Sources           : (none)
-7. State after       : {"last_question": "Chương này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": []}
+7. State after       : {"last_question": "Chương này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["faq.txt / Q4"]}
 
 --- Turn 6 ---
 1. Original question : Tài liệu của phần này là gì?
-2. State before      : {"last_question": "Chương này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": []}
+2. State before      : {"last_question": "Chương này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "CH03", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["faq.txt / Q4"]}
 3. Resolved query    : Tài liệu tham khảo cho Chương 6 là gì? (has_reference=True, type=RESOURCE_OF_THIS_PART)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_RESOURCE, entities=CH06,NLP] faq-q4-3 (score=0.3248, faq.txt / Q4); resources-reference-3-5 (score=0.2385, resources.txt / REFERENCE 3); resources-textbook-3-2 (score=0.2382, resources.txt / TEXTBOOK 3)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Tài liệu của phần này là gì?", "last_intent": "GET_RESOURCE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "NLP", "CH03", "PCFG", "REFERENCE", "CO3085", "NATURAL_LANGUAGE_PROCESSING"], "last_sources": []}
+5. Answer [ANSWERED] : PCFG được trình bày trong Chương 3 và tiếp tục được sử dụng trong Chương 6 về các phương pháp thống kê. [Nguồn: faq.txt / Q4]
+6. Sources           : faq.txt / Q4
+7. State after       : {"last_question": "Tài liệu của phần này là gì?", "last_intent": "GET_RESOURCE", "last_entities": {"chapter": "CH06"}, "last_answer_entities": ["CH06", "NLP", "CH03", "PCFG", "REFERENCE", "CO3085", "NATURAL_LANGUAGE_PROCESSING"], "last_sources": ["faq.txt / Q4"]}
 
 
 === DIALOGUE 2: Chương 8 -> Chương 9, Bài tập lớn Phần III & Tuần 2 ===
@@ -64,7 +64,7 @@
 2. State before      : {"last_question": null, "last_intent": null, "last_entities": {}, "last_answer_entities": [], "last_sources": []}
 3. Resolved query    : Chương 8 học vào tuần nào? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_SCHEDULE, entities=CH08] faq-q7-6 (score=0.1846, faq.txt / Q7); schedule-week-10-10 (score=0.1798, schedule.txt / WEEK 10); faq-q8-7 (score=0.1744, faq.txt / Q8)
-5. Answer [ANSWERED] : Chương 8 học vào Tuần 10 [Nguồn: schedule.txt / WEEK 10].
+5. Answer [ANSWERED] : WEEK 10 học Chapter 8 với các nội dung: - semantic interpretation and compositionality - grammar and lexicon with semantic interpretation - prepositional phrases and verb phrases - lexicalized semantic interpretation - semantic roles - handling simple questions. [Nguồn: schedule.txt / WEEK 10]
 6. Sources           : schedule.txt / WEEK 10
 7. State after       : {"last_question": "Chương 8 học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH08"}, "last_answer_entities": ["CH08", "KNOWLEDGE_REPRESENTATION", "CH11", "SEMANTIC_INTERPRETATION", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["schedule.txt / WEEK 10"]}
 
@@ -82,7 +82,7 @@
 2. State before      : {"last_question": "Chương 8 học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH08"}, "last_answer_entities": ["CH08", "KNOWLEDGE_REPRESENTATION", "CH11", "SEMANTIC_INTERPRETATION", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["schedule.txt / WEEK 10"]}
 3. Resolved query    : Chương 8 học vào tuần nào? (has_reference=True, type=THIS_CONTENT)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_SCHEDULE, entities=CH08] faq-q7-6 (score=0.1846, faq.txt / Q7); schedule-week-10-10 (score=0.1798, schedule.txt / WEEK 10); faq-q8-7 (score=0.1744, faq.txt / Q8)
-5. Answer [ANSWERED] : Chương 8 học vào tuần 10 [Nguồn: schedule.txt / WEEK 10].
+5. Answer [ANSWERED] : WEEK 10 học Chapter 8 với các nội dung: - semantic interpretation and compositionality - grammar and lexicon with semantic interpretation - prepositional phrases and verb phrases - lexicalized semantic interpretation - semantic roles - handling simple questions. [Nguồn: schedule.txt / WEEK 10]
 6. Sources           : schedule.txt / WEEK 10
 7. State after       : {"last_question": "Nội dung này học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH08"}, "last_answer_entities": ["CH08", "KNOWLEDGE_REPRESENTATION", "CH11", "SEMANTIC_INTERPRETATION", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12"], "last_sources": ["schedule.txt / WEEK 10"]}
 
@@ -93,18 +93,18 @@
 2. State before      : {"last_question": null, "last_intent": null, "last_entities": {}, "last_answer_entities": [], "last_sources": []}
 3. Resolved query    : Bài tập lớn có phần hội thoại không? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_ASSIGNMENT, entities=BTL01] assignments-luu-y-0 (score=0.4639, assignments.txt / Lưu ý); faq-q12-11 (score=0.1788, faq.txt / Q12); assignments-part-ii-semantic-interpretation-and-qa-2 (score=0.1318, assignments.txt / PART II - Semantic Interpretation and QA)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Bài tập lớn có phần hội thoại không?", "last_intent": "GET_ASSIGNMENT", "last_entities": {"assignment": "BTL01"}, "last_answer_entities": ["BTL01", "SEMANTIC_INTERPRETATION", "QUESTION_ANSWERING", "NLP", "PART_II"], "last_sources": []}
+5. Answer [ANSWERED] : Lưu ý: Các mốc dưới đây là DỮ LIỆU MẪU được thiết kế cho bài tập lớn Course Assistant. Đây không phải lịch nộp chính thức của học phần. assignment_id: BTL01 title: Intelligent Course Assistant team_size: 3-4 students domain: Course information and learning support goal: Xây dựng hệ thống xử lý câu hỏi tự nhiên trong miền thông tin của một môn học. Hệ thống phải thể hiện pipeline NLP từ parsing đến semantic interpretation và question answering. [Nguồn: assignments.txt / Lưu ý]
+6. Sources           : assignments.txt / Lưu ý
+7. State after       : {"last_question": "Bài tập lớn có phần hội thoại không?", "last_intent": "GET_ASSIGNMENT", "last_entities": {"assignment": "BTL01"}, "last_answer_entities": ["BTL01", "SEMANTIC_INTERPRETATION", "QUESTION_ANSWERING", "NLP", "PART_II"], "last_sources": ["assignments.txt / Lưu ý"]}
 
 --- Turn 2 ---
 1. Original question : Phần này cần xuất file gì?
-2. State before      : {"last_question": "Bài tập lớn có phần hội thoại không?", "last_intent": "GET_ASSIGNMENT", "last_entities": {"assignment": "BTL01"}, "last_answer_entities": ["BTL01", "SEMANTIC_INTERPRETATION", "QUESTION_ANSWERING", "NLP", "PART_II"], "last_sources": []}
+2. State before      : {"last_question": "Bài tập lớn có phần hội thoại không?", "last_intent": "GET_ASSIGNMENT", "last_entities": {"assignment": "BTL01"}, "last_answer_entities": ["BTL01", "SEMANTIC_INTERPRETATION", "QUESTION_ANSWERING", "NLP", "PART_II"], "last_sources": ["assignments.txt / Lưu ý"]}
 3. Resolved query    : bài tập lớn cần xuất file gì? (has_reference=True, type=THIS_PART)
 4. Retrieved chunks  : [parse_status=UNPARSED, retrieval_status=FOUND, intent=GET_ASSIGNMENT, entities=BTL01] assignments-luu-y-0 (score=0.4227, assignments.txt / Lưu ý); assignments-part-i-grammar-and-parser-1 (score=0.1132, assignments.txt / PART I - Grammar and Parser); faq-q12-11 (score=0.1006, faq.txt / Q12)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Phần này cần xuất file gì?", "last_intent": "GET_ASSIGNMENT", "last_entities": {"assignment": "BTL01"}, "last_answer_entities": ["BTL01", "SEMANTIC_INTERPRETATION", "QUESTION_ANSWERING", "NLP", "PART_I"], "last_sources": []}
+5. Answer [ANSWERED] : PART I - Grammar and Parser yêu cầu xuất các file đầu ra: output/grammar.txt output/samples.txt output/parse-results.txt (Yêu cầu: - xây dựng grammar cho miền Course Assistant - sinh câu hợp lệ từ grammar - xây dựng parser - xuất parse tree - xử lý câu không hợp lệ). [Nguồn: assignments.txt / PART I - Grammar and Parser]
+6. Sources           : assignments.txt / PART I - Grammar and Parser
+7. State after       : {"last_question": "Phần này cần xuất file gì?", "last_intent": "GET_ASSIGNMENT", "last_entities": {"assignment": "BTL01"}, "last_answer_entities": ["BTL01", "SEMANTIC_INTERPRETATION", "QUESTION_ANSWERING", "NLP", "PART_I"], "last_sources": ["assignments.txt / PART I - Grammar and Parser"]}
 
 [Command: RESET -> DialogueState cleared]
 
@@ -113,18 +113,18 @@
 2. State before      : {"last_question": null, "last_intent": null, "last_entities": {}, "last_answer_entities": [], "last_sources": []}
 3. Resolved query    : Tuần 2 học những nội dung gì? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_SCHEDULE, entities=WEEK_02] faq-q9-8 (score=0.1474, faq.txt / Q9); faq-q10-9 (score=0.1456, faq.txt / Q10); schedule-week-02-2 (score=0.1249, schedule.txt / WEEK 02)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Tuần 2 học những nội dung gì?", "last_intent": "GET_SCHEDULE", "last_entities": {"week": "WEEK_02"}, "last_answer_entities": ["WEEK_02", "LOCAL_DISCOURSE_CONTEXT", "REFERENCE", "SYNTACTIC_PROCESSING"], "last_sources": []}
+5. Answer [ANSWERED] : WEEK 02 học Chapter 2 với các nội dung: - words - simple noun phrases - verb phrases - simple sentences - adjective phrases - adverbial phrases. [Nguồn: schedule.txt / WEEK 02]
+6. Sources           : schedule.txt / WEEK 02
+7. State after       : {"last_question": "Tuần 2 học những nội dung gì?", "last_intent": "GET_SCHEDULE", "last_entities": {"week": "WEEK_02"}, "last_answer_entities": ["WEEK_02", "LOCAL_DISCOURSE_CONTEXT", "REFERENCE", "SYNTACTIC_PROCESSING"], "last_sources": ["schedule.txt / WEEK 02"]}
 
 --- Turn 2 ---
 1. Original question : Tài liệu của phần này ở đâu?
-2. State before      : {"last_question": "Tuần 2 học những nội dung gì?", "last_intent": "GET_SCHEDULE", "last_entities": {"week": "WEEK_02"}, "last_answer_entities": ["WEEK_02", "LOCAL_DISCOURSE_CONTEXT", "REFERENCE", "SYNTACTIC_PROCESSING"], "last_sources": []}
+2. State before      : {"last_question": "Tuần 2 học những nội dung gì?", "last_intent": "GET_SCHEDULE", "last_entities": {"week": "WEEK_02"}, "last_answer_entities": ["WEEK_02", "LOCAL_DISCOURSE_CONTEXT", "REFERENCE", "SYNTACTIC_PROCESSING"], "last_sources": ["schedule.txt / WEEK 02"]}
 3. Resolved query    : Tài liệu tham khảo cho Tuần 2 (tham chiếu, Phần I) là gì? (has_reference=True, type=RESOURCE_OF_THIS_PART)
 4. Retrieved chunks  : [parse_status=UNPARSED, retrieval_status=FOUND, intent=GET_RESOURCE, entities=REFERENCE,WEEK_02,PART_I,NLP] resources-textbook-3-2 (score=0.2663, resources.txt / TEXTBOOK 3); resources-reference-3-5 (score=0.2593, resources.txt / REFERENCE 3); faq-q9-8 (score=0.2579, faq.txt / Q9)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Tài liệu của phần này ở đâu?", "last_intent": "GET_RESOURCE", "last_entities": {"week": "WEEK_02", "topic": "REFERENCE", "part": "PART_I"}, "last_answer_entities": ["REFERENCE", "WEEK_02", "PART_I", "NLP", "CO3085", "NATURAL_LANGUAGE_PROCESSING", "LOCAL_DISCOURSE_CONTEXT"], "last_sources": []}
+5. Answer [ANSWERED] : TEXTBOOK 3 — 'Xử lý ngôn ngữ tự nhiên' (Tác giả: Phan Thị Tươi), công dụng: Vietnamese NLP reference. [Nguồn: resources.txt / TEXTBOOK 3] Ngoài ra còn có: REFERENCE 3 — 'Speech and Language Processing' (Tác giả: Daniel Jurafsky; James H. Martin), công dụng: broad NLP reference. [Nguồn: resources.txt / REFERENCE 3]
+6. Sources           : resources.txt / TEXTBOOK 3, resources.txt / REFERENCE 3
+7. State after       : {"last_question": "Tài liệu của phần này ở đâu?", "last_intent": "GET_RESOURCE", "last_entities": {"week": "WEEK_02", "topic": "REFERENCE", "part": "PART_I"}, "last_answer_entities": ["REFERENCE", "WEEK_02", "PART_I", "NLP", "CO3085", "NATURAL_LANGUAGE_PROCESSING", "LOCAL_DISCOURSE_CONTEXT"], "last_sources": ["resources.txt / TEXTBOOK 3", "resources.txt / REFERENCE 3"]}
 
 
 === DIALOGUE 3: Kiểm tra No-Context Guard, Insufficient-Context & L.O.3.3 ===
@@ -162,7 +162,7 @@
 2. State before      : {"last_question": "Phòng học của môn CO3085 ở đâu?", "last_intent": "GET_DEADLINE", "last_entities": {"course": "CO3085"}, "last_answer_entities": ["CO3085", "NLP", "NATURAL_LANGUAGE_PROCESSING", "PART_III", "CONTEXT_AND_WORLD_KNOWLEDGE", "PART_II", "SEMANTIC_INTERPRETATION", "PART_I", "SYNTACTIC_PROCESSING", "REFERENCE"], "last_sources": ["faq.txt / Q1", "course_info.txt / course_description", "resources.txt / TEXTBOOK 3"]}
 3. Resolved query    : L.O.3.3 mô tả năng lực gì? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_LO, entities=LO3.3] faq-q11-10 (score=0.2483, faq.txt / Q11); faq-q10-9 (score=0.2049, faq.txt / Q10); faq-q9-8 (score=0.1925, faq.txt / Q9)
-5. Answer [ANSWERED] : L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê [Nguồn: faq.txt / Q11].
+5. Answer [ANSWERED] : L.O.3.3 liên quan đến giải quyết nhập nhằng ngữ nghĩa dựa trên cơ sở tri thức và thống kê. [Nguồn: faq.txt / Q11]
 6. Sources           : faq.txt / Q11
 7. State after       : {"last_question": "L.O.3.3 mô tả năng lực gì?", "last_intent": "GET_LO", "last_entities": {"lo": "LO3.3"}, "last_answer_entities": ["LO3.3", "LOCAL_DISCOURSE_CONTEXT", "REFERENCE"], "last_sources": ["faq.txt / Q11"]}
 
@@ -206,36 +206,36 @@
 2. State before      : {"last_question": null, "last_intent": null, "last_entities": {}, "last_answer_entities": [], "last_sources": []}
 3. Resolved query    : Chương 2 và Chương 3 khác nhau như thế nào? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_TOPIC, entities=CH02,CH03] faq-q3-2 (score=0.4055, faq.txt / Q3); faq-q4-3 (score=0.3615, faq.txt / Q4); faq-q7-6 (score=0.1989, faq.txt / Q7)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Chương 2 và Chương 3 khác nhau như thế nào?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": []}
+5. Answer [ANSWERED] : CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]
+6. Sources           : faq.txt / Q3
+7. State after       : {"last_question": "Chương 2 và Chương 3 khác nhau như thế nào?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": ["faq.txt / Q3"]}
 
 --- Turn 2 ---
 1. Original question : Chương này học vào tuần nào?
-2. State before      : {"last_question": "Chương 2 và Chương 3 khác nhau như thế nào?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": []}
+2. State before      : {"last_question": "Chương 2 và Chương 3 khác nhau như thế nào?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": ["faq.txt / Q3"]}
 3. Resolved query    : Chương này học vào tuần nào? (has_reference=True, type=THIS_CHAPTER)
 4. Retrieved chunks  : [parse_status=SKIPPED, retrieval_status=SKIPPED, intent=NONE, entities=NONE] (none)
 5. Answer [NEED_CLARIFICATION] : Lượt trước nhắc tới nhiều chương (Chương 2, Chương 3). Bạn muốn hỏi chương nào?
 6. Sources           : (none)
-7. State after       : {"last_question": "Chương 2 và Chương 3 khác nhau như thế nào?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": []}
+7. State after       : {"last_question": "Chương 2 và Chương 3 khác nhau như thế nào?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": ["faq.txt / Q3"]}
 
 --- Turn 3 ---
 1. Original question : Chương 2 học vào tuần nào?
-2. State before      : {"last_question": "Chương 2 và Chương 3 khác nhau như thế nào?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": []}
+2. State before      : {"last_question": "Chương 2 và Chương 3 khác nhau như thế nào?", "last_intent": "GET_TOPIC", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": ["faq.txt / Q3"]}
 3. Resolved query    : Chương 2 học vào tuần nào? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_SCHEDULE, entities=CH02] faq-q7-6 (score=0.2071, faq.txt / Q7); faq-q8-7 (score=0.1956, faq.txt / Q8); faq-q5-4 (score=0.1865, faq.txt / Q5)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Chương 2 học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12", "AUGMENTED_GRAMMAR", "CH04", "FEATURES"], "last_sources": []}
+5. Answer [ANSWERED] : Chương 11. [Nguồn: faq.txt / Q7]
+6. Sources           : faq.txt / Q7
+7. State after       : {"last_question": "Chương 2 học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12", "AUGMENTED_GRAMMAR", "CH04", "FEATURES"], "last_sources": ["faq.txt / Q7"]}
 
 --- Turn 4 ---
 1. Original question : Còn chương sau?
-2. State before      : {"last_question": "Chương 2 học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12", "AUGMENTED_GRAMMAR", "CH04", "FEATURES"], "last_sources": []}
+2. State before      : {"last_question": "Chương 2 học vào tuần nào?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH02"}, "last_answer_entities": ["CH02", "KNOWLEDGE_REPRESENTATION", "CH11", "LOCAL_DISCOURSE_CONTEXT", "PART_III", "CH12", "AUGMENTED_GRAMMAR", "CH04", "FEATURES"], "last_sources": ["faq.txt / Q7"]}
 3. Resolved query    : Chương 3 học vào tuần nào? (has_reference=True, type=NEXT_CHAPTER)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_SCHEDULE, entities=CH03] faq-q3-2 (score=0.5169, faq.txt / Q3); faq-q4-3 (score=0.4533, faq.txt / Q4); faq-q7-6 (score=0.1958, faq.txt / Q7)
-5. Answer [INSUFFICIENT_CONTEXT] : Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán.
-6. Sources           : (none)
-7. State after       : {"last_question": "Còn chương sau?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH03"}, "last_answer_entities": ["CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": []}
+5. Answer [ANSWERED] : CFG được trình bày trong Chương 3, Grammar and Parsing. [Nguồn: faq.txt / Q3]
+6. Sources           : faq.txt / Q3
+7. State after       : {"last_question": "Còn chương sau?", "last_intent": "GET_SCHEDULE", "last_entities": {"chapter": "CH03"}, "last_answer_entities": ["CH03", "CFG", "CH06", "PCFG", "KNOWLEDGE_REPRESENTATION", "CH11"], "last_sources": ["faq.txt / Q3"]}
 
 
 === DIALOGUE 6: Thời lượng thi Midterm/Final và quy định LLM/RAG ===
@@ -246,13 +246,13 @@
 2. State before      : {"last_question": null, "last_intent": null, "last_entities": {}, "last_answer_entities": [], "last_sources": []}
 3. Resolved query    : Midterm bao nhiêu phút? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_COURSE_INFO, entities=MIDTERM] course-info-course-information-0 (score=0.4012, course_info.txt / COURSE INFORMATION); faq-q14-13 (score=0.2634, faq.txt / Q14); faq-q15-14 (score=0.1455, faq.txt / Q15)
-5. Answer [ANSWERED] : Midterm có thời lượng 60 phút [Nguồn: faq.txt / Q14].
-6. Sources           : faq.txt / Q14
-7. State after       : {"last_question": "Midterm bao nhiêu phút?", "last_intent": "GET_COURSE_INFO", "last_entities": {"exam": "MIDTERM"}, "last_answer_entities": ["MIDTERM"], "last_sources": ["faq.txt / Q14"]}
+5. Answer [ANSWERED] : COURSE INFORMATION ================== [Nguồn: course_info.txt / COURSE INFORMATION]
+6. Sources           : course_info.txt / COURSE INFORMATION
+7. State after       : {"last_question": "Midterm bao nhiêu phút?", "last_intent": "GET_COURSE_INFO", "last_entities": {"exam": "MIDTERM"}, "last_answer_entities": ["MIDTERM"], "last_sources": ["course_info.txt / COURSE INFORMATION"]}
 
 --- Turn 2 ---
 1. Original question : Final bao nhiêu phút?
-2. State before      : {"last_question": "Midterm bao nhiêu phút?", "last_intent": "GET_COURSE_INFO", "last_entities": {"exam": "MIDTERM"}, "last_answer_entities": ["MIDTERM"], "last_sources": ["faq.txt / Q14"]}
+2. State before      : {"last_question": "Midterm bao nhiêu phút?", "last_intent": "GET_COURSE_INFO", "last_entities": {"exam": "MIDTERM"}, "last_answer_entities": ["MIDTERM"], "last_sources": ["course_info.txt / COURSE INFORMATION"]}
 3. Resolved query    : Final bao nhiêu phút? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_COURSE_INFO, entities=FINAL] course-info-course-information-0 (score=0.4040, course_info.txt / COURSE INFORMATION); faq-q15-14 (score=0.2535, faq.txt / Q15); faq-q14-13 (score=0.1458, faq.txt / Q14)
 5. Answer [ANSWERED] : COURSE INFORMATION ================== [Nguồn: course_info.txt / COURSE INFORMATION]
@@ -264,6 +264,6 @@
 2. State before      : {"last_question": "Final bao nhiêu phút?", "last_intent": "GET_COURSE_INFO", "last_entities": {"exam": "FINAL"}, "last_answer_entities": ["FINAL"], "last_sources": ["course_info.txt / COURSE INFORMATION"]}
 3. Resolved query    : Có được dùng LLM/RAG không? (has_reference=False, type=NONE)
 4. Retrieved chunks  : [parse_status=PARSED, retrieval_status=FOUND, intent=GET_RULE, entities=LLM_RAG] faq-q12-11 (score=0.4167, faq.txt / Q12); regulations-llm-rag-7 (score=0.3431, regulations.txt / LLM_RAG); assignments-llm-rag-extension-5 (score=0.2551, assignments.txt / LLM/RAG EXTENSION)
-5. Answer [ANSWERED] : Có thể sử dụng LLM hoặc RAG như một phần mở rộng nếu được cho phép, nhưng không thay thế các yêu cầu NLP cốt lõi [Nguồn: faq.txt / Q12]. Khi sử dụng, sinh viên phải mô tả rõ mô hình, dữ liệu, retrieval và cách đánh giá [Nguồn: regulations.txt / LLM_RAG]. Phần này là tùy chọn, không bắt buộc [Nguồn: assignments.txt / LLM/RAG EXTENSION].
-6. Sources           : faq.txt / Q12, regulations.txt / LLM_RAG, assignments.txt / LLM/RAG EXTENSION
-7. State after       : {"last_question": "Có được dùng LLM/RAG không?", "last_intent": "GET_RULE", "last_entities": {"rule": "LLM_RAG"}, "last_answer_entities": ["LLM_RAG", "NLP"], "last_sources": ["faq.txt / Q12", "regulations.txt / LLM_RAG", "assignments.txt / LLM/RAG EXTENSION"]}
+5. Answer [ANSWERED] : LLM_RAG: LLM/RAG nếu được sử dụng chỉ nên đóng vai trò mở rộng. Sinh viên phải mô tả rõ mô hình, dữ liệu, retrieval và cách đánh giá. [Nguồn: regulations.txt / LLM_RAG]
+6. Sources           : regulations.txt / LLM_RAG
+7. State after       : {"last_question": "Có được dùng LLM/RAG không?", "last_intent": "GET_RULE", "last_entities": {"rule": "LLM_RAG"}, "last_answer_entities": ["LLM_RAG", "NLP"], "last_sources": ["regulations.txt / LLM_RAG"]}

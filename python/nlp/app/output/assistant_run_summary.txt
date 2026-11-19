@@ -1,7 +1,7 @@
 ======================================================================
 PHẦN IV: BÁO CÁO ĐÁNH GIÁ HỆ THỐNG COURSE ASSISTANT (NHÁNH LLM/RAG & HỘI THOẠI)
 ======================================================================
-Mô hình LLM / Adapter sử dụng : gemini-3.5-flash-lite
+Mô hình LLM / Adapter sử dụng : mock-grounded-extractive-v1 [FALLBACK: URLError, requested qwen2.5:7b]
 
 I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
 ----------------------------------------------------------------------
@@ -9,8 +9,8 @@ I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
    - Tổng số lượt kiểm thử (Total turns)       : 27
    - Số lượt xử lý đúng theo kỳ vọng            : 27/27 (100.0%)
    - Phân bố trạng thái đầu ra (Answer Status):
-     + ANSWERED (Trả lời có căn cứ & trích dẫn) : 9
-     + INSUFFICIENT_CONTEXT (Chặn thiếu dữ liệu): 13
+     + ANSWERED (Trả lời có căn cứ & trích dẫn) : 18
+     + INSUFFICIENT_CONTEXT (Chặn thiếu dữ liệu): 4
      + NO_RELEVANT_CONTEXT (Chặn ngoài miền)    : 1
      + NEED_CLARIFICATION (Yêu cầu làm rõ)      : 4
    - Phân bố trạng thái Parser (Phần I CFG trên resolved_query):
@@ -31,37 +31,36 @@ I. SỐ LƯỢNG CÂU KIỂM THỬ & ĐỘ CHÍNH XÁC (METRICS)
        * THIS_PART                : 1
 
 2. Đánh giá diện rộng trên tập câu hỏi có nhãn (samples_labeled.jsonl) [ĐO TRỰC TIẾP]:
-   - Tổng số mẫu kiểm thử                         : 50
-   - Trạng thái nhãn                              : AUTO_LABEL_REQUIRES_REVIEW=50
-   - Hit@k (có chunk kỳ vọng trong top-k)         : 21 / 21 (100.0%)
-   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 13 / 21 (61.9%)
-   - Từ chối khi nhãn yêu cầu từ chối             : 14 / 29 (48.3%)
-   - Câu ANSWERED có trích dẫn hợp lệ             : 27 / 27 (100.0%)
-   - Số nguồn trung bình mỗi câu ANSWERED         : 1.30 (chỉ tính nguồn thực sự được trích dẫn)
-   - Câu bị đánh dấu NEEDS_REVIEW                 : 1
+   - Tổng số mẫu kiểm thử                         : 10000
+   - Trạng thái nhãn                              : AUTO_LABEL_REQUIRES_REVIEW=10000
+   - Hit@k (có chunk kỳ vọng trong top-k)         : 4086 / 4098 (99.7%)
+   - Trả lời khi nhãn là EXPECTED_CONTEXT         : 4098 / 4098 (100.0%)
+   - Từ chối khi nhãn yêu cầu từ chối             : 573 / 5902 (9.7%)
+   - Câu ANSWERED có trích dẫn hợp lệ             : 9427 / 9427 (100.0%)
+   - Số nguồn trung bình mỗi câu ANSWERED         : 1.29 (chỉ tính nguồn thực sự được trích dẫn)
+   - Câu bị đánh dấu NEEDS_REVIEW                 : 0
    - Ma trận (nhãn kỳ vọng -> trạng thái thực tế):
-       EXPECTED_CONTEXT       -> ANSWERED               : 13
-       EXPECTED_CONTEXT       -> INSUFFICIENT_CONTEXT   : 8
-       INSUFFICIENT_CONTEXT   -> ANSWERED               : 14
-       INSUFFICIENT_CONTEXT   -> INSUFFICIENT_CONTEXT   : 14
-       INSUFFICIENT_CONTEXT   -> NEEDS_REVIEW           : 1
+       EXPECTED_CONTEXT       -> ANSWERED               : 4098
+       INSUFFICIENT_CONTEXT   -> ANSWERED               : 5329
+       INSUFFICIENT_CONTEXT   -> INSUFFICIENT_CONTEXT   : 570
+       NO_RELEVANT_CONTEXT    -> NO_RELEVANT_CONTEXT    : 3
    Lưu ý: nhãn do build_sample_dataset gán tự động (AUTO_LABEL_REQUIRES_REVIEW), chưa rà soát thủ công.
 
-II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; model = gemini-3.5-flash-lite)
+II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; model = mock-grounded-extractive-v1 [FALLBACK: URLError, requested qwen2.5:7b])
 ----------------------------------------------------------------------
 1. Câu trả lời đúng và có căn cứ (Grounded Answer):
    - Câu hỏi   : "Môn NLP có bao nhiêu tín chỉ?"
    - Truy xuất : faq-q1-0, course-info-course-description-2, course-info-course-id-co3085-1
-   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q1
-   - Trả lời   : "Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ [Nguồn: faq.txt / Q1]."
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q1, course_info.txt / course_description
+   - Trả lời   : "Môn Xử lý Ngôn ngữ Tự nhiên (CO3085) có 3 tín chỉ. [Nguồn: faq.txt / Q1] Ngoài ra: course_description: Môn học cung cấp các khái niệm, lý thuyết và kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên. Nội dung được tổ chức thành ba phầ…"
    - Câu hỏi   : "Chương 4 nói về gì?"
    - Truy xuất : faq-q5-4, faq-q7-6, faq-q8-7
    - Trạng thái: ANSWERED   Nguồn được trích dẫn: faq.txt / Q5
-   - Trả lời   : "Chương 4 học về Features và Augmented Grammar [Nguồn: faq.txt / Q5]."
+   - Trả lời   : "Chương 4. [Nguồn: faq.txt / Q5]"
    - Câu hỏi   : "Tuần 5 học những nội dung gì?"
    - Truy xuất : faq-q10-9, schedule-week-06-6, faq-q11-10
-   - Trạng thái: INSUFFICIENT_CONTEXT   Nguồn được trích dẫn: (không có)
-   - Trả lời   : "Các đoạn tài liệu truy xuất được không đủ thông tin để trả lời câu hỏi này, nên hệ thống không đưa ra câu trả lời để tránh suy đoán."
+   - Trạng thái: ANSWERED   Nguồn được trích dẫn: schedule.txt / WEEK 06
+   - Trả lời   : "WEEK 06 học Chapter 5 với các nội dung: - auxiliary verbs and verb phrases - movement phenomena - handling questions in CFG - relative clauses. [Nguồn: schedule.txt / WEEK 06]"
 
 2. Câu hỏi không có thông tin trong Knowledge Base / ngoài phạm vi:
    - [câu ngoài miền (mẫu của văn phạm)] "Hôm nay ở TP.HCM có mưa không?"
@@ -95,17 +94,31 @@ II. CÁC VÍ DỤ CHO NHÁNH LLM/RAG (sinh bằng cách chạy hệ thống; mod
 
 III. TRƯỜNG HỢP SAI / HẠN CHẾ (liệt kê từ kết quả chạy thật)
 ----------------------------------------------------------------------
-1. Câu ngoài miền diễn đạt lại (không nằm trong mẫu của văn phạm): từ chối đúng 10 / 10
-2. Truy xuất sai (không có chunk kỳ vọng trong top-k): 0 / 21
-3. Nhãn INSUFFICIENT_CONTEXT nhưng hệ thống vẫn trả lời: 14 / 29
-   Phân bố theo intent: {'GET_RULE': 4, 'GET_RESOURCE': 1, 'GET_LO': 1, 'GET_TOPIC': 3, 'GET_SCHEDULE': 5}
-   - "cho hỏi Nếu sử dụng công cụ AI thì sinh viên cần lưu ý điều gì?" -> trích dẫn: regulations.txt / AI_usage, regulations.txt / LLM_RAG
-   - "xin hỏi Tài liệu nào liên quan đến knowledge representation?" -> trích dẫn: course_info.txt / detailed_learning_outcomes
-   - "cho biết Sinh viên cần đạt được năng lực gì theo L.O.2.5?" -> trích dẫn: faq.txt / Q10
+1. Câu ngoài miền diễn đạt lại (không nằm trong mẫu của văn phạm): từ chối đúng 3 / 10
+   - Vẫn bị trả lời [ANSWERED]: "Thời tiết hôm nay thế nào?" -> "Lưu ý: Các quy định chi tiết về deadline, format nộp bài và chính sách lớp học trong file này là dữ liệu MẪU …"
+   - Vẫn bị trả lời [ANSWERED]: "Cho tôi công thức nấu phở" -> "external_libraries: Được phép sử dụng thư viện công khai nếu tuân thủ yêu cầu của bài tập. [Nguồn: regulation…"
+   - Vẫn bị trả lời [ANSWERED]: "Bạn có thể viết giúp tôi một bài thơ không?" -> "Có thể sử dụng như một phần mở rộng nếu được cho phép, nhưng LLM/RAG không thay thế các yêu cầu NLP cốt lõi. …"
+   - Vẫn bị trả lời [ANSWERED]: "Python 3.12 có gì mới?" -> "REFERENCE 2 — 'Natural Language Processing with Python' (Tác giả: Steven Bird; Ewan Klein; Edward Loper), côn…"
+   - Vẫn bị trả lời [ANSWERED]: "Làm sao để nấu cơm cho ngon?" -> "assignment_sharing: Không được sao chép hoặc chia sẻ bài làm giữa các nhóm. [Nguồn: regulations.txt / assignm…"
+   - Vẫn bị trả lời [ANSWERED]: "Ai là tổng thống Mỹ hiện nay?" -> "AI_usage: Sinh viên phải khai báo việc sử dụng AI trong báo cáo, nghiên cứu và quá trình thực hiện theo quy đ…"
+   - Vẫn bị trả lời [ANSWERED]: "Phim nào đang chiếu rạp?" -> "detailed_learning_outcomes: LO1.1 - Hiểu cấu trúc hệ thống NLP, ứng dụng và cách đánh giá hệ thống hiểu ngôn …"
+   Nguyên nhân: bộ lọc trước LLM chỉ dựa trên điểm truy xuất và độ phủ từ vựng; mock không đánh giá được
+   sự liên quan. Với model thật, prompt yêu cầu trả INSUFFICIENT_CONTEXT và answer_guard xử lý (xem II.3, trường hợp cuối).
+2. Truy xuất sai (không có chunk kỳ vọng trong top-k): 12 / 4098
+   - SYN0411 "Muốn học sâu hơn về xử lý ngôn ngữ tự nhiên bằng Python thì nên đọc tài liệu nào?": kỳ vọng ['resources-reference-2-4'] ; nhận ['resources-textbook-3-2', 'faq-q1-0', 'course-info-course-description-2']
+   - SYN0421 "Sinh viên nên bắt đầu đọc tài liệu nào về xử lý ngôn ngữ tự nhiên bằng Python?": kỳ vọng ['resources-reference-2-4'] ; nhận ['resources-textbook-3-2', 'faq-q1-0', 'course-info-course-description-2']
+   - SYN1928 "cho hỏi Muốn học sâu hơn về xử lý ngôn ngữ tự nhiên bằng Python thì nên đọc tài liệu nào?": kỳ vọng ['resources-reference-2-4'] ; nhận ['resources-textbook-3-2', 'faq-q1-0', 'course-info-course-description-2']
+   - SYN1938 "cho hỏi Sinh viên nên bắt đầu đọc tài liệu nào về xử lý ngôn ngữ tự nhiên bằng Python?": kỳ vọng ['resources-reference-2-4'] ; nhận ['resources-textbook-3-2', 'faq-q1-0', 'course-info-course-description-2']
+   - SYN2040 "xin hỏi Muốn học sâu hơn về xử lý ngôn ngữ tự nhiên bằng Python thì nên đọc tài liệu nào?": kỳ vọng ['resources-reference-2-4'] ; nhận ['resources-textbook-3-2', 'faq-q1-0', 'course-info-course-description-2']
+3. Nhãn INSUFFICIENT_CONTEXT nhưng hệ thống vẫn trả lời: 5329 / 5899
+   Phân bố theo intent: {'GET_COURSE_INFO': 20, 'GET_SCHEDULE': 2883, 'GET_TOPIC': 1296, 'GET_RESOURCE': 327, 'GET_RULE': 638, 'GET_LO': 165}
+   - "thời lượng của midterm là bao lâu?" -> trích dẫn: faq.txt / Q14, course_info.txt / COURSE INFORMATION
+   - "thời lượng của final là bao lâu?" -> trích dẫn: faq.txt / Q15, course_info.txt / COURSE INFORMATION
+   - "thời lượng của bài thi giữa kỳ là bao lâu?" -> trích dẫn: course_info.txt / COURSE INFORMATION
    Cần rà soát thủ công: nếu nguồn được trích dẫn thực sự chứa đáp án thì lỗi nằm ở nhãn tự động chứ không ở hệ thống.
 4. Câu hội thoại mà văn phạm Phần I không nhận (UNPARSED): 3
-   - "bài tập lớn cần xuất file gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=INSUFFICIENT_CONTEXT
-   - "Tài liệu tham khảo cho Tuần 2 (tham chiếu, Phần I) là gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=INSUFFICIENT_CONTEXT
+   - "bài tập lớn cần xuất file gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=ANSWERED
+   - "Tài liệu tham khảo cho Tuần 2 (tham chiếu, Phần I) là gì?" -> hệ thống vẫn truy xuất bằng câu gốc, status=ANSWERED
    - "Phòng học của môn CO3085 ở đâu?" -> hệ thống vẫn truy xuất bằng câu gốc, status=INSUFFICIENT_CONTEXT
 
 IV. NHẬN XÉT ƯU ĐIỂM VÀ HẠN CHẾ CỦA PHƯƠNG PHÁP ĐÃ SỬ DỤNG
