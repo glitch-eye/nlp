@@ -226,14 +226,32 @@ def _is_fallback(model_name):
 
 
 def evaluate_rows(assistant, rows, judge=None):
-    """Run the actual assistant and optionally judge each generated answer."""
+    """Run the assistant and retain per-call model provenance, including multi-intent."""
     results = []
+    client = assistant.llm_client
     for row in rows:
+        history = getattr(client, "call_history", None)
+        history_start = len(history) if isinstance(history, list) else None
         started = time.perf_counter()
         output = assistant.answer(row["query"])
         elapsed_seconds = time.perf_counter() - started
-        model_name = getattr(assistant.llm_client, "model_name", "unknown")
-        last_error = getattr(assistant.llm_client, "last_error", None)
+        calls = history[history_start:] if history_start is not None else []
+        model_name = getattr(client, "model_name", "unknown")
+        last_error = getattr(client, "last_error", None)
+        if calls:
+            names = list(dict.fromkeys(str(c.get("model_name") or "unknown") for c in calls))
+            model_name = " | ".join(names)
+            fallback = any(bool(c.get("fallback")) for c in calls)
+            errors = list(dict.fromkeys(str(c.get("error")) for c in calls if c.get("error")))
+            model_error = "; ".join(errors) or None
+            api_calls = sum(bool(c.get("used_api")) for c in calls)
+            execution = "real_api" if api_calls == len(calls) else ("mixed" if api_calls else ("fallback" if fallback else "mock"))
+            generation_latency = round(sum(float(c.get("elapsed_seconds") or 0) for c in calls), 6)
+        else:
+            fallback = _is_fallback(model_name)
+            model_error = last_error
+            execution = "fallback" if fallback else ("mock" if "mock" in str(model_name).lower() else "unknown")
+            generation_latency = None
         record = {
             "sample_id": row.get("sample_id"),
             "query": row["query"],
@@ -250,16 +268,20 @@ def evaluate_rows(assistant, rows, judge=None):
             "sources": output.get("sources") or [],
             "citation_check": output.get("citation_check") or {},
             "model_name": model_name,
-            "model_fallback": _is_fallback(model_name),
-            "model_error": last_error,
+            "model_execution": execution,
+            "model_call_count": len(calls),
+            "model_calls": calls,
+            "model_fallback": fallback,
+            "model_error": model_error,
+            "generation_elapsed_seconds": generation_latency,
             "elapsed_seconds": round(elapsed_seconds, 4),
             "reference_status": row.get("reference_status", "UNVERIFIED"),
             "judge": None,
             "judge_error": None,
         }
         if judge is not None:
-            if record["model_fallback"] or "mock" in str(model_name).lower():
-                record["judge_error"] = "SKIPPED: generator output is mock or fallback, not a real-model answer"
+            if execution != "real_api":
+                record["judge_error"] = "SKIPPED: no verified real-API generator call for this answer"
             else:
                 try:
                     record["judge"] = judge.evaluate(row, output)
@@ -313,6 +335,13 @@ def calculate_metrics(results):
             "n": len(values),
         }
     hallucination_checked = [j for j in judged if j.get("hallucination") is not None]
+    generation_latencies = [
+        float(r["generation_elapsed_seconds"]) for r in results
+        if r.get("generation_elapsed_seconds") is not None
+    ]
+    pipeline_latencies = [
+        float(r["elapsed_seconds"]) for r in results if r.get("elapsed_seconds") is not None
+    ]
     return {
         "sample_count": len(results),
         "labelled_count": len(labelled),
@@ -345,10 +374,26 @@ def calculate_metrics(results):
         "judge_error_count": sum(bool(r.get("judge_error")) and not r["judge_error"].startswith("SKIPPED:") for r in results),
         "judge_skipped_count": sum(bool(r.get("judge_error")) and r["judge_error"].startswith("SKIPPED:") for r in results),
         "fallback_count": sum(r["model_fallback"] for r in results),
-        "mock_answer_count": sum("mock" in str(r.get("model_name", "")).lower() for r in results),
-        "real_model_answer_count": sum(
-            not r["model_fallback"] and "mock" not in str(r.get("model_name", "")).lower()
+        "mock_answer_count": sum(
+            r.get("model_execution") == "mock" or "mock" in str(r.get("model_name", "")).lower()
             for r in results
+        ),
+        "real_model_answer_count": sum(
+            r.get("model_execution") == "real_api"
+            if r.get("model_execution") is not None
+            else (not r["model_fallback"] and "mock" not in str(r.get("model_name", "")).lower())
+            for r in results
+        ),
+        "mixed_model_answer_count": sum(r.get("model_execution") == "mixed" for r in results),
+        "model_generation_call_count": sum(int(r.get("model_call_count") or 0) for r in results),
+        "successful_api_call_count": sum(
+            bool(call.get("used_api")) for r in results for call in (r.get("model_calls") or [])
+        ),
+        "mean_generation_latency_seconds": (
+            sum(generation_latencies) / len(generation_latencies) if generation_latencies else None
+        ),
+        "mean_pipeline_latency_seconds": (
+            sum(pipeline_latencies) / len(pipeline_latencies) if pipeline_latencies else None
         ),
         "status_confusion": _status_confusion(labelled),
     }
@@ -434,6 +479,10 @@ def render_markdown(report):
         "| Real-model answer rows | {} |".format(m["real_model_answer_count"]),
         "| Mock answer rows | {} |".format(m["mock_answer_count"]),
         "| Model fallback rows | {} |".format(m["fallback_count"]),
+        "| Mixed real/mock rows | {} |".format(m.get("mixed_model_answer_count", 0)),
+        "| Generation calls / successful API calls | {} / {} |".format(m.get("model_generation_call_count", 0), m.get("successful_api_call_count", 0)),
+        "| Mean generation latency (s) | {} |".format(_score(m.get("mean_generation_latency_seconds"))),
+        "| Mean pipeline latency (s) | {} |".format(_score(m.get("mean_pipeline_latency_seconds"))),
         "",
         "## Model-as-judge (diagnostic only)",
         "",
@@ -461,7 +510,12 @@ def render_markdown(report):
     for row in report["results"]:
         lines.append("### {} — {}".format(row["sample_id"], row["query"]))
         lines.append("- Expected: {}; actual: {}".format(row["expected_answerability"], row["actual_status"]))
-        lines.append("- Model: {}{}".format(row["model_name"], " (FALLBACK)" if row["model_fallback"] else ""))
+        lines.append("- Model: {} ({}){}".format(row["model_name"], row.get("model_execution", "unknown"), " (FALLBACK)" if row["model_fallback"] else ""))
+        lines.append("- Model calls: {}; generation latency: {}s; pipeline latency: {}s".format(
+            row.get("model_call_count", 0),
+            row.get("generation_elapsed_seconds") if row.get("generation_elapsed_seconds") is not None else "n/a",
+            row.get("elapsed_seconds", "n/a"),
+        ))
         lines.append("- Retrieved: {}".format(", ".join(row["retrieved_chunk_ids"]) or "(none)"))
         lines.append("- Guarded answer: {}".format((row["answer"] or "").replace("\n", " ")))
         if row.get("raw_generated_answer") != row.get("answer"):
