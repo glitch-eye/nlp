@@ -66,6 +66,36 @@ python -m nlp.app.api --host 127.0.0.1 --port 8000
 python -m unittest discover -s test -v
 ```
 
+Để chạy chương trình với model thực, thực hiện các bước sau từ thư mục root:
+
+```bash
+# 1. Mở terminal 1
+
+$env:OLLAMA_HOST="0.0.0.0:11434"
+$env:OLLAMA_DEBUG="1"                   
+$env:OLLAMA_DEBUG_LOG_REQUESTS="true"   
+ollama serve
+
+# 2. Mở terminal 2
+export LLM_PROVIDER="api"
+export LLM_MODEL="qwen2.5:7b"
+export OPENAI_BASE_URL="http://172.23.64.1:11434/v1"
+export OPENAI_API_KEY="ollama"
+export LLM_TIMEOUT="120"
+export PYTHONPATH="$PWD/python:$PYTHONPATH"
+
+python -m nlp.app.run_assistant --data-dir data --provider openai
+python -m nlp.app.api --host 127.0.0.1 --port 8000
+
+# 3. Mở terminal thứ 3
+
+curl -X POST http://127.0.0.1:8000/answer \
+  -H "Content-Type: application/json" \
+  -d '{"question":"Tuần 2 học những nội dung gì?"}' # Test kiểm thử chương trình kết nối đc với model
+
+python python/run_evaluation.py --base-url http://127.0.0.1:8000 --dataset input/test_dataset.json --reset-before # chạy kiểm thử đánh giá chương trình với dataset
+```
+
 ---
 
 ## 4. Mô tả kiến trúc hệ thống
