@@ -32,7 +32,12 @@ _STOPWORDS = frozenset(
     "những các một được để với trong về nói học vậy ạ nhé thì mà bị đang sẽ đã rồi cần muốn "
     "cái việc như sao đâu nữa lại cũng hay hoặc".split()
 )
+_CJK = re.compile(r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uac00-\ud7af]")  # Chinese/Japanese/Korean
 _CITATION = re.compile(r"\[Nguồn:\s*([^\]]+?)\s*\]")
+LANGUAGE_MSG = (
+    "Câu trả lời do mô hình sinh ra dùng ngôn ngữ không mong muốn (không phải tiếng Việt/Anh) "
+    "nên hệ thống không đưa ra; cần kiểm tra lại."
+)
 UNSUPPORTED_MSG = (
     "Câu trả lời do mô hình sinh ra chứa thông tin không có trong tài liệu truy xuất ({}), "
     "nên hệ thống không đưa ra để tránh sai lệch."
@@ -126,6 +131,11 @@ def check_answer(answer, chunks):
     if SENTINEL in answer:
         return {"status": "INSUFFICIENT_CONTEXT", "answer": INSUFFICIENT_MSG, "sources": [],
                 "valid_citations": [], "invalid_citations": []}
+
+    if _CJK.search(answer) and not any(_CJK.search(c.get("text", "")) for c in chunks):
+        # The course data is Vietnamese/English only: CJK text means the model drifted into another language.
+        return {"status": "NEEDS_REVIEW", "answer": LANGUAGE_MSG, "raw_answer": answer, "language_drift": True,
+                "sources": [], "valid_citations": [], "invalid_citations": []}
 
     allowed = {_pair("{} / {}".format(c.get("source", ""), c.get("section", ""))) for c in chunks}
     valid, invalid, cleaned = [], [], answer

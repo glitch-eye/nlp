@@ -1,0 +1,46 @@
+Course Assistant evaluation | 2026-11-20T19:56:20 | http://127.0.0.1:8000 | top_k=3
+LLM: UNKNOWN - the server did not report a model (restart it from the updated api.py).
+
+tests: 20 run | 16 scored | 9 passed | 7 FAILED | 4 unlabelled | pass rate 56%
+latency: mean 1050.3275 ms, p95 5227.6 ms | HTTP success 100%
+
+== Parser ==
+  intent accuracy        50% (n=14)
+  entity recall          90% | exact-set 90% (n=10)
+  unparsed answer rate   70%
+== Retrieval (gold-labelled n=0) ==
+  hit@3 n/a | precision@3 n/a | recall@3 n/a | MRR n/a
+== Answers ==
+  status accuracy        n/a
+  FALSE-ANSWER rate      n/a (must refuse n=0)
+  false-refusal rate     n/a (must answer n=0)
+  facts present          n/a (n=0) | ANSWERED-but-wrong: 0
+  NEEDS_REVIEW answers   0 | language drift: 0
+== By category ==
+  uncategorised        9/16
+
+== Failures ==
+  [FAIL] R03 (uncategorised) PCFG là gì?
+         - intent: expected GET_TOPIC got None
+  [FAIL] R04 (uncategorised) Các phương pháp thống kê được học ở chương nào?
+         - intent: expected GET_TOPIC got None
+  [FAIL] R05 (uncategorised) Nội dung môn học liên quan đến xác suất là gì?
+         - intent: expected GET_TOPIC got None
+  [FAIL] R08 (uncategorised) Tuần 4 học về nội dung gì?
+         - intent: expected GET_SCHEDULE got None
+         - entities: expected ['WEEK_04'] got []
+  [FAIL] R09 (uncategorised) Các tuần học có nội dung nào liên quan đến mô hình thống kê?
+         - intent: expected GET_TOPIC got None
+  [FAIL] R10 (uncategorised) Tóm tắt những chủ đề chính của môn học.
+         - intent: expected GET_TOPIC got None
+  [FAIL] A07 (uncategorised) PCFG là gì?
+         - intent: expected GET_TOPIC got None
+         answer: PCFG là probabilistic context-free grammar, một dạng ngữ pháp có xác suất được sử dụng trong xử lý ngôn ngữ tự nhiên. [Nguồn: topics.txt / C
+
+== Unlabelled (no expectations, not scored) ==
+  A02 Giải thích thêm về nội dung đó.
+  A08 Cho ví dụ dễ hiểu hơn.
+  A09 Lịch thi cuối kỳ vào ngày nào?
+  A10 Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.
+
+Scores cover only tests that carry expectations; UNLABELLED tests are listed, not counted. Gold chunk labels and facts were written from the KB text. Citation validity (answer_guard) only means the cited source was sent in the prompt, not that it supports the claim.

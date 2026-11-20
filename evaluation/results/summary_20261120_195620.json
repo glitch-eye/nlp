@@ -1,0 +1,67 @@
+{
+  "created_at": "2026-11-20T19:56:20",
+  "base_url": "http://127.0.0.1:8000",
+  "top_k": 3,
+  "server": {
+    "status": "ok",
+    "service": "retrieval",
+    "document_count": 76,
+    "top_k": 3,
+    "min_score": 0.08,
+    "lexical_weight": 0.75,
+    "semantic_weight": 0.25,
+    "min_lexical_score": 0.0
+  },
+  "total_run": 20,
+  "scored": 16,
+  "passed": 9,
+  "failed": 7,
+  "unlabelled": 4,
+  "pass_rate": 0.5625,
+  "http_success_rate": 1.0,
+  "mean_latency_ms": 1050.3275,
+  "p95_latency_ms": 5227.6,
+  "parser": {
+    "intent_accuracy": 0.5,
+    "intent_n": 14,
+    "entity_recall": 0.9,
+    "entity_exact_set_accuracy": 0.9,
+    "entity_n": 10,
+    "parse_status_accuracy": null,
+    "unparsed_answer_rate": 0.7
+  },
+  "retrieval": {
+    "labelled_n": 0,
+    "hit_at_k": null,
+    "precision_at_k_mean": null,
+    "recall_at_k_mean": null,
+    "mrr_mean": null
+  },
+  "answers": {
+    "status_accuracy": null,
+    "false_answer_rate": null,
+    "must_refuse_n": 0,
+    "false_refusal_rate": null,
+    "must_answer_n": 0,
+    "fact_pass_rate": null,
+    "fact_n": 0,
+    "answered_but_wrong": 0,
+    "needs_review": 0,
+    "language_drift": 0
+  },
+  "llm": {
+    "server_reports": null,
+    "answers_with_model_call": 0,
+    "models_seen": [],
+    "fallback_answers": 0,
+    "mock_answers": 0,
+    "real_model_verified": null
+  },
+  "by_category": {
+    "uncategorised": {
+      "passed": 9,
+      "total": 16
+    }
+  },
+  "note": "Scores cover only tests that carry expectations; UNLABELLED tests are listed, not counted. Gold chunk labels and facts were written from the KB text. Citation validity (answer_guard) only means the cited source was sent in the prompt, not that it supports the claim."
+}

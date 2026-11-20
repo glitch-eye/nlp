@@ -1,0 +1,700 @@
+{
+  "version": "2.0",
+  "description": "Benchmark for retrieval, parsing, answering and dialogue. Gold labels and expected facts were written from the knowledge-base text, NOT from system output. Optional per-test fields: expected_intent, expected_intents, expected_entities, expected_chunk_ids, expected_status (list of acceptable), must_contain (list; each item 'a|b' = any alternative, all items required), must_not_contain, resolved_query_contains, reset_before, category. Fact alternatives are bilingual (Vietnamese|English) because a real model may translate the KB's English terms.",
+  "tests": [
+    {
+      "id": "R01",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Chương 3 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH03"
+      ],
+      "expected_chunk_ids": [
+        "topics-chapter-3-grammar-and-parsing-2",
+        "schedule-week-03-3"
+      ],
+      "notes": "Verify the exact relevant chunk(s) in the knowledge base.",
+      "category": "topic_lookup"
+    },
+    {
+      "id": "R02",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Chương 6 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH06"
+      ],
+      "expected_chunk_ids": [
+        "topics-chapter-6-ambiguity-resolution-statistical-methods-5",
+        "schedule-week-07-7",
+        "schedule-week-08-8"
+      ],
+      "notes": "Previously observed answer associates Chapter 6 with statistical methods; verify target chunk.",
+      "category": "topic_lookup"
+    },
+    {
+      "id": "R03",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "PCFG là gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "topics-chapter-3-grammar-and-parsing-2",
+        "faq-q4-3",
+        "schedule-week-03-3"
+      ],
+      "notes": "Annotate chunk(s) defining PCFG.",
+      "category": "paraphrase"
+    },
+    {
+      "id": "R04",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Các phương pháp thống kê được học ở chương nào?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "topics-chapter-6-ambiguity-resolution-statistical-methods-5",
+        "faq-q4-3"
+      ],
+      "notes": "Verify chapter references in the KB.",
+      "category": "paraphrase"
+    },
+    {
+      "id": "R05",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Nội dung môn học liên quan đến xác suất là gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "faq-q10-9",
+        "schedule-week-07-7",
+        "topics-chapter-6-ambiguity-resolution-statistical-methods-5"
+      ],
+      "notes": "Broad semantic query; manually annotate relevant chunks.",
+      "category": "broad"
+    },
+    {
+      "id": "R06",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tuần 2 học những nội dung gì?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "expected_chunk_ids": [
+        "schedule-week-02-2"
+      ],
+      "notes": "Prior run extracted WEEK_02 but returned apparently irrelevant chunks; investigate and annotate.",
+      "category": "schedule_lookup"
+    },
+    {
+      "id": "R07",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tuần 3 có những chủ đề nào?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_03"
+      ],
+      "expected_chunk_ids": [
+        "schedule-week-03-3"
+      ],
+      "notes": "Verify schedule content and expected chunks.",
+      "category": "schedule_lookup"
+    },
+    {
+      "id": "R08",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tuần 4 học về nội dung gì?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_04"
+      ],
+      "expected_chunk_ids": [
+        "schedule-week-04-4"
+      ],
+      "notes": "Verify schedule content and expected chunks.",
+      "category": "schedule_lookup"
+    },
+    {
+      "id": "R09",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Các tuần học có nội dung nào liên quan đến mô hình thống kê?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "schedule-week-07-7",
+        "schedule-week-11-11",
+        "schedule-week-03-3"
+      ],
+      "notes": "Broad query; annotate all relevant chunk IDs.",
+      "category": "broad"
+    },
+    {
+      "id": "R10",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tóm tắt những chủ đề chính của môn học.",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "course-info-main-parts-4",
+        "faq-q2-1"
+      ],
+      "notes": "Broad summary query; manually judge relevance.",
+      "category": "broad"
+    },
+    {
+      "id": "A01",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương 3 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH03"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Judge answer accuracy and citation grounding.",
+      "category": "dialogue",
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "must_contain": [
+        "grammar and parsing|cfg|context-free|ngữ pháp|phân tích cú pháp"
+      ],
+      "reset_before": true
+    },
+    {
+      "id": "A02",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Giải thích thêm về nội dung đó.",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Follow-up in same dialogue chain as A01; check referent resolution.",
+      "category": "dialogue",
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "resolved_query_contains": "Chương 3"
+    },
+    {
+      "id": "A03",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương 6 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH06"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Topic switch; should not keep answering Chapter 3.",
+      "category": "dialogue",
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "must_contain": [
+        "thống kê|statistical|ambiguity"
+      ],
+      "must_not_contain": [
+        "Chương 3 nói về"
+      ]
+    },
+    {
+      "id": "A04",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương đó có liên quan đến Chương 3 không?",
+      "expected_intent": null,
+      "expected_entities": [
+        "CH06",
+        "CH03"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Follow-up referring to Chapter 6 from A03; verify comparison is grounded.",
+      "category": "dialogue",
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "resolved_query_contains": "Chương 6",
+      "must_contain": [
+        "chương 3|chapter 3",
+        "chương 6|chapter 6"
+      ]
+    },
+    {
+      "id": "A05",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Tuần 2 học gì?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Answer should be grounded in week 2 schedule.",
+      "category": "dialogue",
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "must_contain": [
+        "noun phrase|cụm danh từ"
+      ],
+      "must_not_contain": [
+        "WEEK 12",
+        "Tuần 12"
+      ]
+    },
+    {
+      "id": "A06",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Nội dung đó có ví dụ không?",
+      "expected_intent": null,
+      "expected_entities": [
+        "WEEK_02"
+      ],
+      "expected_chunk_ids": [],
+      "notes": "Follow-up to A05. The KB says nothing about examples, so the correct behaviour is to say it is not available. Referent must resolve to Tuần 2.",
+      "category": "dialogue",
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "resolved_query_contains": "Tuần 2"
+    },
+    {
+      "id": "A07",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "PCFG là gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "The KB has no PCFG definition, only where it is covered (Chapter 3/6). A grounded 'where it appears' answer or a refusal is acceptable.",
+      "category": "definition",
+      "expected_status": [
+        "ANSWERED",
+        "INSUFFICIENT_CONTEXT"
+      ],
+      "must_contain": [
+        "probabilistic context-free|chương 3|chapter 3"
+      ]
+    },
+    {
+      "id": "A08",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Cho ví dụ dễ hiểu hơn.",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Follow-up to A07. Must not answer with the OUT_OF_SCOPE policy text.",
+      "category": "dialogue",
+      "expected_status": [
+        "NEED_CLARIFICATION",
+        "INSUFFICIENT_CONTEXT",
+        "ANSWERED"
+      ],
+      "must_not_contain": [
+        "OUT_OF_SCOPE"
+      ]
+    },
+    {
+      "id": "A09",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Lịch thi cuối kỳ vào ngày nào?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "The KB has no exam date (verified: no 'ngày thi'/'lịch thi' in data/).",
+      "category": "missing_data",
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "reset_before": true
+    },
+    {
+      "id": "A10",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Reset cuộc hội thoại sau đó hãy cho biết thông tin về một chủ đề không có trong tài liệu.",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "notes": "Reset first, then an unsupported topic: must refuse.",
+      "category": "missing_data",
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "reset_before": true
+    },
+    {
+      "id": "R11",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Midterm kéo dài bao lâu?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "faq-q14-13",
+        "course-info-exam-format-8"
+      ],
+      "category": "fact_lookup",
+      "notes": ""
+    },
+    {
+      "id": "R12",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Bài tập lớn có được dùng AI không?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "regulations-ai-usage-3",
+        "regulations-llm-rag-7",
+        "faq-q12-11"
+      ],
+      "category": "fact_lookup",
+      "notes": ""
+    },
+    {
+      "id": "R13",
+      "type": "retrieval",
+      "endpoint": "/retrieve",
+      "question": "Tài liệu tham khảo nào nói về machine translation?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "resources-reference-4-6"
+      ],
+      "category": "fact_lookup",
+      "notes": ""
+    },
+    {
+      "id": "A11",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Môn NLP có bao nhiêu tín chỉ?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "faq-q1-0",
+        "course-info-course-id-co3085-1"
+      ],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "grounded",
+      "reset_before": true,
+      "notes": "",
+      "must_contain": [
+        "3 tín chỉ|3 tín|3 credits|credits: 3"
+      ]
+    },
+    {
+      "id": "A12",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Final kéo dài bao lâu?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "faq-q15-14",
+        "course-info-exam-format-8"
+      ],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "grounded",
+      "reset_before": true,
+      "notes": "",
+      "must_contain": [
+        "90"
+      ]
+    },
+    {
+      "id": "A13",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Midterm kéo dài bao lâu?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "faq-q14-13",
+        "course-info-exam-format-8"
+      ],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "grounded",
+      "reset_before": true,
+      "notes": "",
+      "must_contain": [
+        "60"
+      ]
+    },
+    {
+      "id": "A14",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Bài tập lớn có phải khai báo việc dùng AI không?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [
+        "regulations-ai-usage-3"
+      ],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "grounded",
+      "reset_before": true,
+      "notes": "",
+      "must_contain": [
+        "khai báo|declare|disclos"
+      ]
+    },
+    {
+      "id": "A15",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Tuần 7 học gì?",
+      "expected_intent": "GET_SCHEDULE",
+      "expected_entities": [
+        "WEEK_07"
+      ],
+      "expected_chunk_ids": [
+        "schedule-week-07-7"
+      ],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "grounded",
+      "reset_before": true,
+      "notes": "",
+      "must_contain": [
+        "probability|xác suất"
+      ],
+      "must_not_contain": [
+        "WEEK 09",
+        "Tuần 9"
+      ]
+    },
+    {
+      "id": "A16",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương 11 học về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH11"
+      ],
+      "expected_chunk_ids": [
+        "topics-chapter-11-knowledge-representation-and-reasoning-10",
+        "schedule-week-13-13"
+      ],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "grounded",
+      "reset_before": true,
+      "notes": "",
+      "must_contain": [
+        "knowledge representation|biểu diễn tri thức"
+      ]
+    },
+    {
+      "id": "A17",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Phòng học môn NLP ở đâu?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "category": "missing_data",
+      "reset_before": true,
+      "notes": "No room information in data/."
+    },
+    {
+      "id": "A18",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Email của giảng viên là gì?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "category": "missing_data",
+      "reset_before": true,
+      "notes": "No email in data/."
+    },
+    {
+      "id": "A19",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Học phí môn NLP là bao nhiêu?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "category": "missing_data",
+      "reset_before": true,
+      "notes": "No tuition information in data/."
+    },
+    {
+      "id": "A20",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Giá vàng hôm nay bao nhiêu một lượng?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "category": "out_of_scope",
+      "reset_before": true,
+      "notes": ""
+    },
+    {
+      "id": "A21",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Messi hiện đang đá cho câu lạc bộ nào?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "category": "out_of_scope",
+      "reset_before": true,
+      "notes": ""
+    },
+    {
+      "id": "A22",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương 13 của môn học nói về gì?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "INSUFFICIENT_CONTEXT",
+        "NO_RELEVANT_CONTEXT"
+      ],
+      "category": "nonexistent_entity",
+      "reset_before": true,
+      "notes": "The course has chapters 1-12 only; answering from another chapter is wrong."
+    },
+    {
+      "id": "A23",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Tuần 3 học gì và chương 4 nói về gì?",
+      "expected_intent": null,
+      "expected_entities": [
+        "WEEK_03",
+        "CH04"
+      ],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "multi_intent",
+      "reset_before": true,
+      "notes": "",
+      "must_contain": [
+        "context-free|top-down|phi ngữ cảnh",
+        "feature|augmented|đặc trưng"
+      ],
+      "expected_intents": [
+        "GET_SCHEDULE",
+        "GET_TOPIC"
+      ]
+    },
+    {
+      "id": "A24",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Nó là gì?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "NEED_CLARIFICATION"
+      ],
+      "category": "dialogue",
+      "reset_before": true,
+      "notes": "No antecedent after a reset: must ask for clarification, never guess."
+    },
+    {
+      "id": "A25",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Chương 4 nói về gì?",
+      "expected_intent": "GET_TOPIC",
+      "expected_entities": [
+        "CH04"
+      ],
+      "expected_chunk_ids": [
+        "topics-chapter-4-features-and-augmented-grammar-3",
+        "schedule-week-04-4",
+        "schedule-week-05-5"
+      ],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "dialogue",
+      "reset_before": true,
+      "notes": "",
+      "must_contain": [
+        "feature|augmented|đặc trưng"
+      ]
+    },
+    {
+      "id": "A26",
+      "type": "answer",
+      "endpoint": "/answer",
+      "question": "Còn chương sau?",
+      "expected_intent": null,
+      "expected_entities": [],
+      "expected_chunk_ids": [],
+      "expected_status": [
+        "ANSWERED"
+      ],
+      "category": "dialogue",
+      "reset_before": false,
+      "notes": "Follow-up to A25: 'chương sau' must resolve to Chapter 5.",
+      "must_contain": [
+        "auxiliary|movement|grammar for natural language|trợ động từ|ngữ pháp cho ngôn ngữ"
+      ],
+      "resolved_query_contains": "Chương 5"
+    }
+  ]
+}
